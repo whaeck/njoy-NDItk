@@ -1,0 +1,1 @@
+add_cpp_test( multigroup.EnergyBounds EnergyBounds.test.cpp )

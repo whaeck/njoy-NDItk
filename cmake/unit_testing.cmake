@@ -25,4 +25,5 @@ endfunction()
 #######################################################################
 # Unit testing directories
 #######################################################################
-add_subdirectory(src/NDItk/multigroup/EnergyBounds/test)
+
+add_subdirectory( src/NDItk/base/SingleIntegerRecord/test )

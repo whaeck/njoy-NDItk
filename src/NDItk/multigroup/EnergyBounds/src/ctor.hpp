@@ -3,13 +3,14 @@
  *
  *  @param energies   the energybounds
  */
-EnergyBounds( std::vector<double> energies ):
+EnergyBounds( std::vector<double> energies ) :
   RecordBase( std::move( energies ) ) {}
 
-  /**
+/**
  *  @brief Constructor
  *
- *  @param in   the input stream 
+ *  @param in   the input stream
  */
-EnergyBounds( std::istream& in , std::size_t size):
-  RecordBase(in, size, "e_bounds") {}
+template < typename Iterator >
+EnergyBounds( Iterator& iter, const Iterator& end, std::size_t size ) :
+  RecordBase( "e_bounds", iter, end, size ) {}

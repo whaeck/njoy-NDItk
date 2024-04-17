@@ -7,7 +7,7 @@ include( FetchContent )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  https://github.com/njoy/tools
-    GIT_TAG         v0.2.0
+    GIT_TAG         feature/disco
     GIT_SHALLOW     TRUE
     )
 

@@ -4,52 +4,52 @@
 // system includes
 #include <vector>
 #include <string>
-#include <istream>
-#include <stdexcept>
-#include <iostream>
-// other includes
 
+// other includes
+#include "tools/disco/FreeFormatCharacter.hpp"
+#include "tools/disco/FreeFormatInteger.hpp"
+#include "tools/disco/FreeFormatReal.hpp"
 
 namespace njoy {
 namespace NDItk {
-
 namespace base {
 
 template < typename Derived >
 class RecordBase {
 
-std::vector<double> data_;
+  /* fields */
 
-  protected:
+  std::vector<double> data_;
 
-   #include "NDItk/base/RecordBase/src/read.hpp"
- 
+protected:
 
-    /* constructor */
-    #include "NDItk/base/RecordBase/src/ctor.hpp"
+  #include "NDItk/base/RecordBase/src/read.hpp"
 
-public: 
+  /* constructor */
+  #include "NDItk/base/RecordBase/src/ctor.hpp"
 
-const std::vector<double>& data() const {
+public:
+
+  const std::vector<double>& data() const {
+
     return this->data_;
-}
+  }
 
-std::vector<double>& data() {
+  std::vector<double>& data() {
+
     return this->data_;
-}
+  }
 
-    std::string keyword() const {
+  std::string keyword() const {
 
-      return static_cast< const Derived* >( this )->name();
-    }
-    
-   #include "NDItk/base/RecordBase/src/write.hpp"
- 
+    return static_cast< const Derived* >( this )->name();
+  }
+
+  #include "NDItk/base/RecordBase/src/write.hpp"
 };
 
 } // base namespace
 } // NDItk namespace
 } // njoy namespace
 
-
-#endif 
+#endif

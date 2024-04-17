@@ -3,13 +3,13 @@
  *
  *  @param data   the data of the record
  */
-RecordBase( std::vector<double> data ):
-  data_( std::move( data ) ) {}
+RecordBase( std::vector< double > data ) : data_( std::move( data ) ) {}
 
-  /**
+/**
  *  @brief Constructor
  *
- *  @param in   the input stream 
+ *  @param in   the input stream
  */
-RecordBase( std::istream& in , std::size_t size, const std::string& keyword):
-  RecordBase(Derived::read(in, size, keyword)) {}
+template < typename Iterator >
+RecordBase( const std::string& key, Iterator& iter, const Iterator& end, std::size_t size ) :
+  RecordBase( Derived::read( key, iter, end, size ) ) {}

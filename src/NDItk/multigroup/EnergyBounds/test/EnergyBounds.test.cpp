@@ -15,39 +15,49 @@ std::string chunk();
 void verifychunk(const multigroup::EnergyBounds&);
 
 SCENARIO( "EnergyBounds" ) {
-  std:: string line = chunk();
+
+  std::string string = chunk();
+
   GIVEN( "Given Energy Bounds" ) {
-    
+
     WHEN( "the data is given explicitly" ) {
 
       std::vector< double > energies = { 10, 1, 1E-2, 1E-5 };
-
       multigroup::EnergyBounds chunk( std::move( energies ) );
 
       THEN( "an EnergyBounds can be constructed and members can be tested" ) {
-    
-      verifychunk(chunk);
+
+        verifychunk( chunk );
       } // THEN
+
       THEN( "an EnergyBounds can be written" ) {
+
         std::ostringstream out;
-       chunk.write(out);
+        chunk.write( out );
 
-      CHECK(out.str()==line);
-      }
-     
+        CHECK( out.str() == string );
+      } // THEN
     } // WHEN
-     WHEN( "the data is read from a stream" ) {
 
-      std::istringstream in(chunk());
+    WHEN( "the data is read from a stream" ) {
 
-      multigroup::EnergyBounds chunk(in, 4);
+      auto iter = string.begin();
+      auto end = string.end();
+
+      multigroup::EnergyBounds chunk( iter, end, 4 );
 
       THEN( "an EnergyBounds can be constructed and members can be tested" ) {
-        verifychunk(chunk);
 
+        verifychunk(chunk);
       } // THEN
 
-     
+      THEN( "an EnergyBounds can be written" ) {
+
+        std::ostringstream out;
+        chunk.write( out );
+
+        CHECK( out.str() == string );
+      } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
@@ -58,11 +68,10 @@ std::string chunk()
 }
 void verifychunk(const multigroup::EnergyBounds& chunk )
 {
-        CHECK ( "e_bounds" == chunk.name()); 
+        CHECK ( "e_bounds" == chunk.name());
         CHECK ( 3 == chunk.numberGroups());
         CHECK_THAT(10, WithinRel(chunk.bounds()[0]));
         CHECK_THAT(1, WithinRel(chunk.bounds()[1]));
         CHECK_THAT(1E-2, WithinRel(chunk.bounds()[2]));
         CHECK_THAT(1E-5, WithinRel(chunk.bounds()[3]));
 }
-

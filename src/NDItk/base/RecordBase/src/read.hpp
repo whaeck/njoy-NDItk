@@ -1,35 +1,23 @@
 
-static std:: vector<double> read(std::istream& in, std::size_t size, const std::string& keyword){
+template < typename Iterator >
+static std:: vector< double >
+read( const std::string& keyword, Iterator& iter, const Iterator& end, std::size_t size ) {
 
-    std::vector<double> data;
-    data.reserve(size);
-    double temp;
-    std::string key;
+  using namespace njoy::tools::disco;
 
-    in >> key;
-    if (key != keyword)
-    {
-        throw std::runtime_error("Error! Unexpected keyword.");
-    }
+  std::vector< double > data;
+  data.reserve(size);
 
-    for(unsigned int i=0;i<size;++i)
-    {
-        in >> temp;
-     //    std:: cout << temp << std::endl;
+  std::string key = FreeFormatCharacter::read< std::string >( iter, end );
+  if ( key != keyword ) {
 
-        if(in.fail())
-        {
-            throw std::runtime_error("Error! Bad input in stream.");
-        }
+    throw std::runtime_error( "Error! Unexpected keyword." );
+  }
 
-        data.push_back(temp);
-        
-    }
+  for( unsigned int i = 0; i < size; ++i ) {
 
-    
+    data.push_back( FreeFormatReal::read< double >( iter, end ) );
+  }
 
-
-    return data;
-
-
+  return data;
 }

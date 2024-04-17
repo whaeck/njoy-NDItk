@@ -2,19 +2,19 @@
 #define NJOY_NDITK_MULTIGROUP_ENERGYBOUNDS
 
 // system includes
+
 // other includes
 #include "NDItk/base/RecordBase.hpp"
 
-
 namespace njoy {
 namespace NDItk {
-
 namespace multigroup {
 
 class EnergyBounds: protected base::RecordBase <EnergyBounds> {
 
-friend class base:: RecordBase <EnergyBounds>;
-public: 
+  friend class base:: RecordBase <EnergyBounds>;
+
+public:
 
     /* constructor */
     #include "NDItk/multigroup/EnergyBounds/src/ctor.hpp"
@@ -26,7 +26,7 @@ public:
       return "e_bounds";
     }
 
-    const std::vector<double>& bounds() const 
+    const std::vector<double>& bounds() const
     {
       return this -> data();
     }
@@ -46,4 +46,4 @@ public:
 } // njoy namespace
 
 
-#endif 
+#endif

@@ -27,3 +27,6 @@ endfunction()
 #######################################################################
 
 add_subdirectory( src/NDItk/base/SingleIntegerRecord/test )
+add_subdirectory( src/NDItk/base/SingleRealRecord/test )
+
+add_subdirectory( src/NDItk/multigroup/Metadata/test )

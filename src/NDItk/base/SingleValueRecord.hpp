@@ -74,8 +74,8 @@ public:
   };
 };
 
-} // disco namespace
-} // tools namespace
+} // base namespace
+} // NDItk namespace
 } // njoy namespace
 
 #endif

@@ -1,0 +1,1 @@
+add_cpp_test( multigroup.Metadata Metadata.test.cpp )

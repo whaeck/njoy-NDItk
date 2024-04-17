@@ -1,12 +1,12 @@
-#ifndef NJOY_NDITK_SINGLEINTEGERRECORD
-#define NJOY_NDITK_SINGLEINTEGERRECORD
+#ifndef NJOY_NDITK_SINGLEREALRECORD
+#define NJOY_NDITK_SINGLEREALRECORD
 
 // system includes
 #include <sstream>
 #include <iomanip>
 
 // other includes
-#include "tools/disco/FreeFormatInteger.hpp"
+#include "tools/disco/FreeFormatReal.hpp"
 #include "NDItk/base/SingleValueRecord.hpp"
 
 namespace njoy {
@@ -14,12 +14,12 @@ namespace NDItk {
 namespace base {
 
 /**
- *  @brief An NDI record with a single integer value
+ *  @brief An NDI record with a single real value
  */
-class SingleIntegerRecord : protected SingleValueRecord< SingleIntegerRecord, int > {
+class SingleRealRecord : protected SingleValueRecord< SingleRealRecord, double > {
 
-  friend class SingleValueRecord< SingleIntegerRecord, int >;
-  using Parent = SingleValueRecord< SingleIntegerRecord, int >;
+  friend class SingleValueRecord< SingleRealRecord, double >;
+  using Parent = SingleValueRecord< SingleRealRecord, double >;
 
 protected:
 
@@ -34,7 +34,8 @@ protected:
   void write( OutputIterator& iter ) const {
 
     std::ostringstream buffer;
-    buffer << std::setw( 20 ) << std::right << this->content().value();
+    buffer << std::setw( 20 ) << std::setprecision( 16 )
+           << std::right << this->content().value();
     for ( auto c : buffer.str() ) { *iter++ = c; }
     *iter++ = '\n';
   };
@@ -48,7 +49,7 @@ public:
    *
    *  @param[in] keyword   the keyword of the record
    */
-  SingleIntegerRecord( std::string keyword ) :
+  SingleRealRecord( std::string keyword ) :
       SingleValueRecord( std::move( keyword ) ) {}
 
   /**
@@ -57,7 +58,7 @@ public:
    *  @param[in] keyword   the keyword of the record
    *  @param[in] value     the value of the record
    */
-  SingleIntegerRecord( std::string keyword, int value ) :
+  SingleRealRecord( std::string keyword, double value ) :
       SingleValueRecord( std::move( keyword ), value ) {}
 
   /* methods */
@@ -74,7 +75,7 @@ public:
   template< typename Iterator >
   void read( Iterator& iter, const Iterator& end ) {
 
-    this->content() = njoy::tools::disco::FreeFormatInteger::read< int >( iter, end );
+    this->content() = njoy::tools::disco::FreeFormatReal::read< double >( iter, end );
   };
 };
 

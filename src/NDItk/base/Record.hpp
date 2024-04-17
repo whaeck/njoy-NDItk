@@ -49,8 +49,8 @@ public:
   const std::string& keyword() const { return this->keyword_; }
 };
 
-} // disco namespace
-} // tools namespace
+} // base namespace
+} // NDItk namespace
 } // njoy namespace
 
 #endif

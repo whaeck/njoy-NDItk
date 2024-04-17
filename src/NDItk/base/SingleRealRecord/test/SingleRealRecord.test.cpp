@@ -23,7 +23,7 @@ SCENARIO( "SingleRealRecord" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      SingleRealRecord chunk( "num_grps", 618 );
+      SingleRealRecord chunk( "temp", 2.53e-8 );
 
       THEN( "a SingleRealRecord can be constructed and members can "
             "be tested" ) {
@@ -43,9 +43,9 @@ SCENARIO( "SingleRealRecord" ) {
 
     WHEN( "the data is defined by iterators" ) {
 
-      auto iter = record.begin() + 8;
+      auto iter = record.begin() + 4;
       auto end = record.end();
-      SingleRealRecord chunk( "num_grps" );
+      SingleRealRecord chunk( "temp" );
       chunk.read( iter, end );
 
       THEN( "a SingleRealRecord can be constructed and members can "
@@ -68,12 +68,12 @@ SCENARIO( "SingleRealRecord" ) {
 
 std::string chunk() {
 
-  return "num_grps\n"
-         "                 618\n";
+  return "temp\n"
+         "            2.53e-08\n";
 }
 
 void verifyChunk( const SingleRealRecord& chunk ) {
 
-  CHECK( "num_grps" == chunk.keyword() );
-  CHECK( 618 == chunk.content().value() );
+  CHECK( "temp" == chunk.keyword() );
+  CHECK_THAT( 2.53e-8, WithinRel( chunk.content().value() ) );
 }

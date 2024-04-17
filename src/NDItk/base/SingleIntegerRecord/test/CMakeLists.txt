@@ -1,1 +1,1 @@
-add_cpp_test( multigroup.SingleIntegerRecord SingleIntegerRecord.test.cpp )
+add_cpp_test( base.SingleIntegerRecord SingleIntegerRecord.test.cpp )

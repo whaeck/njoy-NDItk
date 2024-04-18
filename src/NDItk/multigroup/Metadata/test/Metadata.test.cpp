@@ -23,6 +23,10 @@ SCENARIO( "Metadata" ) {
 
     WHEN( "the data is given explicitly" ) {
 
+      std::string zaid = "92235.711nm";
+      std::string name = "mendf71x";
+      std::string source = "12/22/2011";
+      std::string process = "08/07/2013";
       double awr = 233.0248;
       double weight = 235.043937521619;
       double temperature = 2.53e-8;
@@ -31,7 +35,9 @@ SCENARIO( "Metadata" ) {
       unsigned int upscatter = 0;
       unsigned int downscatter = 617;
       unsigned int order = 5;
-      Metadata chunk( awr, weight, temperature, dilution,
+      Metadata chunk( std::move( zaid ), std::move( name ),
+                      std::move( source ), std::move( process ),
+                      awr, weight, temperature, dilution,
                       groups, upscatter, downscatter, order  );
 
       THEN( "a Metadata can be constructed and members can "
@@ -54,7 +60,15 @@ SCENARIO( "Metadata" ) {
 
 std::string chunk() {
 
-  return "awr\n"
+  return "zaid\n"
+         "    92235.711nm\n"
+         "library_name\n"
+         "    mendf71x\n"
+         "date_source\n"
+         "    12/22/2011\n"
+         "date_processed\n"
+         "    08/07/2013\n"
+         "awr\n"
          "            233.0248\n"
          "at_wgt\n"
          "    235.043937521619\n"
@@ -74,6 +88,10 @@ std::string chunk() {
 
 void verifyChunk( const Metadata& chunk ) {
 
+  CHECK( "92235.711nm" == chunk.zaid().value() );
+  CHECK( "mendf71x" == chunk.libraryName().value() );
+  CHECK( "12/22/2011" == chunk.sourceData().value() );
+  CHECK( "08/07/2013" == chunk.processDate().value() );
   CHECK_THAT( 233.0248, WithinRel( chunk.atomicWeightRatio().value() ) );
   CHECK_THAT( 235.043937521619, WithinRel( chunk.atomicWeight().value() ) );
   CHECK_THAT( 2.53e-8, WithinRel( chunk.temperature().value() ) );

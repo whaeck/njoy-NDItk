@@ -75,5 +75,6 @@ std::string chunk() {
 void verifyChunk( const SingleRealRecord& chunk ) {
 
   CHECK( "temp" == chunk.keyword() );
+  CHECK( true == chunk.hasContent() );
   CHECK_THAT( 2.53e-8, WithinRel( chunk.content().value() ) );
 }

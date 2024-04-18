@@ -38,7 +38,7 @@ SCENARIO( "Metadata" ) {
       Metadata chunk( std::move( zaid ), std::move( name ),
                       std::move( source ), std::move( process ),
                       awr, weight, temperature, dilution,
-                      groups, upscatter, downscatter, order  );
+                      groups, upscatter, downscatter, order );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {

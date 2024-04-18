@@ -73,5 +73,6 @@ std::string chunk() {
 void verifyChunk( const SingleIntegerRecord& chunk ) {
 
   CHECK( "num_grps" == chunk.keyword() );
+  CHECK( true == chunk.hasContent() );
   CHECK( 618 == chunk.content().value() );
 }

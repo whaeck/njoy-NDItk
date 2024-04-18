@@ -59,6 +59,11 @@ public:
   std::optional< std::vector< Type > >& content() { return this->values_; }
 
   /**
+   *  @brief Return whether or not the record has content
+   */
+  bool hasContent() const { return this->values_.has_value(); }
+
+  /**
    *  @brief Print the record (if it has content)
    *
    *  Printing the data contained in the record is delegated to the

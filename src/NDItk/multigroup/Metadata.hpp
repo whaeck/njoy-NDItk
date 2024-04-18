@@ -123,8 +123,8 @@ public:
   };
 };
 
-} // disco namespace
-} // tools namespace
+} // multigroup namespace
+} // NDItk namespace
 } // njoy namespace
 
 #endif

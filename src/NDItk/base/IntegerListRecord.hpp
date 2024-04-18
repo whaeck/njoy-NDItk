@@ -89,6 +89,7 @@ public:
 
   using Parent::keyword;
   using Parent::content;
+  using Parent::hasContent;
   using Parent::print;
 
   /**

@@ -55,6 +55,47 @@ SCENARIO( "Metadata" ) {
         CHECK( buffer == record );
       } // THEN
     } // WHEN
+
+    WHEN( "the data is read using iterators" ) {
+
+      auto iter = record.begin();
+      auto end = record.end();
+
+      auto readKey = [] ( auto&& iter, auto&& end ) {
+
+        return njoy::tools::disco::FreeFormatCharacter::read< std::string >( iter, end );
+      };
+
+      Metadata chunk;
+
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
+
+      THEN( "a Metadata can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        chunk.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
   } // GIVEN
 } // SCENARIO
 

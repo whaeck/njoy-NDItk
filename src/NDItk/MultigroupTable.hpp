@@ -6,6 +6,7 @@
 // other includes
 #include "NDItk/multigroup/Metadata.hpp"
 #include "NDItk/multigroup/Structure.hpp"
+#include "NDItk/multigroup/FluxWeights.hpp"
 
 namespace njoy {
 namespace NDItk {
@@ -18,6 +19,7 @@ class MultigroupTable {
   /* fields */
   multigroup::Metadata metadata_;
   multigroup::Structure structure_;
+  multigroup::FluxWeights weights_;
 
   template < typename Record, typename Iterator, typename... Arguments >
   static void readRecord( Record& record, Iterator& iter, const Iterator& end,
@@ -32,7 +34,7 @@ class MultigroupTable {
 
 public:
 
-  MultigroupTable() : metadata_(), structure_() {}
+  MultigroupTable() : metadata_(), structure_(), weights_() {}
 
   const multigroup::Metadata& metadata() const { return this->metadata_; }
   const multigroup::Structure& structure() const { return this->structure_; }
@@ -47,6 +49,7 @@ public:
 
     this->metadata_.print( iter );
     this->structure_.print( iter );
+    this->weights_.print( iter );
     *iter++ = 'e';
     *iter++ = 'n';
     *iter++ = 'd';
@@ -69,7 +72,8 @@ public:
       if ( ( keyword == "zaid" ) || ( keyword == "library_name" ) || ( keyword == "date_source" ) ||
            ( keyword == "date_processed" ) || ( keyword == "awr" ) || ( keyword == "at_wgt" ) ||
            ( keyword == "temp" ) || ( keyword == "sig_0" ) || ( keyword == "num_grps" ) ||
-           ( keyword == "up_grps" ) || ( keyword == "down_grps" ) || ( keyword == "pn_order" ) ) {
+           ( keyword == "up_grps" ) || ( keyword == "down_grps" ) || ( keyword == "pn_order" ) ||
+           ( keyword == "num_reac" ) ) {
 
         this->metadata_.read( keyword, iter, end );
       }
@@ -78,6 +82,17 @@ public:
         if ( this->metadata_.numberGroups().has_value() ) {
 
           readRecord( this->structure_, iter, end, this->metadata_.numberGroups().value() + 1 );
+        }
+        else {
+
+          throw std::runtime_error( "Required metadata is missing" );
+        }
+      }
+      else if ( keyword == "wgts" ) {
+
+        if ( this->metadata_.numberGroups().has_value() ) {
+
+          readRecord( this->weights_, iter, end, this->metadata_.numberGroups().value() + 1 );
         }
         else {
 

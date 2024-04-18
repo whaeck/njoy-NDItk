@@ -30,6 +30,7 @@ class Metadata {
   base::SingleIntegerRecord upscatter_;
   base::SingleIntegerRecord downscatter_;
   base::SingleIntegerRecord legendre_order_;
+  base::SingleIntegerRecord reactions_;
 
   template < typename Record, typename Iterator >
   static void readRecord( Record& record, Iterator& iter, const Iterator& end ) {
@@ -47,19 +48,19 @@ public:
                process_date_( "date_processed" ), awr_( "awr" ), atomic_weight_( "at_wgt" ),
                temperature_( "temp" ), dilution_( "sig_0" ), groups_( "num_grps" ),
                upscatter_( "up_grps" ), downscatter_( "down_grps" ),
-               legendre_order_( "pn_order" ) {}
+               legendre_order_( "pn_order" ), reactions_( "num_reac" ) {}
 
   Metadata( std::string zaid, std::string libname, std::string source, std::string process,
             double awr, double weight, double temperature, double dilution,
             unsigned int groups, unsigned int upscatter, unsigned int downscatter,
-            unsigned int order ) :
+            unsigned int order, unsigned int reactions ) :
       zaid_( "zaid", std::move( zaid ) ), library_name_( "library_name", std::move( libname ) ),
       source_date_( "date_source", std::move( source ) ),
       process_date_( "date_processed", std::move( process ) ),
       awr_( "awr", awr ), atomic_weight_( "at_wgt", weight ), temperature_( "temp", temperature ),
       dilution_( "sig_0", dilution ), groups_( "num_grps", groups ),
       upscatter_( "up_grps", upscatter ), downscatter_( "down_grps", downscatter ),
-      legendre_order_( "pn_order", order ) {}
+      legendre_order_( "pn_order", order ), reactions_( "num_reac", reactions ) {}
 
   decltype(auto) zaid() const { return this->zaid_.content(); }
   decltype(auto) libraryName() const { return this->library_name_.content(); }
@@ -73,6 +74,7 @@ public:
   decltype(auto) numberUpscatterGroups() const { return this->upscatter_.content(); }
   decltype(auto) numberDownscatterGroups() const { return this->downscatter_.content(); }
   decltype(auto) legendreOrder() const { return this->legendre_order_.content(); }
+  decltype(auto) numberReactions() const { return this->reactions_.content(); }
 
   /**
    *  @brief Read the metadata record content
@@ -94,6 +96,7 @@ public:
     else if ( keyword == "up_grps" )        { readRecord( this->upscatter_, iter, end ); }
     else if ( keyword == "down_grps" )      { readRecord( this->downscatter_, iter, end ); }
     else if ( keyword == "pn_order" )       { readRecord( this->legendre_order_, iter, end ); }
+    else if ( keyword == "num_reac" )       { readRecord( this->reactions_, iter, end ); }
     else {
 
       throw std::runtime_error( "Unknown keyword" );
@@ -120,6 +123,7 @@ public:
     this->upscatter_.print( iter );
     this->downscatter_.print( iter );
     this->legendre_order_.print( iter );
+    this->reactions_.print( iter );
   };
 };
 

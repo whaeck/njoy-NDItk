@@ -1,29 +1,31 @@
 // include Catch2
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
+using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "NDItk/base/SingleIntegerRecord.hpp"
+#include "NDItk/base/IntegerListRecord.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::NDItk;
-using SingleIntegerRecord = base::SingleIntegerRecord;
+using IntegerListRecord = base::IntegerListRecord;
 
 std::string chunk();
-void verifyChunk( const SingleIntegerRecord& );
+void verifyChunk( const IntegerListRecord& );
 
-SCENARIO( "SingleIntegerRecord" ) {
+SCENARIO( "IntegerListRecord" ) {
 
-  GIVEN( "valid data for a SingleIntegerRecord instance" ) {
+  GIVEN( "valid data for a IntegerListRecord instance" ) {
 
     std::string record = chunk();
 
     WHEN( "the data is given explicitly" ) {
 
-      SingleIntegerRecord chunk( "num_grps", 618 );
+      IntegerListRecord chunk( "rprod_all", { 1, 2, 3, 4, 5, 6, 7, 8 } );
 
-      THEN( "a SingleIntegerRecord can be constructed and members can "
+      THEN( "a IntegerListRecord can be constructed and members can "
             "be tested" ) {
 
         verifyChunk( chunk );
@@ -41,12 +43,12 @@ SCENARIO( "SingleIntegerRecord" ) {
 
     WHEN( "the data is defined by iterators" ) {
 
-      auto iter = record.begin() + 8;
+      auto iter = record.begin() + 9;
       auto end = record.end();
-      SingleIntegerRecord chunk( "num_grps" );
-      chunk.read( iter, end );
+      IntegerListRecord chunk( "rprod_all" );
+      chunk.read( iter, end, 8 );
 
-      THEN( "a SingleIntegerRecord can be constructed and members can "
+      THEN( "a IntegerListRecord can be constructed and members can "
             "be tested" ) {
 
         verifyChunk( chunk );
@@ -66,12 +68,13 @@ SCENARIO( "SingleIntegerRecord" ) {
 
 std::string chunk() {
 
-  return "num_grps\n"
-         "                 618\n";
+  return "rprod_all\n"
+         "         1         2         3         4         5         6\n"
+         "         7         8\n";
 }
 
-void verifyChunk( const SingleIntegerRecord& chunk ) {
+void verifyChunk( const IntegerListRecord& chunk ) {
 
-  CHECK( "num_grps" == chunk.keyword() );
-  CHECK( 618 == chunk.content().value() );
+  CHECK( "rprod_all" == chunk.keyword() );
+  CHECK( 8 == chunk.content().value().size() );
 }

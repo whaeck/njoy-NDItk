@@ -33,3 +33,6 @@ add_subdirectory( src/NDItk/base/IntegerListRecord/test )
 add_subdirectory( src/NDItk/base/RealListRecord/test )
 
 add_subdirectory( src/NDItk/multigroup/Metadata/test )
+add_subdirectory( src/NDItk/multigroup/Structure/test )
+
+add_subdirectory( src/NDItk/MultigroupTable/test )

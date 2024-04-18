@@ -32,6 +32,19 @@ public:
   using base::RealListRecord::keyword;
 
   decltype(auto) boundaries() const { return this->content(); }
+
+  std::size_t numberGroups() const {
+
+    if ( this->hasContent() ) {
+
+      return this->boundaries().value().size() - 1;
+    }
+    else {
+
+      return 0;
+    }
+  }
+
   using base::RealListRecord::hasContent;
 
   using base::RealListRecord::read;

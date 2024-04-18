@@ -80,6 +80,7 @@ std::string chunk() {
 
 void verifyChunk( const MultigroupTable& chunk ) {
 
+  // metadata
   CHECK( "92235.711nm" == chunk.metadata().zaid().value() );
   CHECK( "mendf71x" == chunk.metadata().libraryName().value() );
   CHECK( "12/22/2011" == chunk.metadata().sourceData().value() );
@@ -92,4 +93,18 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( 6 == chunk.metadata().numberDownscatterGroups().value() );
   CHECK( 0 == chunk.metadata().numberUpscatterGroups().value() );
   CHECK( 5 == chunk.metadata().legendreOrder().value() );
+
+  // principal group structure
+  CHECK( "e_bounds" == chunk.structure().keyword() );
+  CHECK( true == chunk.structure().hasContent() );
+  CHECK( 8 == chunk.structure().boundaries().value().size() );
+  CHECK( 7 == chunk.structure().numberGroups() );
+  CHECK_THAT(    20, WithinRel( chunk.structure().boundaries().value()[0] ) );
+  CHECK_THAT(    18, WithinRel( chunk.structure().boundaries().value()[1] ) );
+  CHECK_THAT(    16, WithinRel( chunk.structure().boundaries().value()[2] ) );
+  CHECK_THAT(    14, WithinRel( chunk.structure().boundaries().value()[3] ) );
+  CHECK_THAT(    10, WithinRel( chunk.structure().boundaries().value()[4] ) );
+  CHECK_THAT(     5, WithinRel( chunk.structure().boundaries().value()[5] ) );
+  CHECK_THAT(     1, WithinRel( chunk.structure().boundaries().value()[6] ) );
+  CHECK_THAT( 1e-11, WithinRel( chunk.structure().boundaries().value()[7] ) );
 }

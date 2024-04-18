@@ -1,0 +1,1 @@
+add_cpp_test( multigroup.Structure Structure.test.cpp )

@@ -62,6 +62,15 @@ public:
       upscatter_( "up_grps", upscatter ), downscatter_( "down_grps", downscatter ),
       legendre_order_( "pn_order", order ), reactions_( "num_reac", reactions ) {}
 
+  bool isMetadataKey( const std::string& keyword ) const {
+
+    return ( keyword == "zaid" ) || ( keyword == "library_name" ) || ( keyword == "date_source" ) ||
+           ( keyword == "date_processed" ) || ( keyword == "awr" ) || ( keyword == "at_wgt" ) ||
+           ( keyword == "temp" ) || ( keyword == "sig_0" ) || ( keyword == "num_grps" ) ||
+           ( keyword == "up_grps" ) || ( keyword == "down_grps" ) || ( keyword == "pn_order" ) ||
+           ( keyword == "num_reac" );
+  }
+
   decltype(auto) zaid() const { return this->zaid_.content(); }
   decltype(auto) libraryName() const { return this->library_name_.content(); }
   decltype(auto) sourceData() const { return this->source_date_.content(); }
@@ -84,19 +93,19 @@ public:
   template< typename Iterator >
   void read( const std::string& keyword, Iterator& iter, const Iterator& end ) {
 
-    if      ( keyword == "zaid" )           { readRecord( this->zaid_, iter, end ); }
-    else if ( keyword == "library_name" )   { readRecord( this->library_name_, iter, end ); }
-    else if ( keyword == "date_source" )    { readRecord( this->source_date_, iter, end ); }
-    else if ( keyword == "date_processed" ) { readRecord( this->process_date_, iter, end ); }
-    else if ( keyword == "awr" )            { readRecord( this->awr_, iter, end ); }
-    else if ( keyword == "at_wgt" )         { readRecord( this->atomic_weight_, iter, end ); }
-    else if ( keyword == "temp" )           { readRecord( this->temperature_, iter, end ); }
-    else if ( keyword == "sig_0" )          { readRecord( this->dilution_, iter, end ); }
-    else if ( keyword == "num_grps" )       { readRecord( this->groups_, iter, end ); }
-    else if ( keyword == "up_grps" )        { readRecord( this->upscatter_, iter, end ); }
-    else if ( keyword == "down_grps" )      { readRecord( this->downscatter_, iter, end ); }
-    else if ( keyword == "pn_order" )       { readRecord( this->legendre_order_, iter, end ); }
-    else if ( keyword == "num_reac" )       { readRecord( this->reactions_, iter, end ); }
+    if      ( keyword == this->zaid_.keyword() )           { readRecord( this->zaid_, iter, end ); }
+    else if ( keyword == this->library_name_.keyword() )   { readRecord( this->library_name_, iter, end ); }
+    else if ( keyword == this->source_date_.keyword() )    { readRecord( this->source_date_, iter, end ); }
+    else if ( keyword == this->process_date_.keyword() )   { readRecord( this->process_date_, iter, end ); }
+    else if ( keyword == this->awr_.keyword() )            { readRecord( this->awr_, iter, end ); }
+    else if ( keyword == this->atomic_weight_.keyword() )  { readRecord( this->atomic_weight_, iter, end ); }
+    else if ( keyword == this->temperature_.keyword() )    { readRecord( this->temperature_, iter, end ); }
+    else if ( keyword == this->dilution_.keyword() )       { readRecord( this->dilution_, iter, end ); }
+    else if ( keyword == this->groups_.keyword() )         { readRecord( this->groups_, iter, end ); }
+    else if ( keyword == this->upscatter_.keyword() )      { readRecord( this->upscatter_, iter, end ); }
+    else if ( keyword == this->downscatter_.keyword() )    { readRecord( this->downscatter_, iter, end ); }
+    else if ( keyword == this->legendre_order_.keyword() ) { readRecord( this->legendre_order_, iter, end ); }
+    else if ( keyword == this->reactions_.keyword() )      { readRecord( this->reactions_, iter, end ); }
     else {
 
       throw std::runtime_error( "Unknown keyword" );

@@ -72,9 +72,21 @@ std::string chunk() {
          "                   6\n"
          "pn_order\n"
          "                   5\n"
+         "num_reac\n"
+         "                   2\n"
          "e_bounds\n"
          "                  20                  18                  16                  14\n"
          "                  10                   5                   1               1e-11\n"
+         "wgts\n"
+         "                 0.1                 0.2                0.25                0.05\n"
+         "                0.15                0.04                0.06                0.15\n"
+         "sig_reac\n"
+         "                   2                   0\n"
+         "                  10                  20                  30                  40\n"
+         "                  50                  60                  70\n"
+         "                  16           1.1234567\n"
+         "                   1                   2                   3                   4\n"
+         "                   5                   6                   7\n"
          "end\n";
 }
 
@@ -107,4 +119,64 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(     5, WithinRel( chunk.structure().boundaries().value()[5] ) );
   CHECK_THAT(     1, WithinRel( chunk.structure().boundaries().value()[6] ) );
   CHECK_THAT( 1e-11, WithinRel( chunk.structure().boundaries().value()[7] ) );
+
+  // flux weights
+  CHECK( "wgts" == chunk.flux().keyword() );
+  CHECK( true == chunk.flux().hasContent() );
+  CHECK( 8 == chunk.flux().weights().value().size() );
+  CHECK( 7 == chunk.flux().numberGroups() );
+  CHECK_THAT( 0.10, WithinRel( chunk.flux().weights().value()[0] ) );
+  CHECK_THAT( 0.20, WithinRel( chunk.flux().weights().value()[1] ) );
+  CHECK_THAT( 0.25, WithinRel( chunk.flux().weights().value()[2] ) );
+  CHECK_THAT( 0.05, WithinRel( chunk.flux().weights().value()[3] ) );
+  CHECK_THAT( 0.15, WithinRel( chunk.flux().weights().value()[4] ) );
+  CHECK_THAT( 0.04, WithinRel( chunk.flux().weights().value()[5] ) );
+  CHECK_THAT( 0.06, WithinRel( chunk.flux().weights().value()[6] ) );
+  CHECK_THAT( 0.15, WithinRel( chunk.flux().weights().value()[7] ) );
+
+  // reaction cross sections
+  CHECK( true == chunk.crossSections().hasContent() );
+  CHECK( 2 == chunk.crossSections().numberReactions() );
+  CHECK( 7 == chunk.crossSections().numberGroups() );
+  CHECK( true == chunk.crossSections().hasReaction( 2 ) );
+  CHECK( true == chunk.crossSections().hasReaction( 16 ) );
+  CHECK( false == chunk.crossSections().hasReaction( 102 ) );
+  CHECK( 2 == chunk.crossSections().reactions()[0].reaction() );
+  CHECK_THAT( 0.0, WithinRel( chunk.crossSections().reactions()[0].qvalue() ) );
+  CHECK_THAT( 10.0, WithinRel( chunk.crossSections().reactions()[0].crossSections()[0] ) );
+  CHECK_THAT( 20.0, WithinRel( chunk.crossSections().reactions()[0].crossSections()[1] ) );
+  CHECK_THAT( 30.0, WithinRel( chunk.crossSections().reactions()[0].crossSections()[2] ) );
+  CHECK_THAT( 40.0, WithinRel( chunk.crossSections().reactions()[0].crossSections()[3] ) );
+  CHECK_THAT( 50.0, WithinRel( chunk.crossSections().reactions()[0].crossSections()[4] ) );
+  CHECK_THAT( 60.0, WithinRel( chunk.crossSections().reactions()[0].crossSections()[5] ) );
+  CHECK_THAT( 70.0, WithinRel( chunk.crossSections().reactions()[0].crossSections()[6] ) );
+  CHECK( 16 == chunk.crossSections().reactions()[1].reaction() );
+  CHECK_THAT( 1.1234567, WithinRel( chunk.crossSections().reactions()[1].qvalue() ) );
+  CHECK_THAT( 1.0, WithinRel( chunk.crossSections().reactions()[1].crossSections()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.crossSections().reactions()[1].crossSections()[1] ) );
+  CHECK_THAT( 3.0, WithinRel( chunk.crossSections().reactions()[1].crossSections()[2] ) );
+  CHECK_THAT( 4.0, WithinRel( chunk.crossSections().reactions()[1].crossSections()[3] ) );
+  CHECK_THAT( 5.0, WithinRel( chunk.crossSections().reactions()[1].crossSections()[4] ) );
+  CHECK_THAT( 6.0, WithinRel( chunk.crossSections().reactions()[1].crossSections()[5] ) );
+  CHECK_THAT( 7.0, WithinRel( chunk.crossSections().reactions()[1].crossSections()[6] ) );
+  auto xs = chunk.crossSections().crossSection( 2 );
+  CHECK( 2 == xs.reaction() );
+  CHECK_THAT( 0.0, WithinRel( xs.qvalue() ) );
+  CHECK_THAT( 10.0, WithinRel( xs.crossSections()[0] ) );
+  CHECK_THAT( 20.0, WithinRel( xs.crossSections()[1] ) );
+  CHECK_THAT( 30.0, WithinRel( xs.crossSections()[2] ) );
+  CHECK_THAT( 40.0, WithinRel( xs.crossSections()[3] ) );
+  CHECK_THAT( 50.0, WithinRel( xs.crossSections()[4] ) );
+  CHECK_THAT( 60.0, WithinRel( xs.crossSections()[5] ) );
+  CHECK_THAT( 70.0, WithinRel( xs.crossSections()[6] ) );
+  xs = chunk.crossSections().crossSection( 16 );
+  CHECK( 16 == xs.reaction() );
+  CHECK_THAT( 1.1234567, WithinRel( xs.qvalue() ) );
+  CHECK_THAT( 1.0, WithinRel( xs.crossSections()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( xs.crossSections()[1] ) );
+  CHECK_THAT( 3.0, WithinRel( xs.crossSections()[2] ) );
+  CHECK_THAT( 4.0, WithinRel( xs.crossSections()[3] ) );
+  CHECK_THAT( 5.0, WithinRel( xs.crossSections()[4] ) );
+  CHECK_THAT( 6.0, WithinRel( xs.crossSections()[5] ) );
+  CHECK_THAT( 7.0, WithinRel( xs.crossSections()[6] ) );
 }

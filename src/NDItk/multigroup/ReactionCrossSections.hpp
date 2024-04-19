@@ -50,8 +50,8 @@ class ReactionCrossSections : protected base::RealListRecord {
     return data;
   }
 
-  ReactionCrossSections( std::size_t reactions, std::size_t groups,
-                         std::vector< CrossSection > xs ) :
+  ReactionCrossSections( std::vector< CrossSection >&& xs,
+                         std::size_t reactions, std::size_t groups ) :
       RealListRecord( "sig_reac", generateData( std::move( xs ) ) ),
       reactions_( reactions ), groups_( groups ) {
 
@@ -63,7 +63,7 @@ public:
   ReactionCrossSections() : RealListRecord( "sig_reac" ) {}
 
   ReactionCrossSections( std::vector< CrossSection > xs ) :
-      ReactionCrossSections( xs.size(), xs.front().numberGroups(), std::move( xs ) ) {}
+      ReactionCrossSections( std::move( xs ), xs.size(), xs.front().numberGroups() ) {}
 
   ReactionCrossSections( const ReactionCrossSections& base ) :
     RealListRecord( base ), reactions_( base.reactions_ ), groups_( base.groups_ ) {

@@ -76,7 +76,7 @@ protected:
    */
   auto values() const {
 
-    return nano::ranges::subrange( this->begin(), this->end() );
+    return njoy::tools::std20::ranges::subrange( this->begin(), this->end() );
   }
 
   /**
@@ -100,7 +100,7 @@ protected:
     const auto left = this->iterator( index );
     const auto right = length > 0 ? this->iterator( index + length )
                                   : left;
-    return nano::ranges::subrange( left, right );
+    return njoy::tools::std20::ranges::subrange( left, right );
   }
 
 public:

@@ -79,7 +79,7 @@ std::string chunk() {
          "                  10                   5                   1               1e-11\n"
          "wgts\n"
          "                 0.1                 0.2                0.25                0.05\n"
-         "                0.15                0.04                0.06                0.15\n"
+         "                0.15                0.04                0.06\n"
          "sig_reac\n"
          "                   2                   0\n"
          "                  10                  20                  30                  40\n"
@@ -123,7 +123,7 @@ void verifyChunk( const MultigroupTable& chunk ) {
   // flux weights
   CHECK( "wgts" == chunk.flux().keyword() );
   CHECK( true == chunk.flux().hasContent() );
-  CHECK( 8 == chunk.flux().weights().value().size() );
+  CHECK( 7 == chunk.flux().weights().value().size() );
   CHECK( 7 == chunk.flux().numberGroups() );
   CHECK_THAT( 0.10, WithinRel( chunk.flux().weights().value()[0] ) );
   CHECK_THAT( 0.20, WithinRel( chunk.flux().weights().value()[1] ) );
@@ -132,7 +132,6 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 0.15, WithinRel( chunk.flux().weights().value()[4] ) );
   CHECK_THAT( 0.04, WithinRel( chunk.flux().weights().value()[5] ) );
   CHECK_THAT( 0.06, WithinRel( chunk.flux().weights().value()[6] ) );
-  CHECK_THAT( 0.15, WithinRel( chunk.flux().weights().value()[7] ) );
 
   // reaction cross sections
   CHECK( true == chunk.crossSections().hasContent() );

@@ -33,8 +33,11 @@ cmake_dependent_option(
 cmake_dependent_option(
   NDItk.python
   "Build NDItk python bindings" ON
-  "NOT ${subproject}" OFF
+  "NOT ${subproject} OR DEFINED requires.NDItk.python " OFF
 )
+if ( NDItk.python )
+  set( require.tools.python CACHE BOOL ON )
+endif()
 
 ########################################################################
 # Dependencies
@@ -102,7 +105,9 @@ if( NDItk.python )
 
   list( APPEND NDItk_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR} )
 
-  include( cmake/unit_testing_python.cmake )
+  if( NDItk.tests )
+    include( cmake/unit_testing_python.cmake )
+  endif()
 
 endif()
 

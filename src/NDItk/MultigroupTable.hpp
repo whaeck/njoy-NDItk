@@ -93,7 +93,7 @@ public:
 
         if ( this->metadata_.numberGroups().has_value() ) {
 
-          readRecord( this->weights_, iter, end, this->metadata_.numberGroups().value() + 1 );
+          readRecord( this->weights_, iter, end, this->metadata_.numberGroups().value() );
         }
         else {
 

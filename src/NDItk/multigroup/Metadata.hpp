@@ -35,7 +35,7 @@ class Metadata {
   template < typename Record, typename Iterator >
   static void readRecord( Record& record, Iterator& iter, const Iterator& end ) {
 
-    if ( record.content().has_value() ) {
+    if ( ! record.empty() ) {
 
       throw std::runtime_error( "Duplicate keyword" );
     }
@@ -71,19 +71,19 @@ public:
            ( keyword == "num_reac" );
   }
 
-  decltype(auto) zaid() const { return this->zaid_.content(); }
-  decltype(auto) libraryName() const { return this->library_name_.content(); }
-  decltype(auto) sourceData() const { return this->source_date_.content(); }
-  decltype(auto) processDate() const { return this->process_date_.content(); }
-  decltype(auto) atomicWeightRatio() const { return this->awr_.content(); }
-  decltype(auto) atomicWeight() const { return this->atomic_weight_.content(); }
-  decltype(auto) temperature() const { return this->temperature_.content(); }
-  decltype(auto) dilution() const { return this->dilution_.content(); }
-  decltype(auto) numberGroups() const { return this->groups_.content(); }
-  decltype(auto) numberUpscatterGroups() const { return this->upscatter_.content(); }
-  decltype(auto) numberDownscatterGroups() const { return this->downscatter_.content(); }
-  decltype(auto) legendreOrder() const { return this->legendre_order_.content(); }
-  decltype(auto) numberReactions() const { return this->reactions_.content(); }
+  decltype(auto) zaid() const { return this->zaid_.data(); }
+  decltype(auto) libraryName() const { return this->library_name_.data(); }
+  decltype(auto) sourceData() const { return this->source_date_.data(); }
+  decltype(auto) processDate() const { return this->process_date_.data(); }
+  decltype(auto) atomicWeightRatio() const { return this->awr_.data(); }
+  decltype(auto) atomicWeight() const { return this->atomic_weight_.data(); }
+  decltype(auto) temperature() const { return this->temperature_.data(); }
+  decltype(auto) dilution() const { return this->dilution_.data(); }
+  decltype(auto) numberGroups() const { return this->groups_.data(); }
+  decltype(auto) numberUpscatterGroups() const { return this->upscatter_.data(); }
+  decltype(auto) numberDownscatterGroups() const { return this->downscatter_.data(); }
+  decltype(auto) legendreOrder() const { return this->legendre_order_.data(); }
+  decltype(auto) numberReactions() const { return this->reactions_.data(); }
 
   /**
    *  @brief Read the metadata record content

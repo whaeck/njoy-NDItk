@@ -13,7 +13,7 @@ namespace NDItk {
 namespace base {
 
 /**
- *  @brief An NDI record with a list of values
+ *  @brief An NDI base record with a list of values
  */
 template < typename Derived, typename Type >
 class ListRecord : protected Record {

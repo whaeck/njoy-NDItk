@@ -112,23 +112,23 @@ std::string chunk() {
          "date_processed\n"
          "    08/07/2013\n"
          "awr\n"
-         "            233.0248\n"
+         "    233.0248\n"
          "at_wgt\n"
          "    235.043937521619\n"
          "temp\n"
-         "            2.53e-08\n"
+         "    2.53e-08\n"
          "sig_0\n"
-         "         10000000000\n"
+         "    10000000000\n"
          "num_grps\n"
-         "                 618\n"
+         "    618\n"
          "up_grps\n"
-         "                   0\n"
+         "    0\n"
          "down_grps\n"
-         "                 617\n"
+         "    617\n"
          "pn_order\n"
-         "                   5\n"
+         "    5\n"
          "num_reac\n"
-         "                   7\n";
+         "    7\n";
 }
 
 void verifyChunk( const Metadata& chunk ) {

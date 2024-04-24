@@ -69,12 +69,12 @@ SCENARIO( "SingleRealRecord" ) {
 std::string chunk() {
 
   return "temp\n"
-         "            2.53e-08\n";
+         "    2.53e-08\n";
 }
 
 void verifyChunk( const SingleRealRecord& chunk ) {
 
   CHECK( "temp" == chunk.keyword() );
-  CHECK( true == chunk.hasContent() );
-  CHECK_THAT( 2.53e-8, WithinRel( chunk.content().value() ) );
+  CHECK( false == chunk.empty() );
+  CHECK_THAT( 2.53e-8, WithinRel( chunk.data().value() ) );
 }

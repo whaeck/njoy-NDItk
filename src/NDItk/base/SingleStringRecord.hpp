@@ -36,7 +36,7 @@ protected:
 
     unsigned int indent = 4;
     while ( indent-- ) { *iter++ = ' '; }
-    for ( auto c : this->content().value() ) { *iter++ = c; }
+    for ( auto c : this->data().value() ) { *iter++ = c; }
     *iter++ = '\n';
   };
 
@@ -64,8 +64,8 @@ public:
   /* methods */
 
   using Parent::keyword;
-  using Parent::content;
-  using Parent::hasContent;
+  using Parent::data;
+  using Parent::empty;
   using Parent::print;
 
   /**
@@ -76,7 +76,7 @@ public:
   template< typename Iterator >
   void read( Iterator& iter, const Iterator& end ) {
 
-    this->content() = njoy::tools::disco::FreeFormatCharacter::read< std::string >( iter, end );
+    this->data() = njoy::tools::disco::FreeFormatCharacter::read< std::string >( iter, end );
   };
 };
 

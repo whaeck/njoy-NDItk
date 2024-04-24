@@ -19,34 +19,20 @@ class Structure : protected base::RealListRecord {
 
 public:
 
-  Structure() : RealListRecord( "e_bounds" ) {}
-  Structure( unsigned int particle ) :
-      RealListRecord( std::string( "e_bounds_" ) + std::to_string( particle ) ) {}
+  /* constructor */
+  #include "NDItk/multigroup/Structure/src/ctor.hpp"
 
-  Structure( std::vector< double > boundaries ) :
-      RealListRecord( "e_bounds", std::move( boundaries ) ) {}
-  Structure( unsigned int particle, std::vector< double > boundaries ) :
-      RealListRecord( std::string( "e_bounds_" ) + std::to_string( particle ),
-                      std::move( boundaries ) ) {}
-
-  using base::RealListRecord::keyword;
+  /* methods */
 
   std::size_t numberGroups() const {
 
-    if ( ! this->empty() ) {
-
-      return this->size() - 1;
-    }
-    else {
-
-      return 0;
-    }
+    return this->empty() ? 0 : this->size() - 1;
   }
 
+  using base::RealListRecord::keyword;
   using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;
-
   using base::RealListRecord::read;
   using base::RealListRecord::print;
 };

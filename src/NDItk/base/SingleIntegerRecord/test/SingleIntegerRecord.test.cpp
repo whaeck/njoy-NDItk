@@ -67,12 +67,12 @@ SCENARIO( "SingleIntegerRecord" ) {
 std::string chunk() {
 
   return "num_grps\n"
-         "                 618\n";
+         "    618\n";
 }
 
 void verifyChunk( const SingleIntegerRecord& chunk ) {
 
   CHECK( "num_grps" == chunk.keyword() );
-  CHECK( true == chunk.hasContent() );
-  CHECK( 618 == chunk.content().value() );
+  CHECK( false == chunk.empty() );
+  CHECK( 618 == chunk.data().value() );
 }

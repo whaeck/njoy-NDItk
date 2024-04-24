@@ -34,8 +34,7 @@ protected:
   void write( OutputIterator& iter ) const {
 
     std::ostringstream buffer;
-    buffer << std::setw( 20 ) << std::setprecision( 15 )
-           << std::right << this->content().value();
+    buffer << "    " << std::setprecision( 15 ) << std::right << this->data().value();
     for ( auto c : buffer.str() ) { *iter++ = c; }
     *iter++ = '\n';
   };
@@ -64,8 +63,8 @@ public:
   /* methods */
 
   using Parent::keyword;
-  using Parent::content;
-  using Parent::hasContent;
+  using Parent::data;
+  using Parent::empty;
   using Parent::print;
 
   /**
@@ -76,7 +75,7 @@ public:
   template< typename Iterator >
   void read( Iterator& iter, const Iterator& end ) {
 
-    this->content() = njoy::tools::disco::FreeFormatReal::read< double >( iter, end );
+    this->data() = njoy::tools::disco::FreeFormatReal::read< double >( iter, end );
   };
 };
 

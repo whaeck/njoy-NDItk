@@ -73,6 +73,6 @@ std::string chunk() {
 void verifyChunk( const SingleStringRecord& chunk ) {
 
   CHECK( "zaid" == chunk.keyword() );
-  CHECK( true == chunk.hasContent() );
-  CHECK( "92235.711nm" == chunk.content().value() );
+  CHECK( false == chunk.empty() );
+  CHECK( "92235.711nm" == chunk.data().value() );
 }

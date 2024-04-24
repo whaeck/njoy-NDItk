@@ -15,7 +15,7 @@ namespace NDItk {
 namespace base {
 
 /**
- *  @brief An NDI record with a list of real values
+ *  @brief An NDI base record with a list of real values
  */
 class RealListRecord : protected ListRecord< RealListRecord, double > {
 
@@ -94,7 +94,7 @@ public:
   using Parent::print;
 
   /**
-   *  @brief Read the record content
+   *  @brief Read the record data
    *
    *  @param[in] iter   the current position in the input
    */

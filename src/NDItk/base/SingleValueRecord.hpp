@@ -12,7 +12,7 @@ namespace NDItk {
 namespace base {
 
 /**
- *  @brief An NDI record with a single value
+ *  @brief An NDI base record with a single value
  */
 template < typename Derived, typename Type >
 class SingleValueRecord : protected Record {
@@ -43,25 +43,23 @@ protected:
 
 public:
 
-  using Record::keyword;
-
   /**
-   *  @brief Return the record content
+   *  @brief Return the record data
    */
-  const std::optional< Type >& content() const { return this->value_; }
+  const std::optional< Type >& data() const { return this->value_; }
 
   /**
-   *  @brief Return the record content
+   *  @brief Return the record data
    */
-  std::optional< Type >& content() { return this->value_; }
+  std::optional< Type >& data() { return this->value_; }
 
   /**
-   *  @brief Return whether or not the record has content
+   *  @brief Return whether or not the record is empty
    */
-  bool hasContent() const { return this->value_.has_value(); }
+  bool empty() const { return ! this->value_.has_value(); }
 
   /**
-   *  @brief Print the record (if it has content)
+   *  @brief Print the record (if it is not empty)
    *
    *  Printing the data contained in the record is delegated to the
    *  derived class which knows how to format the data.
@@ -71,12 +69,14 @@ public:
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
 
-    if ( this->content().has_value() ) {
+    if ( ! this->empty() ) {
 
       Record::print( iter );
       static_cast< const Derived* >( this )->write( iter );
     }
   };
+
+  using Record::keyword;
 };
 
 } // base namespace

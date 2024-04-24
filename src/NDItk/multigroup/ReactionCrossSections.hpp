@@ -32,7 +32,7 @@ class ReactionCrossSections : protected base::RealListRecord {
       this->xs_.clear();
       for ( unsigned int index = 0; index < this->numberReactions(); ++index ) {
 
-        const auto left = this->content()->begin() + index * ( 2 + this->numberGroups() );
+        const auto left = this->content().begin() + index * ( 2 + this->numberGroups() );
         const auto right = left + 2 + this->numberGroups();
         this->xs_.emplace_back( left, right );
       }
@@ -179,7 +179,7 @@ public:
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
 
-    if ( this->content().has_value() ) {
+    if ( this->hasContent() ) {
 
       for ( auto c : this->keyword() ) { *iter++ = c; }
       *iter++ = '\n';

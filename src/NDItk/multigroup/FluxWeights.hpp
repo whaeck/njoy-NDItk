@@ -32,7 +32,7 @@ public:
 
     if ( this->hasContent() ) {
 
-      return this->weights().value().size();
+      return this->weights().size();
     }
     else {
 

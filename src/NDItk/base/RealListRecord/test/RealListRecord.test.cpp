@@ -77,13 +77,13 @@ void verifyChunk( const RealListRecord& chunk ) {
 
   CHECK( "e_bounds" == chunk.keyword() );
   CHECK( true == chunk.hasContent() );
-  CHECK( 8 == chunk.content().value().size() );
-  CHECK_THAT(    20, WithinRel( chunk.content().value()[0] ) );
-  CHECK_THAT(    18, WithinRel( chunk.content().value()[1] ) );
-  CHECK_THAT(    16, WithinRel( chunk.content().value()[2] ) );
-  CHECK_THAT(    14, WithinRel( chunk.content().value()[3] ) );
-  CHECK_THAT(    10, WithinRel( chunk.content().value()[4] ) );
-  CHECK_THAT(     5, WithinRel( chunk.content().value()[5] ) );
-  CHECK_THAT(     1, WithinRel( chunk.content().value()[6] ) );
-  CHECK_THAT( 1e-11, WithinRel( chunk.content().value()[7] ) );
+  CHECK( 8 == chunk.content().size() );
+  CHECK_THAT(    20, WithinRel( chunk.content()[0] ) );
+  CHECK_THAT(    18, WithinRel( chunk.content()[1] ) );
+  CHECK_THAT(    16, WithinRel( chunk.content()[2] ) );
+  CHECK_THAT(    14, WithinRel( chunk.content()[3] ) );
+  CHECK_THAT(    10, WithinRel( chunk.content()[4] ) );
+  CHECK_THAT(     5, WithinRel( chunk.content()[5] ) );
+  CHECK_THAT(     1, WithinRel( chunk.content()[6] ) );
+  CHECK_THAT( 1e-11, WithinRel( chunk.content()[7] ) );
 }

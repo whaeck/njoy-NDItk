@@ -36,9 +36,9 @@ protected:
 
     std::ostringstream buffer;
 
-    auto full = this->content().value().size() / 4;
-    auto partial = this->content().value().size() - full * 4;
-    auto x = this->content().value().begin();
+    auto full = this->content().size() / 4;
+    auto partial = this->content().size() - full * 4;
+    auto x = this->content().begin();
 
     while ( full-- ) {
 

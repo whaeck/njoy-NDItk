@@ -80,13 +80,13 @@ void verifyChunk( const FluxWeights& chunk ) {
 
   CHECK( "wgts" == chunk.keyword() );
   CHECK( true == chunk.hasContent() );
-  CHECK( 7 == chunk.weights().value().size() );
+  CHECK( 7 == chunk.weights().size() );
   CHECK( 7 == chunk.numberGroups() );
-  CHECK_THAT( 0.10, WithinRel( chunk.weights().value()[0] ) );
-  CHECK_THAT( 0.20, WithinRel( chunk.weights().value()[1] ) );
-  CHECK_THAT( 0.25, WithinRel( chunk.weights().value()[2] ) );
-  CHECK_THAT( 0.05, WithinRel( chunk.weights().value()[3] ) );
-  CHECK_THAT( 0.15, WithinRel( chunk.weights().value()[4] ) );
-  CHECK_THAT( 0.04, WithinRel( chunk.weights().value()[5] ) );
-  CHECK_THAT( 0.06, WithinRel( chunk.weights().value()[6] ) );
+  CHECK_THAT( 0.10, WithinRel( chunk.weights()[0] ) );
+  CHECK_THAT( 0.20, WithinRel( chunk.weights()[1] ) );
+  CHECK_THAT( 0.25, WithinRel( chunk.weights()[2] ) );
+  CHECK_THAT( 0.05, WithinRel( chunk.weights()[3] ) );
+  CHECK_THAT( 0.15, WithinRel( chunk.weights()[4] ) );
+  CHECK_THAT( 0.04, WithinRel( chunk.weights()[5] ) );
+  CHECK_THAT( 0.06, WithinRel( chunk.weights()[6] ) );
 }

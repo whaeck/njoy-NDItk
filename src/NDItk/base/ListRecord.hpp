@@ -18,7 +18,7 @@ template < typename Derived, typename Type >
 class ListRecord : protected Record {
 
   /* fields */
-  std::optional< std::vector< Type > > values_;
+  std::vector< Type > values_;
 
 protected:
 
@@ -30,7 +30,7 @@ protected:
    *  @param[in] keyword   the keyword of the record
    */
   ListRecord( std::string keyword ) :
-      Record( std::move( keyword ) ), values_( std::nullopt ) {}
+      Record( std::move( keyword ) ), values_() {}
 
   /**
    *  @brief Constructor
@@ -48,7 +48,7 @@ public:
   /**
    *  @brief Return the record content
    */
-  const std::optional< std::vector< Type > >& content() const {
+  const std::vector< Type >& content() const {
 
     return this->values_;
   }
@@ -56,12 +56,12 @@ public:
   /**
    *  @brief Return the record content
    */
-  std::optional< std::vector< Type > >& content() { return this->values_; }
+  std::vector< Type >& content() { return this->values_; }
 
   /**
    *  @brief Return whether or not the record has content
    */
-  bool hasContent() const { return this->values_.has_value(); }
+  bool hasContent() const { return this->values_.size() != 0; }
 
   /**
    *  @brief Print the record (if it has content)
@@ -74,7 +74,7 @@ public:
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
 
-    if ( this->content().has_value() ) {
+    if ( this->hasContent() ) {
 
       Record::print( iter );
       static_cast< const Derived* >( this )->write( iter );

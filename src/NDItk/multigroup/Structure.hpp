@@ -37,7 +37,7 @@ public:
 
     if ( this->hasContent() ) {
 
-      return this->boundaries().value().size() - 1;
+      return this->boundaries().size() - 1;
     }
     else {
 

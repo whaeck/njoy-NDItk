@@ -77,13 +77,13 @@ void verifyChunk( const IntegerListRecord& chunk ) {
 
   CHECK( "rprod_all" == chunk.keyword() );
   CHECK( true == chunk.hasContent() );
-  CHECK( 8 == chunk.content().value().size() );
-  CHECK( 1 == chunk.content().value()[0] );
-  CHECK( 2 == chunk.content().value()[1] );
-  CHECK( 3 == chunk.content().value()[2] );
-  CHECK( 4 == chunk.content().value()[3] );
-  CHECK( 5 == chunk.content().value()[4] );
-  CHECK( 6 == chunk.content().value()[5] );
-  CHECK( 7 == chunk.content().value()[6] );
-  CHECK( 8 == chunk.content().value()[7] );
+  CHECK( 8 == chunk.content().size() );
+  CHECK( 1 == chunk.content()[0] );
+  CHECK( 2 == chunk.content()[1] );
+  CHECK( 3 == chunk.content()[2] );
+  CHECK( 4 == chunk.content()[3] );
+  CHECK( 5 == chunk.content()[4] );
+  CHECK( 6 == chunk.content()[5] );
+  CHECK( 7 == chunk.content()[6] );
+  CHECK( 8 == chunk.content()[7] );
 }

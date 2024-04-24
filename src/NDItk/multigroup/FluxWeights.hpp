@@ -19,15 +19,20 @@ class FluxWeights : protected base::RealListRecord {
 
 public:
 
-  FluxWeights() : RealListRecord( "wgts" ) {}
+  /* constructor */
+  #include "NDItk/multigroup/FluxWeights/src/ctor.hpp"
 
-  FluxWeights( std::vector< double > boundaries ) :
-      RealListRecord( "wgts", std::move( boundaries ) ) {}
-
+  /**
+   *  @brief Return the number of groups defined by this record
+   */
   std::size_t numberGroups() const { return this->size(); }
 
+  /**
+   *  @brief Return the flux weights
+   */
+  auto weights() const { return this->values(); }
+
   using base::RealListRecord::keyword;
-  using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;
   using base::RealListRecord::begin;

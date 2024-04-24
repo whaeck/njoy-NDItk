@@ -81,14 +81,14 @@ void verifyChunk( const Structure& chunk ) {
   CHECK( "e_bounds" == chunk.keyword() );
   CHECK( false == chunk.empty() );
   CHECK( 8 == chunk.size() );
-  CHECK( 8 == chunk.values().size() );
+  CHECK( 8 == chunk.boundaries().size() );
   CHECK( 7 == chunk.numberGroups() );
-  CHECK_THAT(    20, WithinRel( chunk.values()[0] ) );
-  CHECK_THAT(    18, WithinRel( chunk.values()[1] ) );
-  CHECK_THAT(    16, WithinRel( chunk.values()[2] ) );
-  CHECK_THAT(    14, WithinRel( chunk.values()[3] ) );
-  CHECK_THAT(    10, WithinRel( chunk.values()[4] ) );
-  CHECK_THAT(     5, WithinRel( chunk.values()[5] ) );
-  CHECK_THAT(     1, WithinRel( chunk.values()[6] ) );
-  CHECK_THAT( 1e-11, WithinRel( chunk.values()[7] ) );
+  CHECK_THAT(    20, WithinRel( chunk.boundaries()[0] ) );
+  CHECK_THAT(    18, WithinRel( chunk.boundaries()[1] ) );
+  CHECK_THAT(    16, WithinRel( chunk.boundaries()[2] ) );
+  CHECK_THAT(    14, WithinRel( chunk.boundaries()[3] ) );
+  CHECK_THAT(    10, WithinRel( chunk.boundaries()[4] ) );
+  CHECK_THAT(     5, WithinRel( chunk.boundaries()[5] ) );
+  CHECK_THAT(     1, WithinRel( chunk.boundaries()[6] ) );
+  CHECK_THAT( 1e-11, WithinRel( chunk.boundaries()[7] ) );
 }

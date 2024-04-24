@@ -24,13 +24,20 @@ public:
 
   /* methods */
 
+  /**
+   *  @brief Return the number of groups defined by this record
+   */
   std::size_t numberGroups() const {
 
     return this->empty() ? 0 : this->size() - 1;
   }
 
+  /**
+   *  @brief Return the group structure boundaries
+   */
+  auto boundaries() const { return this->values(); }
+
   using base::RealListRecord::keyword;
-  using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;
   using base::RealListRecord::begin;

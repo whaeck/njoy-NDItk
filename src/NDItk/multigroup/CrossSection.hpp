@@ -98,7 +98,10 @@ public:
   double qvalue() const { return this->value( 1 ); }
   auto crossSections() const { return this->values( 2, this->numberGroups() ); }
 
-  int numberGroups() const { return this->length() - 2; }
+  /**
+   *  @brief Return the number of groups defined by this record
+   */
+  std::size_t numberGroups() const { return this->length() - 2; }
 
   using Parent::begin;
   using Parent::end;

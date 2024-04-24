@@ -36,9 +36,9 @@ protected:
 
     std::ostringstream buffer;
 
-    auto full = this->content().size() / 4;
-    auto partial = this->content().size() - full * 4;
-    auto x = this->content().begin();
+    auto full = this->data().size() / 4;
+    auto partial = this->data().size() - full * 4;
+    auto x = this->data().begin();
 
     while ( full-- ) {
 
@@ -86,8 +86,9 @@ public:
   /* methods */
 
   using Parent::keyword;
-  using Parent::content;
-  using Parent::hasContent;
+  using Parent::values;
+  using Parent::size;
+  using Parent::empty;
   using Parent::print;
 
   /**
@@ -104,7 +105,7 @@ public:
 
       data.push_back( njoy::tools::disco::FreeFormatReal::read< double >( iter, end ) );
     }
-    this->content() = data;
+    this->data() = data;
   };
 };
 

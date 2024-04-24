@@ -27,7 +27,7 @@ class MultigroupTable {
   static void readRecord( Record& record, Iterator& iter, const Iterator& end,
                           Arguments... arguments ) {
 
-    if ( record.hasContent() ) {
+    if ( ! record.empty() ) {
 
       throw std::runtime_error( "Duplicate keyword" );
     }

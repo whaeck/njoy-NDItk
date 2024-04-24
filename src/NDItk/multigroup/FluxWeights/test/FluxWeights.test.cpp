@@ -79,14 +79,15 @@ std::string chunk() {
 void verifyChunk( const FluxWeights& chunk ) {
 
   CHECK( "wgts" == chunk.keyword() );
-  CHECK( true == chunk.hasContent() );
-  CHECK( 7 == chunk.weights().size() );
+  CHECK( false == chunk.empty() );
+  CHECK( 7 == chunk.size() );
+  CHECK( 7 == chunk.values().size() );
   CHECK( 7 == chunk.numberGroups() );
-  CHECK_THAT( 0.10, WithinRel( chunk.weights()[0] ) );
-  CHECK_THAT( 0.20, WithinRel( chunk.weights()[1] ) );
-  CHECK_THAT( 0.25, WithinRel( chunk.weights()[2] ) );
-  CHECK_THAT( 0.05, WithinRel( chunk.weights()[3] ) );
-  CHECK_THAT( 0.15, WithinRel( chunk.weights()[4] ) );
-  CHECK_THAT( 0.04, WithinRel( chunk.weights()[5] ) );
-  CHECK_THAT( 0.06, WithinRel( chunk.weights()[6] ) );
+  CHECK_THAT( 0.10, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT( 0.20, WithinRel( chunk.values()[1] ) );
+  CHECK_THAT( 0.25, WithinRel( chunk.values()[2] ) );
+  CHECK_THAT( 0.05, WithinRel( chunk.values()[3] ) );
+  CHECK_THAT( 0.15, WithinRel( chunk.values()[4] ) );
+  CHECK_THAT( 0.04, WithinRel( chunk.values()[5] ) );
+  CHECK_THAT( 0.06, WithinRel( chunk.values()[6] ) );
 }

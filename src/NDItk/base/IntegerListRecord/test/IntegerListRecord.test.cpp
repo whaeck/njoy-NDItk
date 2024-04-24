@@ -76,14 +76,15 @@ std::string chunk() {
 void verifyChunk( const IntegerListRecord& chunk ) {
 
   CHECK( "rprod_all" == chunk.keyword() );
-  CHECK( true == chunk.hasContent() );
-  CHECK( 8 == chunk.content().size() );
-  CHECK( 1 == chunk.content()[0] );
-  CHECK( 2 == chunk.content()[1] );
-  CHECK( 3 == chunk.content()[2] );
-  CHECK( 4 == chunk.content()[3] );
-  CHECK( 5 == chunk.content()[4] );
-  CHECK( 6 == chunk.content()[5] );
-  CHECK( 7 == chunk.content()[6] );
-  CHECK( 8 == chunk.content()[7] );
+  CHECK( false == chunk.empty() );
+  CHECK( 8 == chunk.size() );
+  CHECK( 8 == chunk.values().size() );
+  CHECK( 1 == chunk.values()[0] );
+  CHECK( 2 == chunk.values()[1] );
+  CHECK( 3 == chunk.values()[2] );
+  CHECK( 4 == chunk.values()[3] );
+  CHECK( 5 == chunk.values()[4] );
+  CHECK( 6 == chunk.values()[5] );
+  CHECK( 7 == chunk.values()[6] );
+  CHECK( 8 == chunk.values()[7] );
 }

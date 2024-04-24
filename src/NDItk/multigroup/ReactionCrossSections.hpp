@@ -27,12 +27,12 @@ class ReactionCrossSections : protected base::RealListRecord {
 
   void generateBlocks() {
 
-    if ( this->hasContent() ) {
+    if ( ! this->empty() ) {
 
       this->xs_.clear();
       for ( unsigned int index = 0; index < this->numberReactions(); ++index ) {
 
-        const auto left = this->content().begin() + index * ( 2 + this->numberGroups() );
+        const auto left = this->values().begin() + index * ( 2 + this->numberGroups() );
         const auto right = left + 2 + this->numberGroups();
         this->xs_.emplace_back( left, right );
       }
@@ -91,8 +91,6 @@ public:
 
   using base::RealListRecord::keyword;
 
-  decltype(auto) data() const { return this->content(); }
-
   /**
    *  @brief Return the number of groups
    */
@@ -117,7 +115,9 @@ public:
     return this->xs_;
   }
 
-  using base::RealListRecord::hasContent;
+  using base::RealListRecord::values;
+  using base::RealListRecord::size;
+  using base::RealListRecord::empty;
 
   /**
    *  @brief Verify whether or not a given reaction is present
@@ -169,7 +169,7 @@ public:
   };
 
   /**
-   *  @brief Print the record (if it has content)
+   *  @brief Print the record (if it is not empty)
    *
    *  Printing the data contained in the record is delegated to the
    *  derived class which knows how to format the data.
@@ -179,7 +179,7 @@ public:
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
 
-    if ( this->hasContent() ) {
+    if ( ! this->empty() ) {
 
       for ( auto c : this->keyword() ) { *iter++ = c; }
       *iter++ = '\n';

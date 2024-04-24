@@ -5,6 +5,7 @@
 #include <optional>
 
 // other includes
+#include "tools/std20/views.hpp"
 #include "NDItk/base/Record.hpp"
 
 namespace njoy {
@@ -41,30 +42,43 @@ protected:
   ListRecord( std::string keyword, std::vector< Type > values ) :
       Record( std::move( keyword ) ), values_( std::move( values ) ) {}
 
+  /**
+   *  @brief Return the record data
+   */
+  std::vector< Type >& data() { return this->values_; }
+
+  /**
+   *  @brief Return the record data
+   */
+  const std::vector< Type >& data() const { return this->values_; }
+
 public:
 
   using Record::keyword;
 
   /**
-   *  @brief Return the record content
+   *  @brief Return the record values
    */
-  const std::vector< Type >& content() const {
+  auto values() const {
 
-    return this->values_;
+    return this->values_ | njoy::tools::std20::views::all;
   }
 
   /**
-   *  @brief Return the record content
+   *  @brief Return the size of the record
    */
-  std::vector< Type >& content() { return this->values_; }
+  std::size_t size() const {
+
+    return this->values_.size();
+  }
 
   /**
-   *  @brief Return whether or not the record has content
+   *  @brief Return whether or not the record is empty
    */
-  bool hasContent() const { return this->values_.size() != 0; }
+  bool empty() const { return this->size() != 0; }
 
   /**
-   *  @brief Print the record (if it has content)
+   *  @brief Print the record (if it is not empty)
    *
    *  Printing the data contained in the record is delegated to the
    *  derived class which knows how to format the data.
@@ -74,7 +88,7 @@ public:
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
 
-    if ( this->hasContent() ) {
+    if ( ! this->empty() ) {
 
       Record::print( iter );
       static_cast< const Derived* >( this )->write( iter );

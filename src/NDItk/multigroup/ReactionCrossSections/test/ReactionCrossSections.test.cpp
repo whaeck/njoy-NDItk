@@ -88,7 +88,7 @@ std::string chunk() {
 
 void verifyChunk( const ReactionCrossSections& chunk ) {
 
-  CHECK( true == chunk.hasContent() );
+  CHECK( false == chunk.empty() );
   CHECK( 2 == chunk.numberReactions() );
   CHECK( 7 == chunk.numberGroups() );
 

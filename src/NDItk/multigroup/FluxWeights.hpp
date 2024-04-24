@@ -26,21 +26,11 @@ public:
 
   using base::RealListRecord::keyword;
 
-  decltype(auto) weights() const { return this->content(); }
+  std::size_t numberGroups() const { return this->size(); }
 
-  std::size_t numberGroups() const {
-
-    if ( this->hasContent() ) {
-
-      return this->weights().size();
-    }
-    else {
-
-      return 0;
-    }
-  }
-
-  using base::RealListRecord::hasContent;
+  using base::RealListRecord::values;
+  using base::RealListRecord::size;
+  using base::RealListRecord::empty;
 
   using base::RealListRecord::read;
   using base::RealListRecord::print;

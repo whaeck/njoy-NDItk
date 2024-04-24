@@ -78,6 +78,16 @@ public:
   bool empty() const { return this->size() == 0; }
 
   /**
+   *  @brief Return the begin iterator to the data of the record
+   */
+  auto begin() const { return this->values().begin(); }
+
+  /**
+   *  @brief Return the end iterator to the data of the record
+   */
+  auto end() const { return this->values().end(); }
+
+  /**
    *  @brief Print the record (if it is not empty)
    *
    *  Printing the data contained in the record is delegated to the

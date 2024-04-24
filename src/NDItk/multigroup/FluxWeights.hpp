@@ -24,14 +24,14 @@ public:
   FluxWeights( std::vector< double > boundaries ) :
       RealListRecord( "wgts", std::move( boundaries ) ) {}
 
-  using base::RealListRecord::keyword;
-
   std::size_t numberGroups() const { return this->size(); }
 
+  using base::RealListRecord::keyword;
   using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;
-
+  using base::RealListRecord::begin;
+  using base::RealListRecord::end;
   using base::RealListRecord::read;
   using base::RealListRecord::print;
 };

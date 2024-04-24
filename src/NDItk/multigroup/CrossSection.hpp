@@ -102,7 +102,7 @@ public:
 
   using Parent::begin;
   using Parent::end;
-  using Parent::hasContent;
+  using Parent::empty;
   using Parent::print;
 };
 

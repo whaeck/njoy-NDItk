@@ -25,9 +25,9 @@ class SingleStringRecord : protected SingleValueRecord< SingleStringRecord, std:
 protected:
 
   /**
-   *  @brief Write the record content
+   *  @brief Write the record data
    *
-   *  This assumes that the content is defined.
+   *  This assumes that the record is not empty.
    *
    *  @param[in] iter   the current position in the output
    */
@@ -69,7 +69,7 @@ public:
   using Parent::print;
 
   /**
-   *  @brief Read the record content
+   *  @brief Read the record data
    *
    *  @param[in] iter   the current position in the input
    */

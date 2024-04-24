@@ -106,12 +106,12 @@ protected:
 public:
 
   /**
-   *  @brief Return whether or not the record has content
+   *  @brief Return whether or not the record is empty
    */
-  bool hasContent() const { return this->begin_ != this->end_; }
+  bool empty() const { return this->begin_ == this->end_; }
 
   /**
-   *  @brief Print the record (if it has content)
+   *  @brief Print the record (if it is not empty)
    *
    *  Printing the data contained in the record is delegated to the
    *  derived class which knows how to format the data.
@@ -121,7 +121,7 @@ public:
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
 
-    if ( this->hasContent() ) {
+    if ( ! this->empty() ) {
 
       static_cast< const Derived* >( this )->write( iter );
     }

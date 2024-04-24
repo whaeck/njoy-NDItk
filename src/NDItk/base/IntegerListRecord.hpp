@@ -53,6 +53,8 @@ public:
   using Parent::values;
   using Parent::size;
   using Parent::empty;
+  using Parent::begin;
+  using Parent::end;
   using Parent::print;
 
   #include "NDItk/base/IntegerListRecord/src/read.hpp"

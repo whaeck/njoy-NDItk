@@ -33,6 +33,8 @@ public:
   using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;
+  using base::RealListRecord::begin;
+  using base::RealListRecord::end;
   using base::RealListRecord::read;
   using base::RealListRecord::print;
 };

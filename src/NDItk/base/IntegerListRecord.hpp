@@ -36,26 +36,26 @@ protected:
 
     std::ostringstream buffer;
 
-    auto full = this->data().size() / 6;
-    auto partial = this->data().size() - full * 6;
+    auto full = this->data().size() / 5;
+    auto partial = this->data().size() - full * 5;
     auto x = this->data().begin();
 
     while ( full-- ) {
 
-      buffer << std::setw( 10 ) << std::right << x[0];
-      buffer << std::setw( 10 ) << std::right << x[1];
-      buffer << std::setw( 10 ) << std::right << x[2];
-      buffer << std::setw( 10 ) << std::right << x[3];
-      buffer << std::setw( 10 ) << std::right << x[4];
-      buffer << std::setw( 10 ) << std::right << x[5] << '\n';
-      x += 6;
+      buffer << "    " << x[0];
+      buffer << ' ' << x[1];
+      buffer << ' ' << x[2];
+      buffer << ' ' << x[3];
+      buffer << ' ' << x[4] << '\n';
+      x += 5;
     }
 
     if ( partial ) {
 
+      buffer << "   ";
       while ( partial-- ) {
 
-        buffer << std::setw( 10 ) << std::right << *x;
+        buffer << ' ' << *x;
         ++x;
       }
       buffer << '\n';

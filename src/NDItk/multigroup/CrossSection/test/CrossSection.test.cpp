@@ -74,9 +74,9 @@ SCENARIO( "CrossSection" ) {
 
 std::string chunk() {
 
-  return "                   2                   0\n"
-         "                  10                  20                  30                  40\n"
-         "                  50                  60                  70\n";
+  return "    2 0\n"
+         "    10 20 30 40 50\n"
+         "    60 70\n";
 }
 
 std::vector< double > data() {

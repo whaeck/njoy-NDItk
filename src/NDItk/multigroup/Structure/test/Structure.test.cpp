@@ -72,8 +72,8 @@ SCENARIO( "Structure" ) {
 std::string chunk() {
 
   return "e_bounds\n"
-         "                  20                  18                  16                  14\n"
-         "                  10                   5                   1               1e-11\n";
+         "    20 18 16 14 10\n"
+         "    5 1 1e-11\n";
 }
 
 void verifyChunk( const Structure& chunk ) {

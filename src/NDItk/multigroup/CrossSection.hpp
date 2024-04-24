@@ -43,28 +43,28 @@ class CrossSection : protected base::SubListRecord< CrossSection, double > {
     std::ostringstream buffer;
 
     auto x = this->begin();
-    buffer << std::setw( 20 ) << std::right << *x;
-    ++x;
-    buffer << std::setw( 20 ) << std::setprecision( 15 ) << std::right << *x << '\n';
-    ++x;
+    buffer << "    " << x[0] << ' ' << std::setprecision( 15 ) << x[1] << '\n';
+    x += 2;
 
-    auto full = this->numberGroups() / 4;
-    auto partial = this->numberGroups() - full * 4;
+    auto full = this->numberGroups() / 5;
+    auto partial = this->numberGroups() - full * 5;
 
     while ( full-- ) {
 
-      buffer << std::setw( 20 ) << std::setprecision( 15 ) << std::right << x[0];
-      buffer << std::setw( 20 ) << std::setprecision( 15 ) << std::right << x[1];
-      buffer << std::setw( 20 ) << std::setprecision( 15 ) << std::right << x[2];
-      buffer << std::setw( 20 ) << std::setprecision( 15 ) << std::right << x[3] << '\n';
-      x += 4;
+      buffer << "    " << std::setprecision( 15 ) << x[0];
+      buffer << ' ' << std::setprecision( 15 ) << x[1];
+      buffer << ' ' << std::setprecision( 15 ) << x[2];
+      buffer << ' ' << std::setprecision( 15 ) << x[3];
+      buffer << ' ' << std::setprecision( 15 ) << x[4] << '\n';
+      x += 5;
     }
 
     if ( partial ) {
 
+      buffer << "   ";
       while ( partial-- ) {
 
-        buffer << std::setw( 20 ) << std::setprecision( 15 ) << std::right << *x;
+        buffer << ' ' << std::setprecision( 15 ) << *x;
         ++x;
       }
       buffer << '\n';

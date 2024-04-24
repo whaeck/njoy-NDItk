@@ -72,8 +72,8 @@ SCENARIO( "FluxWeights" ) {
 std::string chunk() {
 
   return "wgts\n"
-         "                 0.1                 0.2                0.25                0.05\n"
-         "                0.15                0.04                0.06\n";
+         "    0.1 0.2 0.25 0.05 0.15\n"
+         "    0.04 0.06\n";
 }
 
 void verifyChunk( const FluxWeights& chunk ) {

@@ -75,7 +75,7 @@ public:
   /**
    *  @brief Return whether or not the record is empty
    */
-  bool empty() const { return this->size() != 0; }
+  bool empty() const { return this->size() == 0; }
 
   /**
    *  @brief Print the record (if it is not empty)

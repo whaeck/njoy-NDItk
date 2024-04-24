@@ -78,12 +78,12 @@ SCENARIO( "ReactionCrossSections" ) {
 std::string chunk() {
 
   return "sig_reac\n"
-         "                   2                   0\n"
-         "                  10                  20                  30                  40\n"
-         "                  50                  60                  70\n"
-         "                  16           1.1234567\n"
-         "                   1                   2                   3                   4\n"
-         "                   5                   6                   7\n";
+         "    2 0\n"
+         "    10 20 30 40 50\n"
+         "    60 70\n"
+         "    16 1.1234567\n"
+         "    1 2 3 4 5\n"
+         "    6 7\n";
 }
 
 void verifyChunk( const ReactionCrossSections& chunk ) {

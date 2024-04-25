@@ -17,7 +17,10 @@ Structure( unsigned int particle ) :
  *  @param[in] boundaries    the group structure boundaries
  */
 Structure( std::vector< double > boundaries ) :
-    RealListRecord( "e_bounds", std::move( boundaries ) ) {}
+    RealListRecord( "e_bounds", std::move( boundaries ) ) {
+
+  verify( this->values() );
+}
 
 /**
  *  @brief Constructor for a secondary particle group structure
@@ -27,4 +30,7 @@ Structure( std::vector< double > boundaries ) :
  */
 Structure( unsigned int particle, std::vector< double > boundaries ) :
     RealListRecord( std::string( "e_bounds_" ) + std::to_string( particle ),
-                    std::move( boundaries ) ) {}
+                    std::move( boundaries ) ) {
+
+  verify( this->values() );
+}

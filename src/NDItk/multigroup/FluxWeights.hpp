@@ -4,6 +4,7 @@
 // system includes
 
 // other includes
+#include "tools/Log.hpp"
 #include "NDItk/base/RealListRecord.hpp"
 
 namespace njoy {
@@ -16,6 +17,10 @@ namespace multigroup {
 class FluxWeights : protected base::RealListRecord {
 
   /* fields */
+
+  /* auxiliary functions */
+
+  #include "NDItk/multigroup/FluxWeights/src/verify.hpp"
 
 public:
 
@@ -40,8 +45,9 @@ public:
   using base::RealListRecord::empty;
   using base::RealListRecord::begin;
   using base::RealListRecord::end;
-  using base::RealListRecord::read;
   using base::RealListRecord::print;
+
+  #include "NDItk/multigroup/FluxWeights/src/read.hpp"
 };
 
 } // multigroup namespace

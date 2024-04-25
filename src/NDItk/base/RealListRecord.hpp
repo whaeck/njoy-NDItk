@@ -24,6 +24,8 @@ class RealListRecord : protected ListRecord< RealListRecord, double > {
 
 protected:
 
+  /* auxiliary functions */
+
   #include "NDItk/base/RealListRecord/src/write.hpp"
 
 public:

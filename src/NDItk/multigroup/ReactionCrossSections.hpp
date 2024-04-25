@@ -27,6 +27,7 @@ class ReactionCrossSections : protected base::RealListRecord {
 
   /* auxiliary functions */
 
+  #include "NDItk/multigroup/ReactionCrossSections/src/verify.hpp"
   #include "NDItk/multigroup/ReactionCrossSections/src/generateData.hpp"
   #include "NDItk/multigroup/ReactionCrossSections/src/generateBlocks.hpp"
 

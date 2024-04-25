@@ -14,6 +14,7 @@ using FluxWeights = multigroup::FluxWeights;
 
 std::string chunk();
 void verifyChunk( const FluxWeights& );
+std::string chunkWithInsufficientNumberWeights();
 
 SCENARIO( "FluxWeights" ) {
 
@@ -67,6 +68,33 @@ SCENARIO( "FluxWeights" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "invalid data for a FluxWeights instance" ) {
+
+    WHEN( "the number of weight values is insufficient" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        std::vector< double > empty = {};
+
+        CHECK_THROWS( FluxWeights( std::move( empty ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "reading the data of the record and the number of weight "
+          "values is insufficient" ) {
+
+      std::string record = chunkWithInsufficientNumberWeights();
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      FluxWeights chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end, 0 ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 std::string chunk() {
@@ -90,4 +118,9 @@ void verifyChunk( const FluxWeights& chunk ) {
   CHECK_THAT( 0.15, WithinRel( chunk.weights()[4] ) );
   CHECK_THAT( 0.04, WithinRel( chunk.weights()[5] ) );
   CHECK_THAT( 0.06, WithinRel( chunk.weights()[6] ) );
+}
+
+std::string chunkWithInsufficientNumberWeights() {
+
+  return "wgts\n";
 }

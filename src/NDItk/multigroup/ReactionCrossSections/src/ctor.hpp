@@ -24,7 +24,8 @@ ReactionCrossSections() : RealListRecord( "sig_reac" ) {}
  *  @param[in] xs    the cross section data
  */
 ReactionCrossSections( std::vector< CrossSection > xs ) :
-    ReactionCrossSections( std::move( xs ), xs.size(), xs.front().numberGroups() ) {}
+    ReactionCrossSections( std::move( xs ), xs.size(),
+                           xs.size() == 0 ? 0 : xs.front().numberGroups() ) {}
 
 /**
  *  @brief Copy constructor

@@ -14,6 +14,9 @@ using Structure = multigroup::Structure;
 
 std::string chunk();
 void verifyChunk( const Structure& );
+std::string chunkWithInsufficientNumberBoundaries();
+std::string chunkWithNonDescendingBoundaries();
+std::string chunkWithNonUniqueBoundaries();
 
 SCENARIO( "Structure" ) {
 
@@ -67,6 +70,82 @@ SCENARIO( "Structure" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "invalid data for a Structure instance" ) {
+
+    WHEN( "the number of boundary values is insufficient" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        std::vector< double > empty = {};
+        std::vector< double > one = { 1 };
+
+        CHECK_THROWS( Structure( std::move( empty ) ) );
+        CHECK_THROWS( Structure( std::move( one ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the boundary values are not in descending order" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        std::vector< double > wrong = { 1., 20. };
+
+        CHECK_THROWS( Structure( std::move( wrong ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the boundary values are not unique" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        std::vector< double > wrong = { 20., 20., 5. };
+
+        CHECK_THROWS( Structure( std::move( wrong ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "reading the data of the record and the number of boundary "
+          "values is insufficient" ) {
+
+      std::string record = chunkWithInsufficientNumberBoundaries();
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      Structure chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end, 1 ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "reading the data of the record and the boundary values"
+          "are not in descending order" ) {
+
+      std::string record = chunkWithNonDescendingBoundaries();
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      Structure chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end, 2 ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the boundary values are not unique" ) {
+
+      std::string record = chunkWithNonUniqueBoundaries();
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      Structure chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end, 3 ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 std::string chunk() {
@@ -91,4 +170,22 @@ void verifyChunk( const Structure& chunk ) {
   CHECK_THAT(     5, WithinRel( chunk.boundaries()[5] ) );
   CHECK_THAT(     1, WithinRel( chunk.boundaries()[6] ) );
   CHECK_THAT( 1e-11, WithinRel( chunk.boundaries()[7] ) );
+}
+
+std::string chunkWithInsufficientNumberBoundaries() {
+
+  return "e_bounds\n"
+         "    20\n";
+}
+
+std::string chunkWithNonDescendingBoundaries() {
+
+  return "e_bounds\n"
+         "    1 20\n";
+}
+
+std::string chunkWithNonUniqueBoundaries() {
+
+  return "e_bounds\n"
+         "    20 20 5\n";
 }

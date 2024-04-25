@@ -22,6 +22,7 @@ class CrossSection : protected base::SubListRecord< CrossSection, double > {
 
   /* auxiliary functions */
 
+  #include "NDItk/multigroup/CrossSection/src/verify.hpp"
   #include "NDItk/multigroup/CrossSection/src/generateData.hpp"
   #include "NDItk/multigroup/CrossSection/src/write.hpp"
 

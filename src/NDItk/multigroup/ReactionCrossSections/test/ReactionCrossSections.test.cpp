@@ -14,8 +14,9 @@ using CrossSection = multigroup::CrossSection;
 using ReactionCrossSections = multigroup::ReactionCrossSections;
 
 std::string chunk();
-std::vector< double > data();
 void verifyChunk( const ReactionCrossSections& );
+std::string chunkWithInsufficientNumberReactions();
+std::string chunkWithInsufficientNumberCrossSectionValues();
 
 SCENARIO( "ReactionCrossSections" ) {
 
@@ -73,6 +74,61 @@ SCENARIO( "ReactionCrossSections" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "invalid data for a ReactionCrossSections instance" ) {
+
+    WHEN( "the number of reactions is insufficient" ) {
+
+      std::vector< CrossSection > xs = {};
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( ReactionCrossSections( std::move( xs ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the number of groups between reactions is inconsistent" ) {
+
+      std::vector< CrossSection > xs = {
+
+        { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
+        { 16, 1.1234567, { 1. } } // <-- wrong
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( ReactionCrossSections( std::move( xs ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "reading the data of the record and the number of reactions "
+          "values is insufficient" ) {
+
+      std::string record = chunkWithInsufficientNumberReactions();
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      ReactionCrossSections chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end, 0, 0 ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "reading the data of the record and the number of cross section "
+          "values is insufficient" ) {
+
+      std::string record = chunkWithInsufficientNumberCrossSectionValues();
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      ReactionCrossSections chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end, 2, 0 ) );
+      } // THEN
+    } // WHEN
+  }
 } // SCENARIO
 
 std::string chunk() {
@@ -137,4 +193,16 @@ void verifyChunk( const ReactionCrossSections& chunk ) {
   CHECK_THAT( 5.0, WithinRel( xs.crossSections()[4] ) );
   CHECK_THAT( 6.0, WithinRel( xs.crossSections()[5] ) );
   CHECK_THAT( 7.0, WithinRel( xs.crossSections()[6] ) );
+}
+
+std::string chunkWithInsufficientNumberReactions() {
+
+  return "sig_reac\n";
+}
+
+std::string chunkWithInsufficientNumberCrossSectionValues() {
+
+  return "sig_reac\n"
+         "    2 0\n"
+         "    16 1.1234567\n";
 }

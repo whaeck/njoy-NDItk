@@ -15,6 +15,7 @@ using CrossSection = multigroup::CrossSection;
 std::string chunk();
 std::vector< double > data();
 void verifyChunk( const CrossSection& );
+std::vector< double > dataWithInsufficientLength();
 
 SCENARIO( "CrossSection" ) {
 
@@ -70,6 +71,30 @@ SCENARIO( "CrossSection" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "invalid data for a CrossSection instance" ) {
+
+    WHEN( "the number of cross section values is insufficient" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( CrossSection( 2, 0, {} ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using iterators and the number of cross section values is "
+          "insufficient" ) {
+
+      std::vector< double > values = dataWithInsufficientLength();
+      auto begin = values.begin();
+      auto end = values.end();
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( CrossSection( begin, end ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 std::string chunk() {
@@ -97,4 +122,9 @@ void verifyChunk( const CrossSection& chunk ) {
   CHECK_THAT( 50, WithinRel( chunk.crossSections()[4] ) );
   CHECK_THAT( 60, WithinRel( chunk.crossSections()[5] ) );
   CHECK_THAT( 70, WithinRel( chunk.crossSections()[6] ) );
+}
+
+std::vector< double > dataWithInsufficientLength() {
+
+  return { 2, 0 };
 }

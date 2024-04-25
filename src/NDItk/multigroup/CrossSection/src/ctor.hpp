@@ -6,7 +6,10 @@
  *  @param[in] values     the cross section values
  */
 CrossSection( int reaction, double qvalue, std::vector< double > values ) :
-  Parent( generateData( reaction, qvalue, std::move( values ) ) ) {}
+  Parent( generateData( reaction, qvalue, std::move( values ) ) ) {
+
+  verify( this->values() );
+}
 
 /**
  *  @brief Constructor
@@ -15,4 +18,7 @@ CrossSection( int reaction, double qvalue, std::vector< double > values ) :
  *  @param[in] end      the end iterator of the cross section
  */
 CrossSection( Iterator begin, Iterator end ) :
-  Parent( begin, end ) {}
+  Parent( begin, end ) {
+
+  verify( this->values() );
+}

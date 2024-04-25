@@ -28,6 +28,7 @@ class MultigroupTable {
   /* auxiliary functions */
 
   #include "NDItk/MultigroupTable/src/readRecord.hpp"
+  #include "NDItk/MultigroupTable/src/verify.hpp"
 
 public:
 

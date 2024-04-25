@@ -30,4 +30,7 @@ MultigroupTable( std::string zaid, std::string libname, std::string source,
                xs.numberGroups(), xs.numberReactions() ),
     structure_( std::move( structure ) ),
     weights_( std::move( weigths ) ),
-    xs_( std::move( xs ) ) {}
+    xs_( std::move( xs ) ) {
+
+  this->verify();
+}

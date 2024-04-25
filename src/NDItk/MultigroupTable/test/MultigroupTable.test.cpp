@@ -79,6 +79,32 @@ SCENARIO( "MultigroupTable" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "invalid data for a MultigroupTable instance" ) {
+
+    WHEN( "the number of groups is inconsistent" ) {
+
+      std::string zaid = "92235.711nm";
+      std::string name = "mendf71x";
+      std::string source = "12/22/2011";
+      std::string process = "08/07/2013";
+      double awr = 233.0248;
+      double weight = 235.043937521619;
+      double temperature = 2.53e-8;
+      double dilution = 1e+10;
+      multigroup::Structure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );                       // <-- 7 groups
+      multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04 } );                           // <-- 6 groups
+      multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70., 80. } },    // <-- 8 groups
+                                              { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7., 8. } } } );
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ), std::move( source ),
+                                       std::move( process ), awr, weight, temperature, dilution,
+                                       std::move( structure ), std::move( weights ), std::move( xs ) ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 std::string chunk() {

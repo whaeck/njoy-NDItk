@@ -6,6 +6,7 @@
 #include <iostream>
 
 // other includes
+#include "tools/Log.hpp"
 #include "NDItk/base/RealListRecord.hpp"
 #include "NDItk/multigroup/CrossSection.hpp"
 
@@ -92,7 +93,8 @@ public:
     }
     else {
 
-      throw std::runtime_error( "reaction not defined" );
+      Log::error( "Reaction with identifier \'{}\' is not present", reaction );
+      throw std::exception();
     }
   }
 

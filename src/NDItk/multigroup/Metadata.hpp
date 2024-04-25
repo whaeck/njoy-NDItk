@@ -4,6 +4,7 @@
 // system includes
 
 // other includes
+#include "tools/Log.hpp"
 #include "NDItk/base/SingleIntegerRecord.hpp"
 #include "NDItk/base/SingleRealRecord.hpp"
 #include "NDItk/base/SingleStringRecord.hpp"
@@ -124,7 +125,9 @@ public:
     else if ( keyword == this->reactions_.keyword() )      { readRecord( this->reactions_, iter, end ); }
     else {
 
-      throw std::runtime_error( "Unknown keyword" );
+      Log::error( "Record with keyword \'{}\' is not part of the "
+                  "multigroup metadata", keyword );
+      throw std::exception();
     }
   };
 

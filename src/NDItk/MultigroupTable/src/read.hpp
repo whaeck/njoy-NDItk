@@ -19,11 +19,14 @@ void read( Iterator& iter, const Iterator& end ) {
 
       if ( this->metadata_.numberGroups().has_value() ) {
 
-        readRecord( this->structure_, iter, end, this->metadata_.numberGroups().value() + 1 );
+        readRecord( this->structure_, iter, end,
+                    this->metadata_.numberGroups().value() + 1 );
       }
       else {
 
-        throw std::runtime_error( "Required metadata is missing: number of groups in the primary group structure" );
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
       }
     }
     else if ( keyword == this->weights_.keyword() ) {
@@ -34,7 +37,9 @@ void read( Iterator& iter, const Iterator& end ) {
       }
       else {
 
-        throw std::runtime_error( "Required metadata is missing: number of groups in the primary group structure" );
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
       }
     }
     else if ( keyword == this->xs_.keyword() ) {
@@ -45,16 +50,24 @@ void read( Iterator& iter, const Iterator& end ) {
       }
       else {
 
-        throw std::runtime_error( "Required metadata is missing:\n"
-                                  "  - number of groups in the primary group structure\n"
-                                  "  - number of reactions defined in the table" );
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        if ( ! this->metadata_.numberGroups().has_value() ) {
+
+          Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        }
+        if ( ! this->metadata_.numberReactions().has_value() ) {
+
+          Log::info( "Required metadata is missing: number of reactions" );
+        }
+        throw std::exception();
       }
     }
     else {
 
       if ( keyword != "end" ) {
 
-        throw std::runtime_error( std::string( "Unknown keyword: " ) + keyword );
+        Log::error( "Unknown keyword found: \'{}\'", keyword );
+        throw std::exception();
       }
     }
 

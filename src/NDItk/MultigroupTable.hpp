@@ -4,6 +4,7 @@
 // system includes
 
 // other includes
+#include "tools/Log.hpp"
 #include "NDItk/multigroup/Metadata.hpp"
 #include "NDItk/multigroup/Structure.hpp"
 #include "NDItk/multigroup/FluxWeights.hpp"

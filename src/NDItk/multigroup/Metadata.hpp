@@ -14,7 +14,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief Metadata associated to a neutron NDI file
+ *  @brief Metadata associated with a neutron NDI file
  */
 class Metadata {
 

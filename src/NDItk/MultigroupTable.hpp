@@ -18,30 +18,48 @@ namespace NDItk {
 class MultigroupTable {
 
   /* fields */
+
   multigroup::Metadata metadata_;
   multigroup::Structure structure_;
   multigroup::FluxWeights weights_;
   multigroup::ReactionCrossSections xs_;
 
-  template < typename Record, typename Iterator, typename... Arguments >
-  static void readRecord( Record& record, Iterator& iter, const Iterator& end,
-                          Arguments... arguments ) {
+  /* auxiliary functions */
 
-    if ( ! record.empty() ) {
-
-      throw std::runtime_error( "Duplicate keyword" );
-    }
-    record.read( iter, end, arguments... );
-  }
+  #include "NDItk/MultigroupTable/src/readRecord.hpp"
 
 public:
 
-  MultigroupTable() : metadata_(), structure_(), weights_(), xs_() {}
+  /* constructor */
 
+  #include "NDItk/MultigroupTable/src/ctor.hpp"
+
+  /* methods */
+
+  /**
+   *  @brief Return the metadata of the table
+   */
   const multigroup::Metadata& metadata() const { return this->metadata_; }
+
+  /**
+   *  @brief Return the primary group structure record
+   */
   const multigroup::Structure& structure() const { return this->structure_; }
+
+  /**
+   *  @brief Return the flux weight record
+   */
   const multigroup::FluxWeights& flux() const { return this->weights_; }
-  const multigroup::ReactionCrossSections& reactionCrossSections() const { return this->xs_; }
+
+  /**
+   *  @brief Return the reaction cross section record
+   */
+  const multigroup::ReactionCrossSections& reactionCrossSections() const {
+
+    return this->xs_;
+  }
+
+  #include "NDItk/MultigroupTable/src/read.hpp"
 
   /**
    *  @brief Print the NDI table
@@ -59,71 +77,6 @@ public:
     *iter++ = 'n';
     *iter++ = 'd';
     *iter++ = '\n';
-  };
-
-  /**
-   *  @brief Read the table content
-   *
-   *  @param[in] iter   the current position in the input
-   */
-  template< typename Iterator >
-  void read( Iterator& iter, const Iterator& end ) {
-
-    std::string keyword;
-    while ( ( keyword != "end" ) && ( iter != end ) ) {
-
-      keyword = njoy::tools::disco::FreeFormatCharacter::read< std::string >( iter, end );
-
-      if ( this->metadata_.isMetadataKey( keyword ) ) {
-
-        this->metadata_.read( keyword, iter, end );
-      }
-      else if ( keyword == this->structure_.keyword() ) {
-
-        if ( this->metadata_.numberGroups().has_value() ) {
-
-          readRecord( this->structure_, iter, end, this->metadata_.numberGroups().value() + 1 );
-        }
-        else {
-
-          throw std::runtime_error( "Required metadata is missing" );
-        }
-      }
-      else if ( keyword == this->weights_.keyword() ) {
-
-        if ( this->metadata_.numberGroups().has_value() ) {
-
-          readRecord( this->weights_, iter, end, this->metadata_.numberGroups().value() );
-        }
-        else {
-
-          throw std::runtime_error( "Required metadata is missing" );
-        }
-      }
-      else if ( keyword == this->xs_.keyword() ) {
-
-        if ( this->metadata_.numberGroups().has_value() && this->metadata_.numberReactions().has_value() ) {
-
-          readRecord( this->xs_, iter, end, this->metadata_.numberReactions().value(), this->metadata_.numberGroups().value() );
-        }
-        else {
-
-          throw std::runtime_error( "Required metadata is missing" );
-        }
-      }
-      else {
-
-        if ( keyword != "end" ) {
-
-          throw std::runtime_error( std::string( "Unknown keyword: " ) + keyword );
-        }
-      }
-
-      while ( std::isspace( *iter ) && iter != end ) {
-
-        ++iter;
-      }
-    }
   };
 };
 

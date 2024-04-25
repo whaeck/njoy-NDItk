@@ -35,6 +35,8 @@ public:
 
   #include "NDItk/multigroup/ReactionCrossSections/src/ctor.hpp"
 
+  /* methods */
+
   /**
    *  @brief Return the number of groups defined in this record
    */

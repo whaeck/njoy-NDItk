@@ -31,6 +31,8 @@ public:
 
   #include "NDItk/multigroup/CrossSection/src/ctor.hpp"
 
+  /* methods */
+
   /**
    *  @brief Return the reaction identifier
    */

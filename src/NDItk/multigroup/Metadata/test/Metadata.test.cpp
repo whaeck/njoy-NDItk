@@ -39,8 +39,7 @@ SCENARIO( "Metadata" ) {
       Metadata chunk( std::move( zaid ), std::move( name ),
                       std::move( source ), std::move( process ),
                       awr, weight, temperature, dilution,
-                      groups, upscatter, downscatter, order,
-                      reactions );
+                      groups, reactions );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {
@@ -69,9 +68,6 @@ SCENARIO( "Metadata" ) {
       };
 
       Metadata chunk;
-      chunk.read( readKey( iter, end ), iter, end );
-      chunk.read( readKey( iter, end ), iter, end );
-      chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
@@ -121,12 +117,6 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    618\n"
-         "up_grps\n"
-         "    0\n"
-         "down_grps\n"
-         "    617\n"
-         "pn_order\n"
-         "    5\n"
          "num_reac\n"
          "    7\n";
 }
@@ -142,8 +132,5 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK_THAT( 2.53e-8, WithinRel( chunk.temperature().value() ) );
   CHECK_THAT( 1e+10, WithinRel( chunk.dilution().value() ) );
   CHECK( 618 == chunk.numberGroups().value() );
-  CHECK( 617 == chunk.numberDownscatterGroups().value() );
-  CHECK(   0 == chunk.numberUpscatterGroups().value() );
-  CHECK(   5 == chunk.legendreOrder().value() );
   CHECK(   7 == chunk.numberReactions().value() );
 }

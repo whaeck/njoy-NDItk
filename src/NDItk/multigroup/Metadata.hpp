@@ -18,6 +18,7 @@ namespace multigroup {
 class Metadata {
 
   /* fields */
+
   base::SingleStringRecord zaid_;
   base::SingleStringRecord library_name_;
   base::SingleStringRecord source_date_;
@@ -27,62 +28,80 @@ class Metadata {
   base::SingleRealRecord temperature_;
   base::SingleRealRecord dilution_;
   base::SingleIntegerRecord groups_;
-  base::SingleIntegerRecord upscatter_;
-  base::SingleIntegerRecord downscatter_;
-  base::SingleIntegerRecord legendre_order_;
   base::SingleIntegerRecord reactions_;
 
-  template < typename Record, typename Iterator >
-  static void readRecord( Record& record, Iterator& iter, const Iterator& end ) {
+  /* auxiliary functions */
 
-    if ( ! record.empty() ) {
-
-      throw std::runtime_error( "Duplicate keyword" );
-    }
-    record.read( iter, end );
-  }
+  #include "NDItk/multigroup/Metadata/src/readRecord.hpp"
 
 public:
 
-  Metadata() : zaid_( "zaid" ), library_name_( "library_name" ), source_date_( "date_source" ),
-               process_date_( "date_processed" ), awr_( "awr" ), atomic_weight_( "at_wgt" ),
-               temperature_( "temp" ), dilution_( "sig_0" ), groups_( "num_grps" ),
-               upscatter_( "up_grps" ), downscatter_( "down_grps" ),
-               legendre_order_( "pn_order" ), reactions_( "num_reac" ) {}
+  /* constructor */
 
-  Metadata( std::string zaid, std::string libname, std::string source, std::string process,
-            double awr, double weight, double temperature, double dilution,
-            unsigned int groups, unsigned int upscatter, unsigned int downscatter,
-            unsigned int order, unsigned int reactions ) :
-      zaid_( "zaid", std::move( zaid ) ), library_name_( "library_name", std::move( libname ) ),
-      source_date_( "date_source", std::move( source ) ),
-      process_date_( "date_processed", std::move( process ) ),
-      awr_( "awr", awr ), atomic_weight_( "at_wgt", weight ), temperature_( "temp", temperature ),
-      dilution_( "sig_0", dilution ), groups_( "num_grps", groups ),
-      upscatter_( "up_grps", upscatter ), downscatter_( "down_grps", downscatter ),
-      legendre_order_( "pn_order", order ), reactions_( "num_reac", reactions ) {}
+  #include "NDItk/multigroup/Metadata/src/ctor.hpp"
 
+  /* methods */
+
+  /**
+   *  @brief Return wether or not a given key corresponds to a metadata key
+   */
   bool isMetadataKey( const std::string& keyword ) const {
 
     return ( keyword == "zaid" ) || ( keyword == "library_name" ) || ( keyword == "date_source" ) ||
            ( keyword == "date_processed" ) || ( keyword == "awr" ) || ( keyword == "at_wgt" ) ||
            ( keyword == "temp" ) || ( keyword == "sig_0" ) || ( keyword == "num_grps" ) ||
-           ( keyword == "up_grps" ) || ( keyword == "down_grps" ) || ( keyword == "pn_order" ) ||
            ( keyword == "num_reac" );
   }
 
+  /**
+   *  @brief Return the zaid of the table
+   */
   decltype(auto) zaid() const { return this->zaid_.data(); }
+
+  /**
+   *  @brief Return the library name
+   */
   decltype(auto) libraryName() const { return this->library_name_.data(); }
+
+  /**
+   *  @brief Return the source date
+   */
   decltype(auto) sourceData() const { return this->source_date_.data(); }
+
+  /**
+   *  @brief Return the processing date
+   */
   decltype(auto) processDate() const { return this->process_date_.data(); }
+
+  /**
+   *  @brief Return the atomic weight ratio of the target (with respect
+   *         to the neutron mass)
+   */
   decltype(auto) atomicWeightRatio() const { return this->awr_.data(); }
+
+  /**
+   *  @brief Return the atomic weight of the target
+   */
   decltype(auto) atomicWeight() const { return this->atomic_weight_.data(); }
+
+  /**
+   *  @brief Return the temperature of the target
+   */
   decltype(auto) temperature() const { return this->temperature_.data(); }
+
+  /**
+   *  @brief Return the dilution (aka sigma0)
+   */
   decltype(auto) dilution() const { return this->dilution_.data(); }
+
+  /**
+   *  @brief Return the number of groups in the primary group structure
+   */
   decltype(auto) numberGroups() const { return this->groups_.data(); }
-  decltype(auto) numberUpscatterGroups() const { return this->upscatter_.data(); }
-  decltype(auto) numberDownscatterGroups() const { return this->downscatter_.data(); }
-  decltype(auto) legendreOrder() const { return this->legendre_order_.data(); }
+
+  /**
+   *  @brief Return the number of reactions defined in the table
+   */
   decltype(auto) numberReactions() const { return this->reactions_.data(); }
 
   /**
@@ -102,9 +121,6 @@ public:
     else if ( keyword == this->temperature_.keyword() )    { readRecord( this->temperature_, iter, end ); }
     else if ( keyword == this->dilution_.keyword() )       { readRecord( this->dilution_, iter, end ); }
     else if ( keyword == this->groups_.keyword() )         { readRecord( this->groups_, iter, end ); }
-    else if ( keyword == this->upscatter_.keyword() )      { readRecord( this->upscatter_, iter, end ); }
-    else if ( keyword == this->downscatter_.keyword() )    { readRecord( this->downscatter_, iter, end ); }
-    else if ( keyword == this->legendre_order_.keyword() ) { readRecord( this->legendre_order_, iter, end ); }
     else if ( keyword == this->reactions_.keyword() )      { readRecord( this->reactions_, iter, end ); }
     else {
 
@@ -129,9 +145,6 @@ public:
     this->temperature_.print( iter );
     this->dilution_.print( iter );
     this->groups_.print( iter );
-    this->upscatter_.print( iter );
-    this->downscatter_.print( iter );
-    this->legendre_order_.print( iter );
     this->reactions_.print( iter );
   };
 };

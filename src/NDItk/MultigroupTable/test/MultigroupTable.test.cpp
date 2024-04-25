@@ -20,6 +20,41 @@ SCENARIO( "MultigroupTable" ) {
 
     std::string record = chunk();
 
+    WHEN( "the data is given explicitly" ) {
+
+      std::string zaid = "92235.711nm";
+      std::string name = "mendf71x";
+      std::string source = "12/22/2011";
+      std::string process = "08/07/2013";
+      double awr = 233.0248;
+      double weight = 235.043937521619;
+      double temperature = 2.53e-8;
+      double dilution = 1e+10;
+      multigroup::Structure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );
+      multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
+      multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
+                                              { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
+
+      MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
+                             std::move( process ), awr, weight, temperature, dilution,
+                             std::move( structure ), std::move( weights ), std::move( xs ) );
+
+      THEN( "a MultigroupTable can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        chunk.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
     WHEN( "the data is read using iterators" ) {
 
       auto iter = record.begin();
@@ -66,12 +101,6 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    7\n"
-         "up_grps\n"
-         "    0\n"
-         "down_grps\n"
-         "    6\n"
-         "pn_order\n"
-         "    5\n"
          "num_reac\n"
          "    2\n"
          "e_bounds\n"
@@ -102,9 +131,7 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 2.53e-8, WithinRel( chunk.metadata().temperature().value() ) );
   CHECK_THAT( 1e+10, WithinRel( chunk.metadata().dilution().value() ) );
   CHECK( 7 == chunk.metadata().numberGroups().value() );
-  CHECK( 6 == chunk.metadata().numberDownscatterGroups().value() );
-  CHECK( 0 == chunk.metadata().numberUpscatterGroups().value() );
-  CHECK( 5 == chunk.metadata().legendreOrder().value() );
+  CHECK( 2 == chunk.metadata().numberReactions().value() );
 
   // principal group structure
   CHECK( "e_bounds" == chunk.structure().keyword() );

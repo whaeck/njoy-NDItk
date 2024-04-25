@@ -23,6 +23,8 @@ public:
 
   #include "NDItk/multigroup/FluxWeights/src/ctor.hpp"
 
+  /* methods */
+
   /**
    *  @brief Return the number of groups defined by this record
    */

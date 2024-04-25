@@ -20,6 +20,7 @@ class Structure : protected base::RealListRecord {
 public:
 
   /* constructor */
+
   #include "NDItk/multigroup/Structure/src/ctor.hpp"
 
   /* methods */

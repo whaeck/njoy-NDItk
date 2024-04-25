@@ -19,80 +19,24 @@ namespace multigroup {
 class ReactionCrossSections : protected base::RealListRecord {
 
   /* fields */
+
   std::vector< CrossSection > xs_;
   std::size_t groups_;
   std::size_t reactions_;
 
   /* auxiliary functions */
 
-  void generateBlocks() {
-
-    if ( ! this->empty() ) {
-
-      this->xs_.clear();
-      for ( unsigned int index = 0; index < this->numberReactions(); ++index ) {
-
-        const auto left = this->values().begin() + index * ( 2 + this->numberGroups() );
-        const auto right = left + 2 + this->numberGroups();
-        this->xs_.emplace_back( left, right );
-      }
-    }
-  }
-
-  static std::vector< double > generateData( std::vector< CrossSection > xs ) {
-
-    std::vector< double > data;
-    data.reserve( xs.size() * ( 2 + xs.front().numberGroups() ) );
-    for ( auto&& entry : xs ) {
-
-      data.insert( data.end(), entry.begin(), entry.end() );
-    }
-    return data;
-  }
-
-  ReactionCrossSections( std::vector< CrossSection >&& xs,
-                         std::size_t reactions, std::size_t groups ) :
-      RealListRecord( "sig_reac", generateData( std::move( xs ) ) ),
-      reactions_( reactions ), groups_( groups ) {
-
-    this->generateBlocks();
-  }
+  #include "NDItk/multigroup/ReactionCrossSections/src/generateData.hpp"
+  #include "NDItk/multigroup/ReactionCrossSections/src/generateBlocks.hpp"
 
 public:
 
-  ReactionCrossSections() : RealListRecord( "sig_reac" ) {}
+  /* constructor */
 
-  ReactionCrossSections( std::vector< CrossSection > xs ) :
-      ReactionCrossSections( std::move( xs ), xs.size(), xs.front().numberGroups() ) {}
-
-  ReactionCrossSections( const ReactionCrossSections& base ) :
-    RealListRecord( base ), reactions_( base.reactions_ ), groups_( base.groups_ ) {
-
-    this->generateBlocks();
-  }
-
-  ReactionCrossSections( ReactionCrossSections&& base ) :
-    RealListRecord( std::move( base ) ), reactions_( base.reactions_ ), groups_( base.groups_ ) {
-
-    this->generateBlocks();
-  }
-
-  ReactionCrossSections& operator=( const ReactionCrossSections& base ) {
-
-    new (this) ReactionCrossSections( base );
-    return *this;
-  }
-
-  ReactionCrossSections& operator=( ReactionCrossSections&& base ) {
-
-    new (this) ReactionCrossSections( std::move( base ) );
-    return *this;
-  }
-
-  using base::RealListRecord::keyword;
+  #include "NDItk/multigroup/ReactionCrossSections/src/ctor.hpp"
 
   /**
-   *  @brief Return the number of groups
+   *  @brief Return the number of groups defined in this record
    */
   std::size_t numberGroups() const {
 
@@ -100,7 +44,7 @@ public:
   }
 
   /**
-   *  @brief Return the number of reactions
+   *  @brief Return the number of reactions defined in this record
    */
   std::size_t numberReactions() const {
 
@@ -108,16 +52,12 @@ public:
   }
 
   /**
-   *  @brief Return the cross section for all reactions
+   *  @brief Return the cross section data for all reactions
    */
   const std::vector< CrossSection >& reactions() const {
 
     return this->xs_;
   }
-
-  using base::RealListRecord::values;
-  using base::RealListRecord::size;
-  using base::RealListRecord::empty;
 
   /**
    *  @brief Verify whether or not a given reaction is present
@@ -129,21 +69,21 @@ public:
     auto iter = std::find_if( this->reactions().begin(), this->reactions().end(),
                               [reaction] ( const auto& entry ) {
 
-                                return entry.reaction() == reaction; } );
+                                return entry.identifier() == reaction; } );
     return iter != this->reactions().end();
   }
 
   /**
-   *  @brief Return the cross section for a given reaction
+   *  @brief Return the cross section data for a given reaction
    *
    *  @param[in] reaction   the reaction to look for
    */
-  const CrossSection& crossSection( int reaction ) const {
+  const CrossSection& reaction( int reaction ) const {
 
     auto iter = std::find_if( this->reactions().begin(), this->reactions().end(),
                               [reaction] ( const auto& entry ) {
 
-                                return entry.reaction() == reaction; } );
+                                return entry.identifier() == reaction; } );
     if ( iter != this->reactions().end() ){
 
       return *iter;
@@ -154,41 +94,14 @@ public:
     }
   }
 
-  /**
-   *  @brief Read the record content
-   *
-   *  @param[in] iter   the current position in the input
-   */
-  template< typename Iterator >
-  void read( Iterator& iter, const Iterator& end, std::size_t reactions, std::size_t groups ) {
+  using base::RealListRecord::keyword;
+  using base::RealListRecord::size;
+  using base::RealListRecord::empty;
+  using base::RealListRecord::begin;
+  using base::RealListRecord::end;
 
-    this->reactions_ = reactions;
-    this->groups_ = groups;
-    base::RealListRecord::read( iter, end, reactions * ( 2 + groups ) );
-    this->generateBlocks();
-  };
-
-  /**
-   *  @brief Print the record (if it is not empty)
-   *
-   *  Printing the data contained in the record is delegated to the
-   *  derived class which knows how to format the data.
-   *
-   *  @param[in] iter   the current position in the output
-   */
-  template< typename OutputIterator >
-  void print( OutputIterator& iter ) const {
-
-    if ( ! this->empty() ) {
-
-      for ( auto c : this->keyword() ) { *iter++ = c; }
-      *iter++ = '\n';
-      for ( const auto& entry : this->xs_ ) {
-
-        entry.print( iter );
-      }
-    }
-  };
+  #include "NDItk/multigroup/ReactionCrossSections/src/read.hpp"
+  #include "NDItk/multigroup/ReactionCrossSections/src/print.hpp"
 };
 
 } // multigroup namespace

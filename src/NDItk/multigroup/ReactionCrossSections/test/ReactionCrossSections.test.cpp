@@ -96,7 +96,7 @@ void verifyChunk( const ReactionCrossSections& chunk ) {
   CHECK( true == chunk.hasReaction( 16 ) );
   CHECK( false == chunk.hasReaction( 102 ) );
 
-  CHECK( 2 == chunk.reactions()[0].reaction() );
+  CHECK( 2 == chunk.reactions()[0].identifier() );
   CHECK_THAT( 0.0, WithinRel( chunk.reactions()[0].qvalue() ) );
   CHECK_THAT( 10.0, WithinRel( chunk.reactions()[0].crossSections()[0] ) );
   CHECK_THAT( 20.0, WithinRel( chunk.reactions()[0].crossSections()[1] ) );
@@ -106,7 +106,7 @@ void verifyChunk( const ReactionCrossSections& chunk ) {
   CHECK_THAT( 60.0, WithinRel( chunk.reactions()[0].crossSections()[5] ) );
   CHECK_THAT( 70.0, WithinRel( chunk.reactions()[0].crossSections()[6] ) );
 
-  CHECK( 16 == chunk.reactions()[1].reaction() );
+  CHECK( 16 == chunk.reactions()[1].identifier() );
   CHECK_THAT( 1.1234567, WithinRel( chunk.reactions()[1].qvalue() ) );
   CHECK_THAT( 1.0, WithinRel( chunk.reactions()[1].crossSections()[0] ) );
   CHECK_THAT( 2.0, WithinRel( chunk.reactions()[1].crossSections()[1] ) );
@@ -116,8 +116,8 @@ void verifyChunk( const ReactionCrossSections& chunk ) {
   CHECK_THAT( 6.0, WithinRel( chunk.reactions()[1].crossSections()[5] ) );
   CHECK_THAT( 7.0, WithinRel( chunk.reactions()[1].crossSections()[6] ) );
 
-  auto xs = chunk.crossSection( 2 );
-  CHECK( 2 == xs.reaction() );
+  auto xs = chunk.reaction( 2 );
+  CHECK( 2 == xs.identifier() );
   CHECK_THAT( 0.0, WithinRel( xs.qvalue() ) );
   CHECK_THAT( 10.0, WithinRel( xs.crossSections()[0] ) );
   CHECK_THAT( 20.0, WithinRel( xs.crossSections()[1] ) );
@@ -127,8 +127,8 @@ void verifyChunk( const ReactionCrossSections& chunk ) {
   CHECK_THAT( 60.0, WithinRel( xs.crossSections()[5] ) );
   CHECK_THAT( 70.0, WithinRel( xs.crossSections()[6] ) );
 
-  xs = chunk.crossSection( 16 );
-  CHECK( 16 == xs.reaction() );
+  xs = chunk.reaction( 16 );
+  CHECK( 16 == xs.identifier() );
   CHECK_THAT( 1.1234567, WithinRel( xs.qvalue() ) );
   CHECK_THAT( 1.0, WithinRel( xs.crossSections()[0] ) );
   CHECK_THAT( 2.0, WithinRel( xs.crossSections()[1] ) );

@@ -88,7 +88,7 @@ std::vector< double > data() {
 void verifyChunk( const CrossSection& chunk ) {
 
   CHECK( false == chunk.empty() );
-  CHECK( 2 == chunk.reaction() );
+  CHECK( 2 == chunk.identifier() );
   CHECK( 7 == chunk.numberGroups() );
   CHECK_THAT( 10, WithinRel( chunk.crossSections()[0] ) );
   CHECK_THAT( 20, WithinRel( chunk.crossSections()[1] ) );

@@ -13,89 +13,37 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A cross section record
+ *  @brief A cross section subrecord
  */
 class CrossSection : protected base::SubListRecord< CrossSection, double > {
 
   friend class base::SubListRecord< CrossSection, double >;
   using Parent = base::SubListRecord< CrossSection, double >;
 
-  /* fields */
+  /* auxiliary functions */
 
-  static std::vector< double > generateData( int reaction, double qvalue, std::vector< double > values ) {
-
-    std::vector< double > data( std::move( values ) );
-    data.insert( data.begin(), qvalue );
-    data.insert( data.begin(), static_cast< double >( reaction ) );
-    return data;
-  }
-
-  /**
-   *  @brief Write the record content
-   *
-   *  This assumes that the content is defined.
-   *
-   *  @param[in] iter   the current position in the output
-   */
-  template< typename OutputIterator >
-  void write( OutputIterator& iter ) const {
-
-    std::ostringstream buffer;
-
-    auto x = this->begin();
-    buffer << "    " << x[0] << ' ' << std::setprecision( 15 ) << x[1] << '\n';
-    x += 2;
-
-    auto full = this->numberGroups() / 5;
-    auto partial = this->numberGroups() - full * 5;
-
-    while ( full-- ) {
-
-      buffer << "    " << std::setprecision( 15 ) << x[0];
-      buffer << ' ' << std::setprecision( 15 ) << x[1];
-      buffer << ' ' << std::setprecision( 15 ) << x[2];
-      buffer << ' ' << std::setprecision( 15 ) << x[3];
-      buffer << ' ' << std::setprecision( 15 ) << x[4] << '\n';
-      x += 5;
-    }
-
-    if ( partial ) {
-
-      buffer << "   ";
-      while ( partial-- ) {
-
-        buffer << ' ' << std::setprecision( 15 ) << *x;
-        ++x;
-      }
-      buffer << '\n';
-    }
-
-    for ( auto c : buffer.str() ) { *iter++ = c; }
-  };
+  #include "NDItk/multigroup/CrossSection/src/generateData.hpp"
+  #include "NDItk/multigroup/CrossSection/src/write.hpp"
 
 public:
 
-  /**
-   *  @brief Constructor
-   *
-   *  @param[in] reaction   the reaction number
-   *  @param[in] qvalue     the q value
-   *  @param[in] values     the cross section values
-   */
-  CrossSection( int reaction, double qvalue, std::vector< double > values ) :
-    Parent( generateData( reaction, qvalue, std::move( values ) ) ) {}
+  /* constructor */
+
+  #include "NDItk/multigroup/CrossSection/src/ctor.hpp"
 
   /**
-   *  @brief Constructor
-   *
-   *  @param[in] begin    the begin iterator of the cross section
-   *  @param[in] end      the end iterator of the cross section
+   *  @brief Return the reaction identifier
    */
-  CrossSection( Iterator begin, Iterator end ) :
-    Parent( begin, end ) {}
+  int identifier() const { return static_cast< int >( std::round( this->value( 0 ) ) ); }
 
-  int reaction() const { return static_cast< int >( std::round( this->value( 0 ) ) ); }
+  /**
+   *  @brief Return the reaction Q value
+   */
   double qvalue() const { return this->value( 1 ); }
+
+  /**
+   *  @brief Return the cross section values
+   */
   auto crossSections() const { return this->values( 2, this->numberGroups() ); }
 
   /**

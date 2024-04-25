@@ -20,6 +20,7 @@ class FluxWeights : protected base::RealListRecord {
 public:
 
   /* constructor */
+
   #include "NDItk/multigroup/FluxWeights/src/ctor.hpp"
 
   /**

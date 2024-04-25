@@ -41,7 +41,7 @@ public:
   const multigroup::Metadata& metadata() const { return this->metadata_; }
   const multigroup::Structure& structure() const { return this->structure_; }
   const multigroup::FluxWeights& flux() const { return this->weights_; }
-  const multigroup::ReactionCrossSections& crossSections() const { return this->xs_; }
+  const multigroup::ReactionCrossSections& reactionCrossSections() const { return this->xs_; }
 
   /**
    *  @brief Print the NDI table

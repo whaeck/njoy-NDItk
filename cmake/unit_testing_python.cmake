@@ -12,7 +12,7 @@ function( add_python_test name source )
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/python )
   set_tests_properties( ${test_name}
                         PROPERTIES ENVIRONMENT
-                        PYTHONPATH=${NDItk_PYTHONPATH}:$ENV{PYTHONPATH})
+                        PYTHONPATH=${tools_PYTHONPATH}:${NDItk_PYTHONPATH}:$ENV{PYTHONPATH})
 
 endfunction()
 
@@ -21,3 +21,5 @@ endfunction()
 #######################################################################
 
 message( STATUS "Adding NDItk Python unit testing" )
+
+add_python_test( multigroup.CrossSection multigroup/Test_NDItk_multigroup_CrossSection.py )

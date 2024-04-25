@@ -9,6 +9,12 @@ namespace python = pybind11;
 
 // declarations
 
+// declarations - record and subrecord subpackages
+void wrapMultigroup( python::module&, python::module& );
+
+// declarations - NDI table types
+void wrapMultigroupTable( python::module&, python::module& );
+
 /**
  *  @brief NDItk python bindings
  *
@@ -17,5 +23,18 @@ namespace python = pybind11;
  */
 PYBIND11_MODULE( NDItk, module ) {
 
+  python::module::import( "tools" );
 
+  // create the views submodule
+  python::module viewmodule = module.def_submodule(
+
+    "sequence",
+    "sequence - NDI sequences (internal use only)"
+  );
+
+  // record and subrecord subpackages
+  wrapMultigroup( module, viewmodule );
+
+  // wrap ACE table types
+  wrapMultigroupTable( module, viewmodule );
 }

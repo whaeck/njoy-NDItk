@@ -92,6 +92,7 @@ if( NDItk.python )
 
   pybind11_add_module( NDItk.python
       python/src/NDItk.python.cpp
+      python/src/multigroup.python.cpp
       )
 
   target_link_libraries( NDItk.python PRIVATE NDItk )

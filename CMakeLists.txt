@@ -95,6 +95,8 @@ if( NDItk.python )
       python/src/MultigroupTable.python.cpp
       python/src/multigroup.python.cpp
       python/src/multigroup/CrossSection.python.cpp
+      python/src/multigroup/FluxWeights.python.cpp
+      python/src/multigroup/Structure.python.cpp
       )
 
   target_link_libraries( NDItk.python PRIVATE NDItk )

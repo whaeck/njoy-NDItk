@@ -6,6 +6,7 @@
 #include "NDItk/multigroup/Structure.hpp"
 #include "tools/views/views-python.hpp"
 #include "definitions.hpp"
+#include "read.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -50,6 +51,19 @@ void wrapStructure( python::module& module, python::module& ) {
     "number_groups",
     &Record::numberGroups,
     "The number of groups defined by this record"
+  )
+  .def_static(
+
+    "from_string",
+    [] ( const std::string& string, std::size_t number ) -> Record
+       { return read< Record >( string, number ); },
+    python::arg( "string" ), python::arg( "number" ),
+    "Read the record from a string\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "component\n\n"
+    "Arguments:\n"
+    "    string    the string representing the component\n"
+    "    number    the number of boundary values to be read"
   );
 
   // add standard record definitions

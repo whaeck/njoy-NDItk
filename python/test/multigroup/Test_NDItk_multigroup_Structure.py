@@ -9,7 +9,7 @@ from NDItk.multigroup import Structure
 class Test_NDItk_multigroup_Structure( unittest.TestCase ) :
     """Unit test for the Structure class."""
 
-    chunk_values = [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ]
+    chunk_values = [ 20, 18, 16, 14, 10, 5, 1, 1e-11 ]
     chunk_string = ( 'e_bounds\n'
                      '    20 18 16 14 10\n'
                      '    5 1 1e-11\n' )
@@ -41,7 +41,12 @@ class Test_NDItk_multigroup_Structure( unittest.TestCase ) :
                 self.assertAlmostEqual( self.chunk_values[index], values[index] )
 
         # the data is given explicitly
-        chunk = Structure( weights = [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] )
+        chunk = Structure( boundaries = [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] )
+
+        verify_chunk( self, chunk )
+
+        # the data is read from a string
+        chunk = Structure.from_string( self.chunk_string, 8 )
 
         verify_chunk( self, chunk )
 

@@ -24,3 +24,4 @@ message( STATUS "Adding NDItk Python unit testing" )
 
 add_python_test( multigroup.CrossSection multigroup/Test_NDItk_multigroup_CrossSection.py )
 add_python_test( multigroup.FluxWeights multigroup/Test_NDItk_multigroup_FluxWeights.py )
+add_python_test( multigroup.Structure multigroup/Test_NDItk_multigroup_Structure.py )

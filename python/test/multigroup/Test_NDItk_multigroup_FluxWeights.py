@@ -44,6 +44,11 @@ class Test_NDItk_multigroup_FluxWeights( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+        # the data is read from a string
+        chunk = FluxWeights.from_string( self.chunk_string, 7 )
+
+        verify_chunk( self, chunk )
+
 if __name__ == '__main__' :
 
     unittest.main()

@@ -189,12 +189,16 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 0.06, WithinRel( chunk.flux().weights()[6] ) );
 
   // reaction cross sections
+  CHECK( 18 == chunk.reactionCrossSections().size() );
   CHECK( false == chunk.reactionCrossSections().empty() );
   CHECK( 2 == chunk.reactionCrossSections().numberReactions() );
   CHECK( 7 == chunk.reactionCrossSections().numberGroups() );
   CHECK( true == chunk.reactionCrossSections().hasReaction( 2 ) );
   CHECK( true == chunk.reactionCrossSections().hasReaction( 16 ) );
   CHECK( false == chunk.reactionCrossSections().hasReaction( 102 ) );
+  CHECK( false == chunk.reactionCrossSections().reactions()[0].empty() );
+  CHECK( 9 == chunk.reactionCrossSections().reactions()[0].size() );
+  CHECK( 7 == chunk.reactionCrossSections().reactions()[0].numberGroups() );
   CHECK( 2 == chunk.reactionCrossSections().reactions()[0].identifier() );
   CHECK_THAT( 0.0, WithinRel( chunk.reactionCrossSections().reactions()[0].qvalue() ) );
   CHECK_THAT( 10.0, WithinRel( chunk.reactionCrossSections().reactions()[0].crossSections()[0] ) );
@@ -204,6 +208,9 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 50.0, WithinRel( chunk.reactionCrossSections().reactions()[0].crossSections()[4] ) );
   CHECK_THAT( 60.0, WithinRel( chunk.reactionCrossSections().reactions()[0].crossSections()[5] ) );
   CHECK_THAT( 70.0, WithinRel( chunk.reactionCrossSections().reactions()[0].crossSections()[6] ) );
+  CHECK( false == chunk.reactionCrossSections().reactions()[1].empty() );
+  CHECK( 9 == chunk.reactionCrossSections().reactions()[1].size() );
+  CHECK( 7 == chunk.reactionCrossSections().reactions()[1].numberGroups() );
   CHECK( 16 == chunk.reactionCrossSections().reactions()[1].identifier() );
   CHECK_THAT( 1.1234567, WithinRel( chunk.reactionCrossSections().reactions()[1].qvalue() ) );
   CHECK_THAT( 1.0, WithinRel( chunk.reactionCrossSections().reactions()[1].crossSections()[0] ) );
@@ -214,6 +221,9 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 6.0, WithinRel( chunk.reactionCrossSections().reactions()[1].crossSections()[5] ) );
   CHECK_THAT( 7.0, WithinRel( chunk.reactionCrossSections().reactions()[1].crossSections()[6] ) );
   auto xs = chunk.reactionCrossSections().reaction( 2 );
+  CHECK( false == xs.empty() );
+  CHECK( 9 == xs.size() );
+  CHECK( 7 == xs.numberGroups() );
   CHECK( 2 == xs.identifier() );
   CHECK_THAT( 0.0, WithinRel( xs.qvalue() ) );
   CHECK_THAT( 10.0, WithinRel( xs.crossSections()[0] ) );
@@ -224,6 +234,9 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 60.0, WithinRel( xs.crossSections()[5] ) );
   CHECK_THAT( 70.0, WithinRel( xs.crossSections()[6] ) );
   xs = chunk.reactionCrossSections().reaction( 16 );
+  CHECK( false == xs.empty() );
+  CHECK( 9 == xs.size() );
+  CHECK( 7 == xs.numberGroups() );
   CHECK( 16 == xs.identifier() );
   CHECK_THAT( 1.1234567, WithinRel( xs.qvalue() ) );
   CHECK_THAT( 1.0, WithinRel( xs.crossSections()[0] ) );

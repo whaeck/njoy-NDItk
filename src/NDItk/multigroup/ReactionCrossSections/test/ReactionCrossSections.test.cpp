@@ -144,7 +144,29 @@ std::string chunk() {
 
 void verifyChunk( const ReactionCrossSections& chunk ) {
 
+  CHECK( "sig_reac" == chunk.keyword() );
+  CHECK_THAT(    2, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT(  0.0, WithinRel( chunk.values()[1] ) );
+  CHECK_THAT( 10.0, WithinRel( chunk.values()[2] ) );
+  CHECK_THAT( 20.0, WithinRel( chunk.values()[3] ) );
+  CHECK_THAT( 30.0, WithinRel( chunk.values()[4] ) );
+  CHECK_THAT( 40.0, WithinRel( chunk.values()[5] ) );
+  CHECK_THAT( 50.0, WithinRel( chunk.values()[6] ) );
+  CHECK_THAT( 60.0, WithinRel( chunk.values()[7] ) );
+  CHECK_THAT( 70.0, WithinRel( chunk.values()[8] ) );
+  CHECK_THAT(   16, WithinRel( chunk.values()[9] ) );
+  CHECK_THAT( 1.1234567, WithinRel( chunk.values()[10] ) );
+  CHECK_THAT(  1.0, WithinRel( chunk.values()[11] ) );
+  CHECK_THAT(  2.0, WithinRel( chunk.values()[12] ) );
+  CHECK_THAT(  3.0, WithinRel( chunk.values()[13] ) );
+  CHECK_THAT(  4.0, WithinRel( chunk.values()[14] ) );
+  CHECK_THAT(  5.0, WithinRel( chunk.values()[15] ) );
+  CHECK_THAT(  6.0, WithinRel( chunk.values()[16] ) );
+  CHECK_THAT(  7.0, WithinRel( chunk.values()[17] ) );
+
   CHECK( false == chunk.empty() );
+  CHECK( 18 == chunk.size() );
+
   CHECK( 2 == chunk.numberReactions() );
   CHECK( 7 == chunk.numberGroups() );
 

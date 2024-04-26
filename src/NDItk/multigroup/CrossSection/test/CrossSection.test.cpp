@@ -112,7 +112,19 @@ std::vector< double > data() {
 
 void verifyChunk( const CrossSection& chunk ) {
 
+  CHECK_THAT(  2, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT(  0, WithinRel( chunk.values()[1] ) );
+  CHECK_THAT( 10, WithinRel( chunk.values()[2] ) );
+  CHECK_THAT( 20, WithinRel( chunk.values()[3] ) );
+  CHECK_THAT( 30, WithinRel( chunk.values()[4] ) );
+  CHECK_THAT( 40, WithinRel( chunk.values()[5] ) );
+  CHECK_THAT( 50, WithinRel( chunk.values()[6] ) );
+  CHECK_THAT( 60, WithinRel( chunk.values()[7] ) );
+  CHECK_THAT( 70, WithinRel( chunk.values()[8] ) );
+
   CHECK( false == chunk.empty() );
+  CHECK( 9 == chunk.size() );
+
   CHECK( 7 == chunk.numberGroups() );
   CHECK( 2 == chunk.identifier() );
   CHECK_THAT( 0, WithinRel( chunk.qvalue() ) );

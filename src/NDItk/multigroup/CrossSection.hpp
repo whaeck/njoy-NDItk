@@ -52,11 +52,13 @@ public:
   /**
    *  @brief Return the number of groups defined by this record
    */
-  std::size_t numberGroups() const { return this->length() - 2; }
+  std::size_t numberGroups() const { return this->size() - 2; }
 
+  using Parent::values;
+  using Parent::size;
+  using Parent::empty;
   using Parent::begin;
   using Parent::end;
-  using Parent::empty;
   using Parent::print;
 };
 

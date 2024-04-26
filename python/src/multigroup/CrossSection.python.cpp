@@ -51,7 +51,7 @@ void wrapCrossSection( python::module& module, python::module& ) {
 
     "qvalue",
     &Record::qvalue,
-    "The number of available reactions (excluding elastic)"
+    "The reaction Q value"
   )
   .def_property_readonly(
 
@@ -68,7 +68,7 @@ void wrapCrossSection( python::module& module, python::module& ) {
   );
 
   // add standard record definitions
-  addStandardRecordDefinitions< Record >( record );
+  addStandardSubrecordDefinitions< Record, DoubleRange >( record );
 }
 
 } // multigroup namespace

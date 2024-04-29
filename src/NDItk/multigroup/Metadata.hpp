@@ -14,7 +14,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief Metadata associated with a neutron NDI file
+ *  @brief Metadata associated with multigroup neutron and photon data
  */
 class Metadata {
 
@@ -67,7 +67,7 @@ public:
   /**
    *  @brief Return the source date
    */
-  decltype(auto) sourceData() const { return this->source_date_.data(); }
+  decltype(auto) sourceDate() const { return this->source_date_.data(); }
 
   /**
    *  @brief Return the processing date

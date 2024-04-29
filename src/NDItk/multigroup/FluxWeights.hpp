@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A flux weight record
+ *  @brief A flux weight record for multigroup neutron and photon data
  */
 class FluxWeights : protected base::RealListRecord {
 
@@ -41,6 +41,7 @@ public:
   auto weights() const { return this->values(); }
 
   using base::RealListRecord::keyword;
+  using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;
   using base::RealListRecord::begin;

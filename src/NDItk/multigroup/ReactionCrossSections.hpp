@@ -15,7 +15,8 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A reaction cross section record
+ *  @brief A reaction cross section record for multigroup neutron and photon 
+ *         data
  */
 class ReactionCrossSections : protected base::RealListRecord {
 
@@ -100,6 +101,7 @@ public:
   }
 
   using base::RealListRecord::keyword;
+  using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;
   using base::RealListRecord::begin;

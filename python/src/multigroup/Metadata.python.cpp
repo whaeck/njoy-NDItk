@@ -41,7 +41,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     python::arg( "reactions" ),
     "Initialise the record\n\n"
     "Arguments:\n"
-    "    self          the metadata\n"
+    "    self           the metadata\n"
     "    zaid           the zaid of the table\n"
     "    libname        the library name\n"
     "    source         the source date\n"

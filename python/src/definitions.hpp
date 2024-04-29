@@ -8,6 +8,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include "tools/views/views-python.hpp"
+#include "NDItk/fromFile.hpp"
 
 namespace python = pybind11;
 
@@ -15,14 +16,17 @@ namespace python = pybind11;
  *  @brief Add standard subrecord definitions
  *
  *  This adds the following standard properties:
- *    - empty
+ *    - values, size, empty
+ *
+ *  This adds the following standard functions:
+ *    - to_string()
  *
  *  @param[in] record   the record to which the definitions have to be added
  */
 template < typename Record, typename Range, typename PythonClass >
-void addStandardSubrecordDefinitions( PythonClass& record ) {
+void addStandardSubrecordDefinitions( PythonClass& subrecord ) {
 
-  record
+  subrecord
   .def_property_readonly(
 
     "values",
@@ -62,7 +66,10 @@ void addStandardSubrecordDefinitions( PythonClass& record ) {
  *  @brief Add standard record definitions
  *
  *  This adds the following standard properties:
- *    - keyword
+ *    - keyword, values, size, empty
+ *
+ *  This adds the following standard functions:
+ *    - to_string()
  *
  *  @param[in] record   the record to which the definitions have to be added
  */
@@ -111,4 +118,32 @@ void addStandardRecordDefinitions( PythonClass& record ) {
   );
 }
 
+/**
+ *  @brief Add standard table definitions
+ *
+ *  This adds the following standard functions:
+ *    - from_file()
+ *
+ *  @param[in] table   the table to which the definitions have to be added
+ */
+template < typename Table, typename PythonClass >
+void addStandardTableDefinitions( PythonClass& table ) {
+
+  table
+  .def_static(
+
+    "from_file",
+    [] ( const std::string& filename ) -> Table {
+
+      return njoy::NDItk::fromFile< Table >( filename );
+    },
+    "Read an ACE table from a file\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "table\n\n"
+    "Arguments:\n"
+    "    filename    the file name and path"
+  );
+}
+
 #endif
+

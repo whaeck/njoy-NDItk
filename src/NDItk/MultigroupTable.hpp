@@ -14,7 +14,7 @@ namespace njoy {
 namespace NDItk {
 
 /**
- *  @brief A multigroup NDI table
+ *  @brief A multigroup neutron and photon table
  */
 class MultigroupTable {
 

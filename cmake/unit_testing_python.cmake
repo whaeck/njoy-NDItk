@@ -28,3 +28,5 @@ add_python_test( multigroup.FluxWeights           multigroup/Test_NDItk_multigro
 add_python_test( multigroup.Structure             multigroup/Test_NDItk_multigroup_Structure.py )
 add_python_test( multigroup.ReactionCrossSections multigroup/Test_NDItk_multigroup_ReactionCrossSections.py )
 
+add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )
+

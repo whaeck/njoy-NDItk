@@ -94,6 +94,7 @@ if( NDItk.python )
       python/src/NDItk.python.cpp
       python/src/MultigroupTable.python.cpp
       python/src/multigroup.python.cpp
+      python/src/multigroup/Metadata.python.cpp
       python/src/multigroup/CrossSection.python.cpp
       python/src/multigroup/FluxWeights.python.cpp
       python/src/multigroup/Structure.python.cpp

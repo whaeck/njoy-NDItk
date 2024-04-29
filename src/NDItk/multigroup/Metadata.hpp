@@ -67,7 +67,7 @@ public:
   /**
    *  @brief Return the source date
    */
-  decltype(auto) sourceData() const { return this->source_date_.data(); }
+  decltype(auto) sourceDate() const { return this->source_date_.data(); }
 
   /**
    *  @brief Return the processing date

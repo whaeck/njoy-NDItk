@@ -32,9 +32,6 @@ SCENARIO( "Metadata" ) {
       double temperature = 2.53e-8;
       double dilution = 1e+10;
       unsigned int groups = 618;
-      unsigned int upscatter = 0;
-      unsigned int downscatter = 617;
-      unsigned int order = 5;
       unsigned int reactions = 7;
       Metadata chunk( std::move( zaid ), std::move( name ),
                       std::move( source ), std::move( process ),
@@ -125,7 +122,7 @@ void verifyChunk( const Metadata& chunk ) {
 
   CHECK( "92235.711nm" == chunk.zaid().value() );
   CHECK( "mendf71x" == chunk.libraryName().value() );
-  CHECK( "12/22/2011" == chunk.sourceData().value() );
+  CHECK( "12/22/2011" == chunk.sourceDate().value() );
   CHECK( "08/07/2013" == chunk.processDate().value() );
   CHECK_THAT( 233.0248, WithinRel( chunk.atomicWeightRatio().value() ) );
   CHECK_THAT( 235.043937521619, WithinRel( chunk.atomicWeight().value() ) );

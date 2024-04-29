@@ -150,7 +150,7 @@ void verifyChunk( const MultigroupTable& chunk ) {
   // metadata
   CHECK( "92235.711nm" == chunk.metadata().zaid().value() );
   CHECK( "mendf71x" == chunk.metadata().libraryName().value() );
-  CHECK( "12/22/2011" == chunk.metadata().sourceData().value() );
+  CHECK( "12/22/2011" == chunk.metadata().sourceDate().value() );
   CHECK( "08/07/2013" == chunk.metadata().processDate().value() );
   CHECK_THAT( 233.0248, WithinRel( chunk.metadata().atomicWeightRatio().value() ) );
   CHECK_THAT( 235.043937521619, WithinRel( chunk.metadata().atomicWeight().value() ) );

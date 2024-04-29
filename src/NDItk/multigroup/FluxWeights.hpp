@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A flux weight record
+ *  @brief A flux weight record for multigroup neutron and photon data
  */
 class FluxWeights : protected base::RealListRecord {
 

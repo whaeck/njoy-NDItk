@@ -34,7 +34,7 @@ void wrapCrossSection( python::module& module, python::module& ) {
     python::init< int, double, std::vector< double > >(),
     python::arg( "reaction" ), python::arg( "qvalue" ),
     python::arg( "values" ),
-    "Initialise the table\n\n"
+    "Initialise the subrecord\n\n"
     "Arguments:\n"
     "    self       the table\n"
     "    reaction   the reaction number\n"

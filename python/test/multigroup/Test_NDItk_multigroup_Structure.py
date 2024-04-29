@@ -32,6 +32,7 @@ class Test_NDItk_multigroup_Structure( unittest.TestCase ) :
             self.assertEqual( self.chunk_string, chunk.to_string() )
 
             # verify the record
+            self.assertEqual( 'e_bounds', chunk.keyword )
             self.assertEqual( False, chunk.empty )
             self.assertEqual( 8, chunk.size )
 

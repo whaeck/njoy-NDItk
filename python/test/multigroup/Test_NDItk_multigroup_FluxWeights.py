@@ -31,6 +31,7 @@ class Test_NDItk_multigroup_FluxWeights( unittest.TestCase ) :
             self.assertEqual( self.chunk_string, chunk.to_string() )
 
             # verify the record
+            self.assertEqual( 'wgts', chunk.keyword )
             self.assertEqual( False, chunk.empty )
             self.assertEqual( 7, chunk.size )
 

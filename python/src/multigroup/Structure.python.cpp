@@ -34,7 +34,7 @@ void wrapStructure( python::module& module, python::module& ) {
 
     python::init< std::vector< double > >(),
     python::arg( "boundaries" ),
-    "Initialise the table\n\n"
+    "Initialise the record\n\n"
     "Arguments:\n"
     "    self          the table\n"
     "    boundaries    the group structure boundaries"
@@ -60,9 +60,9 @@ void wrapStructure( python::module& module, python::module& ) {
     python::arg( "string" ), python::arg( "number" ),
     "Read the record from a string\n\n"
     "An exception is raised if something goes wrong while reading the\n"
-    "component\n\n"
+    "record\n\n"
     "Arguments:\n"
-    "    string    the string representing the component\n"
+    "    string    the string representing the record\n"
     "    number    the number of boundary values to be read"
   );
 

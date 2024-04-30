@@ -1,5 +1,5 @@
-#ifndef NJOY_NDITK_MULTIGROUP_FISSIONENERGYRELEASE
-#define NJOY_NDITK_MULTIGROUP_FISSIONENERGYRELEASE
+#ifndef NJOY_NDITK_MULTIGROUP_AVERAGEFISSIONENERGYRELEASE
+#define NJOY_NDITK_MULTIGROUP_AVERAGEFISSIONENERGYRELEASE
 
 // system includes
 
@@ -29,11 +29,72 @@ public:
   /* methods */
 
   /**
-   *  @brief Return the number of groups defined by this record
+   *  @brief Return the recoverable energy release (total energy release
+   *         minus neutrinos)
    */
-  std::size_t numberGroups() const {
+  double recoverableEnergyRelease() const {
 
-    return this->empty() ? 0 : this->size() - 1;
+    return this->values()[0];
+  }
+
+  /**
+   *  @brief Return the total energy release (including neutrinos)
+   */
+  double totalEnergyRelease() const {
+
+    return this->values()[1];
+  }
+
+  /**
+   *  @brief Return the energy release through neutrinos
+   */
+  double neutrinos() const {
+
+    return this->totalEnergyRelease() - this->recoverableEnergyRelease();
+  }
+
+  /**
+   *  @brief Return the energy release through delayed betas
+   */
+  double delayedBetas() const {
+
+    return this->values()[2];
+  }
+
+  /**
+   *  @brief Return the energy release through prompt gammas
+   */
+  double promptGammas() const {
+
+    return this->values()[3];
+  }
+
+  /**
+   *  @brief Return the kinetic energy of the prompt fission neutrons
+   */
+  double promptNeutrons() const {
+
+    return this->values()[5];
+  }
+
+  /**
+   *  @brief Return the kinetic energy of the fission products
+   */
+  double fissionFragments() const {
+
+    return this->values()[4];
+  }
+
+  /**
+   *  @brief Return the energy release through delayed neutrons and gammas
+   */
+  double delayedNeutronsAndGammas() const {
+
+    return this->recoverableEnergyRelease()
+           - this->delayedBetas()
+           - this->promptGammas()
+           - this->promptNeutrons()
+           - this->fissionFragments();
   }
 
   using base::RealListRecord::keyword;

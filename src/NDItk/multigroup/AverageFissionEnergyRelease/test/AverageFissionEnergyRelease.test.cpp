@@ -27,12 +27,12 @@ SCENARIO( "AverageFissionEnergyRelease" ) {
     WHEN( "the data is given explicitly" ) {
 
       double total = 202.827;
-      double recoverable = 181.238898;
+      double prompt = 181.238898;
       double neutrons = 4.827645;
       double gammas = 7.281253;
       double betas = 6.5;
       double fragments = 169.13;
-      AverageFissionEnergyRelease chunk( total, recoverable, neutrons,
+      AverageFissionEnergyRelease chunk( total, prompt, neutrons,
                                          gammas, betas, fragments );
 
       THEN( "a AverageFissionEnergyRelease can be constructed and members can "

@@ -12,7 +12,8 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief An average fission energy release record
+ *  @brief An average fission energy release record for multigroup
+ *         neutron and photon data
  */
 class AverageFissionEnergyRelease : protected base::RealListRecord {
 

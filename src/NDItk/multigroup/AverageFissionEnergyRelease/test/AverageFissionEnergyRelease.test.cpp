@@ -97,11 +97,10 @@ void verifyChunk( const AverageFissionEnergyRelease& chunk ) {
   CHECK( false == chunk.empty() );
   CHECK( 6 == chunk.size() );
 
-  CHECK_THAT( 181.238898, WithinRel( chunk.recoverableEnergyRelease() ) );
+  CHECK_THAT( 181.238898, WithinRel( chunk.promptEnergyRelease() ) );
   CHECK_THAT(    202.827, WithinRel( chunk.totalEnergyRelease() ) );
   CHECK_THAT(        6.5, WithinRel( chunk.delayedBetas() ) );
   CHECK_THAT(   7.281253, WithinRel( chunk.promptGammas() ) );
   CHECK_THAT(     169.13, WithinRel( chunk.fissionFragments() ) );
   CHECK_THAT(   4.827645, WithinRel( chunk.promptNeutrons() ) );
-  CHECK_THAT(   0.781253, WithinRel( chunk.delayedNeutronsAndGammas() ) );
 }

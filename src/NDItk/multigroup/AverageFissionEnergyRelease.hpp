@@ -29,28 +29,21 @@ public:
   /* methods */
 
   /**
-   *  @brief Return the recoverable energy release (total energy release
-   *         minus neutrinos)
+   *  @brief Return the prompt energy release (total energy release
+   *         minus delayed particles and neutrinos)
    */
-  double recoverableEnergyRelease() const {
+  double promptEnergyRelease() const {
 
     return this->values()[0];
   }
 
   /**
-   *  @brief Return the total energy release (including neutrinos)
+   *  @brief Return the total energy release (including delayed particles
+   *         and neutrinos)
    */
   double totalEnergyRelease() const {
 
     return this->values()[1];
-  }
-
-  /**
-   *  @brief Return the energy release through neutrinos
-   */
-  double neutrinos() const {
-
-    return this->totalEnergyRelease() - this->recoverableEnergyRelease();
   }
 
   /**
@@ -83,18 +76,6 @@ public:
   double fissionFragments() const {
 
     return this->values()[4];
-  }
-
-  /**
-   *  @brief Return the energy release through delayed neutrons and gammas
-   */
-  double delayedNeutronsAndGammas() const {
-
-    return this->recoverableEnergyRelease()
-           - this->delayedBetas()
-           - this->promptGammas()
-           - this->promptNeutrons()
-           - this->fissionFragments();
   }
 
   using base::RealListRecord::keyword;

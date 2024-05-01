@@ -4,10 +4,10 @@ import unittest
 # third party imports
 
 # local imports
-from NDItk.multigroup import Structure
+from NDItk.multigroup import EnergyGroupStructure
 
-class Test_NDItk_multigroup_Structure( unittest.TestCase ) :
-    """Unit test for the Structure class."""
+class Test_NDItk_multigroup_EnergyGroupStructure( unittest.TestCase ) :
+    """Unit test for the EnergyGroupStructure class."""
 
     chunk_values = [ 20, 18, 16, 14, 10, 5, 1, 1e-11 ]
     chunk_string = ( 'e_bounds\n'
@@ -42,12 +42,12 @@ class Test_NDItk_multigroup_Structure( unittest.TestCase ) :
                 self.assertAlmostEqual( self.chunk_values[index], values[index] )
 
         # the data is given explicitly
-        chunk = Structure( boundaries = [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] )
+        chunk = EnergyGroupStructure( boundaries = [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] )
 
         verify_chunk( self, chunk )
 
         # the data is read from a string
-        chunk = Structure.from_string( self.chunk_string, 8 )
+        chunk = EnergyGroupStructure.from_string( self.chunk_string, 8 )
 
         verify_chunk( self, chunk )
 

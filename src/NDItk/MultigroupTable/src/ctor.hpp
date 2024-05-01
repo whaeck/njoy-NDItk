@@ -1,7 +1,8 @@
 /**
  *  @brief Default constructor
  */
-MultigroupTable() : metadata_(), structure_(), weights_(), xs_() {}
+MultigroupTable() : metadata_(), structure_(), weights_(), xs_(),
+                    release_() {}
 
 /**
  *  @brief Constructor
@@ -18,19 +19,22 @@ MultigroupTable() : metadata_(), structure_(), weights_(), xs_() {}
  *  @param[in] structure      the primary group structure
  *  @param[in] weights        the flux weights
  *  @param[in] xs             the reaction cross section data
+ *  @param[in] release        the average fission energy release data
  */
 MultigroupTable( std::string zaid, std::string libname, std::string source,
                  std::string process, double awr, double weight, double temperature,
                  double dilution,
                  multigroup::Structure structure,
                  multigroup::FluxWeights weigths,
-                 multigroup::ReactionCrossSections xs ) :
+                 multigroup::ReactionCrossSections xs,
+                 std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :
     metadata_( std::move( zaid ), std::move( libname ), std::move( source ),
                std::move( process ), awr, weight, temperature, dilution,
                xs.numberGroups(), xs.numberReactions() ),
     structure_( std::move( structure ) ),
     weights_( std::move( weigths ) ),
-    xs_( std::move( xs ) ) {
+    xs_( std::move( xs ) ),
+    release_( std::move( release.value() ) ) {
 
   this->verify();
 }

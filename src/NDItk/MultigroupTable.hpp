@@ -9,6 +9,7 @@
 #include "NDItk/multigroup/Structure.hpp"
 #include "NDItk/multigroup/FluxWeights.hpp"
 #include "NDItk/multigroup/ReactionCrossSections.hpp"
+#include "NDItk/multigroup/AverageFissionEnergyRelease.hpp"
 
 namespace njoy {
 namespace NDItk {
@@ -24,6 +25,7 @@ class MultigroupTable {
   multigroup::Structure structure_;
   multigroup::FluxWeights weights_;
   multigroup::ReactionCrossSections xs_;
+  multigroup::AverageFissionEnergyRelease release_;
 
   /* auxiliary functions */
 
@@ -61,6 +63,15 @@ public:
     return this->xs_;
   }
 
+  /**
+   *  @brief Return the average fission energy release record
+   */
+  const multigroup::AverageFissionEnergyRelease&
+  averageFissionEnergyRelease() const {
+
+    return this->release_;
+  }
+
   #include "NDItk/MultigroupTable/src/read.hpp"
 
   /**
@@ -75,6 +86,7 @@ public:
     this->structure_.print( iter );
     this->weights_.print( iter );
     this->xs_.print( iter );
+    this->release_.print( iter );
     *iter++ = 'e';
     *iter++ = 'n';
     *iter++ = 'd';

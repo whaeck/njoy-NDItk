@@ -34,10 +34,13 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
+      multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
+                                                       7.281253, 6.5, 169.13 );
 
       MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
                              std::move( process ), awr, weight, temperature, dilution,
-                             std::move( structure ), std::move( weights ), std::move( xs ) );
+                             std::move( structure ), std::move( weights ), std::move( xs ),
+                             std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
             "be tested" ) {
@@ -142,6 +145,9 @@ std::string chunk() {
          "    16 1.1234567\n"
          "    1 2 3 4 5\n"
          "    6 7\n"
+         "fiss_q\n"
+         "    181.238898 202.827 6.5 7.281253 169.13\n"
+         "    4.827645\n"
          "end\n";
 }
 
@@ -246,4 +252,15 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 5.0, WithinRel( xs.crossSections()[4] ) );
   CHECK_THAT( 6.0, WithinRel( xs.crossSections()[5] ) );
   CHECK_THAT( 7.0, WithinRel( xs.crossSections()[6] ) );
+
+  // average fission energy release
+  CHECK( "fiss_q" == chunk.averageFissionEnergyRelease().keyword() );
+  CHECK( false == chunk.averageFissionEnergyRelease().empty() );
+  CHECK( 6 == chunk.averageFissionEnergyRelease().size() );
+  CHECK_THAT( 181.238898, WithinRel( chunk.averageFissionEnergyRelease().promptEnergyRelease() ) );
+  CHECK_THAT(    202.827, WithinRel( chunk.averageFissionEnergyRelease().totalEnergyRelease() ) );
+  CHECK_THAT(        6.5, WithinRel( chunk.averageFissionEnergyRelease().delayedBetas() ) );
+  CHECK_THAT(   7.281253, WithinRel( chunk.averageFissionEnergyRelease().promptGammas() ) );
+  CHECK_THAT(     169.13, WithinRel( chunk.averageFissionEnergyRelease().fissionFragments() ) );
+  CHECK_THAT(   4.827645, WithinRel( chunk.averageFissionEnergyRelease().promptNeutrons() ) );
 }

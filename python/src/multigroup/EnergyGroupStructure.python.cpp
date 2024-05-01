@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "NDItk/multigroup/Structure.hpp"
+#include "NDItk/multigroup/EnergyGroupStructure.hpp"
 #include "tools/views/views-python.hpp"
 #include "definitions.hpp"
 #include "read.hpp"
@@ -13,10 +13,10 @@ namespace python = pybind11;
 
 namespace multigroup {
 
-void wrapStructure( python::module& module, python::module& ) {
+void wrapEnergyGroupStructure( python::module& module, python::module& ) {
 
   // type aliases
-  using Record = njoy::NDItk::multigroup::Structure;
+  using Record = njoy::NDItk::multigroup::EnergyGroupStructure;
 
   // wrap views created by this record
 
@@ -24,7 +24,7 @@ void wrapStructure( python::module& module, python::module& ) {
   python::class_< Record > record(
 
     module,
-    "Structure",
+    "EnergyGroupStructure",
     "A group structure record for multigroup neutron and photon data"
   );
 

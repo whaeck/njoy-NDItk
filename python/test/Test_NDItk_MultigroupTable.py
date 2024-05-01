@@ -6,7 +6,7 @@ import unittest
 # local imports
 from NDItk import MultigroupTable
 from NDItk.multigroup import AverageFissionEnergyRelease
-from NDItk.multigroup import Structure
+from NDItk.multigroup import EnergyGroupStructure
 from NDItk.multigroup import FluxWeights
 from NDItk.multigroup import ReactionCrossSections
 from NDItk.multigroup import CrossSection
@@ -116,7 +116,7 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
         chunk = MultigroupTable( zaid = '92235.711nm', libname = 'mendf71x', source = '12/22/2011',
                                  process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
                                  temperature = 2.53e-8, dilution = 1e+10,
-                                 structure = Structure( [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] ),
+                                 structure = EnergyGroupStructure( [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] ),
                                  flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
                                  xs = ReactionCrossSections(
                                           xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),

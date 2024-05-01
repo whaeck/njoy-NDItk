@@ -15,7 +15,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   // type aliases
   using Table = njoy::NDItk::MultigroupTable;
   using Metadata = njoy::NDItk::multigroup::Metadata;
-  using Structure = njoy::NDItk::multigroup::Structure;
+  using EnergyGroupStructure = njoy::NDItk::multigroup::EnergyGroupStructure;
   using FluxWeights = njoy::NDItk::multigroup::FluxWeights;
   using ReactionCrossSections = njoy::NDItk::multigroup::ReactionCrossSections;
   using AverageFissionEnergyRelease = njoy::NDItk::multigroup::AverageFissionEnergyRelease;
@@ -36,7 +36,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
 
     python::init< std::string, std::string, std::string, std::string,
                   double, double, double, double,
-                  Structure, FluxWeights,
+                  EnergyGroupStructure, FluxWeights,
                   ReactionCrossSections,
                   std::optional< AverageFissionEnergyRelease > >(),
     python::arg( "zaid" ), python::arg( "libname" ), python::arg( "source" ),

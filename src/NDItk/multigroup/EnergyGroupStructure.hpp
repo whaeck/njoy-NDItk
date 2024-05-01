@@ -12,21 +12,21 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A group structure record for multigroup neutron and photon data
+ *  @brief An energy group structure record for multigroup neutron and photon data
  */
-class Structure : protected base::RealListRecord {
+class EnergyGroupStructure : protected base::RealListRecord {
 
   /* fields */
 
   /* auxiliary functions */
 
-  #include "NDItk/multigroup/Structure/src/verify.hpp"
+  #include "NDItk/multigroup/EnergyGroupStructure/src/verify.hpp"
 
 public:
 
   /* constructor */
 
-  #include "NDItk/multigroup/Structure/src/ctor.hpp"
+  #include "NDItk/multigroup/EnergyGroupStructure/src/ctor.hpp"
 
   /* methods */
 
@@ -51,7 +51,7 @@ public:
   using base::RealListRecord::end;
   using base::RealListRecord::print;
 
-  #include "NDItk/multigroup/Structure/src/read.hpp"
+  #include "NDItk/multigroup/EnergyGroupStructure/src/read.hpp"
 };
 
 } // multigroup namespace

@@ -6,7 +6,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "NDItk/multigroup/Metadata.hpp"
-#include "NDItk/multigroup/Structure.hpp"
+#include "NDItk/multigroup/EnergyGroupStructure.hpp"
 #include "NDItk/multigroup/FluxWeights.hpp"
 #include "NDItk/multigroup/ReactionCrossSections.hpp"
 #include "NDItk/multigroup/AverageFissionEnergyRelease.hpp"
@@ -22,7 +22,7 @@ class MultigroupTable {
   /* fields */
 
   multigroup::Metadata metadata_;
-  multigroup::Structure structure_;
+  multigroup::EnergyGroupStructure structure_;
   multigroup::FluxWeights weights_;
   multigroup::ReactionCrossSections xs_;
   multigroup::AverageFissionEnergyRelease release_;
@@ -48,7 +48,7 @@ public:
   /**
    *  @brief Return the primary group structure record
    */
-  const multigroup::Structure& structure() const { return this->structure_; }
+  const multigroup::EnergyGroupStructure& structure() const { return this->structure_; }
 
   /**
    *  @brief Return the flux weight record

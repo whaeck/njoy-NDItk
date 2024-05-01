@@ -24,7 +24,7 @@ MultigroupTable() : metadata_(), structure_(), weights_(), xs_(),
 MultigroupTable( std::string zaid, std::string libname, std::string source,
                  std::string process, double awr, double weight, double temperature,
                  double dilution,
-                 multigroup::Structure structure,
+                 multigroup::EnergyGroupStructure structure,
                  multigroup::FluxWeights weigths,
                  multigroup::ReactionCrossSections xs,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :

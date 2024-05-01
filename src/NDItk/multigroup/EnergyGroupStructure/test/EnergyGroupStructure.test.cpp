@@ -4,23 +4,23 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "NDItk/multigroup/Structure.hpp"
+#include "NDItk/multigroup/EnergyGroupStructure.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::NDItk;
-using Structure = multigroup::Structure;
+using EnergyGroupStructure = multigroup::EnergyGroupStructure;
 
 std::string chunk();
-void verifyChunk( const Structure& );
+void verifyChunk( const EnergyGroupStructure& );
 std::string chunkWithInsufficientNumberBoundaries();
 std::string chunkWithNonDescendingBoundaries();
 std::string chunkWithNonUniqueBoundaries();
 
-SCENARIO( "Structure" ) {
+SCENARIO( "EnergyGroupStructure" ) {
 
-  GIVEN( "valid data for a Structure instance" ) {
+  GIVEN( "valid data for a EnergyGroupStructure instance" ) {
 
     std::string record = chunk();
 
@@ -28,9 +28,9 @@ SCENARIO( "Structure" ) {
 
       std::vector< double > boundaries = { 20., 18., 16., 14., 10., 5, 1, 1e-11 };
 
-      Structure chunk( std::move( boundaries ) );
+      EnergyGroupStructure chunk( std::move( boundaries ) );
 
-      THEN( "a Structure can be constructed and members can "
+      THEN( "a EnergyGroupStructure can be constructed and members can "
             "be tested" ) {
 
         verifyChunk( chunk );
@@ -51,10 +51,10 @@ SCENARIO( "Structure" ) {
       auto iter = record.begin() + 8;
       auto end = record.end();
 
-      Structure chunk;
+      EnergyGroupStructure chunk;
       chunk.read( iter, end, 8 );
 
-      THEN( "a Structure can be constructed and members can "
+      THEN( "a EnergyGroupStructure can be constructed and members can "
             "be tested" ) {
 
         verifyChunk( chunk );
@@ -71,7 +71,7 @@ SCENARIO( "Structure" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for a Structure instance" ) {
+  GIVEN( "invalid data for a EnergyGroupStructure instance" ) {
 
     WHEN( "the number of boundary values is insufficient" ) {
 
@@ -80,8 +80,8 @@ SCENARIO( "Structure" ) {
         std::vector< double > empty = {};
         std::vector< double > one = { 1 };
 
-        CHECK_THROWS( Structure( std::move( empty ) ) );
-        CHECK_THROWS( Structure( std::move( one ) ) );
+        CHECK_THROWS( EnergyGroupStructure( std::move( empty ) ) );
+        CHECK_THROWS( EnergyGroupStructure( std::move( one ) ) );
       } // THEN
     } // WHEN
 
@@ -91,7 +91,7 @@ SCENARIO( "Structure" ) {
 
         std::vector< double > wrong = { 1., 20. };
 
-        CHECK_THROWS( Structure( std::move( wrong ) ) );
+        CHECK_THROWS( EnergyGroupStructure( std::move( wrong ) ) );
       } // THEN
     } // WHEN
 
@@ -101,7 +101,7 @@ SCENARIO( "Structure" ) {
 
         std::vector< double > wrong = { 20., 20., 5. };
 
-        CHECK_THROWS( Structure( std::move( wrong ) ) );
+        CHECK_THROWS( EnergyGroupStructure( std::move( wrong ) ) );
       } // THEN
     } // WHEN
 
@@ -111,7 +111,7 @@ SCENARIO( "Structure" ) {
       std::string record = chunkWithInsufficientNumberBoundaries();
       auto iter = record.begin() + 8;
       auto end = record.end();
-      Structure chunk;
+      EnergyGroupStructure chunk;
 
       THEN( "an exception is thrown" ) {
 
@@ -125,7 +125,7 @@ SCENARIO( "Structure" ) {
       std::string record = chunkWithNonDescendingBoundaries();
       auto iter = record.begin() + 8;
       auto end = record.end();
-      Structure chunk;
+      EnergyGroupStructure chunk;
 
       THEN( "an exception is thrown" ) {
 
@@ -138,7 +138,7 @@ SCENARIO( "Structure" ) {
       std::string record = chunkWithNonUniqueBoundaries();
       auto iter = record.begin() + 8;
       auto end = record.end();
-      Structure chunk;
+      EnergyGroupStructure chunk;
 
       THEN( "an exception is thrown" ) {
 
@@ -155,7 +155,7 @@ std::string chunk() {
          "    5 1 1e-11\n";
 }
 
-void verifyChunk( const Structure& chunk ) {
+void verifyChunk( const EnergyGroupStructure& chunk ) {
 
   CHECK( "e_bounds" == chunk.keyword() );
   CHECK_THAT(    20, WithinRel( chunk.values()[0] ) );

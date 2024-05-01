@@ -1,1 +1,1 @@
-add_cpp_test( multigroup.Structure Structure.test.cpp )
+add_cpp_test( multigroup.EnergyGroupStructure EnergyGroupStructure.test.cpp )

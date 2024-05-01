@@ -2,6 +2,7 @@
 #define NJOY_NDITK_UTILITY_SPLITKEYWORD
 
 // system includes
+#include <regex>
 #include <string>
 
 // other includes
@@ -9,6 +10,7 @@
 
 namespace njoy {
 namespace NDItk {
+namespace utility {
 
   /**
    *  @brief Utility function to extract the particle id from a keyword
@@ -23,19 +25,21 @@ namespace NDItk {
   inline std::pair< std::string, std::optional< int > > 
   splitKeyword( const std::string& keyword ) {
 
-    constexpr std::regex key{ "^([a-z]+(?:_[a-z]+)?)_([0-9]+)" };
+    const std::regex key{ "^([a-z]+(?:_[a-z]+)?)(?:_([0-9]+))?" };
 
     std::smatch match;
     if ( std::regex_match( keyword, match, key ) ) {
 
-      return { match[0], 
-               match.size() == 1 ? std::nullopt : std::stoi( match[1] };
+      return { match[1], 
+               match[1] == keyword ? std::nullopt 
+                                   : std::make_optional( std::stoi( match[2] ) ) };
     }
 
     Log::error( "Unknown keyword found: \'{}\'", keyword );
     throw std::exception();
   }
 
+} // utility namespace
 } // NDItk namespace
 } // njoy namespace
 

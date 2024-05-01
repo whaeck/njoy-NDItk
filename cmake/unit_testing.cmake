@@ -26,6 +26,8 @@ endfunction()
 # Unit testing directories
 #######################################################################
 
+add_subdirectory( src/NDItk/utility/test )
+
 add_subdirectory( src/NDItk/base/SingleIntegerRecord/test )
 add_subdirectory( src/NDItk/base/SingleRealRecord/test )
 add_subdirectory( src/NDItk/base/SingleStringRecord/test )

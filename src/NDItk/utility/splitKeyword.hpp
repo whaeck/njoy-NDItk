@@ -15,28 +15,36 @@ namespace utility {
   /**
    *  @brief Utility function to extract the particle id from a keyword
    *
-   *  Some NDI records use keywords that include a particle id at the end of 
+   *  Some NDI records use keywords that include a particle id at the end of
    *  the keyword. These are basically of the form xxxxxxxx_yyyyy where yyyyy
    *  are digits that represent the particle id (e.g. 0 for gammas and 1001 for
    *  protons).
    *
    *  @param[in] keyword   the keyword
    */
-  inline std::pair< std::string, std::optional< int > > 
+  inline std::pair< std::string, std::optional< int > >
   splitKeyword( const std::string& keyword ) {
 
-    const std::regex key{ "^([a-z]+(?:_[a-z]+)?)(?:_([0-9]+))?" };
+    // special cases: sig_0
+    if ( "sig_0" == keyword ) {
 
-    std::smatch match;
-    if ( std::regex_match( keyword, match, key ) ) {
-
-      return { match[1], 
-               match[1] == keyword ? std::nullopt 
-                                   : std::make_optional( std::stoi( match[2] ) ) };
+      return { keyword, std::nullopt };
     }
+    else {
 
-    Log::error( "Unknown keyword found: \'{}\'", keyword );
-    throw std::exception();
+      const std::regex key{ "^([a-z]+(?:_[a-z]+)?)(?:_([0-9]+))?" };
+
+      std::smatch match;
+      if ( std::regex_match( keyword, match, key ) ) {
+
+        return { match[1],
+                 match[1] == keyword ? std::nullopt
+                                     : std::make_optional( std::stoi( match[2] ) ) };
+      }
+
+      Log::error( "Unknown keyword found: \'{}\'", keyword );
+      throw std::exception();
+    }
   }
 
 } // utility namespace

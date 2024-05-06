@@ -16,6 +16,7 @@ std::string chunk();
 std::vector< double > data();
 void verifyChunk( const CrossSection& );
 std::vector< double > dataWithInsufficientLength();
+std::vector< double > dataWithNonIntegerIdentifier();
 
 SCENARIO( "CrossSection" ) {
 
@@ -94,6 +95,18 @@ SCENARIO( "CrossSection" ) {
         CHECK_THROWS( CrossSection( begin, end ) );
       } // THEN
     } // WHEN
+
+    WHEN( "using iterators and the reaction identifier is not an integer" ) {
+
+      std::vector< double > values = dataWithNonIntegerIdentifier();
+      auto begin = values.begin();
+      auto end = values.end();
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( CrossSection( begin, end ) );
+      } // THEN
+    } // WHEN
   } // GIVEN
 } // SCENARIO
 
@@ -140,4 +153,10 @@ void verifyChunk( const CrossSection& chunk ) {
 std::vector< double > dataWithInsufficientLength() {
 
   return { 2, 0 };
+}
+
+std::vector< double > dataWithNonIntegerIdentifier() {
+
+  return { 2.001, 0,
+           10, 20, 30, 40, 50, 60, 70 };
 }

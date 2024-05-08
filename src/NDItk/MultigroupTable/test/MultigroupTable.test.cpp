@@ -40,7 +40,7 @@ SCENARIO( "MultigroupTable" ) {
 
       MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
                              std::move( process ), awr, weight, temperature, dilution,
-                             std::move( structure ), std::move( weights ), std::move( xs ),
+                             std::move( structure ), {}, std::move( weights ), std::move( xs ),
                              std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
@@ -105,7 +105,7 @@ SCENARIO( "MultigroupTable" ) {
 
         CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ), std::move( source ),
                                        std::move( process ), awr, weight, temperature, dilution,
-                                       std::move( structure ), std::move( weights ), std::move( xs ) ) );
+                                       std::move( structure ), {}, std::move( weights ), std::move( xs ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

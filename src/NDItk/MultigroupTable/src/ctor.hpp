@@ -1,8 +1,9 @@
 /**
  *  @brief Default constructor
  */
-MultigroupTable() : metadata_(), structure_(), weights_(), xs_(),
-                    release_() {}
+MultigroupTable() :
+  metadata_(), primary_structure_(), outgoing_structure_(), weights_(), xs_(),
+  release_() {}
 
 /**
  *  @brief Constructor
@@ -17,6 +18,7 @@ MultigroupTable() : metadata_(), structure_(), weights_(), xs_(),
  *  @param[in] temperature    the temperature of the target
  *  @param[in] dilution       the dilution (aka sigma0)
  *  @param[in] structure      the primary group structure
+ *  @param[in] outgoing       the outgoing particle group structures
  *  @param[in] weights        the flux weights
  *  @param[in] xs             the reaction cross section data
  *  @param[in] release        the average fission energy release data
@@ -25,13 +27,15 @@ MultigroupTable( std::string zaid, std::string libname, std::string source,
                  std::string process, double awr, double weight, double temperature,
                  double dilution,
                  multigroup::EnergyGroupStructure structure,
+                 std::vector< multigroup::EnergyGroupStructure > outgoing,
                  multigroup::FluxWeights weigths,
                  multigroup::ReactionCrossSections xs,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :
     metadata_( std::move( zaid ), std::move( libname ), std::move( source ),
                std::move( process ), awr, weight, temperature, dilution,
                xs.numberGroups(), {}, xs.numberReactions() ),
-    structure_( std::move( structure ) ),
+    primary_structure_( std::move( structure ) ),
+    outgoing_structure_( std::move( outgoing ) ),
     weights_( std::move( weigths ) ),
     xs_( std::move( xs ) ),
     release_( std::move( release.value() ) ) {

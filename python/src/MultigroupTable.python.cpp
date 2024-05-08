@@ -36,13 +36,16 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
 
     python::init< std::string, std::string, std::string, std::string,
                   double, double, double, double,
-                  EnergyGroupStructure, FluxWeights,
+                  EnergyGroupStructure,
+                  std::vector< EnergyGroupStructure >,
+                  FluxWeights,
                   ReactionCrossSections,
                   std::optional< AverageFissionEnergyRelease > >(),
     python::arg( "zaid" ), python::arg( "libname" ), python::arg( "source" ),
     python::arg( "process" ), python::arg( "awr" ), python::arg( "weight" ),
     python::arg( "temperature" ), python::arg( "dilution" ),
-    python::arg( "structure" ), python::arg( "flux" ), python::arg( "xs" ),
+    python::arg( "structure" ), python::arg( "outgoing" ),
+    python::arg( "flux" ), python::arg( "xs" ),
     python::arg( "release" ) = std::nullopt,
     "Initialise the table\n\n"
     "Arguments:\n"
@@ -57,6 +60,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    temperature    the temperature of the target\n"
     "    dilution       the dilution (aka sigma0)\n"
     "    structure      the primary group structure\n"
+    "    outgoing       the outgoing particle group structures\n"
     "    flux           the flux weights\n"
     "    xs             the reaction cross section data\n"
     "    release        the average fission energy release data"

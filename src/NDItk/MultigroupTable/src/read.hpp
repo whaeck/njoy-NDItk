@@ -15,11 +15,11 @@ void read( Iterator& iter, const Iterator& end ) {
 
       this->metadata_.read( keyword, iter, end );
     }
-    else if ( keyword == this->structure_.keyword() ) {
+    else if ( keyword == this->primary_structure_.keyword() ) {
 
       if ( this->metadata_.numberGroups().has_value() ) {
 
-        readRecord( this->structure_, iter, end,
+        readRecord( this->primary_structure_, iter, end,
                     this->metadata_.numberGroups().value() + 1 );
       }
       else {

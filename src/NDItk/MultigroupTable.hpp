@@ -22,7 +22,8 @@ class MultigroupTable {
   /* fields */
 
   multigroup::Metadata metadata_;
-  multigroup::EnergyGroupStructure structure_;
+  multigroup::EnergyGroupStructure primary_structure_;
+  std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;
   multigroup::FluxWeights weights_;
   multigroup::ReactionCrossSections xs_;
   multigroup::AverageFissionEnergyRelease release_;
@@ -48,7 +49,7 @@ public:
   /**
    *  @brief Return the primary group structure record
    */
-  const multigroup::EnergyGroupStructure& structure() const { return this->structure_; }
+  const multigroup::EnergyGroupStructure& structure() const { return this->primary_structure_; }
 
   /**
    *  @brief Return the flux weight record
@@ -83,7 +84,7 @@ public:
   void print( OutputIterator& iter ) const {
 
     this->metadata_.print( iter );
-    this->structure_.print( iter );
+    this->primary_structure_.print( iter );
     this->weights_.print( iter );
     this->xs_.print( iter );
     this->release_.print( iter );

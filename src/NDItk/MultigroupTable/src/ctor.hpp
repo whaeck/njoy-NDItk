@@ -30,7 +30,7 @@ MultigroupTable( std::string zaid, std::string libname, std::string source,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :
     metadata_( std::move( zaid ), std::move( libname ), std::move( source ),
                std::move( process ), awr, weight, temperature, dilution,
-               xs.numberGroups(), xs.numberReactions() ),
+               xs.numberGroups(), {}, xs.numberReactions() ),
     structure_( std::move( structure ) ),
     weights_( std::move( weigths ) ),
     xs_( std::move( xs ) ),

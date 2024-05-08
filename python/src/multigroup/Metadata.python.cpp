@@ -34,11 +34,12 @@ void wrapMetadata( python::module& module, python::module& ) {
 
     python::init< std::string, std::string, std::string, std::string,
                   double, double, double, double,
-                  unsigned int, unsigned int >(),
+                  unsigned int, std::map< unsigned int, unsigned int >,
+                  unsigned int >(),
     python::arg( "zaid" ), python::arg( "libname" ), python::arg( "source" ),
     python::arg( "process" ), python::arg( "awr" ), python::arg( "weight" ),
     python::arg( "temperature" ), python::arg( "dilution" ), python::arg( "groups" ),
-    python::arg( "reactions" ),
+    python::arg( "outgoing" ), python::arg( "reactions" ),
     "Initialise the record\n\n"
     "Arguments:\n"
     "    self           the metadata\n"
@@ -52,6 +53,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     "    temperature    the temperature of the target\n"
     "    dilution       the dilution (aka sigma0)\n"
     "    groups         the number of groups in the primary group structure\n"
+    "    outgoing       the number of groups in the outgoing group structures\n"
     "    reactions      the number of reactions defined in the table"
   )
   .def_property_readonly(
@@ -108,6 +110,16 @@ void wrapMetadata( python::module& module, python::module& ) {
     &Record::numberGroups,
     "The number of groups defined by this record"
   )
+  .def(
+
+    "number_outgoing_groups",
+    &Record::numberOutgoingGroups,
+    python::arg( "particle" ),
+    "The number of outgoing groups defined by this record for the particle\n\n"
+    "Arguments:\n"
+    "    self       the metadata\n"
+    "    particle   the outgoing particle identifier"
+  )
   .def_property_readonly(
 
     "number_reactions",
@@ -126,7 +138,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     },
     "Return the string representation of the subrecord\n\n"
     "Arguments:\n"
-    "    self    the subrecord"
+    "    self    the metadata"
   );
 }
 

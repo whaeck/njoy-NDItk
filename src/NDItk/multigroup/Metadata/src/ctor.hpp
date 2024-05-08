@@ -9,7 +9,7 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
              atomic_weight_( base::Keyword( "at_wgt" ) ),
              temperature_( base::Keyword( "temp" ) ),
              dilution_( base::Keyword( "sig_0" ) ),
-             groups_( base::Keyword( "num_grps" ) ),
+             primary_groups_( base::Keyword( "num_grps" ) ),
              reactions_( base::Keyword( "num_reac" ) ) {}
 
 /**
@@ -25,11 +25,14 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
  *  @param[in] temperature    the temperature of the target
  *  @param[in] dilution       the dilution (aka sigma0)
  *  @param[in] groups         the number of groups in the primary group structure
+ *  @param[in] outgoing       the number of groups in the outgoing group structures
  *  @param[in] reactions      the number of reactions defined in the table
  */
 Metadata( std::string zaid, std::string libname, std::string source, std::string process,
           double awr, double weight, double temperature, double dilution,
-          unsigned int groups, unsigned int reactions ) :
+          unsigned int groups,
+          const std::map< unsigned int, unsigned int >& outgoing,
+          unsigned int reactions ) :
     zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
     library_name_( base::Keyword( "library_name" ), std::move( libname ) ),
     source_date_( base::Keyword( "date_source" ), std::move( source ) ),
@@ -38,5 +41,6 @@ Metadata( std::string zaid, std::string libname, std::string source, std::string
     atomic_weight_( base::Keyword( "at_wgt" ), weight ),
     temperature_( base::Keyword( "temp" ), temperature ),
     dilution_( base::Keyword( "sig_0" ), dilution ),
-    groups_( base::Keyword( "num_grps" ), groups ),
+    primary_groups_( base::Keyword( "num_grps" ), groups ),
+    secondary_groups_( generateSecondaryGroups( outgoing ) ),
     reactions_( base::Keyword( "num_reac" ), reactions ) {}

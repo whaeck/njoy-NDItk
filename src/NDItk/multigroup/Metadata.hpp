@@ -31,7 +31,7 @@ class Metadata {
   base::SingleRealRecord dilution_;
   base::SingleIntegerRecord reactions_;
   base::SingleIntegerRecord primary_groups_;
-  std::vector< base::SingleIntegerRecord > secondary_groups_;
+  std::vector< base::SingleIntegerRecord > outgoing_groups_;
 
   /* auxiliary functions */
 
@@ -117,14 +117,14 @@ public:
    */
   decltype(auto) numberOutgoingGroups( unsigned int particle ) const {
 
-    auto pos = std::lower_bound( this->secondary_groups_.begin(),
-                                 this->secondary_groups_.end(),
+    auto pos = std::lower_bound( this->outgoing_groups_.begin(),
+                                 this->outgoing_groups_.end(),
                                  particle,
                                  [] ( auto&& left, auto&& right ) {
 
                                    return left.particle() < right;
                                  } );
-    if ( pos != this->secondary_groups_.end() ) {
+    if ( pos != this->outgoing_groups_.end() ) {
 
       if ( pos->particle() == particle ) {
 
@@ -166,14 +166,14 @@ public:
       else {
 
         base::Keyword secondary( keyword );
-        auto pos = std::lower_bound( this->secondary_groups_.begin(),
-                                     this->secondary_groups_.end(),
+        auto pos = std::lower_bound( this->outgoing_groups_.begin(),
+                                     this->outgoing_groups_.end(),
                                      secondary.particle(),
                                      [] ( auto&& left, auto&& right ) {
 
                                        return left.particle() < right;
                                      } );
-        if ( pos != this->secondary_groups_.end() ) {
+        if ( pos != this->outgoing_groups_.end() ) {
 
           if ( pos->particle() == secondary.particle() ) {
 
@@ -181,7 +181,7 @@ public:
             throw std::exception();
           }
         }
-        pos = this->secondary_groups_.insert( pos, base::SingleIntegerRecord( std::move( secondary ) ) );
+        pos = this->outgoing_groups_.insert( pos, base::SingleIntegerRecord( std::move( secondary ) ) );
         readRecord( *pos, iter, end );
       }
     }
@@ -210,7 +210,7 @@ public:
     this->temperature_.print( iter );
     this->dilution_.print( iter );
     this->primary_groups_.print( iter );
-    for ( const auto& entry : this->secondary_groups_ ) { entry.print( iter ); }
+    for ( const auto& entry : this->outgoing_groups_ ) { entry.print( iter ); }
     this->reactions_.print( iter );
   };
 };

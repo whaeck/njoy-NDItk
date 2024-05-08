@@ -10,6 +10,7 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
              temperature_( base::Keyword( "temp" ) ),
              dilution_( base::Keyword( "sig_0" ) ),
              primary_groups_( base::Keyword( "num_grps" ) ),
+             outgoing_groups_(),
              reactions_( base::Keyword( "num_reac" ) ) {}
 
 /**
@@ -42,5 +43,5 @@ Metadata( std::string zaid, std::string libname, std::string source, std::string
     temperature_( base::Keyword( "temp" ), temperature ),
     dilution_( base::Keyword( "sig_0" ), dilution ),
     primary_groups_( base::Keyword( "num_grps" ), groups ),
-    secondary_groups_( generateSecondaryGroups( outgoing ) ),
+    outgoing_groups_( generateSecondaryGroups( outgoing ) ),
     reactions_( base::Keyword( "num_reac" ), reactions ) {}

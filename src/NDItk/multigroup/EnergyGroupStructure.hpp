@@ -52,6 +52,7 @@ public:
   auto boundaries() const { return this->values(); }
 
   using base::RealListRecord::keyword;
+  using base::RealListRecord::particle;
   using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;

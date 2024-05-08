@@ -26,6 +26,8 @@ protected:
 
   #include "NDItk/base/IntegerListRecord/src/write.hpp"
 
+  using Parent::key;
+
 public:
 
   /* constructor */
@@ -35,7 +37,7 @@ public:
    *
    *  @param[in] keyword   the keyword of the record
    */
-  IntegerListRecord( std::string keyword ) :
+  IntegerListRecord( Keyword keyword ) :
       ListRecord( std::move( keyword ) ) {}
 
   /**
@@ -44,12 +46,14 @@ public:
    *  @param[in] keyword   the keyword of the record
    *  @param[in] value     the value of the record
    */
-  IntegerListRecord( std::string keyword, std::vector< int > value ) :
+  IntegerListRecord( Keyword keyword, std::vector< int > value ) :
       ListRecord( std::move( keyword ), std::move( value ) ) {}
 
   /* methods */
 
   using Parent::keyword;
+  using Parent::subtype;
+  using Parent::particle;
   using Parent::values;
   using Parent::size;
   using Parent::empty;

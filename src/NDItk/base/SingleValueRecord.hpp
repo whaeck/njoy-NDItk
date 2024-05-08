@@ -29,7 +29,7 @@ protected:
    *
    *  @param[in] keyword   the keyword of the record
    */
-  SingleValueRecord( std::string keyword ) :
+  SingleValueRecord( Keyword keyword ) :
       Record( std::move( keyword ) ), value_( std::nullopt ) {}
 
   /**
@@ -38,8 +38,10 @@ protected:
    *  @param[in] keyword   the keyword of the record
    *  @param[in] value     the value of the record
    */
-  SingleValueRecord( std::string keyword, Type value ) :
+  SingleValueRecord( Keyword keyword, Type value ) :
       Record( std::move( keyword ) ), value_( std::move( value ) ) {}
+
+  using Record::key;
 
 public:
 
@@ -77,6 +79,8 @@ public:
   };
 
   using Record::keyword;
+  using Record::subtype;
+  using Record::particle;
 };
 
 } // base namespace

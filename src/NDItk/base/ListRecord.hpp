@@ -30,7 +30,7 @@ protected:
    *
    *  @param[in] keyword   the keyword of the record
    */
-  ListRecord( std::string keyword ) :
+  ListRecord( Keyword keyword ) :
       Record( std::move( keyword ) ), values_() {}
 
   /**
@@ -39,7 +39,7 @@ protected:
    *  @param[in] keyword   the keyword of the record
    *  @param[in] value     the values of the record
    */
-  ListRecord( std::string keyword, std::vector< Type > values ) :
+  ListRecord( Keyword keyword, std::vector< Type > values ) :
       Record( std::move( keyword ) ), values_( std::move( values ) ) {}
 
   /**
@@ -52,9 +52,13 @@ protected:
    */
   const std::vector< Type >& data() const { return this->values_; }
 
+  using Record::key;
+
 public:
 
   using Record::keyword;
+  using Record::subtype;
+  using Record::particle;
 
   /**
    *  @brief Return the record values

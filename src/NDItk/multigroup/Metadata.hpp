@@ -8,7 +8,6 @@
 #include "NDItk/base/SingleIntegerRecord.hpp"
 #include "NDItk/base/SingleRealRecord.hpp"
 #include "NDItk/base/SingleStringRecord.hpp"
-#include "NDItk/utility/splitKeyWord.hpp"
 
 namespace njoy {
 namespace NDItk {

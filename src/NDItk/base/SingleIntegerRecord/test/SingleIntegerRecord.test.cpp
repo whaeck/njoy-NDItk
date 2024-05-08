@@ -9,6 +9,7 @@
 // convenience typedefs
 using namespace njoy::NDItk;
 using SingleIntegerRecord = base::SingleIntegerRecord;
+using Keyword = base::Keyword;
 
 std::string chunk();
 void verifyChunk( const SingleIntegerRecord& );
@@ -21,7 +22,7 @@ SCENARIO( "SingleIntegerRecord" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      SingleIntegerRecord chunk( "num_grps", 618 );
+      SingleIntegerRecord chunk( Keyword( "num_grps" ), 618 );
 
       THEN( "a SingleIntegerRecord can be constructed and members can "
             "be tested" ) {
@@ -43,7 +44,7 @@ SCENARIO( "SingleIntegerRecord" ) {
 
       auto iter = record.begin() + 8;
       auto end = record.end();
-      SingleIntegerRecord chunk( "num_grps" );
+      SingleIntegerRecord chunk( Keyword( "num_grps" ) );
       chunk.read( iter, end );
 
       THEN( "a SingleIntegerRecord can be constructed and members can "

@@ -40,6 +40,8 @@ protected:
     *iter++ = '\n';
   };
 
+  using Parent::key;
+
 public:
 
   /* constructor */
@@ -49,7 +51,7 @@ public:
    *
    *  @param[in] keyword   the keyword of the record
    */
-  SingleStringRecord( std::string keyword ) :
+  SingleStringRecord( Keyword keyword ) :
       SingleValueRecord( std::move( keyword ) ) {}
 
   /**
@@ -58,12 +60,14 @@ public:
    *  @param[in] keyword   the keyword of the record
    *  @param[in] value     the value of the record
    */
-  SingleStringRecord( std::string keyword, std::string value ) :
+  SingleStringRecord( Keyword keyword, std::string value ) :
       SingleValueRecord( std::move( keyword ), value ) {}
 
   /* methods */
 
   using Parent::keyword;
+  using Parent::subtype;
+  using Parent::particle;
   using Parent::data;
   using Parent::empty;
   using Parent::print;

@@ -11,6 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::NDItk;
 using SingleRealRecord = base::SingleRealRecord;
+using Keyword = base::Keyword;
 
 std::string chunk();
 void verifyChunk( const SingleRealRecord& );
@@ -23,7 +24,7 @@ SCENARIO( "SingleRealRecord" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      SingleRealRecord chunk( "temp", 2.53e-8 );
+      SingleRealRecord chunk( Keyword( "temp" ), 2.53e-8 );
 
       THEN( "a SingleRealRecord can be constructed and members can "
             "be tested" ) {
@@ -45,7 +46,7 @@ SCENARIO( "SingleRealRecord" ) {
 
       auto iter = record.begin() + 4;
       auto end = record.end();
-      SingleRealRecord chunk( "temp" );
+      SingleRealRecord chunk( Keyword( "temp" ) );
       chunk.read( iter, end );
 
       THEN( "a SingleRealRecord can be constructed and members can "

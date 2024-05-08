@@ -5,7 +5,7 @@ private:
  */
 ReactionCrossSections( std::vector< CrossSection >&& xs,
                        std::size_t reactions, std::size_t groups ) :
-    RealListRecord( "sig_reac", generateData( std::move( xs ) ) ),
+    RealListRecord( base::Keyword( "sig_reac" ), generateData( std::move( xs ) ) ),
     reactions_( reactions ), groups_( groups ) {
 
   this->generateBlocks();
@@ -16,7 +16,7 @@ public:
 /**
  *  @brief Default constructor
  */
-ReactionCrossSections() : RealListRecord( "sig_reac" ) {}
+ReactionCrossSections() : RealListRecord( base::Keyword( "sig_reac" ) ) {}
 
 /**
  *  @brief Constructor

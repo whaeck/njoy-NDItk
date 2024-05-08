@@ -9,6 +9,7 @@
 // convenience typedefs
 using namespace njoy::NDItk;
 using SingleStringRecord = base::SingleStringRecord;
+using Keyword = base::Keyword;
 
 std::string chunk();
 void verifyChunk( const SingleStringRecord& );
@@ -21,7 +22,7 @@ SCENARIO( "SingleStringRecord" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      SingleStringRecord chunk( "zaid", "92235.711nm" );
+      SingleStringRecord chunk( Keyword( "zaid" ), "92235.711nm" );
 
       THEN( "a SingleStringRecord can be constructed and members can "
             "be tested" ) {
@@ -43,7 +44,7 @@ SCENARIO( "SingleStringRecord" ) {
 
       auto iter = record.begin() + 4;
       auto end = record.end();
-      SingleStringRecord chunk( "zaid" );
+      SingleStringRecord chunk( Keyword( "zaid" ) );
       chunk.read( iter, end );
 
       THEN( "a SingleStringRecord can be constructed and members can "

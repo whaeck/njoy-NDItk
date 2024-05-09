@@ -30,7 +30,10 @@ class MultigroupTable {
 
   /* auxiliary functions */
 
+  #include "NDItk/MultigroupTable/src/generateOutgoingStructureMetadata.hpp"
   #include "NDItk/MultigroupTable/src/readRecord.hpp"
+  #include "NDItk/MultigroupTable/src/readPrimaryStructure.hpp"
+  #include "NDItk/MultigroupTable/src/readOutgoingStructure.hpp"
   #include "NDItk/MultigroupTable/src/verify.hpp"
 
 public:
@@ -50,6 +53,29 @@ public:
    *  @brief Return the primary group structure record
    */
   const multigroup::EnergyGroupStructure& structure() const { return this->primary_structure_; }
+
+  /**
+   *  @brief Return the group structure record for an outgoing particle
+   */
+  const multigroup::EnergyGroupStructure& outgoingStructure( unsigned int particle ) const {
+
+    auto pos = std::lower_bound( this->outgoing_structure_.begin(),
+                                 this->outgoing_structure_.end(),
+                                 particle,
+                                 [] ( auto&& left, auto&& right ) {
+
+                                   return left.particle() < right;
+                                 } );
+    if ( pos != this->outgoing_structure_.end() ) {
+
+      if ( pos->particle() == particle ) {
+
+        return *pos;
+      }
+    }
+    Log::error( "The requested outgoing particle \'{}\' has no outgoing group structure", particle );
+    throw std::exception();
+  }
 
   /**
    *  @brief Return the flux weight record
@@ -85,13 +111,11 @@ public:
 
     this->metadata_.print( iter );
     this->primary_structure_.print( iter );
+    for ( const auto& entry : this->outgoing_structure_ ) { entry.print( iter ); }
     this->weights_.print( iter );
     this->xs_.print( iter );
     this->release_.print( iter );
-    *iter++ = 'e';
-    *iter++ = 'n';
-    *iter++ = 'd';
-    *iter++ = '\n';
+    base::Keyword( "end" ).print( iter );
   };
 };
 

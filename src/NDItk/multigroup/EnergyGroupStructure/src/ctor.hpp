@@ -6,7 +6,7 @@ EnergyGroupStructure() : RealListRecord( base::Keyword( "e_bounds" ) ) {}
 /**
  *  @brief Default constructor for a secondary particle group structure
  *
- *  @param[in] particle    the secondary particle ID
+ *  @param[in] particle    the secondary particle identifier
  */
 EnergyGroupStructure( unsigned int particle ) :
     RealListRecord( base::Keyword( "e_bounds", particle ) ) {}
@@ -25,7 +25,7 @@ EnergyGroupStructure( std::vector< double > boundaries ) :
 /**
  *  @brief Constructor for a secondary particle group structure
  *
- *  @param[in] particle      the secondary particle ID
+ *  @param[in] particle      the secondary particle identifier
  *  @param[in] boundaries    the group structure boundaries
  */
 EnergyGroupStructure( unsigned int particle, std::vector< double > boundaries ) :

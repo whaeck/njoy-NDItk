@@ -32,6 +32,10 @@ SCENARIO( "MultigroupTable" ) {
       double dilution = 1e+10;
       multigroup::EnergyGroupStructure structure( { 20., 18.123456789, 16.0000000000001,
                                                     14., 10., 5, 1, 1e-11 } );
+      std::vector< multigroup::EnergyGroupStructure > outgoing =   {
+          { 0, { 20., 10., 5, 1e-11 } },
+          { 1001, { 20., 10., 1e-11 } }
+      };
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
@@ -40,8 +44,8 @@ SCENARIO( "MultigroupTable" ) {
 
       MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
                              std::move( process ), awr, weight, temperature, dilution,
-                             std::move( structure ), {}, std::move( weights ), std::move( xs ),
-                             std::move( release ) );
+                             std::move( structure ), std::move( outgoing ), std::move( weights ),
+                             std::move( xs ), std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
             "be tested" ) {
@@ -131,11 +135,19 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    7\n"
+         "num_grps_0\n"
+         "    3\n"
+         "num_grps_1001\n"
+         "    2\n"
          "num_reac\n"
          "    2\n"
          "e_bounds\n"
          "    20 18.123456789 16.0000000000001 14 10\n"
          "    5 1 1e-11\n"
+         "e_bounds_0\n"
+         "    20 10 5 1e-11\n"
+         "e_bounds_1001\n"
+         "    20 10 1e-11\n"
          "wgts\n"
          "    0.1 0.2 0.25 0.05 0.15\n"
          "    0.04 0.06\n"
@@ -168,6 +180,7 @@ void verifyChunk( const MultigroupTable& chunk ) {
 
   // principal group structure
   CHECK( "e_bounds" == chunk.structure().keyword() );
+  CHECK( std::nullopt == chunk.structure().particle() );
   CHECK( false == chunk.structure().empty() );
   CHECK( 8 == chunk.structure().size() );
   CHECK( 8 == chunk.structure().boundaries().size() );
@@ -180,6 +193,31 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(     5, WithinRel( chunk.structure().boundaries()[5] ) );
   CHECK_THAT(     1, WithinRel( chunk.structure().boundaries()[6] ) );
   CHECK_THAT( 1e-11, WithinRel( chunk.structure().boundaries()[7] ) );
+
+  // outgoing group structure: 0
+  auto structure = chunk.outgoingStructure( 0 );
+  CHECK( "e_bounds_0" == structure.keyword() );
+  CHECK( 0 == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 4 == structure.size() );
+  CHECK( 4 == structure.boundaries().size() );
+  CHECK( 3 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.boundaries()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.boundaries()[1] ) );
+  CHECK_THAT(     5, WithinRel( structure.boundaries()[2] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.boundaries()[3] ) );
+
+  // outgoing group structure: 1001
+  structure = chunk.outgoingStructure( 1001 );
+  CHECK( "e_bounds_1001" == structure.keyword() );
+  CHECK( 1001 == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 3 == structure.size() );
+  CHECK( 3 == structure.boundaries().size() );
+  CHECK( 2 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.boundaries()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.boundaries()[1] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.boundaries()[2] ) );
 
   // flux weights
   CHECK( "wgts" == chunk.flux().keyword() );

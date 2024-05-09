@@ -77,6 +77,16 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     &Table::structure,
     "The primary group structure record"
   )
+  .def(
+
+    "outgoing_structure",
+    &Table::outgoingStructure,
+    python::arg( "particle" ),
+    "The group structure record for an outgoing particle\n\n"
+    "Arguments:\n"
+    "    self       the metadata\n"
+    "    particle   the outgoing particle identifier"
+  )
   .def_property_readonly(
 
     "flux",

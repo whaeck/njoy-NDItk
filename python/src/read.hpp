@@ -9,7 +9,7 @@
 #include "tools/disco/FreeFormatCharacter.hpp"
 
 /**
- *  @brief Read a record from a string
+ *  @brief Read a record from a string (no subtype record)
  *
  *  @param[in] string   the string to read from
  */
@@ -17,15 +17,15 @@ template < typename Record, typename... Arguments >
 Record read( const std::string& string, Arguments... arguments ) {
 
   using namespace njoy::tools;
+  using namespace njoy::NDItk;
 
   Record record;
   auto iter = string.begin();
   auto end = string.end();
 
-  std::string key = disco::FreeFormatCharacter::read< std::string >( iter, end );
-  if ( record.keyword() == key ) {
+  base::Keyword key( disco::FreeFormatCharacter::read< std::string >( iter, end ) );
+  if ( record.keyword() == key.keyword() ) {
 
-    //! @todo take into account _0 style keys
     record.read( iter, end, arguments... );
 
     //! @todo verify the string is now empty
@@ -35,9 +35,44 @@ Record read( const std::string& string, Arguments... arguments ) {
 
     Log::error( "The record keyword is not the one expected" );
     Log::info( "Expected: \'{}\'", record.keyword() );
-    Log::info( "Found: \'{}\'", key );
+    Log::info( "Found: \'{}\'", key.keyword() );
     throw std::exception();
   }
 }
 
+/**
+ *  @brief Read a record from a string (subtype record)
+ *
+ *  @param[in] string   the string to read from
+ */
+template < typename Record, typename... Arguments >
+Record readWithSubtype( const std::string& string, Arguments... arguments ) {
+
+  using namespace njoy::tools;
+  using namespace njoy::NDItk;
+
+  Record record;
+  auto iter = string.begin();
+  auto end = string.end();
+
+  base::Keyword key( disco::FreeFormatCharacter::read< std::string >( iter, end ) );
+  if ( key.keyword().find( record.keyword() ) == 0 ) {
+
+    if ( key.particle().has_value() ) {
+
+      record = Record( key.particle().value() );
+    }
+    record.read( iter, end, arguments... );
+
+    //! @todo verify the string is now empty
+    return record;
+  }
+  else {
+
+    Log::error( "The record keyword is not the one expected" );
+    Log::info( "Expected: \'{}\'", record.keyword() );
+    Log::info( "Found: \'{}\'", key.keyword() );
+    throw std::exception();
+  }
+}
 #endif

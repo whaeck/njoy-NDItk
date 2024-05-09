@@ -29,9 +29,11 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual( 2.53e-8, metadata.temperature )
             self.assertAlmostEqual( 1e+10, metadata.dilution )
             self.assertEqual( 7, metadata.number_groups )
+            self.assertEqual( 3, metadata.number_outgoing_groups( 0 ) )
+            self.assertEqual( 2, metadata.number_outgoing_groups( 1001 ) )
             self.assertEqual( 2, metadata.number_reactions )
 
-            # verify content - energy boundaries
+            # verify content - primary energy boundaries
             structure = chunk.structure
             self.assertEqual( 7, structure.number_groups )
             self.assertAlmostEqual(    20, structure.boundaries[0] )
@@ -42,6 +44,21 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual(     5, structure.boundaries[5] )
             self.assertAlmostEqual(     1, structure.boundaries[6] )
             self.assertAlmostEqual( 1e-11, structure.boundaries[7] )
+
+            # verify content - outgoing energy boundaries: 0
+            structure = chunk.outgoing_structure( 0 )
+            self.assertEqual( 3, structure.number_groups )
+            self.assertAlmostEqual(    20, structure.boundaries[0] )
+            self.assertAlmostEqual(    10, structure.boundaries[1] )
+            self.assertAlmostEqual(     5, structure.boundaries[2] )
+            self.assertAlmostEqual( 1e-11, structure.boundaries[3] )
+
+            # verify content - outgoing energy boundaries: 1001
+            structure = chunk.outgoing_structure( 1001 )
+            self.assertEqual( 2, structure.number_groups )
+            self.assertAlmostEqual(    20, structure.boundaries[0] )
+            self.assertAlmostEqual(    10, structure.boundaries[1] )
+            self.assertAlmostEqual( 1e-11, structure.boundaries[2] )
 
             # verify content - flux weights
             flux = chunk.flux
@@ -117,7 +134,8 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                  process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
                                  temperature = 2.53e-8, dilution = 1e+10,
                                  structure = EnergyGroupStructure( [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] ),
-                                 outgoing = [],
+                                 outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
+                                              EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] )],
                                  flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
                                  xs = ReactionCrossSections(
                                           xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),

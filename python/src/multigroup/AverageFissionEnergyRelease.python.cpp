@@ -38,7 +38,7 @@ void wrapAverageFissionEnergyRelease( python::module& module, python::module& ) 
     python::arg( "gammas" ), python::arg( "betas" ), python::arg( "fragments" ),
     "Initialise the record\n\n"
     "Arguments:\n"
-    "    self        the table\n"
+    "    self        the record\n"
     "    total       the total energy release (including delayed particles\n"
     "                and neutrinos)\n"
     "    prompt      the recoverable energy release (total minus delayed\n"

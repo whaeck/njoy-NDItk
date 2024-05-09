@@ -36,7 +36,7 @@ void wrapCrossSection( python::module& module, python::module& ) {
     python::arg( "values" ),
     "Initialise the subrecord\n\n"
     "Arguments:\n"
-    "    self       the table\n"
+    "    self       the record\n"
     "    reaction   the reaction number\n"
     "    qvalue     the q value\n"
     "    values     the cross section values"

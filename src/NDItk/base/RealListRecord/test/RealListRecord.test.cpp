@@ -24,7 +24,7 @@ SCENARIO( "RealListRecord" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      RealListRecord chunk( "e_bounds", { 20.000001, 18.000000001, 16.0000000000001, 14., 10., 5, 1, 1e-11 } );
+      RealListRecord chunk( Keyword( "e_bounds" ), { 20.000001, 18.000000001, 16.0000000000001, 14., 10., 5, 1, 1e-11 } );
 
       THEN( "a RealListRecord can be constructed and members can "
             "be tested" ) {

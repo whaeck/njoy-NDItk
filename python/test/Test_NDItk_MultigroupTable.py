@@ -8,6 +8,7 @@ from NDItk import MultigroupTable
 from NDItk.multigroup import AverageFissionEnergyRelease
 from NDItk.multigroup import EnergyGroupStructure
 from NDItk.multigroup import FluxWeights
+from NDItk.multigroup import TotalCrossSection
 from NDItk.multigroup import ReactionCrossSections
 from NDItk.multigroup import CrossSection
 
@@ -70,6 +71,17 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual( 0.15, flux.weights[4] )
             self.assertAlmostEqual( 0.04, flux.weights[5] )
             self.assertAlmostEqual( 0.06, flux.weights[6] )
+
+            # verify content - total cross section
+            total = chunk.total_cross_section
+            self.assertEqual( 7, total.number_groups )
+            self.assertAlmostEqual( 1.10, total.values[0] )
+            self.assertAlmostEqual( 1.20, total.values[1] )
+            self.assertAlmostEqual( 1.25, total.values[2] )
+            self.assertAlmostEqual( 1.05, total.values[3] )
+            self.assertAlmostEqual( 1.15, total.values[4] )
+            self.assertAlmostEqual( 1.04, total.values[5] )
+            self.assertAlmostEqual( 1.06, total.values[6] )
 
             # verify content - reaction cross sections
             reactions = chunk.reaction_cross_sections
@@ -137,6 +149,7 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                  outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
                                               EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] )],
                                  flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
+                                 total = TotalCrossSection( [ 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 ] ),
                                  xs = ReactionCrossSections(
                                           xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
                                                  CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ),

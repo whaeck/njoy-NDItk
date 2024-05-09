@@ -17,6 +17,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   using Metadata = njoy::NDItk::multigroup::Metadata;
   using EnergyGroupStructure = njoy::NDItk::multigroup::EnergyGroupStructure;
   using FluxWeights = njoy::NDItk::multigroup::FluxWeights;
+  using TotalCrossSection = njoy::NDItk::multigroup::TotalCrossSection;
   using ReactionCrossSections = njoy::NDItk::multigroup::ReactionCrossSections;
   using AverageFissionEnergyRelease = njoy::NDItk::multigroup::AverageFissionEnergyRelease;
 
@@ -39,13 +40,14 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
                   EnergyGroupStructure,
                   std::vector< EnergyGroupStructure >,
                   FluxWeights,
+                  TotalCrossSection,
                   ReactionCrossSections,
                   std::optional< AverageFissionEnergyRelease > >(),
     python::arg( "zaid" ), python::arg( "libname" ), python::arg( "source" ),
     python::arg( "process" ), python::arg( "awr" ), python::arg( "weight" ),
     python::arg( "temperature" ), python::arg( "dilution" ),
     python::arg( "structure" ), python::arg( "outgoing" ),
-    python::arg( "flux" ), python::arg( "xs" ),
+    python::arg( "flux" ), python::arg( "total" ), python::arg( "xs" ),
     python::arg( "release" ) = std::nullopt,
     "Initialise the table\n\n"
     "Arguments:\n"
@@ -62,6 +64,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    structure      the primary group structure\n"
     "    outgoing       the outgoing particle group structures\n"
     "    flux           the flux weights\n"
+    "    total          the total cross section\n"
     "    xs             the reaction cross section data\n"
     "    release        the average fission energy release data"
   )
@@ -98,6 +101,12 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "reaction_cross_sections",
     &Table::reactionCrossSections,
     "The reaction cross section record"
+  )
+  .def_property_readonly(
+
+    "total_cross_section",
+    &Table::totalCrossSection,
+    "The total cross section record"
   )
   .def_property_readonly(
 

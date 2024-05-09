@@ -37,6 +37,7 @@ SCENARIO( "MultigroupTable" ) {
           { 1001, { 20., 10., 1e-11 } }
       };
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
+      multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
@@ -45,7 +46,7 @@ SCENARIO( "MultigroupTable" ) {
       MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
                              std::move( process ), awr, weight, temperature, dilution,
                              std::move( structure ), std::move( outgoing ), std::move( weights ),
-                             std::move( xs ), std::move( release ) );
+                             std::move( total ), std::move( xs ), std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
             "be tested" ) {
@@ -102,6 +103,7 @@ SCENARIO( "MultigroupTable" ) {
       double dilution = 1e+10;
       multigroup::EnergyGroupStructure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );            // <-- 7 groups
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04 } );                           // <-- 6 groups
+      multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04 } );                       // <-- 5 groups
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70., 80. } },    // <-- 8 groups
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7., 8. } } } );
 
@@ -109,7 +111,8 @@ SCENARIO( "MultigroupTable" ) {
 
         CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ), std::move( source ),
                                        std::move( process ), awr, weight, temperature, dilution,
-                                       std::move( structure ), {}, std::move( weights ), std::move( xs ) ) );
+                                       std::move( structure ), {}, std::move( weights ), std::move( total ),
+                                       std::move( xs ) ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -151,6 +154,9 @@ std::string chunk() {
          "wgts\n"
          "    0.1 0.2 0.25 0.05 0.15\n"
          "    0.04 0.06\n"
+         "sig_tot\n"
+         "    1.1 1.2 1.25 1.05 1.15\n"
+         "    1.04 1.06\n"
          "sig_reac\n"
          "    2 0\n"
          "    10 20 30 40 50\n"
@@ -232,6 +238,20 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 0.15, WithinRel( chunk.flux().weights()[4] ) );
   CHECK_THAT( 0.04, WithinRel( chunk.flux().weights()[5] ) );
   CHECK_THAT( 0.06, WithinRel( chunk.flux().weights()[6] ) );
+
+  // total cross section
+  CHECK( "sig_tot" == chunk.totalCrossSection().keyword() );
+  CHECK( false == chunk.totalCrossSection().empty() );
+  CHECK( 7 == chunk.totalCrossSection().size() );
+  CHECK( 7 == chunk.totalCrossSection().values().size() );
+  CHECK( 7 == chunk.totalCrossSection().numberGroups() );
+  CHECK_THAT( 1.10, WithinRel( chunk.totalCrossSection().values()[0] ) );
+  CHECK_THAT( 1.20, WithinRel( chunk.totalCrossSection().values()[1] ) );
+  CHECK_THAT( 1.25, WithinRel( chunk.totalCrossSection().values()[2] ) );
+  CHECK_THAT( 1.05, WithinRel( chunk.totalCrossSection().values()[3] ) );
+  CHECK_THAT( 1.15, WithinRel( chunk.totalCrossSection().values()[4] ) );
+  CHECK_THAT( 1.04, WithinRel( chunk.totalCrossSection().values()[5] ) );
+  CHECK_THAT( 1.06, WithinRel( chunk.totalCrossSection().values()[6] ) );
 
   // reaction cross sections
   CHECK( 18 == chunk.reactionCrossSections().size() );

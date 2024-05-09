@@ -9,6 +9,7 @@
 #include "NDItk/multigroup/EnergyGroupStructure.hpp"
 #include "NDItk/multigroup/FluxWeights.hpp"
 #include "NDItk/multigroup/ReactionCrossSections.hpp"
+#include "NDItk/multigroup/TotalCrossSection.hpp"
 #include "NDItk/multigroup/AverageFissionEnergyRelease.hpp"
 
 namespace njoy {
@@ -26,6 +27,7 @@ class MultigroupTable {
   std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;
   multigroup::FluxWeights weights_;
   multigroup::ReactionCrossSections xs_;
+  multigroup::TotalCrossSection total_;
   multigroup::AverageFissionEnergyRelease release_;
 
   /* auxiliary functions */
@@ -83,6 +85,14 @@ public:
   const multigroup::FluxWeights& flux() const { return this->weights_; }
 
   /**
+   *  @brief Return the total cross section record
+   */
+  const multigroup::TotalCrossSection& totalCrossSection() const {
+
+    return this->total_;
+  }
+
+  /**
    *  @brief Return the reaction cross section record
    */
   const multigroup::ReactionCrossSections& reactionCrossSections() const {
@@ -113,6 +123,7 @@ public:
     this->primary_structure_.print( iter );
     for ( const auto& entry : this->outgoing_structure_ ) { entry.print( iter ); }
     this->weights_.print( iter );
+    this->total_.print( iter );
     this->xs_.print( iter );
     this->release_.print( iter );
     base::Keyword( "end" ).print( iter );

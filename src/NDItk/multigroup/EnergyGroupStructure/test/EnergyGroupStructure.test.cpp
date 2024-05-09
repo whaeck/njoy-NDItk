@@ -143,7 +143,7 @@ SCENARIO( "EnergyGroupStructure" ) {
 
       THEN( "an exception is thrown" ) {
 
-        std::vector< double > wrong = { 1., 20. };
+        std::vector< double > wrong = { 3., 1., 20. };
 
         CHECK_THROWS( EnergyGroupStructure( std::move( wrong ) ) );
       } // THEN
@@ -183,7 +183,7 @@ SCENARIO( "EnergyGroupStructure" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( chunk.read( iter, end, 2 ) );
+        CHECK_THROWS( chunk.read( iter, end, 3 ) );
       } // THEN
     } // WHEN
 
@@ -281,7 +281,7 @@ std::string chunkWithInsufficientNumberBoundaries() {
 std::string chunkWithNonDescendingBoundaries() {
 
   return "e_bounds\n"
-         "    1 20\n";
+         "    3 1 20\n";
 }
 
 std::string chunkWithNonUniqueBoundaries() {

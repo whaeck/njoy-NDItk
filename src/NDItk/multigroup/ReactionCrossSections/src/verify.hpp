@@ -1,11 +1,11 @@
 /**
- *  @brief Verify the groups structure
+ *  @brief Verify the reaction cross section information
  *
  *  The following verification tests are performed:
- *    - there are at least two values
- *    - the boundaries are unique and in descending order
+ *    - there is at least one reaction
+ *    - the number of groups for each reaction is the same
  *
- *  @param[in] boundaries    the boundary values to be verified
+ *  @param[in] reactions    the reactions to be verified
  */
 template < typename Range >
 static void verify( const Range& reactions ) {

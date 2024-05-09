@@ -23,7 +23,7 @@ SCENARIO( "RealListRecord" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      RealListRecord chunk( "e_bounds", { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );
+      RealListRecord chunk( "e_bounds", { 20.000001, 18.000000001, 16.0000000000001, 14., 10., 5, 1, 1e-11 } );
 
       THEN( "a RealListRecord can be constructed and members can "
             "be tested" ) {
@@ -69,7 +69,7 @@ SCENARIO( "RealListRecord" ) {
 std::string chunk() {
 
   return "e_bounds\n"
-         "    20 18 16 14 10\n"
+         "    20.000001 18.000000001 16.0000000000001 14 10\n"
          "    5 1 1e-11\n";
 }
 
@@ -79,9 +79,9 @@ void verifyChunk( const RealListRecord& chunk ) {
   CHECK( false == chunk.empty() );
   CHECK( 8 == chunk.size() );
   CHECK( 8 == chunk.values().size() );
-  CHECK_THAT(    20, WithinRel( chunk.values()[0] ) );
-  CHECK_THAT(    18, WithinRel( chunk.values()[1] ) );
-  CHECK_THAT(    16, WithinRel( chunk.values()[2] ) );
+  CHECK_THAT(    20.000001, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT(    18.000000001, WithinRel( chunk.values()[1] ) );
+  CHECK_THAT(    16.0000000000001, WithinRel( chunk.values()[2] ) );
   CHECK_THAT(    14, WithinRel( chunk.values()[3] ) );
   CHECK_THAT(    10, WithinRel( chunk.values()[4] ) );
   CHECK_THAT(     5, WithinRel( chunk.values()[5] ) );

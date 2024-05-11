@@ -52,12 +52,16 @@ public:
   /**
    *  @brief Return the primary group structure record
    */
-  const multigroup::EnergyGroupStructure& structure() const { return this->primary_structure_; }
+  const multigroup::EnergyGroupStructure& primaryGroupBoundaries() const { 
+    
+    return this->primary_structure_; 
+  }
 
   /**
    *  @brief Return the group structure record for an outgoing particle
    */
-  const multigroup::EnergyGroupStructure& outgoingStructure( unsigned int particle ) const {
+  const multigroup::EnergyGroupStructure& 
+  outgoingGroupBoundaries( unsigned int particle ) const {
 
     auto pos = std::lower_bound( this->outgoing_structure_.begin(),
                                  this->outgoing_structure_.end(),
@@ -80,7 +84,7 @@ public:
   /**
    *  @brief Return the flux weight record
    */
-  const multigroup::FluxWeights& flux() const { return this->weights_; }
+  const multigroup::FluxWeights& fluxWeights() const { return this->weights_; }
 
   /**
    *  @brief Return the reaction cross section record

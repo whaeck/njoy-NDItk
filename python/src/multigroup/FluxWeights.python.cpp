@@ -41,13 +41,6 @@ void wrapFluxWeights( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
-    "weights",
-    [] ( const Record& self ) -> DoubleRange
-       { return self.weights(); },
-    "The flux weights"
-  )
-  .def_property_readonly(
-
     "number_groups",
     &Record::numberGroups,
     "The number of groups defined by this record"

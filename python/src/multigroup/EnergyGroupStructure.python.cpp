@@ -51,13 +51,6 @@ void wrapEnergyGroupStructure( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
-    "boundaries",
-    [] ( const Record& self ) -> DoubleRange
-       { return self.boundaries(); },
-    "The group structure boundaries"
-  )
-  .def_property_readonly(
-
     "number_groups",
     &Record::numberGroups,
     "The number of groups defined by this record"

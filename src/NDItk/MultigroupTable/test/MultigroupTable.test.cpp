@@ -179,59 +179,61 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( 2 == chunk.metadata().numberReactions().value() );
 
   // principal group structure
-  CHECK( "e_bounds" == chunk.structure().keyword() );
-  CHECK( std::nullopt == chunk.structure().particle() );
-  CHECK( false == chunk.structure().empty() );
-  CHECK( 8 == chunk.structure().size() );
-  CHECK( 8 == chunk.structure().boundaries().size() );
-  CHECK( 7 == chunk.structure().numberGroups() );
-  CHECK_THAT(    20, WithinRel( chunk.structure().boundaries()[0] ) );
-  CHECK_THAT(    18.123456789, WithinRel( chunk.structure().boundaries()[1] ) );
-  CHECK_THAT(    16.0000000000001, WithinRel( chunk.structure().boundaries()[2] ) );
-  CHECK_THAT(    14, WithinRel( chunk.structure().boundaries()[3] ) );
-  CHECK_THAT(    10, WithinRel( chunk.structure().boundaries()[4] ) );
-  CHECK_THAT(     5, WithinRel( chunk.structure().boundaries()[5] ) );
-  CHECK_THAT(     1, WithinRel( chunk.structure().boundaries()[6] ) );
-  CHECK_THAT( 1e-11, WithinRel( chunk.structure().boundaries()[7] ) );
+  auto structure = chunk.primaryGroupBoundaries();
+  CHECK( "e_bounds" == structure.keyword() );
+  CHECK( std::nullopt == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 8 == structure.size() );
+  CHECK( 8 == structure.values().size() );
+  CHECK( 7 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    18.123456789, WithinRel( structure.values()[1] ) );
+  CHECK_THAT(    16.0000000000001, WithinRel( structure.values()[2] ) );
+  CHECK_THAT(    14, WithinRel( structure.values()[3] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[4] ) );
+  CHECK_THAT(     5, WithinRel( structure.values()[5] ) );
+  CHECK_THAT(     1, WithinRel( structure.values()[6] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[7] ) );
 
   // outgoing group structure: 0
-  auto structure = chunk.outgoingStructure( 0 );
+  structure = chunk.outgoingGroupBoundaries( 0 );
   CHECK( "e_bounds_0" == structure.keyword() );
   CHECK( 0 == structure.particle() );
   CHECK( false == structure.empty() );
   CHECK( 4 == structure.size() );
-  CHECK( 4 == structure.boundaries().size() );
+  CHECK( 4 == structure.values().size() );
   CHECK( 3 == structure.numberGroups() );
-  CHECK_THAT(    20, WithinRel( structure.boundaries()[0] ) );
-  CHECK_THAT(    10, WithinRel( structure.boundaries()[1] ) );
-  CHECK_THAT(     5, WithinRel( structure.boundaries()[2] ) );
-  CHECK_THAT( 1e-11, WithinRel( structure.boundaries()[3] ) );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
+  CHECK_THAT(     5, WithinRel( structure.values()[2] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[3] ) );
 
   // outgoing group structure: 1001
-  structure = chunk.outgoingStructure( 1001 );
+  structure = chunk.outgoingGroupBoundaries( 1001 );
   CHECK( "e_bounds_1001" == structure.keyword() );
   CHECK( 1001 == structure.particle() );
   CHECK( false == structure.empty() );
   CHECK( 3 == structure.size() );
-  CHECK( 3 == structure.boundaries().size() );
+  CHECK( 3 == structure.values().size() );
   CHECK( 2 == structure.numberGroups() );
-  CHECK_THAT(    20, WithinRel( structure.boundaries()[0] ) );
-  CHECK_THAT(    10, WithinRel( structure.boundaries()[1] ) );
-  CHECK_THAT( 1e-11, WithinRel( structure.boundaries()[2] ) );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[2] ) );
 
-  // flux weights
-  CHECK( "wgts" == chunk.flux().keyword() );
-  CHECK( false == chunk.flux().empty() );
-  CHECK( 7 == chunk.flux().size() );
-  CHECK( 7 == chunk.flux().weights().size() );
-  CHECK( 7 == chunk.flux().numberGroups() );
-  CHECK_THAT( 0.10, WithinRel( chunk.flux().weights()[0] ) );
-  CHECK_THAT( 0.20, WithinRel( chunk.flux().weights()[1] ) );
-  CHECK_THAT( 0.25, WithinRel( chunk.flux().weights()[2] ) );
-  CHECK_THAT( 0.05, WithinRel( chunk.flux().weights()[3] ) );
-  CHECK_THAT( 0.15, WithinRel( chunk.flux().weights()[4] ) );
-  CHECK_THAT( 0.04, WithinRel( chunk.flux().weights()[5] ) );
-  CHECK_THAT( 0.06, WithinRel( chunk.flux().weights()[6] ) );
+  // flux values
+  auto flux = chunk.fluxWeights();
+  CHECK( "wgts" == flux.keyword() );
+  CHECK( false == flux.empty() );
+  CHECK( 7 == flux.size() );
+  CHECK( 7 == flux.values().size() );
+  CHECK( 7 == flux.numberGroups() );
+  CHECK_THAT( 0.10, WithinRel( flux.values()[0] ) );
+  CHECK_THAT( 0.20, WithinRel( flux.values()[1] ) );
+  CHECK_THAT( 0.25, WithinRel( flux.values()[2] ) );
+  CHECK_THAT( 0.05, WithinRel( flux.values()[3] ) );
+  CHECK_THAT( 0.15, WithinRel( flux.values()[4] ) );
+  CHECK_THAT( 0.04, WithinRel( flux.values()[5] ) );
+  CHECK_THAT( 0.06, WithinRel( flux.values()[6] ) );
 
   // reaction cross sections
   CHECK( 18 == chunk.reactionCrossSections().size() );

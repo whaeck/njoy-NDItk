@@ -46,11 +46,6 @@ public:
     return this->empty() ? 0 : this->size() - 1;
   }
 
-  /**
-   *  @brief Return the group structure boundaries
-   */
-  auto boundaries() const { return this->values(); }
-
   using base::RealListRecord::keyword;
   using base::RealListRecord::particle;
   using base::RealListRecord::values;

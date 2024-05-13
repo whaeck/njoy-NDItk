@@ -14,9 +14,12 @@ void verify() {
        ( this->reactionCrossSections().numberGroups() != groups ) ) {
 
     Log::error( "Found inconsistent number of primary groups across the table" );
-    Log::info( "Number of primary groups in the metadata: {}", this->metadata().numberGroups().value() );
-    Log::info( "Number of primary groups in the structure: {}", this->structure().numberGroups() );
-    Log::info( "Number of primary groups in the flux weights: {}", this->flux().numberGroups() );
+    Log::info( "Number of primary groups in the metadata: {}", 
+               this->metadata().numberGroups().value() );
+    Log::info( "Number of primary groups in the primary group structure: {}", 
+               this->primaryGroupBoundaries().numberGroups() );
+    Log::info( "Number of primary groups in the flux weights: {}", 
+               this->fluxWeights().numberGroups() );
     Log::info( "Number of primary groups in the total cross section: {}",
                this->totalCrossSection().numberGroups() );
     Log::info( "Number of primary groups in the reaction cross section data: {}",

@@ -20,13 +20,13 @@ class Test_NDItk_multigroup_FluxWeights( unittest.TestCase ) :
 
             # verify content
             self.assertEqual( 7, chunk.number_groups )
-            self.assertAlmostEqual( 0.10, chunk.weights[0] )
-            self.assertAlmostEqual( 0.20, chunk.weights[1] )
-            self.assertAlmostEqual( 0.25, chunk.weights[2] )
-            self.assertAlmostEqual( 0.05, chunk.weights[3] )
-            self.assertAlmostEqual( 0.15, chunk.weights[4] )
-            self.assertAlmostEqual( 0.04, chunk.weights[5] )
-            self.assertAlmostEqual( 0.06, chunk.weights[6] )
+            self.assertAlmostEqual( 0.10, chunk.values[0] )
+            self.assertAlmostEqual( 0.20, chunk.values[1] )
+            self.assertAlmostEqual( 0.25, chunk.values[2] )
+            self.assertAlmostEqual( 0.05, chunk.values[3] )
+            self.assertAlmostEqual( 0.15, chunk.values[4] )
+            self.assertAlmostEqual( 0.04, chunk.values[5] )
+            self.assertAlmostEqual( 0.06, chunk.values[6] )
 
             self.assertEqual( self.chunk_string, chunk.to_string() )
 

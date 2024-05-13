@@ -8,8 +8,8 @@ void verify() {
 
   // consistent group structure
   const auto groups = this->metadata().numberGroups().value();
-  if ( ( this->structure().numberGroups() != groups ) ||
-       ( this->flux().numberGroups() != groups ) ||
+  if ( ( this->primaryGroupBoundaries().numberGroups() != groups ) ||
+       ( this->fluxWeights().numberGroups() != groups ) ||
        ( this->totalCrossSection().numberGroups() != groups ) ||
        ( this->reactionCrossSections().numberGroups() != groups ) ) {
 

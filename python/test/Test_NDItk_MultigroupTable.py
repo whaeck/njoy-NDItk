@@ -35,42 +35,42 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertEqual( 2, metadata.number_reactions )
 
             # verify content - primary energy boundaries
-            structure = chunk.structure
+            structure = chunk.primary_group_boundaries
             self.assertEqual( 7, structure.number_groups )
-            self.assertAlmostEqual(    20, structure.boundaries[0] )
-            self.assertAlmostEqual(    18.123456789, structure.boundaries[1] )
-            self.assertAlmostEqual(    16.0000000000001, structure.boundaries[2] )
-            self.assertAlmostEqual(    14, structure.boundaries[3] )
-            self.assertAlmostEqual(    10, structure.boundaries[4] )
-            self.assertAlmostEqual(     5, structure.boundaries[5] )
-            self.assertAlmostEqual(     1, structure.boundaries[6] )
-            self.assertAlmostEqual( 1e-11, structure.boundaries[7] )
+            self.assertAlmostEqual(    20, structure.values[0] )
+            self.assertAlmostEqual(    18.123456789, structure.values[1] )
+            self.assertAlmostEqual(    16.0000000000001, structure.values[2] )
+            self.assertAlmostEqual(    14, structure.values[3] )
+            self.assertAlmostEqual(    10, structure.values[4] )
+            self.assertAlmostEqual(     5, structure.values[5] )
+            self.assertAlmostEqual(     1, structure.values[6] )
+            self.assertAlmostEqual( 1e-11, structure.values[7] )
 
             # verify content - outgoing energy boundaries: 0
-            structure = chunk.outgoing_structure( 0 )
+            structure = chunk.outgoing_group_boundaries( 0 )
             self.assertEqual( 3, structure.number_groups )
-            self.assertAlmostEqual(    20, structure.boundaries[0] )
-            self.assertAlmostEqual(    10, structure.boundaries[1] )
-            self.assertAlmostEqual(     5, structure.boundaries[2] )
-            self.assertAlmostEqual( 1e-11, structure.boundaries[3] )
+            self.assertAlmostEqual(    20, structure.values[0] )
+            self.assertAlmostEqual(    10, structure.values[1] )
+            self.assertAlmostEqual(     5, structure.values[2] )
+            self.assertAlmostEqual( 1e-11, structure.values[3] )
 
             # verify content - outgoing energy boundaries: 1001
-            structure = chunk.outgoing_structure( 1001 )
+            structure = chunk.outgoing_group_boundaries( 1001 )
             self.assertEqual( 2, structure.number_groups )
-            self.assertAlmostEqual(    20, structure.boundaries[0] )
-            self.assertAlmostEqual(    10, structure.boundaries[1] )
-            self.assertAlmostEqual( 1e-11, structure.boundaries[2] )
+            self.assertAlmostEqual(    20, structure.values[0] )
+            self.assertAlmostEqual(    10, structure.values[1] )
+            self.assertAlmostEqual( 1e-11, structure.values[2] )
 
             # verify content - flux weights
-            flux = chunk.flux
+            flux = chunk.flux_weights
             self.assertEqual( 7, flux.number_groups )
-            self.assertAlmostEqual( 0.10, flux.weights[0] )
-            self.assertAlmostEqual( 0.20, flux.weights[1] )
-            self.assertAlmostEqual( 0.25, flux.weights[2] )
-            self.assertAlmostEqual( 0.05, flux.weights[3] )
-            self.assertAlmostEqual( 0.15, flux.weights[4] )
-            self.assertAlmostEqual( 0.04, flux.weights[5] )
-            self.assertAlmostEqual( 0.06, flux.weights[6] )
+            self.assertAlmostEqual( 0.10, flux.values[0] )
+            self.assertAlmostEqual( 0.20, flux.values[1] )
+            self.assertAlmostEqual( 0.25, flux.values[2] )
+            self.assertAlmostEqual( 0.05, flux.values[3] )
+            self.assertAlmostEqual( 0.15, flux.values[4] )
+            self.assertAlmostEqual( 0.04, flux.values[5] )
+            self.assertAlmostEqual( 0.06, flux.values[6] )
 
             # verify content - total cross section
             total = chunk.total_cross_section

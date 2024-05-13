@@ -35,11 +35,6 @@ public:
    */
   std::size_t numberGroups() const { return this->size(); }
 
-  /**
-   *  @brief Return the flux weights
-   */
-  auto weights() const { return this->values(); }
-
   using base::RealListRecord::keyword;
   using base::RealListRecord::values;
   using base::RealListRecord::size;

@@ -24,14 +24,14 @@ class Test_NDItk_multigroup_EnergyGroupStructure( unittest.TestCase ) :
 
             # verify content
             self.assertEqual( 7, chunk.number_groups )
-            self.assertAlmostEqual(    20, chunk.boundaries[0] )
-            self.assertAlmostEqual(    18, chunk.boundaries[1] )
-            self.assertAlmostEqual(    16, chunk.boundaries[2] )
-            self.assertAlmostEqual(    14, chunk.boundaries[3] )
-            self.assertAlmostEqual(    10, chunk.boundaries[4] )
-            self.assertAlmostEqual(     5, chunk.boundaries[5] )
-            self.assertAlmostEqual(     1, chunk.boundaries[6] )
-            self.assertAlmostEqual( 1e-11, chunk.boundaries[7] )
+            self.assertAlmostEqual(    20, chunk.values[0] )
+            self.assertAlmostEqual(    18, chunk.values[1] )
+            self.assertAlmostEqual(    16, chunk.values[2] )
+            self.assertAlmostEqual(    14, chunk.values[3] )
+            self.assertAlmostEqual(    10, chunk.values[4] )
+            self.assertAlmostEqual(     5, chunk.values[5] )
+            self.assertAlmostEqual(     1, chunk.values[6] )
+            self.assertAlmostEqual( 1e-11, chunk.values[7] )
 
             self.assertEqual( self.chunk_string, chunk.to_string() )
 
@@ -49,9 +49,9 @@ class Test_NDItk_multigroup_EnergyGroupStructure( unittest.TestCase ) :
 
             # verify content
             self.assertEqual( 2, chunk.number_groups )
-            self.assertAlmostEqual(    20, chunk.boundaries[0] )
-            self.assertAlmostEqual(    10, chunk.boundaries[1] )
-            self.assertAlmostEqual( 1e-11, chunk.boundaries[2] )
+            self.assertAlmostEqual(    20, chunk.values[0] )
+            self.assertAlmostEqual(    10, chunk.values[1] )
+            self.assertAlmostEqual( 1e-11, chunk.values[2] )
 
             self.assertEqual( self.chunk_outgoing_string, chunk.to_string() )
 

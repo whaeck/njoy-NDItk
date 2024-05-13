@@ -76,14 +76,14 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
-    "structure",
-    &Table::structure,
+    "primary_group_boundaries",
+    &Table::primaryGroupBoundaries,
     "The primary group structure record"
   )
   .def(
 
-    "outgoing_structure",
-    &Table::outgoingStructure,
+    "outgoing_group_boundaries",
+    &Table::outgoingGroupBoundaries,
     python::arg( "particle" ),
     "The group structure record for an outgoing particle\n\n"
     "Arguments:\n"
@@ -92,8 +92,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
-    "flux",
-    &Table::flux,
+    "flux_weights",
+    &Table::fluxWeights,
     "The flux weight record"
   )
   .def_property_readonly(

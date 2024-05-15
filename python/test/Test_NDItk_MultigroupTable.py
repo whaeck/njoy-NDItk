@@ -11,6 +11,7 @@ from NDItk.multigroup import FluxWeights
 from NDItk.multigroup import TotalCrossSection
 from NDItk.multigroup import ReactionCrossSections
 from NDItk.multigroup import CrossSection
+from NDItk.multigroup import Velocities
 
 class Test_NDItk_MultigroupTable( unittest.TestCase ) :
     """Unit test for the MultigroupTable class."""
@@ -60,6 +61,17 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual(    20, structure.values[0] )
             self.assertAlmostEqual(    10, structure.values[1] )
             self.assertAlmostEqual( 1e-11, structure.values[2] )
+
+            # verify content - velocities
+            velocities = chunk.velocities
+            self.assertEqual( 7, velocities.number_groups )
+            self.assertAlmostEqual( 2.10, velocities.values[0] )
+            self.assertAlmostEqual( 2.20, velocities.values[1] )
+            self.assertAlmostEqual( 2.25, velocities.values[2] )
+            self.assertAlmostEqual( 2.05, velocities.values[3] )
+            self.assertAlmostEqual( 2.15, velocities.values[4] )
+            self.assertAlmostEqual( 2.04, velocities.values[5] )
+            self.assertAlmostEqual( 2.06, velocities.values[6] )
 
             # verify content - flux weights
             flux = chunk.flux_weights
@@ -148,6 +160,7 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                  structure = EnergyGroupStructure( [ 20., 18.123456789, 16.0000000000001, 14., 10., 5, 1, 1e-11 ] ),
                                  outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
                                               EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] )],
+                                 velocities = Velocities( [ 2.1, 2.2, 2.25, 2.05, 2.15, 2.04, 2.06 ] ),
                                  flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
                                  total = TotalCrossSection( [ 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 ] ),
                                  xs = ReactionCrossSections(

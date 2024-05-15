@@ -7,6 +7,7 @@
 #include "tools/Log.hpp"
 #include "NDItk/multigroup/Metadata.hpp"
 #include "NDItk/multigroup/EnergyGroupStructure.hpp"
+#include "NDItk/multigroup/Velocities.hpp"
 #include "NDItk/multigroup/FluxWeights.hpp"
 #include "NDItk/multigroup/ReactionCrossSections.hpp"
 #include "NDItk/multigroup/TotalCrossSection.hpp"
@@ -24,6 +25,7 @@ class MultigroupTable {
 
   multigroup::Metadata metadata_;
   multigroup::EnergyGroupStructure primary_structure_;
+  multigroup::Velocities velocities_;
   std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;
   multigroup::FluxWeights weights_;
   multigroup::ReactionCrossSections xs_;
@@ -54,15 +56,15 @@ public:
   /**
    *  @brief Return the primary group structure record
    */
-  const multigroup::EnergyGroupStructure& primaryGroupBoundaries() const { 
-    
-    return this->primary_structure_; 
+  const multigroup::EnergyGroupStructure& primaryGroupBoundaries() const {
+
+    return this->primary_structure_;
   }
 
   /**
    *  @brief Return the group structure record for an outgoing particle
    */
-  const multigroup::EnergyGroupStructure& 
+  const multigroup::EnergyGroupStructure&
   outgoingGroupBoundaries( unsigned int particle ) const {
 
     auto pos = std::lower_bound( this->outgoing_structure_.begin(),
@@ -81,6 +83,14 @@ public:
     }
     Log::error( "The requested outgoing particle \'{}\' has no outgoing group structure", particle );
     throw std::exception();
+  }
+
+  /**
+   *  @brief Return the velocity record
+   */
+  const multigroup::Velocities& velocities() const {
+
+    return this->velocities_;
   }
 
   /**
@@ -126,6 +136,7 @@ public:
     this->metadata_.print( iter );
     this->primary_structure_.print( iter );
     for ( const auto& entry : this->outgoing_structure_ ) { entry.print( iter ); }
+    this->velocities_.print( iter );
     this->weights_.print( iter );
     this->total_.print( iter );
     this->xs_.print( iter );

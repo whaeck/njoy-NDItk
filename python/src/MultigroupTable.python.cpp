@@ -16,6 +16,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   using Table = njoy::NDItk::MultigroupTable;
   using Metadata = njoy::NDItk::multigroup::Metadata;
   using EnergyGroupStructure = njoy::NDItk::multigroup::EnergyGroupStructure;
+  using Velocities = njoy::NDItk::multigroup::Velocities;
   using FluxWeights = njoy::NDItk::multigroup::FluxWeights;
   using TotalCrossSection = njoy::NDItk::multigroup::TotalCrossSection;
   using ReactionCrossSections = njoy::NDItk::multigroup::ReactionCrossSections;
@@ -39,6 +40,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
                   double, double, double,
                   EnergyGroupStructure,
                   std::vector< EnergyGroupStructure >,
+                  Velocities,
                   FluxWeights,
                   ReactionCrossSections,
                   std::optional< std::string >,
@@ -49,7 +51,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "process" ), python::arg( "awr" ),
     python::arg( "temperature" ), python::arg( "dilution" ),
     python::arg( "structure" ), python::arg( "outgoing" ),
-    python::arg( "flux" ), python::arg( "xs" ),
+    python::arg( "velocities" ), python::arg( "flux" ),
+    python::arg( "xs" ),
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
     python::arg( "total" ) = std::nullopt,
@@ -66,6 +69,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    dilution       the dilution (aka sigma0)\n"
     "    structure      the primary group structure\n"
     "    outgoing       the outgoing particle group structures\n"
+    "    velocities     the velocities\n"
     "    flux           the flux weights\n"
     "    xs             the reaction cross section data\n"
     "    source         the source date (optional)\n"
@@ -94,6 +98,12 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "Arguments:\n"
     "    self       the metadata\n"
     "    particle   the outgoing particle identifier"
+  )
+  .def_property_readonly(
+
+    "velocities",
+    &Table::velocities,
+    "The velocity record"
   )
   .def_property_readonly(
 

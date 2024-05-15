@@ -9,6 +9,7 @@ void verify() {
   // consistent group structure
   const auto groups = this->metadata().numberGroups().value();
   if ( ( this->primaryGroupBoundaries().numberGroups() != groups ) ||
+       ( this->velocities().numberGroups() != groups ) ||
        ( this->fluxWeights().numberGroups() != groups ) ||
        ( ( ! this->totalCrossSection().empty() ) && this->totalCrossSection().numberGroups() != groups ) ||
        ( this->reactionCrossSections().numberGroups() != groups ) ) {
@@ -18,6 +19,8 @@ void verify() {
                this->metadata().numberGroups().value() );
     Log::info( "Number of primary groups in the primary group structure: {}",
                this->primaryGroupBoundaries().numberGroups() );
+    Log::info( "Number of primary groups in the velocities: {}",
+               this->velocities().numberGroups() );
     Log::info( "Number of primary groups in the flux weights: {}",
                this->fluxWeights().numberGroups() );
     if ( ! this->totalCrossSection().empty() ) {

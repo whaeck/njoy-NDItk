@@ -36,6 +36,7 @@ SCENARIO( "MultigroupTable" ) {
           { 0, { 20., 10., 5, 1e-11 } },
           { 1001, { 20., 10., 1e-11 } }
       };
+      multigroup::Velocities velocities( { 2.1, 2.2, 2.25, 2.05, 2.15, 2.04, 2.06 } );
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
       multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
@@ -45,7 +46,8 @@ SCENARIO( "MultigroupTable" ) {
 
       MultigroupTable chunk( std::move( zaid ), std::move( name ),
                              std::move( process ), awr, temperature, dilution,
-                             std::move( structure ), std::move( outgoing ), std::move( weights ),
+                             std::move( structure ), std::move( outgoing ),
+                             std::move( velocities ), std::move( weights ),
                              std::move( xs ), std::move( source ), weight,
                              std::move( total ), std::move( release ) );
 
@@ -103,6 +105,7 @@ SCENARIO( "MultigroupTable" ) {
       double temperature = 2.53e-8;
       double dilution = 1e+10;
       multigroup::EnergyGroupStructure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );            // <-- 7 groups
+      multigroup::Velocities velocities( { 2.1, 2.2, 2.25, 2.05 } );                                     // <-- 4 groups
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04 } );                           // <-- 6 groups
       multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04 } );                       // <-- 5 groups
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70., 80. } },    // <-- 8 groups
@@ -112,8 +115,9 @@ SCENARIO( "MultigroupTable" ) {
 
         CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ),
                                        std::move( process ), awr, temperature, dilution,
-                                       std::move( structure ), {}, std::move( weights ),
-                                       std::move( xs ), std::move( source ), weight,
+                                       std::move( structure ), {}, std::move( velocities ),
+                                       std::move( weights ), std::move( xs ),
+                                       std::move( source ), weight,
                                        std::move( total ) ) );
       } // THEN
     } // WHEN
@@ -153,6 +157,9 @@ std::string chunk() {
          "    20 10 5 1e-11\n"
          "e_bounds_1001\n"
          "    20 10 1e-11\n"
+         "vel\n"
+         "    2.1 2.2 2.25 2.05 2.15\n"
+         "    2.04 2.06\n"
          "wgts\n"
          "    0.1 0.2 0.25 0.05 0.15\n"
          "    0.04 0.06\n"
@@ -227,6 +234,21 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
   CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
   CHECK_THAT( 1e-11, WithinRel( structure.values()[2] ) );
+
+  // velocity values
+  auto velocities = chunk.velocities();
+  CHECK( "vel" == velocities.keyword() );
+  CHECK( false == velocities.empty() );
+  CHECK( 7 == velocities.size() );
+  CHECK( 7 == velocities.values().size() );
+  CHECK( 7 == velocities.numberGroups() );
+  CHECK_THAT( 2.10, WithinRel( velocities.values()[0] ) );
+  CHECK_THAT( 2.20, WithinRel( velocities.values()[1] ) );
+  CHECK_THAT( 2.25, WithinRel( velocities.values()[2] ) );
+  CHECK_THAT( 2.05, WithinRel( velocities.values()[3] ) );
+  CHECK_THAT( 2.15, WithinRel( velocities.values()[4] ) );
+  CHECK_THAT( 2.04, WithinRel( velocities.values()[5] ) );
+  CHECK_THAT( 2.06, WithinRel( velocities.values()[6] ) );
 
   // flux values
   auto flux = chunk.fluxWeights();

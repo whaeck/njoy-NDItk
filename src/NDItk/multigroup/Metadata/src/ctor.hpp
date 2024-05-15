@@ -34,11 +34,12 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
  *  @param[in] downscatter    the number of downscatter groups (optional)
  */
 Metadata( std::string zaid, std::string libname, std::string process,
-          double awr, double weight, double temperature, double dilution,
+          double awr, double temperature, double dilution,
           unsigned int groups,
           const std::map< unsigned int, unsigned int >& outgoing,
           unsigned int reactions,
           std::optional< std::string > source = std::nullopt,
+          std::optional< double  > weight = std::nullopt,
           std::optional< int > upscatter = std::nullopt,
           std::optional< int > downscatter = std::nullopt ) :
     zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
@@ -48,7 +49,9 @@ Metadata( std::string zaid, std::string libname, std::string process,
                   : base::SingleStringRecord( base::Keyword( "date_source" ) ) ),
     process_date_( base::Keyword( "date_processed" ), std::move( process ) ),
     awr_( base::Keyword( "awr" ), awr ),
-    atomic_weight_( base::Keyword( "at_wgt" ), weight ),
+    atomic_weight_( weight.has_value()
+                    ? base::SingleRealRecord( base::Keyword( "at_wgt" ), weight.value() )
+                    : base::SingleRealRecord( base::Keyword( "at_wgt" ) ) ),
     temperature_( base::Keyword( "temp" ), temperature ),
     dilution_( base::Keyword( "sig_0" ), dilution ),
     primary_groups_( base::Keyword( "num_grps" ), groups ),

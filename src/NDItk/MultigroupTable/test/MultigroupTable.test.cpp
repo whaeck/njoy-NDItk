@@ -44,9 +44,9 @@ SCENARIO( "MultigroupTable" ) {
                                                        7.281253, 6.5, 169.13 );
 
       MultigroupTable chunk( std::move( zaid ), std::move( name ),
-                             std::move( process ), awr, weight, temperature, dilution,
+                             std::move( process ), awr, temperature, dilution,
                              std::move( structure ), std::move( outgoing ), std::move( weights ),
-                             std::move( total ), std::move( xs ), std::move( source ),
+                             std::move( total ), std::move( xs ), std::move( source ), weight,
                              std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
@@ -111,9 +111,9 @@ SCENARIO( "MultigroupTable" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ),
-                                       std::move( process ), awr, weight, temperature, dilution,
+                                       std::move( process ), awr, temperature, dilution,
                                        std::move( structure ), {}, std::move( weights ), std::move( total ),
-                                       std::move( xs ), std::move( source ) ) );
+                                       std::move( xs ), std::move( source ), weight ) );
       } // THEN
     } // WHEN
   } // GIVEN

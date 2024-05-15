@@ -33,16 +33,17 @@ SCENARIO( "Metadata" ) {
       double dilution = 1e+10;
       unsigned int groups = 618;
       std::map< unsigned int, unsigned int > outgoing = { { 0, 30 }, { 1001, 250 } };
-      std::optional< int > upscatter = 3;
-      std::optional< int > downscatter = 2;
+      int upscatter = 3;
+      int downscatter = 2;
       unsigned int reactions = 7;
 
       Metadata chunk( std::move( zaid ), std::move( name ),
                       std::move( process ),
-                      awr, weight, temperature, dilution,
+                      awr, temperature, dilution,
                       groups, outgoing, reactions,
                       std::move( source ),
-                      std::move( upscatter ), std::move( downscatter ) );
+                      weight,
+                      upscatter, downscatter );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {

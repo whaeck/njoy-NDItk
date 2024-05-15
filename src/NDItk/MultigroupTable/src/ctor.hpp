@@ -13,7 +13,6 @@ MultigroupTable() :
  *  @param[in] process        the processing date
  *  @param[in] awr            the atomic weight ratio of the target
  *                            (with respect to the neutron mass)
- *  @param[in] weight         the atomic weight of the target
  *  @param[in] temperature    the temperature of the target
  *  @param[in] dilution       the dilution (aka sigma0)
  *  @param[in] structure      the primary group structure
@@ -22,10 +21,11 @@ MultigroupTable() :
  *  @param[in] total          the total cross section
  *  @param[in] xs             the reaction cross section data
  *  @param[in] source         the source date (optional)
+ *  @param[in] weight         the atomic weight of the target (optional)
  *  @param[in] release        the average fission energy release data (optional)
  */
 MultigroupTable( std::string zaid, std::string libname,
-                 std::string process, double awr, double weight, double temperature,
+                 std::string process, double awr, double temperature,
                  double dilution,
                  multigroup::EnergyGroupStructure structure,
                  std::vector< multigroup::EnergyGroupStructure > outgoing,
@@ -33,11 +33,13 @@ MultigroupTable( std::string zaid, std::string libname,
                  multigroup::TotalCrossSection total,
                  multigroup::ReactionCrossSections xs,
                  std::optional< std::string > source = std::nullopt,
+                 std::optional< double > weight = std::nullopt,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :
     metadata_( std::move( zaid ), std::move( libname ),
-               std::move( process ), awr, weight, temperature, dilution,
+               std::move( process ), awr, temperature, dilution,
                structure.numberGroups(), generateOutgoingStructureMetadata( outgoing ),
-               xs.numberReactions(), std::move( source ), std::nullopt, std::nullopt ),
+               xs.numberReactions(), std::move( source ), std::move( weight ),
+               std::nullopt, std::nullopt ),
     primary_structure_( std::move( structure ) ),
     outgoing_structure_( std::move( outgoing ) ),
     weights_( std::move( weigths ) ),

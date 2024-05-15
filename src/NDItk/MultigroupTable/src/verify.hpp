@@ -6,6 +6,24 @@
  */
 void verify() {
 
+  // required records
+  if ( this->primaryGroupBoundaries().empty() ||
+       this->velocities().empty() ||
+       this->fluxWeights().empty() ||
+       this->reactionCrossSections().empty() ) {
+
+    Log::error( "One or more required records are not founs in the table" );
+    Log::info( "Primary group structure record: {}",
+               this->primaryGroupBoundaries().empty() ? "absent" : "present" );
+    Log::info( "Velocity record: {}",
+               this->velocities().empty() ? "absent" : "present" );
+    Log::info( "Flux weight record: {}",
+               this->fluxWeights().empty() ? "absent" : "present" );
+    Log::info( "Reaction cross sections record: {}",
+               this->reactionCrossSections().empty() ? "absent" : "present" );
+    throw std::exception();
+  }
+
   // consistent group structure
   const auto groups = this->metadata().numberGroups().value();
   if ( ( this->primaryGroupBoundaries().numberGroups() != groups ) ||

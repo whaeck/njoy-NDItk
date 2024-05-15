@@ -112,4 +112,5 @@ void read( Iterator& iter, const Iterator& end ) {
       ++iter;
     }
   }
+  this->verify();
 };

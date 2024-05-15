@@ -13,6 +13,7 @@ using namespace njoy::NDItk;
 
 std::string chunk();
 void verifyChunk( const MultigroupTable& );
+std::string chunkWithMissingRecords();
 
 SCENARIO( "MultigroupTable" ) {
 
@@ -93,6 +94,20 @@ SCENARIO( "MultigroupTable" ) {
   } // GIVEN
 
   GIVEN( "invalid data for a MultigroupTable instance" ) {
+
+    WHEN( "required records are missing" ) {
+
+      std::string record = chunkWithMissingRecords();
+      auto iter = record.begin();
+      auto end = record.end();
+
+      MultigroupTable chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end ) );
+      } // THEN
+    } // WHEN
 
     WHEN( "the number of groups is inconsistent" ) {
 
@@ -348,4 +363,54 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(   7.281253, WithinRel( chunk.averageFissionEnergyRelease().promptGammas() ) );
   CHECK_THAT(     169.13, WithinRel( chunk.averageFissionEnergyRelease().fissionFragments() ) );
   CHECK_THAT(   4.827645, WithinRel( chunk.averageFissionEnergyRelease().promptNeutrons() ) );
+}
+
+std::string chunkWithMissingRecords() {
+
+  // e_bounds and wgts are not present
+  return "zaid\n"
+         "    92235.711nm\n"
+         "library_name\n"
+         "    mendf71x\n"
+         "date_source\n"
+         "    12/22/2011\n"
+         "date_processed\n"
+         "    08/07/2013\n"
+         "awr\n"
+         "    233.0248\n"
+         "at_wgt\n"
+         "    235.043937521619\n"
+         "temp\n"
+         "    2.53e-08\n"
+         "sig_0\n"
+         "    10000000000\n"
+         "num_grps\n"
+         "    7\n"
+         "num_grps_0\n"
+         "    3\n"
+         "num_grps_1001\n"
+         "    2\n"
+         "num_reac\n"
+         "    2\n"
+         "e_bounds_0\n"
+         "    20 10 5 1e-11\n"
+         "e_bounds_1001\n"
+         "    20 10 1e-11\n"
+         "vel\n"
+         "    2.1 2.2 2.25 2.05 2.15\n"
+         "    2.04 2.06\n"
+         "sig_tot\n"
+         "    1.1 1.2 1.25 1.05 1.15\n"
+         "    1.04 1.06\n"
+         "sig_reac\n"
+         "    2 0\n"
+         "    10 20 30 40 50\n"
+         "    60 70\n"
+         "    16 1.1234567\n"
+         "    1 2 3 4 5\n"
+         "    6 7\n"
+         "fiss_q\n"
+         "    181.238898 202.827 6.5 7.281253 169.13\n"
+         "    4.827645\n"
+         "end\n";
 }

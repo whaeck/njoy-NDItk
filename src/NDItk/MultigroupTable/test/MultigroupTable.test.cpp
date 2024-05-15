@@ -43,10 +43,11 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
 
-      MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
+      MultigroupTable chunk( std::move( zaid ), std::move( name ),
                              std::move( process ), awr, weight, temperature, dilution,
                              std::move( structure ), std::move( outgoing ), std::move( weights ),
-                             std::move( total ), std::move( xs ), std::move( release ) );
+                             std::move( total ), std::move( xs ), std::move( source ),
+                             std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
             "be tested" ) {
@@ -109,10 +110,10 @@ SCENARIO( "MultigroupTable" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ), std::move( source ),
+        CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ),
                                        std::move( process ), awr, weight, temperature, dilution,
                                        std::move( structure ), {}, std::move( weights ), std::move( total ),
-                                       std::move( xs ) ) );
+                                       std::move( xs ), std::move( source ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

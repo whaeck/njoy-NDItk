@@ -32,20 +32,25 @@ void wrapMetadata( python::module& module, python::module& ) {
   record
   .def(
 
-    python::init< std::string, std::string, std::string, std::string,
+    python::init< std::string, std::string, std::string,
                   double, double, double, double,
                   unsigned int, std::map< unsigned int, unsigned int >,
-                  unsigned int >(),
-    python::arg( "zaid" ), python::arg( "libname" ), python::arg( "source" ),
+                  unsigned int,
+                  std::optional< std::string >,
+                  std::optional< unsigned int >,
+                  std::optional< unsigned int > >(),
+    python::arg( "zaid" ), python::arg( "libname" ),
     python::arg( "process" ), python::arg( "awr" ), python::arg( "weight" ),
     python::arg( "temperature" ), python::arg( "dilution" ), python::arg( "groups" ),
     python::arg( "outgoing" ), python::arg( "reactions" ),
+    python::arg( "source" ) = std::nullopt,
+    python::arg( "upscatter" ) = std::nullopt,
+    python::arg( "downscatter" ) = std::nullopt,
     "Initialise the record\n\n"
     "Arguments:\n"
     "    self           the metadata\n"
     "    zaid           the zaid of the table\n"
     "    libname        the library name\n"
-    "    source         the source date\n"
     "    process        the processing date\n"
     "    awr            the atomic weight ratio of the target (with respect\n"
     "                   to the neutron mass)\n"
@@ -54,7 +59,10 @@ void wrapMetadata( python::module& module, python::module& ) {
     "    dilution       the dilution (aka sigma0)\n"
     "    groups         the number of groups in the primary group structure\n"
     "    outgoing       the number of groups in the outgoing group structures\n"
-    "    reactions      the number of reactions defined in the table"
+    "    reactions      the number of reactions defined in the table\n"
+    "    source         the source date (optional)\n"
+    "    upscatter      the number of upscatter groups (optional)\n"
+    "    downscatter    the number of downscatter groups (optional)"
   )
   .def_property_readonly(
 
@@ -109,6 +117,18 @@ void wrapMetadata( python::module& module, python::module& ) {
     "number_groups",
     &Record::numberGroups,
     "The number of groups defined by this record"
+  )
+  .def_property_readonly(
+
+    "number_upscatter_groups",
+    &Record::numberUpscatterGroups,
+    "The number of upscatter groups defined by this record"
+  )
+  .def_property_readonly(
+
+    "number_downscatter_groups",
+    &Record::numberDownscatterGroups,
+    "The number of downscatter groups defined by this record"
   )
   .def(
 

@@ -11,6 +11,8 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
              dilution_( base::Keyword( "sig_0" ) ),
              primary_groups_( base::Keyword( "num_grps" ) ),
              outgoing_groups_(),
+             upscatter_groups_( base::Keyword( "up_grps" ) ),
+             downscatter_groups_( base::Keyword( "down_grps" ) ),
              reactions_( base::Keyword( "num_reac" ) ) {}
 
 /**
@@ -18,7 +20,6 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
  *
  *  @param[in] zaid           the zaid of the table
  *  @param[in] libname        the library name
- *  @param[in] source         the source date
  *  @param[in] process        the processing date
  *  @param[in] awr            the atomic weight ratio of the target
  *                            (with respect to the neutron mass)
@@ -28,15 +29,23 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
  *  @param[in] groups         the number of groups in the primary group structure
  *  @param[in] outgoing       the number of groups in the outgoing group structures
  *  @param[in] reactions      the number of reactions defined in the table
+ *  @param[in] source         the source date (optional)
+ *  @param[in] upscatter      the number of upscatter groups (optional)
+ *  @param[in] downscatter    the number of downscatter groups (optional)
  */
-Metadata( std::string zaid, std::string libname, std::string source, std::string process,
+Metadata( std::string zaid, std::string libname, std::string process,
           double awr, double weight, double temperature, double dilution,
           unsigned int groups,
           const std::map< unsigned int, unsigned int >& outgoing,
-          unsigned int reactions ) :
+          unsigned int reactions,
+          std::optional< std::string > source = std::nullopt,
+          std::optional< int > upscatter = std::nullopt,
+          std::optional< int > downscatter = std::nullopt ) :
     zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
     library_name_( base::Keyword( "library_name" ), std::move( libname ) ),
-    source_date_( base::Keyword( "date_source" ), std::move( source ) ),
+    source_date_( source.has_value()
+                  ? base::SingleStringRecord( base::Keyword( "date_source" ), std::move( source.value() ) )
+                  : base::SingleStringRecord( base::Keyword( "date_source" ) ) ),
     process_date_( base::Keyword( "date_processed" ), std::move( process ) ),
     awr_( base::Keyword( "awr" ), awr ),
     atomic_weight_( base::Keyword( "at_wgt" ), weight ),
@@ -44,4 +53,10 @@ Metadata( std::string zaid, std::string libname, std::string source, std::string
     dilution_( base::Keyword( "sig_0" ), dilution ),
     primary_groups_( base::Keyword( "num_grps" ), groups ),
     outgoing_groups_( generateSecondaryGroups( outgoing ) ),
+    upscatter_groups_( upscatter.has_value()
+                       ? base::SingleIntegerRecord( base::Keyword( "up_grps" ), upscatter.value() )
+                       : base::SingleIntegerRecord( base::Keyword( "up_grps" ) ) ),
+    downscatter_groups_( upscatter.has_value()
+                         ? base::SingleIntegerRecord( base::Keyword( "down_grps" ), downscatter.value() )
+                         : base::SingleIntegerRecord( base::Keyword( "down_grps" ) ) ),
     reactions_( base::Keyword( "num_reac" ), reactions ) {}

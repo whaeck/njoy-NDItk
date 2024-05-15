@@ -10,7 +10,6 @@ MultigroupTable() :
  *
  *  @param[in] zaid           the zaid of the table
  *  @param[in] libname        the library name
- *  @param[in] source         the source date
  *  @param[in] process        the processing date
  *  @param[in] awr            the atomic weight ratio of the target
  *                            (with respect to the neutron mass)
@@ -22,9 +21,10 @@ MultigroupTable() :
  *  @param[in] weights        the flux weights
  *  @param[in] total          the total cross section
  *  @param[in] xs             the reaction cross section data
- *  @param[in] release        the average fission energy release data
+ *  @param[in] source         the source date (optional)
+ *  @param[in] release        the average fission energy release data (optional)
  */
-MultigroupTable( std::string zaid, std::string libname, std::string source,
+MultigroupTable( std::string zaid, std::string libname,
                  std::string process, double awr, double weight, double temperature,
                  double dilution,
                  multigroup::EnergyGroupStructure structure,
@@ -32,11 +32,12 @@ MultigroupTable( std::string zaid, std::string libname, std::string source,
                  multigroup::FluxWeights weigths,
                  multigroup::TotalCrossSection total,
                  multigroup::ReactionCrossSections xs,
+                 std::optional< std::string > source = std::nullopt,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :
-    metadata_( std::move( zaid ), std::move( libname ), std::move( source ),
+    metadata_( std::move( zaid ), std::move( libname ),
                std::move( process ), awr, weight, temperature, dilution,
                structure.numberGroups(), generateOutgoingStructureMetadata( outgoing ),
-               xs.numberReactions() ),
+               xs.numberReactions(), std::move( source ), std::nullopt, std::nullopt ),
     primary_structure_( std::move( structure ) ),
     outgoing_structure_( std::move( outgoing ) ),
     weights_( std::move( weigths ) ),

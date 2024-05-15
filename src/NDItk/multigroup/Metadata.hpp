@@ -29,9 +29,11 @@ class Metadata {
   base::SingleRealRecord atomic_weight_;
   base::SingleRealRecord temperature_;
   base::SingleRealRecord dilution_;
-  base::SingleIntegerRecord reactions_;
   base::SingleIntegerRecord primary_groups_;
   std::vector< base::SingleIntegerRecord > outgoing_groups_;
+  base::SingleIntegerRecord upscatter_groups_;
+  base::SingleIntegerRecord downscatter_groups_;
+  base::SingleIntegerRecord reactions_;
 
   /* auxiliary functions */
 
@@ -59,8 +61,10 @@ public:
            ( keyword == this->atomic_weight_.keyword() ) ||
            ( keyword == this->temperature_.keyword() ) ||
            ( keyword == this->dilution_.keyword() ) ||
-           ( keyword == this->reactions_.keyword() ||
-           ( keyword.find( this->primary_groups_.keyword() ) == 0 ) );
+           ( keyword == this->reactions_.keyword() ) ||
+           ( keyword.find( this->primary_groups_.keyword() ) == 0 ) ||
+           ( keyword == this->upscatter_groups_.keyword() ) ||
+           ( keyword == this->downscatter_groups_.keyword() );
   }
 
   /**
@@ -141,6 +145,22 @@ public:
   decltype(auto) numberReactions() const { return this->reactions_.data(); }
 
   /**
+   *  @brief Return the number of upscatter groups defined in the table
+   */
+  decltype(auto) numberUpscatterGroups() const {
+
+    return this->upscatter_groups_.data();
+  }
+
+  /**
+   *  @brief Return the number of downscatter groups defined in the table
+   */
+  decltype(auto) numberDownscatterGroups() const {
+
+    return this->downscatter_groups_.data();
+  }
+
+  /**
    *  @brief Read the metadata record content
    *
    *  @param[in] iter   the current position in the input
@@ -148,15 +168,17 @@ public:
   template< typename Iterator >
   void read( const std::string& keyword, Iterator& iter, const Iterator& end ) {
 
-    if      ( keyword == this->zaid_.keyword() )          { readRecord( this->zaid_, iter, end ); }
-    else if ( keyword == this->library_name_.keyword() )  { readRecord( this->library_name_, iter, end ); }
-    else if ( keyword == this->source_date_.keyword() )   { readRecord( this->source_date_, iter, end ); }
-    else if ( keyword == this->process_date_.keyword() )  { readRecord( this->process_date_, iter, end ); }
-    else if ( keyword == this->awr_.keyword() )           { readRecord( this->awr_, iter, end ); }
-    else if ( keyword == this->atomic_weight_.keyword() ) { readRecord( this->atomic_weight_, iter, end ); }
-    else if ( keyword == this->temperature_.keyword() )   { readRecord( this->temperature_, iter, end ); }
-    else if ( keyword == this->dilution_.keyword() )      { readRecord( this->dilution_, iter, end ); }
-    else if ( keyword == this->reactions_.keyword() )     { readRecord( this->reactions_, iter, end ); }
+    if      ( keyword == this->zaid_.keyword() )               { readRecord( this->zaid_, iter, end ); }
+    else if ( keyword == this->library_name_.keyword() )       { readRecord( this->library_name_, iter, end ); }
+    else if ( keyword == this->source_date_.keyword() )        { readRecord( this->source_date_, iter, end ); }
+    else if ( keyword == this->process_date_.keyword() )       { readRecord( this->process_date_, iter, end ); }
+    else if ( keyword == this->awr_.keyword() )                { readRecord( this->awr_, iter, end ); }
+    else if ( keyword == this->atomic_weight_.keyword() )      { readRecord( this->atomic_weight_, iter, end ); }
+    else if ( keyword == this->temperature_.keyword() )        { readRecord( this->temperature_, iter, end ); }
+    else if ( keyword == this->dilution_.keyword() )           { readRecord( this->dilution_, iter, end ); }
+    else if ( keyword == this->reactions_.keyword() )          { readRecord( this->reactions_, iter, end ); }
+    else if ( keyword == this->upscatter_groups_.keyword() )   { readRecord( this->upscatter_groups_, iter, end ); }
+    else if ( keyword == this->downscatter_groups_.keyword() ) { readRecord( this->downscatter_groups_, iter, end ); }
     else if ( keyword.find( this->primary_groups_.keyword() ) == 0 ) {
 
       if ( keyword == this->primary_groups_.keyword() ) {
@@ -211,6 +233,8 @@ public:
     this->dilution_.print( iter );
     this->primary_groups_.print( iter );
     for ( const auto& entry : this->outgoing_groups_ ) { entry.print( iter ); }
+    this->upscatter_groups_.print( iter );
+    this->downscatter_groups_.print( iter );
     this->reactions_.print( iter );
   };
 };

@@ -40,5 +40,6 @@ add_subdirectory( src/NDItk/multigroup/CrossSection/test )
 add_subdirectory( src/NDItk/multigroup/ReactionCrossSections/test )
 add_subdirectory( src/NDItk/multigroup/TotalCrossSection/test )
 add_subdirectory( src/NDItk/multigroup/AverageFissionEnergyRelease/test )
+add_subdirectory( src/NDItk/multigroup/Velocities/test )
 
 add_subdirectory( src/NDItk/MultigroupTable/test )

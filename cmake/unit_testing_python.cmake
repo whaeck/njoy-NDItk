@@ -29,5 +29,6 @@ add_python_test( multigroup.EnergyGroupStructure        multigroup/Test_NDItk_mu
 add_python_test( multigroup.ReactionCrossSections       multigroup/Test_NDItk_multigroup_ReactionCrossSections.py )
 add_python_test( multigroup.TotalCrossSection           multigroup/Test_NDItk_multigroup_TotalCrossSection.py )
 add_python_test( multigroup.AverageFissionEnergyRelease multigroup/Test_NDItk_multigroup_AverageFissionEnergyRelease.py )
+add_python_test( multigroup.Velocities                  multigroup/Test_NDItk_multigroup_Velocities.py )
 
 add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )

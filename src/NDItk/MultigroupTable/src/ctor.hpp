@@ -30,10 +30,10 @@ MultigroupTable( std::string zaid, std::string libname,
                  multigroup::EnergyGroupStructure structure,
                  std::vector< multigroup::EnergyGroupStructure > outgoing,
                  multigroup::FluxWeights weigths,
-                 multigroup::TotalCrossSection total,
                  multigroup::ReactionCrossSections xs,
                  std::optional< std::string > source = std::nullopt,
                  std::optional< double > weight = std::nullopt,
+                 std::optional< multigroup::TotalCrossSection > total = std::nullopt,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :
     metadata_( std::move( zaid ), std::move( libname ),
                std::move( process ), awr, temperature, dilution,
@@ -43,9 +43,12 @@ MultigroupTable( std::string zaid, std::string libname,
     primary_structure_( std::move( structure ) ),
     outgoing_structure_( std::move( outgoing ) ),
     weights_( std::move( weigths ) ),
-    total_( std::move( total ) ),
     xs_( std::move( xs ) ),
     release_( std::move( release.value() ) ) {
 
+  if ( total.has_value() ) {
+
+    this->total_ = std::move( total.value() );
+  }
   this->verify();
 }

@@ -46,8 +46,8 @@ SCENARIO( "MultigroupTable" ) {
       MultigroupTable chunk( std::move( zaid ), std::move( name ),
                              std::move( process ), awr, temperature, dilution,
                              std::move( structure ), std::move( outgoing ), std::move( weights ),
-                             std::move( total ), std::move( xs ), std::move( source ), weight,
-                             std::move( release ) );
+                             std::move( xs ), std::move( source ), weight,
+                             std::move( total ), std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
             "be tested" ) {
@@ -112,8 +112,9 @@ SCENARIO( "MultigroupTable" ) {
 
         CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ),
                                        std::move( process ), awr, temperature, dilution,
-                                       std::move( structure ), {}, std::move( weights ), std::move( total ),
-                                       std::move( xs ), std::move( source ), weight ) );
+                                       std::move( structure ), {}, std::move( weights ),
+                                       std::move( xs ), std::move( source ), weight,
+                                       std::move( total ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

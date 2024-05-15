@@ -40,18 +40,19 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
                   EnergyGroupStructure,
                   std::vector< EnergyGroupStructure >,
                   FluxWeights,
-                  TotalCrossSection,
                   ReactionCrossSections,
                   std::optional< std::string >,
                   std::optional< double >,
+                  std::optional< TotalCrossSection >,
                   std::optional< AverageFissionEnergyRelease > >(),
     python::arg( "zaid" ), python::arg( "libname" ),
     python::arg( "process" ), python::arg( "awr" ),
     python::arg( "temperature" ), python::arg( "dilution" ),
     python::arg( "structure" ), python::arg( "outgoing" ),
-    python::arg( "flux" ), python::arg( "total" ), python::arg( "xs" ),
+    python::arg( "flux" ), python::arg( "xs" ),
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
+    python::arg( "total" ) = std::nullopt,
     python::arg( "release" ) = std::nullopt,
     "Initialise the table\n\n"
     "Arguments:\n"
@@ -66,10 +67,10 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    structure      the primary group structure\n"
     "    outgoing       the outgoing particle group structures\n"
     "    flux           the flux weights\n"
-    "    total          the total cross section\n"
     "    xs             the reaction cross section data\n"
     "    source         the source date (optional)\n"
     "    weight         the atomic weight of the target (optional)\n"
+    "    total          the total cross section (optional)\n"
     "    release        the average fission energy release data (optional)"
   )
   .def_property_readonly(

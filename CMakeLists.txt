@@ -102,6 +102,8 @@ if( NDItk.python )
       python/src/multigroup/TotalCrossSection.python.cpp
       python/src/multigroup/AverageFissionEnergyRelease.python.cpp
       python/src/multigroup/Velocities.python.cpp
+      python/src/multigroup/HeatingNumbers.python.cpp
+      python/src/multigroup/Kerma.python.cpp
       )
 
   target_link_libraries( NDItk.python PRIVATE NDItk )

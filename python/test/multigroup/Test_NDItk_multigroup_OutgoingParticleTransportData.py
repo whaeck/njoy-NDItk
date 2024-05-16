@@ -9,7 +9,7 @@ from NDItk.multigroup import OutgoingParticleTransportData
 class Test_NDItk_multigroup_OutgoingParticleTransportData( unittest.TestCase ) :
     """Unit test for the OutgoingParticleTransportData class."""
 
-    chunk_values = [ 0, 1001 ]
+    chunk_values = [ '92000', '92235.proton' ]
     chunk_string = ( 'sec_part_zaids\n'
                      '    92000 92235.proton\n' )
 
@@ -19,8 +19,8 @@ class Test_NDItk_multigroup_OutgoingParticleTransportData( unittest.TestCase ) :
 
             # verify content
             self.assertEqual( 2, chunk.number_outgoing_particles )
-            self.assertAlmostEqual( "92000", chunk.values[0] )
-            self.assertAlmostEqual( "92235.proton", chunk.values[1] )
+            self.assertEqual( "92000", chunk.values[0] )
+            self.assertEqual( "92235.proton", chunk.values[1] )
 
             self.assertEqual( self.chunk_string, chunk.to_string() )
 
@@ -32,7 +32,7 @@ class Test_NDItk_multigroup_OutgoingParticleTransportData( unittest.TestCase ) :
             values = chunk.values
             for index in range( chunk.size ) :
 
-                self.assertAlmostEqual( self.chunk_values[index], values[index] )
+                self.assertEqual( self.chunk_values[index], values[index] )
 
         # the data is given explicitly
         chunk = OutgoingParticleTransportData( values = [ '92000', '92235.proton' ] )

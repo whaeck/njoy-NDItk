@@ -153,6 +153,54 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual(     169.13, release.fission_fragments )
             self.assertAlmostEqual(   4.827645, release.prompt_neutrons )
 
+            # verify content - primary heating numbers
+            heating = chunk.primary_heating_numbers
+            # self.assertEqual( 7, heating.number_groups )
+            # self.assertAlmostEqual( 20, heating.values[0] )
+            # self.assertAlmostEqual( 18, heating.values[1] )
+            # self.assertAlmostEqual( 16, heating.values[2] )
+            # self.assertAlmostEqual( 14, heating.values[3] )
+            # self.assertAlmostEqual( 10, heating.values[4] )
+            # self.assertAlmostEqual(  5, heating.values[5] )
+            # self.assertAlmostEqual(  1, heating.values[6] )
+
+            # verify content - outgoing heating numbers: 0
+            # heating = chunk.outgoing_group_boundaries( 0 )
+            # self.assertEqual( 3, heating.number_groups )
+            # self.assertAlmostEqual( 20, heating.values[0] )
+            # self.assertAlmostEqual( 10, heating.values[1] )
+            # self.assertAlmostEqual(  5, heating.values[2] )
+
+            # verify content - outgoing energy boundaries: 1001
+            # heating = chunk.outgoing_group_boundaries( 1001 )
+            # self.assertEqual( 2, heating.number_groups )
+            # self.assertAlmostEqual( 20, heating.values[0] )
+            # self.assertAlmostEqual( 10, heating.values[1] )
+
+            # verify content - primary kerma
+            kerma = chunk.primary_kerma
+            # self.assertEqual( 7, kerma.number_groups )
+            # self.assertAlmostEqual( 20, kerma.values[0] )
+            # self.assertAlmostEqual( 18, kerma.values[1] )
+            # self.assertAlmostEqual( 16, kerma.values[2] )
+            # self.assertAlmostEqual( 14, kerma.values[3] )
+            # self.assertAlmostEqual( 10, kerma.values[4] )
+            # self.assertAlmostEqual(  5, kerma.values[5] )
+            # self.assertAlmostEqual(  1, kerma.values[6] )
+
+            # verify content - outgoing kerma: 0
+            # kerma = chunk.outgoing_group_boundaries( 0 )
+            # self.assertEqual( 3, kerma.number_groups )
+            # self.assertAlmostEqual( 20, kerma.values[0] )
+            # self.assertAlmostEqual( 10, kerma.values[1] )
+            # self.assertAlmostEqual(  5, kerma.values[2] )
+
+            # verify content - outgoing kerma: 1001
+            # kerma = chunk.outgoing_group_boundaries( 1001 )
+            # self.assertEqual( 2, kerma.number_groups )
+            # self.assertAlmostEqual( 20, kerma.values[0] )
+            # self.assertAlmostEqual( 10, kerma.values[1] )
+
         # the data is given explicitly
         chunk = MultigroupTable( zaid = '92235.711nm', libname = 'mendf71x', source = '12/22/2011',
                                  process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,

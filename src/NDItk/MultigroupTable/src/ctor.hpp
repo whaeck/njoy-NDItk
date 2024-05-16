@@ -2,8 +2,10 @@
  *  @brief Default constructor
  */
 MultigroupTable() :
-  metadata_(), primary_structure_(), velocities_(), outgoing_structure_(),
-  weights_(), total_(), xs_(), release_() {}
+  metadata_(), primary_structure_(),outgoing_structure_(),
+   velocities_(), weights_(), total_(), xs_(), release_(),
+   primary_heating_(), outgoing_heating_(),
+   primary_kerma_(), outgoing_kerma_() {}
 
 /**
  *  @brief Constructor

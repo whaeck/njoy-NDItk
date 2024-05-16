@@ -363,6 +363,66 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(   7.281253, WithinRel( chunk.averageFissionEnergyRelease().promptGammas() ) );
   CHECK_THAT(     169.13, WithinRel( chunk.averageFissionEnergyRelease().fissionFragments() ) );
   CHECK_THAT(   4.827645, WithinRel( chunk.averageFissionEnergyRelease().promptNeutrons() ) );
+
+  // principal heating numbers
+  auto heating = chunk.primaryHeatingNumbers();
+  CHECK( "heating" == heating.keyword() );
+  CHECK( std::nullopt == heating.particle() );
+  CHECK( true == heating.empty() );
+//  CHECK( 7 == heating.size() );
+//  CHECK( 7 == heating.values().size() );
+//  CHECK( 7 == heating.numberGroups() );
+//  CHECK_THAT(    20, WithinRel( heating.values()[0] ) );
+//  CHECK_THAT(    18.123456789, WithinRel( heating.values()[1] ) );
+//  CHECK_THAT(    16.0000000000001, WithinRel( heating.values()[2] ) );
+//  CHECK_THAT(    14, WithinRel( heating.values()[3] ) );
+//  CHECK_THAT(    10, WithinRel( heating.values()[4] ) );
+//  CHECK_THAT(     5, WithinRel( heating.values()[5] ) );
+//  CHECK_THAT(     1, WithinRel( heating.values()[6] ) );
+//  CHECK_THAT( 1e-11, WithinRel( heating.values()[7] ) );
+
+  // outgoing heating numbers: 0
+//  heating = chunk.outgoingHeatingNumbers( 0 );
+//  CHECK( "heating_0" == heating.keyword() );
+//  CHECK( 0 == heating.particle() );
+//  CHECK( true == heating.empty() );
+//  CHECK( 4 == heating.size() );
+//  CHECK( 4 == heating.values().size() );
+//  CHECK( 3 == heating.numberGroups() );
+//  CHECK_THAT(    20, WithinRel( heating.values()[0] ) );
+//  CHECK_THAT(    10, WithinRel( heating.values()[1] ) );
+//  CHECK_THAT(     5, WithinRel( heating.values()[2] ) );
+//  CHECK_THAT( 1e-11, WithinRel( heating.values()[3] ) );
+
+  // principal kerma
+  auto kerma = chunk.primaryKerma();
+  CHECK( "kerma" == kerma.keyword() );
+  CHECK( std::nullopt == kerma.particle() );
+  CHECK( true == kerma.empty() );
+//  CHECK( 7 == kerma.size() );
+//  CHECK( 7 == kerma.values().size() );
+//  CHECK( 7 == kerma.numberGroups() );
+//  CHECK_THAT(    20, WithinRel( kerma.values()[0] ) );
+//  CHECK_THAT(    18.123456789, WithinRel( kerma.values()[1] ) );
+//  CHECK_THAT(    16.0000000000001, WithinRel( kerma.values()[2] ) );
+//  CHECK_THAT(    14, WithinRel( kerma.values()[3] ) );
+//  CHECK_THAT(    10, WithinRel( kerma.values()[4] ) );
+//  CHECK_THAT(     5, WithinRel( kerma.values()[5] ) );
+//  CHECK_THAT(     1, WithinRel( kerma.values()[6] ) );
+//  CHECK_THAT( 1e-11, WithinRel( kerma.values()[7] ) );
+
+  // outgoing heating numbers: 0
+//  kerma = chunk.outgoingKerma( 0 );
+//  CHECK( "heating_0" == kerma.keyword() );
+//  CHECK( 0 == kerma.particle() );
+//  CHECK( true == kerma.empty() );
+//  CHECK( 4 == kerma.size() );
+//  CHECK( 4 == kerma.values().size() );
+//  CHECK( 3 == kerma.numberGroups() );
+//  CHECK_THAT(    20, WithinRel( kerma.values()[0] ) );
+//  CHECK_THAT(    10, WithinRel( kerma.values()[1] ) );
+//  CHECK_THAT(     5, WithinRel( kerma.values()[2] ) );
+//  CHECK_THAT( 1e-11, WithinRel( kerma.values()[3] ) );
 }
 
 std::string chunkWithMissingRecords() {

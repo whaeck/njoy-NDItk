@@ -96,7 +96,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "particle" ),
     "The group structure record for an outgoing particle\n\n"
     "Arguments:\n"
-    "    self       the metadata\n"
+    "    self       the table\n"
     "    particle   the outgoing particle identifier"
   )
   .def_property_readonly(
@@ -128,6 +128,38 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "average_fission_energy_release",
     &Table::averageFissionEnergyRelease,
     "The average fission energy release record"
+  )
+  .def_property_readonly(
+
+    "primary_heating_numbers",
+    &Table::primaryHeatingNumbers,
+    "The primary heating numbers record"
+  )
+  .def(
+
+    "outgoing_heating_numbers",
+    &Table::outgoingHeatingNumbers,
+    python::arg( "particle" ),
+    "The heating numbers record for an outgoing particle\n\n"
+    "Arguments:\n"
+    "    self       the table\n"
+    "    particle   the outgoing particle identifier"
+  )
+  .def_property_readonly(
+
+    "primary_kerma",
+    &Table::primaryKerma,
+    "The primary kerma record"
+  )
+  .def(
+
+    "outgoing_kerma",
+    &Table::outgoingKerma,
+    python::arg( "particle" ),
+    "The kerma record for an outgoing particle\n\n"
+    "Arguments:\n"
+    "    self       the table\n"
+    "    particle   the outgoing particle identifier"
   );
 
   // add standard table definitions

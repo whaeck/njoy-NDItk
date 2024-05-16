@@ -12,6 +12,7 @@
 #include "NDItk/multigroup/ReactionCrossSections.hpp"
 #include "NDItk/multigroup/TotalCrossSection.hpp"
 #include "NDItk/multigroup/AverageFissionEnergyRelease.hpp"
+#include "NDItk/multigroup/OutgoingParticleTypes.hpp"
 #include "NDItk/multigroup/HeatingNumbers.hpp"
 #include "NDItk/multigroup/Kerma.hpp"
 
@@ -27,15 +28,16 @@ class MultigroupTable {
 
   multigroup::Metadata metadata_;
   multigroup::EnergyGroupStructure primary_structure_;
-  std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;
   multigroup::Velocities velocities_;
   multigroup::FluxWeights weights_;
-  multigroup::ReactionCrossSections xs_;
   multigroup::TotalCrossSection total_;
+  multigroup::ReactionCrossSections xs_;
   multigroup::AverageFissionEnergyRelease release_;
   multigroup::HeatingNumbers primary_heating_;
-  std::vector< multigroup::HeatingNumbers > outgoing_heating_;
   multigroup::Kerma primary_kerma_;
+  multigroup::OutgoingParticleTypes outgoing_particles_;
+  std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;
+  std::vector< multigroup::HeatingNumbers > outgoing_heating_;
   std::vector< multigroup::Kerma > outgoing_kerma_;
 
   /* auxiliary functions */
@@ -67,30 +69,6 @@ public:
   const multigroup::EnergyGroupStructure& primaryGroupBoundaries() const {
 
     return this->primary_structure_;
-  }
-
-  /**
-   *  @brief Return the group structure record for an outgoing particle
-   */
-  const multigroup::EnergyGroupStructure&
-  outgoingGroupBoundaries( unsigned int particle ) const {
-
-    auto pos = std::lower_bound( this->outgoing_structure_.begin(),
-                                 this->outgoing_structure_.end(),
-                                 particle,
-                                 [] ( auto&& left, auto&& right ) {
-
-                                   return left.particle() < right;
-                                 } );
-    if ( pos != this->outgoing_structure_.end() ) {
-
-      if ( pos->particle() == particle ) {
-
-        return *pos;
-      }
-    }
-    Log::error( "The requested outgoing particle \'{}\' has no outgoing group structure", particle );
-    throw std::exception();
   }
 
   /**
@@ -140,6 +118,47 @@ public:
   }
 
   /**
+   *  @brief Return the primary kerma record
+   */
+  const multigroup::Kerma& primaryKerma() const {
+
+    return this->primary_kerma_;
+  }
+
+  /**
+   *  @brief Return the outgoing particle types record
+   */
+  const multigroup::OutgoingParticleTypes&
+  outgoingParticleTypes() const {
+
+    return this->outgoing_particles_;
+  }
+
+  /**
+   *  @brief Return the group structure record for an outgoing particle
+   */
+  const multigroup::EnergyGroupStructure&
+  outgoingGroupBoundaries( unsigned int particle ) const {
+
+    auto pos = std::lower_bound( this->outgoing_structure_.begin(),
+                                 this->outgoing_structure_.end(),
+                                 particle,
+                                 [] ( auto&& left, auto&& right ) {
+
+                                   return left.particle() < right;
+                                 } );
+    if ( pos != this->outgoing_structure_.end() ) {
+
+      if ( pos->particle() == particle ) {
+
+        return *pos;
+      }
+    }
+    Log::error( "The requested outgoing particle \'{}\' has no outgoing group structure", particle );
+    throw std::exception();
+  }
+
+  /**
    *  @brief Return the heating numbers record for an outgoing particle
    */
   const multigroup::HeatingNumbers&
@@ -162,14 +181,6 @@ public:
     Log::error( "The requested outgoing particle \'{}\' has no associated "
                 "heating numbers", particle );
     throw std::exception();
-  }
-
-  /**
-   *  @brief Return the primary kerma record
-   */
-  const multigroup::Kerma& primaryKerma() const {
-
-    return this->primary_kerma_;
   }
 
   /**
@@ -209,15 +220,16 @@ public:
 
     this->metadata_.print( iter );
     this->primary_structure_.print( iter );
-    for ( const auto& entry : this->outgoing_structure_ ) { entry.print( iter ); }
     this->velocities_.print( iter );
     this->weights_.print( iter );
     this->total_.print( iter );
     this->xs_.print( iter );
     this->release_.print( iter );
     this->primary_heating_.print( iter );
-    for ( const auto& entry : this->outgoing_heating_ ) { entry.print( iter ); }
     this->primary_kerma_.print( iter );
+    this->outgoing_particles_.print( iter );
+    for ( const auto& entry : this->outgoing_structure_ ) { entry.print( iter ); }
+    for ( const auto& entry : this->outgoing_heating_ ) { entry.print( iter ); }
     for ( const auto& entry : this->outgoing_kerma_ ) { entry.print( iter ); }
     base::Keyword( "end" ).print( iter );
   };

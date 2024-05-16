@@ -28,12 +28,12 @@ void read( Iterator& iter, const Iterator& end ) {
         readOutgoingStructure( keyword, iter, end );
       }
     }
-    // flux weights
-    else if ( keyword == this->weights_.keyword() ) {
+    // velocities
+    else if ( keyword == this->velocities_.keyword() ) {
 
       if ( this->metadata_.numberGroups().has_value() ) {
 
-        readRecord( this->weights_, iter, end, this->metadata_.numberGroups().value() );
+        readRecord( this->velocities_, iter, end, this->metadata_.numberGroups().value() );
       }
       else {
 
@@ -42,12 +42,12 @@ void read( Iterator& iter, const Iterator& end ) {
         throw std::exception();
       }
     }
-    // velocities
-    else if ( keyword == this->velocities_.keyword() ) {
+    // flux weights
+    else if ( keyword == this->weights_.keyword() ) {
 
       if ( this->metadata_.numberGroups().has_value() ) {
 
-        readRecord( this->velocities_, iter, end, this->metadata_.numberGroups().value() );
+        readRecord( this->weights_, iter, end, this->metadata_.numberGroups().value() );
       }
       else {
 
@@ -118,6 +118,20 @@ void read( Iterator& iter, const Iterator& end ) {
       else {
 
         readOutgoingData( keyword, this->outgoing_kerma_, iter, end );
+      }
+    }
+    // outgoing particle types
+    else if ( keyword == this->outgoing_particles_.keyword() ) {
+
+      if ( this->metadata_.numberOutgoingParticles().has_value() ) {
+
+        readRecord( this->outgoing_particles_, iter, end, this->metadata_.numberOutgoingParticles().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
       }
     }
     // unknown or end keyword

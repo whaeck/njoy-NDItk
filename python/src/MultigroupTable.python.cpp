@@ -21,6 +21,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   using TotalCrossSection = njoy::NDItk::multigroup::TotalCrossSection;
   using ReactionCrossSections = njoy::NDItk::multigroup::ReactionCrossSections;
   using AverageFissionEnergyRelease = njoy::NDItk::multigroup::AverageFissionEnergyRelease;
+  using OutgoingParticleTypes = njoy::NDItk::multigroup::OutgoingParticleTypes;
   using HeatingNumbers = njoy::NDItk::multigroup::HeatingNumbers;
   using Kerma = njoy::NDItk::multigroup::Kerma;
 
@@ -49,6 +50,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
                   std::optional< double >,
                   std::optional< TotalCrossSection >,
                   std::optional< AverageFissionEnergyRelease >,
+                  std::optional< OutgoingParticleTypes >,
                   std::optional< HeatingNumbers >,
                   std::vector< HeatingNumbers >,
                   std::optional< Kerma >,
@@ -63,6 +65,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "weight" ) = std::nullopt,
     python::arg( "total" ) = std::nullopt,
     python::arg( "release" ) = std::nullopt,
+    python::arg( "types" ) = std::nullopt,
     python::arg( "primary_heating" ) = std::nullopt,
     python::arg( "outgoing_heating" ) = std::vector< HeatingNumbers >{},
     python::arg( "primary_kerma" ) = std::nullopt,
@@ -86,6 +89,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    weight             the atomic weight of the target (optional)\n"
     "    total              the total cross section (optional)\n"
     "    release            the average fission energy release data (optional)\n"
+    "    types              the outgoing particle types (optional)\n"
     "    primary_heating    the primary heating numbers (optional)\n"
     "    outgoing_heating   the outgoing particle heating numbers (optional)\n"
     "    primary_kerma      the primary kerma (optional)\n"
@@ -142,6 +146,12 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "average_fission_energy_release",
     &Table::averageFissionEnergyRelease,
     "The average fission energy release record"
+  )
+  .def_property_readonly(
+
+    "outgoing_particle_types",
+    &Table::outgoingParticleTypes,
+    "The outgoing particle types record"
   )
   .def_property_readonly(
 

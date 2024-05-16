@@ -38,8 +38,8 @@ void wrapMetadata( python::module& module, python::module& ) {
                   unsigned int,
                   std::optional< std::string >,
                   std::optional< double >,
-                  std::optional< unsigned int >,
-                  std::optional< unsigned int > >(),
+                  std::optional< int >,
+                  std::optional< int > >(),
     python::arg( "zaid" ), python::arg( "libname" ),
     python::arg( "process" ), python::arg( "awr" ),
     python::arg( "temperature" ), python::arg( "dilution" ), python::arg( "groups" ),
@@ -125,6 +125,12 @@ void wrapMetadata( python::module& module, python::module& ) {
     "number_upscatter_groups",
     &Record::numberUpscatterGroups,
     "The number of upscatter groups defined by this record"
+  )
+  .def_property_readonly(
+
+    "number_outgoing_particles",
+    &Record::numberOutgoingParticles,
+    "The number of outgoing particles by this record"
   )
   .def_property_readonly(
 

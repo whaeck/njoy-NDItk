@@ -240,11 +240,11 @@ public:
     this->temperature_.print( iter );
     this->dilution_.print( iter );
     this->primary_groups_.print( iter );
-    this->outgoing_particles_.print( iter );
-    for ( const auto& entry : this->outgoing_groups_ ) { entry.print( iter ); }
+    this->reactions_.print( iter );
     this->upscatter_groups_.print( iter );
     this->downscatter_groups_.print( iter );
-    this->reactions_.print( iter );
+    this->outgoing_particles_.print( iter );
+    for ( const auto& entry : this->outgoing_groups_ ) { entry.print( iter ); }
   };
 };
 

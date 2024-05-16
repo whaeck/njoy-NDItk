@@ -27,12 +27,14 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
                      '    10000000000\n'
                      'num_grps\n'
                      '    618\n'
+                     'num_reac\n'
+                     '    7\n'
+                     'num_sec_parts\n'
+                     '    2\n'
                      'num_grps_0\n'
                      '    30\n'
                      'num_grps_1001\n'
-                     '    250\n'
-                     'num_reac\n'
-                     '    7\n' )
+                     '    250\n' )
 
     def test_component( self ) :
 

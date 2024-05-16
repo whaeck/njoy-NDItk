@@ -86,6 +86,7 @@ SCENARIO( "Metadata" ) {
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {
@@ -125,16 +126,18 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    618\n"
-         "num_grps_0\n"
-         "    30\n"
-         "num_grps_1001\n"
-         "    250\n"
+         "num_reac\n"
+         "    7\n"
          "up_grps\n"
          "    3\n"
          "down_grps\n"
          "    2\n"
-         "num_reac\n"
-         "    7\n";
+         "num_sec_parts\n"
+         "    2\n"
+         "num_grps_0\n"
+         "    30\n"
+         "num_grps_1001\n"
+         "    250\n";
 }
 
 void verifyChunk( const Metadata& chunk ) {
@@ -150,7 +153,7 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK( 618 == chunk.numberGroups() );
   CHECK(  30 == chunk.numberOutgoingGroups( 0 ) );
   CHECK( 250 == chunk.numberOutgoingGroups( 1001 ) );
-  CHECK( std::nullopt == chunk.numberOutgoingParticles() );
+  CHECK(   2 == chunk.numberOutgoingParticles() );
   CHECK(   3 == chunk.numberUpscatterGroups() );
   CHECK(   2 == chunk.numberDownscatterGroups() );
   CHECK(   7 == chunk.numberReactions() );

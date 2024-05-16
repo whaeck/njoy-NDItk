@@ -30,7 +30,9 @@ void verify() {
        ( this->velocities().numberGroups() != groups ) ||
        ( this->fluxWeights().numberGroups() != groups ) ||
        ( ( ! this->totalCrossSection().empty() ) && this->totalCrossSection().numberGroups() != groups ) ||
-       ( this->reactionCrossSections().numberGroups() != groups ) ) {
+       ( this->reactionCrossSections().numberGroups() != groups ) ||
+       ( ( ! this->primaryHeatingNumbers().empty() ) && this->primaryHeatingNumbers().numberGroups() != groups ) ||
+       ( ( ! this->primaryKerma().empty() ) && this->primaryKerma().numberGroups() != groups ) ) {
 
     Log::error( "Found inconsistent number of primary groups across the table" );
     Log::info( "Number of primary groups in the metadata: {}",
@@ -48,6 +50,16 @@ void verify() {
     }
     Log::info( "Number of primary groups in the reaction cross section data: {}",
                this->reactionCrossSections().numberGroups() );
+    if ( ! this->primaryHeatingNumbers().empty() ) {
+
+      Log::info( "Number of primary groups in the heating numbers: {}",
+                 this->primaryHeatingNumbers().numberGroups() );
+    }
+    if ( ! this->primaryKerma().empty() ) {
+
+      Log::info( "Number of primary groups in the kerma values: {}",
+                 this->primaryKerma().numberGroups() );
+    }
     throw std::exception();
   }
 };

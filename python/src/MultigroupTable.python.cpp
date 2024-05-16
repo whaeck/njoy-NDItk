@@ -21,6 +21,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   using TotalCrossSection = njoy::NDItk::multigroup::TotalCrossSection;
   using ReactionCrossSections = njoy::NDItk::multigroup::ReactionCrossSections;
   using AverageFissionEnergyRelease = njoy::NDItk::multigroup::AverageFissionEnergyRelease;
+  using HeatingNumbers = njoy::NDItk::multigroup::HeatingNumbers;
+  using Kerma = njoy::NDItk::multigroup::Kerma;
 
   // wrap views created by this table
 
@@ -46,7 +48,11 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
                   std::optional< std::string >,
                   std::optional< double >,
                   std::optional< TotalCrossSection >,
-                  std::optional< AverageFissionEnergyRelease > >(),
+                  std::optional< AverageFissionEnergyRelease >,
+                  std::optional< HeatingNumbers >,
+                  std::vector< HeatingNumbers >,
+                  std::optional< Kerma >,
+                  std::vector< Kerma > >(),
     python::arg( "zaid" ), python::arg( "libname" ),
     python::arg( "process" ), python::arg( "awr" ),
     python::arg( "temperature" ), python::arg( "dilution" ),
@@ -57,25 +63,33 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "weight" ) = std::nullopt,
     python::arg( "total" ) = std::nullopt,
     python::arg( "release" ) = std::nullopt,
+    python::arg( "primary_heating" ) = std::nullopt,
+    python::arg( "outgoing_heating" ) = std::vector< HeatingNumbers >{},
+    python::arg( "primary_kerma" ) = std::nullopt,
+    python::arg( "outgoing_kerma" ) = std::vector< Kerma >{},
     "Initialise the table\n\n"
     "Arguments:\n"
-    "    self           the table\n"
-    "    zaid           the zaid of the table\n"
-    "    libname        the library name\n"
-    "    process        the processing date\n"
-    "    awr            the atomic weight ratio of the target (with respect\n"
-    "                   to the neutron mass)\n"
-    "    temperature    the temperature of the target\n"
-    "    dilution       the dilution (aka sigma0)\n"
-    "    structure      the primary group structure\n"
-    "    outgoing       the outgoing particle group structures\n"
-    "    velocities     the velocities\n"
-    "    flux           the flux weights\n"
-    "    xs             the reaction cross section data\n"
-    "    source         the source date (optional)\n"
-    "    weight         the atomic weight of the target (optional)\n"
-    "    total          the total cross section (optional)\n"
-    "    release        the average fission energy release data (optional)"
+    "    self               the table\n"
+    "    zaid               the zaid of the table\n"
+    "    libname            the library name\n"
+    "    process            the processing date\n"
+    "    awr                the atomic weight ratio of the target (with respect\n"
+    "                       to the neutron mass)\n"
+    "    temperature        the temperature of the target\n"
+    "    dilution           the dilution (aka sigma0)\n"
+    "    structure          the primary group structure\n"
+    "    outgoing           the outgoing particle group structures\n"
+    "    velocities         the velocities\n"
+    "    flux               the flux weights\n"
+    "    xs                 the reaction cross section data\n"
+    "    source             the source date (optional)\n"
+    "    weight             the atomic weight of the target (optional)\n"
+    "    total              the total cross section (optional)\n"
+    "    release            the average fission energy release data (optional)\n"
+    "    primary_heating    the primary heating numbers (optional)\n"
+    "    outgoing_heating   the outgoing particle heating numbers (optional)\n"
+    "    primary_kerma      the primary kerma (optional)\n"
+    "    outgoing_kerma     the outgoing particle kermas (optional)"
   )
   .def_property_readonly(
 

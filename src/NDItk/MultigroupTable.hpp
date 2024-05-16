@@ -44,6 +44,8 @@ class MultigroupTable {
   #include "NDItk/MultigroupTable/src/readRecord.hpp"
   #include "NDItk/MultigroupTable/src/readPrimaryStructure.hpp"
   #include "NDItk/MultigroupTable/src/readOutgoingStructure.hpp"
+  #include "NDItk/MultigroupTable/src/readPrimaryData.hpp"
+  #include "NDItk/MultigroupTable/src/readOutgoingData.hpp"
   #include "NDItk/MultigroupTable/src/verify.hpp"
 
 public:

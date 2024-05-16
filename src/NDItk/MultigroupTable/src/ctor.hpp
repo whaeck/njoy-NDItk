@@ -38,7 +38,11 @@ MultigroupTable( std::string zaid, std::string libname,
                  std::optional< std::string > source = std::nullopt,
                  std::optional< double > weight = std::nullopt,
                  std::optional< multigroup::TotalCrossSection > total = std::nullopt,
-                 std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt ) :
+                 std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt,
+                 std::optional< multigroup::HeatingNumbers > primaryHeating = std::nullopt,
+                 std::vector< multigroup::HeatingNumbers > outgoingHeating = {},
+                 std::optional< multigroup::Kerma > primaryKerma = std::nullopt,
+                 std::vector< multigroup::Kerma > outgoingKerma = {} ) :
     metadata_( std::move( zaid ), std::move( libname ),
                std::move( process ), awr, temperature, dilution,
                structure.numberGroups(), generateOutgoingStructureMetadata( outgoing ),
@@ -49,11 +53,21 @@ MultigroupTable( std::string zaid, std::string libname,
     outgoing_structure_( std::move( outgoing ) ),
     weights_( std::move( weigths ) ),
     xs_( std::move( xs ) ),
-    release_( std::move( release.value() ) ) {
+    release_( std::move( release.value() ) ),
+    outgoing_heating_( std::move( outgoingHeating ) ),
+    outgoing_kerma_( std::move( outgoingKerma ) ) {
 
   if ( total.has_value() ) {
 
     this->total_ = std::move( total.value() );
+  }
+  if ( primaryHeating.has_value() ) {
+
+    this->primary_heating_ = std::move( primaryHeating.value() );
+  }
+  if ( primaryKerma.has_value() ) {
+
+    this->primary_kerma_ = std::move( primaryKerma.value() );
   }
   this->verify();
 }

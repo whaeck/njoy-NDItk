@@ -21,6 +21,7 @@ namespace multigroup {
   void wrapKerma( python::module&, python::module& );
   void wrapAverageFissionEnergyRelease( python::module&, python::module& );
   void wrapOutgoingParticleTypes( python::module&, python::module& );
+  void wrapOutgoingParticleTransportData( python::module&, python::module& );
 }
 
 void wrapMultigroup( python::module& module, python::module& viewmodule ) {
@@ -43,4 +44,5 @@ void wrapMultigroup( python::module& module, python::module& viewmodule ) {
   multigroup::wrapKerma( submodule, viewmodule );
   multigroup::wrapAverageFissionEnergyRelease( submodule, viewmodule );
   multigroup::wrapOutgoingParticleTypes( submodule, viewmodule );
+  multigroup::wrapOutgoingParticleTransportData( submodule, viewmodule );
 }

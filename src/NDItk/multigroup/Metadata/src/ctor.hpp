@@ -10,6 +10,7 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
              temperature_( base::Keyword( "temp" ) ),
              dilution_( base::Keyword( "sig_0" ) ),
              primary_groups_( base::Keyword( "num_grps" ) ),
+             outgoing_particles_( base::Keyword( "num_sec_parts" ) ),
              outgoing_groups_(),
              upscatter_groups_( base::Keyword( "up_grps" ) ),
              downscatter_groups_( base::Keyword( "down_grps" ) ),
@@ -41,7 +42,8 @@ Metadata( std::string zaid, std::string libname, std::string process,
           std::optional< std::string > source = std::nullopt,
           std::optional< double  > weight = std::nullopt,
           std::optional< int > upscatter = std::nullopt,
-          std::optional< int > downscatter = std::nullopt ) :
+          std::optional< int > downscatter = std::nullopt,
+          std::optional< int > outgoingParticles = std::nullopt ) :
     zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
     library_name_( base::Keyword( "library_name" ), std::move( libname ) ),
     source_date_( source.has_value()
@@ -55,6 +57,9 @@ Metadata( std::string zaid, std::string libname, std::string process,
     temperature_( base::Keyword( "temp" ), temperature ),
     dilution_( base::Keyword( "sig_0" ), dilution ),
     primary_groups_( base::Keyword( "num_grps" ), groups ),
+    outgoing_particles_( outgoingParticles.has_value()
+                         ? base::SingleIntegerRecord( base::Keyword( "num_sec_parts" ), outgoingParticles.value() )
+                         : base::SingleIntegerRecord( base::Keyword( "num_sec_parts" ) ) ),
     outgoing_groups_( generateSecondaryGroups( outgoing ) ),
     upscatter_groups_( upscatter.has_value()
                        ? base::SingleIntegerRecord( base::Keyword( "up_grps" ), upscatter.value() )

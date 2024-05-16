@@ -50,5 +50,11 @@ SCENARIO( "Keyword" ) {
   CHECK( std::nullopt == result.particle() );
   CHECK( false == result.hasSubtype() );
 
+  result = Keyword( "num_sec_parts" );
+  CHECK( "num_sec_parts" == result.keyword() );
+  CHECK( std::nullopt == result.subtype() );
+  CHECK( std::nullopt == result.particle() );
+  CHECK( false == result.hasSubtype() );
+
   CHECK_THROWS( Keyword( "NuM_GrPs" ) );
 } // SCENARIO

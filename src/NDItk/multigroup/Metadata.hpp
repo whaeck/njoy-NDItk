@@ -30,6 +30,7 @@ class Metadata {
   base::SingleRealRecord temperature_;
   base::SingleRealRecord dilution_;
   base::SingleIntegerRecord primary_groups_;
+  base::SingleIntegerRecord outgoing_particles_;
   std::vector< base::SingleIntegerRecord > outgoing_groups_;
   base::SingleIntegerRecord upscatter_groups_;
   base::SingleIntegerRecord downscatter_groups_;
@@ -63,6 +64,7 @@ public:
            ( keyword == this->dilution_.keyword() ) ||
            ( keyword == this->reactions_.keyword() ) ||
            ( keyword.find( this->primary_groups_.keyword() ) == 0 ) ||
+           ( keyword == this->outgoing_particles_.keyword() ) ||
            ( keyword == this->upscatter_groups_.keyword() ) ||
            ( keyword == this->downscatter_groups_.keyword() );
   }
@@ -112,6 +114,11 @@ public:
    *  @brief Return the number of groups in the primary group structure
    */
   decltype(auto) numberGroups() const { return this->primary_groups_.data(); }
+
+  /**
+   *  @brief Return the number of outgoing particles
+   */
+  decltype(auto) numberOutgoingParticles() const { return this->outgoing_particles_.data(); }
 
   /**
    *  @brief Return the number of groups in the outgoing group structure
@@ -179,6 +186,7 @@ public:
     else if ( keyword == this->reactions_.keyword() )          { readRecord( this->reactions_, iter, end ); }
     else if ( keyword == this->upscatter_groups_.keyword() )   { readRecord( this->upscatter_groups_, iter, end ); }
     else if ( keyword == this->downscatter_groups_.keyword() ) { readRecord( this->downscatter_groups_, iter, end ); }
+    else if ( keyword == this->outgoing_particles_.keyword() ) { readRecord( this->outgoing_particles_, iter, end ); }
     else if ( keyword.find( this->primary_groups_.keyword() ) == 0 ) {
 
       if ( keyword == this->primary_groups_.keyword() ) {
@@ -232,6 +240,7 @@ public:
     this->temperature_.print( iter );
     this->dilution_.print( iter );
     this->primary_groups_.print( iter );
+    this->outgoing_particles_.print( iter );
     for ( const auto& entry : this->outgoing_groups_ ) { entry.print( iter ); }
     this->upscatter_groups_.print( iter );
     this->downscatter_groups_.print( iter );

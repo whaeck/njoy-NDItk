@@ -130,7 +130,21 @@ void read( Iterator& iter, const Iterator& end ) {
       else {
 
         Log::error( "Metadata required for the \'\' record was not found", keyword );
-        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        Log::info( "Required metadata is missing: number of outgoing particle types" );
+        throw std::exception();
+      }
+    }
+    // outgoing particle transport data
+    else if ( keyword == this->outgoing_zaids_.keyword() ) {
+
+      if ( this->metadata_.numberOutgoingParticles().has_value() ) {
+
+        readRecord( this->outgoing_zaids_, iter, end, this->metadata_.numberOutgoingParticles().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of outgoing particle types" );
         throw std::exception();
       }
     }

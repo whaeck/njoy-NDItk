@@ -46,6 +46,7 @@ SCENARIO( "MultigroupTable" ) {
                                                        7.281253, 6.5, 169.13 );
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
+      multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
           { 1001, { 25., 15. } }
@@ -62,7 +63,7 @@ SCENARIO( "MultigroupTable" ) {
                              std::move( velocities ), std::move( weights ),
                              std::move( xs ), std::move( source ), weight,
                              std::move( total ), std::move( release ),
-                             std::move( types ),
+                             std::move( types ), std::move( transport ),
                              std::move( primaryHeating ), std::move( outgoingHeating ),
                              std::move( primaryKerma ), std::move( outgoingKerma ) );
 
@@ -142,6 +143,7 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
+      multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
@@ -161,7 +163,7 @@ SCENARIO( "MultigroupTable" ) {
                                        std::move( weights ), std::move( xs ),
                                        std::move( source ), weight,
                                        std::move( total ), std::move( release ),
-                                       std::move( types ),
+                                       std::move( types ), std::move( transport ),
                                        std::move( primaryHeating ), std::move( outgoingHeating ),
                                        std::move( primaryKerma ), std::move( outgoingKerma ) ) );
       } // THEN
@@ -227,6 +229,8 @@ std::string chunk() {
          "    660 770\n"
          "sec_part_types\n"
          "    0 1001\n"
+         "sec_part_zaids\n"
+         "    92000 92235.proton\n"
          "e_bounds_0\n"
          "    20 10 5 1e-11\n"
          "e_bounds_1001\n"
@@ -429,6 +433,16 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( 2 == types.numberOutgoingParticles() );
   CHECK(    0 == types.values()[0] );
   CHECK( 1001 == types.values()[1] );
+
+  // outgoing particle transport data
+  auto transport = chunk.outgoingParticleTransportData();
+  CHECK( "sec_part_zaids" == transport.keyword() );
+  CHECK( false == transport.empty() );
+  CHECK( 2 == transport.size() );
+  CHECK( 2 == transport.values().size() );
+  CHECK( 2 == transport.numberOutgoingParticles() );
+  CHECK( "92000" == transport.values()[0] );
+  CHECK( "92235.proton" == transport.values()[1] );
 
   // outgoing group structure: 0
   structure = chunk.outgoingGroupBoundaries( 0 );

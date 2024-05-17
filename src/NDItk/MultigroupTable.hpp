@@ -13,6 +13,7 @@
 #include "NDItk/multigroup/TotalCrossSection.hpp"
 #include "NDItk/multigroup/AverageFissionEnergyRelease.hpp"
 #include "NDItk/multigroup/OutgoingParticleTypes.hpp"
+#include "NDItk/multigroup/OutgoingParticleTransportData.hpp"
 #include "NDItk/multigroup/HeatingNumbers.hpp"
 #include "NDItk/multigroup/Kerma.hpp"
 
@@ -36,6 +37,7 @@ class MultigroupTable {
   multigroup::HeatingNumbers primary_heating_;
   multigroup::Kerma primary_kerma_;
   multigroup::OutgoingParticleTypes outgoing_particles_;
+  multigroup::OutgoingParticleTransportData outgoing_zaids_;
   std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;
   std::vector< multigroup::HeatingNumbers > outgoing_heating_;
   std::vector< multigroup::Kerma > outgoing_kerma_;
@@ -135,6 +137,15 @@ public:
   }
 
   /**
+   *  @brief Return the outgoing particle transport data record
+   */
+  const multigroup::OutgoingParticleTransportData&
+  outgoingParticleTransportData() const {
+
+    return this->outgoing_zaids_;
+  }
+
+  /**
    *  @brief Return the group structure record for an outgoing particle
    */
   const multigroup::EnergyGroupStructure&
@@ -228,6 +239,7 @@ public:
     this->primary_heating_.print( iter );
     this->primary_kerma_.print( iter );
     this->outgoing_particles_.print( iter );
+    this->outgoing_zaids_.print( iter );
     for ( const auto& entry : this->outgoing_structure_ ) { entry.print( iter ); }
     for ( const auto& entry : this->outgoing_heating_ ) { entry.print( iter ); }
     for ( const auto& entry : this->outgoing_kerma_ ) { entry.print( iter ); }

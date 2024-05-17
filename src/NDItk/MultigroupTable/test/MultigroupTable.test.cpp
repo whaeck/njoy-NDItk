@@ -193,6 +193,8 @@ std::string chunk() {
          "    7\n"
          "num_reac\n"
          "    2\n"
+         "pn_order\n"
+         "    0\n"
          "num_sec_parts\n"
          "    2\n"
          "num_grps_0\n"

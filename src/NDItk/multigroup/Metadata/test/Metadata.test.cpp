@@ -33,6 +33,7 @@ SCENARIO( "Metadata" ) {
       double dilution = 1e+10;
       unsigned int groups = 618;
       std::map< unsigned int, unsigned int > outgoing = { { 0, 30 }, { 1001, 250 } };
+      int legendre = 5;
       int upscatter = 3;
       int downscatter = 2;
       unsigned int reactions = 7;
@@ -40,7 +41,7 @@ SCENARIO( "Metadata" ) {
       Metadata chunk( std::move( zaid ), std::move( name ),
                       std::move( process ),
                       awr, temperature, dilution,
-                      groups, outgoing, reactions,
+                      groups, outgoing, reactions, legendre,
                       std::move( source ),
                       weight,
                       upscatter, downscatter );
@@ -72,6 +73,7 @@ SCENARIO( "Metadata" ) {
       };
 
       Metadata chunk;
+      chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
@@ -128,6 +130,8 @@ std::string chunk() {
          "    618\n"
          "num_reac\n"
          "    7\n"
+         "pn_order\n"
+         "    5\n"
          "up_grps\n"
          "    3\n"
          "down_grps\n"
@@ -157,6 +161,7 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK(   3 == chunk.numberUpscatterGroups() );
   CHECK(   2 == chunk.numberDownscatterGroups() );
   CHECK(   7 == chunk.numberReactions() );
+  CHECK(   5 == chunk.numberLegendreMoments() );
 
   CHECK_THROWS( chunk.numberOutgoingGroups( 1 ) );
 }

@@ -35,5 +35,6 @@ add_python_test( multigroup.Kerma                         multigroup/Test_NDItk_
 add_python_test( multigroup.OutgoingParticleTypes         multigroup/Test_NDItk_multigroup_OutgoingParticleTypes.py )
 add_python_test( multigroup.OutgoingParticleTransportData multigroup/Test_NDItk_multigroup_OutgoingParticleTransportData.py )
 add_python_test( multigroup.LegendreMoment                multigroup/Test_NDItk_multigroup_LegendreMoment.py )
+add_python_test( multigroup.ScatteringMatrix              multigroup/Test_NDItk_multigroup_ScatteringMatrix.py )
 
 add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )

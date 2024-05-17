@@ -23,6 +23,7 @@ namespace multigroup {
   void wrapOutgoingParticleTypes( python::module&, python::module& );
   void wrapOutgoingParticleTransportData( python::module&, python::module& );
   void wrapLegendreMoment( python::module&, python::module& );
+  void wrapScatteringMatrix( python::module&, python::module& );
 }
 
 void wrapMultigroup( python::module& module, python::module& viewmodule ) {
@@ -47,4 +48,5 @@ void wrapMultigroup( python::module& module, python::module& viewmodule ) {
   multigroup::wrapOutgoingParticleTypes( submodule, viewmodule );
   multigroup::wrapOutgoingParticleTransportData( submodule, viewmodule );
   multigroup::wrapLegendreMoment( submodule, viewmodule );
+  multigroup::wrapScatteringMatrix( submodule, viewmodule );
 }

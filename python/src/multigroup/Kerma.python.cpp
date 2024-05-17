@@ -58,7 +58,7 @@ void wrapKerma( python::module& module, python::module& ) {
   .def_static(
 
     "from_string",
-    [] ( const std::string& string, std::size_t number ) -> Record
+    [] ( const std::string& string, unsigned int number ) -> Record
        { return readWithSubtype< Record >( string, number ); },
     python::arg( "string" ), python::arg( "number" ),
     "Read the record from a string\n\n"

@@ -33,7 +33,7 @@ public:
   /**
    *  @brief Return the number of outgoing particles defined by this record
    */
-  std::size_t numberOutgoingParticles() const { return this->size(); }
+  unsigned int numberOutgoingParticles() const { return this->size(); }
 
   using base::IntegerListRecord::keyword;
   using base::IntegerListRecord::values;

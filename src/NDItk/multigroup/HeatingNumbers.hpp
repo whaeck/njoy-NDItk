@@ -33,7 +33,7 @@ public:
   /**
    *  @brief Return the number of groups defined by this record
    */
-  std::size_t numberGroups() const { return this->size(); }
+  unsigned int numberGroups() const { return this->size(); }
 
   using base::RealListRecord::keyword;
   using base::RealListRecord::particle;

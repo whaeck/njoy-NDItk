@@ -23,8 +23,8 @@ class ReactionCrossSections : protected base::RealListRecord {
   /* fields */
 
   std::vector< CrossSection > xs_;
-  std::size_t groups_;
-  std::size_t reactions_;
+  unsigned int groups_;
+  unsigned int reactions_;
 
   /* auxiliary functions */
 

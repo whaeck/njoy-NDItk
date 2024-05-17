@@ -23,8 +23,8 @@ class LegendreMoment : protected base::SubListRecord< LegendreMoment, double > {
 
   /* fields */
 
-  std::size_t incident_;
-  std::size_t outgoing_;
+  unsigned int incident_;
+  unsigned int outgoing_;
 
   /* auxiliary functions */
 
@@ -48,12 +48,12 @@ public:
   /**
    *  @brief Return the number of incident groups defined by this record
    */
-  int numberPrimaryGroups() const { return this->incident_; }
+  unsigned int numberPrimaryGroups() const { return this->incident_; }
 
   /**
    *  @brief Return the number of outgoing groups defined by this record
    */
-  int numberOutgoingGroups() const { return this->outgoing_; }
+  unsigned int numberOutgoingGroups() const { return this->outgoing_; }
 
   /**
    *  @brief Return the matrix defined by this record

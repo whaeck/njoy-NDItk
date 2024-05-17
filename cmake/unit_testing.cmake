@@ -46,5 +46,6 @@ add_subdirectory( src/NDItk/multigroup/HeatingNumbers/test )
 add_subdirectory( src/NDItk/multigroup/Kerma/test )
 add_subdirectory( src/NDItk/multigroup/OutgoingParticleTypes/test )
 add_subdirectory( src/NDItk/multigroup/OutgoingParticleTransportData/test )
+add_subdirectory( src/NDItk/multigroup/LegendreMoment/test )
 
 add_subdirectory( src/NDItk/MultigroupTable/test )

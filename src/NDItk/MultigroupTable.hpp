@@ -277,6 +277,7 @@ public:
     this->outgoing_particles_.print( iter );
     this->outgoing_zaids_.print( iter );
     for ( const auto& entry : this->outgoing_structure_ ) { entry.print( iter ); }
+    for ( const auto& entry : this->outgoing_production_ ) { entry.print( iter ); }
     for ( const auto& entry : this->outgoing_heating_ ) { entry.print( iter ); }
     for ( const auto& entry : this->outgoing_kerma_ ) { entry.print( iter ); }
     base::Keyword( "end" ).print( iter );

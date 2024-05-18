@@ -1,5 +1,5 @@
 template< typename Iterator >
-void readOutgoingStructure( const std::string& key, Iterator& iter, const Iterator& end ) {
+void readOutgoingProductionMatrix( const std::string& key, Iterator& iter, const Iterator& end ) {
 
   base::Keyword secondary( key );
   unsigned int particle = secondary.particle().value();

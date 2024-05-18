@@ -61,6 +61,37 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
       multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
+      std::vector< multigroup::ScatteringMatrix > production = {
+
+        multigroup::ScatteringMatrix( 0, { { 0, { 1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1, }, 7, 3 },
+                                           { 1, { 0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0 }, 7, 3 } } ),
+        multigroup::ScatteringMatrix( 1001, { { 0, { 1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0, }, 7, 2 },
+                                              { 1, { 0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1 }, 7, 2 } } )
+      };
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
           { 1001, { 25., 15. } }
@@ -79,6 +110,7 @@ SCENARIO( "MultigroupTable" ) {
                              std::move( source ), weight,
                              std::move( total ), std::move( release ),
                              std::move( types ), std::move( transport ),
+                             std::move( production ),
                              std::move( primaryHeating ), std::move( outgoingHeating ),
                              std::move( primaryKerma ), std::move( outgoingKerma ) );
 
@@ -173,6 +205,37 @@ SCENARIO( "MultigroupTable" ) {
                                                        7.281253, 6.5, 169.13 );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
       multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
+      std::vector< multigroup::ScatteringMatrix > production = {
+
+        multigroup::ScatteringMatrix( 0, { { 0, { 1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1, }, 7, 3 },
+                                           { 1, { 0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0 }, 7, 3 } } ),
+        multigroup::ScatteringMatrix( 1001, { { 0, { 1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0, }, 7, 2 },
+                                              { 1, { 0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1 }, 7, 2 } } )
+      };
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
@@ -194,6 +257,7 @@ SCENARIO( "MultigroupTable" ) {
                                        std::move( source ), weight,
                                        std::move( total ), std::move( release ),
                                        std::move( types ), std::move( transport ),
+                                       std::move( production ),
                                        std::move( primaryHeating ), std::move( outgoingHeating ),
                                        std::move( primaryKerma ), std::move( outgoingKerma ) ) );
       } // THEN
@@ -290,6 +354,28 @@ std::string chunk() {
          "    20 10 5 1e-11\n"
          "e_bounds_1001\n"
          "    20 10 1e-11\n"
+         "pn_prod_full_0\n"
+         "    0\n"
+         "    1 0 0 0 1\n"
+         "    0 0 0 1 0\n"
+         "    1 0 1 0 0\n"
+         "    0 1 0 0 0\n"
+         "    1\n"
+         "    1\n"
+         "    0 0 1 0 1\n"
+         "    0 1 0 0 0\n"
+         "    1 0 0 0 1\n"
+         "    0 1 0 1 0\n"
+         "    0\n"
+         "pn_prod_full_1001\n"
+         "    0\n"
+         "    1 0 0 1 1\n"
+         "    0 0 1 1 0\n"
+         "    0 1 1 0\n"
+         "    1\n"
+         "    0 1 1 0 0\n"
+         "    1 1 0 0 1\n"
+         "    1 0 0 1\n"
          "heating_0\n"
          "    21 11 5.1\n"
          "heating_1001\n"

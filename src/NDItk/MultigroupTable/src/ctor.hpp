@@ -30,6 +30,7 @@ MultigroupTable() :
  *  @param[in] release           the average fission energy release data (optional)
  *  @param[in] types             the outgoing particle types (optional)
  *  @param[in] transport         the outgoing particle transport data (optional)
+ *  @param[in] production        the outgoing production matrices (optional)
  *  @param[in] primaryHeating    the primary particle heating numbers (optional)
  *  @param[in] outgoingHeating   the outgoing particles' heating numbers (optional)
  *  @param[in] primaryKerma      the primary particle kerma (optional)
@@ -50,6 +51,7 @@ MultigroupTable( std::string zaid, std::string libname,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTypes > types = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTransportData > transport = std::nullopt,
+                 std::vector< multigroup::ScatteringMatrix > production = {},
                  std::optional< multigroup::HeatingNumbers > primaryHeating = std::nullopt,
                  std::vector< multigroup::HeatingNumbers > outgoingHeating = {},
                  std::optional< multigroup::Kerma > primaryKerma = std::nullopt,
@@ -62,11 +64,12 @@ MultigroupTable( std::string zaid, std::string libname,
                std::nullopt, std::nullopt ),
     primary_structure_( std::move( structure ) ),
     velocities_( std::move( velocities ) ),
-    outgoing_structure_( std::move( outgoing ) ),
     weights_( std::move( weigths ) ),
     xs_( std::move( xs ) ),
     scattering_( std::move( scattering ) ),
     release_( std::move( release.value() ) ),
+    outgoing_structure_( std::move( outgoing ) ),
+    outgoing_production_( std::move( production ) ),
     outgoing_heating_( std::move( outgoingHeating ) ),
     outgoing_kerma_( std::move( outgoingKerma ) ) {
 

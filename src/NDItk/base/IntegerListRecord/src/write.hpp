@@ -11,7 +11,7 @@ void write( OutputIterator& iter ) const {
   std::ostringstream buffer;
 
   auto full = this->data().size() / 5;
-  auto partial = this->data().size() - full * 5;
+  auto partial = this->data().size() % 5;
   auto x = this->data().begin();
 
   while ( full-- ) {

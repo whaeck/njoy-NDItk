@@ -16,7 +16,7 @@ void write( OutputIterator& iter ) const {
   x += 2;
 
   auto full = this->numberGroups() / 5;
-  auto partial = this->numberGroups() - full * 5;
+  auto partial = this->numberGroups() % 5;
 
   while ( full-- ) {
 

@@ -23,6 +23,7 @@ class Test_NDItk_multigroup_EnergyGroupStructure( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # verify content
+            self.assertEqual( None, chunk.particle )
             self.assertEqual( 7, chunk.number_groups )
             self.assertAlmostEqual(    20, chunk.values[0] )
             self.assertAlmostEqual(    18, chunk.values[1] )
@@ -48,6 +49,7 @@ class Test_NDItk_multigroup_EnergyGroupStructure( unittest.TestCase ) :
         def verify_outgoing_chunk( self, chunk ) :
 
             # verify content
+            self.assertEqual( 1001, chunk.particle )
             self.assertEqual( 2, chunk.number_groups )
             self.assertAlmostEqual(    20, chunk.values[0] )
             self.assertAlmostEqual(    10, chunk.values[1] )

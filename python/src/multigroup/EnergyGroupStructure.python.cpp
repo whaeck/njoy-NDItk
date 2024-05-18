@@ -51,6 +51,12 @@ void wrapEnergyGroupStructure( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "particle",
+    [] ( const Record& self ) { return self.particle(); },
+    "The particle identifier"
+  )
+  .def_property_readonly(
+
     "number_groups",
     &Record::numberGroups,
     "The number of groups defined by this record"

@@ -16,6 +16,8 @@ from NDItk.multigroup import HeatingNumbers
 from NDItk.multigroup import Kerma
 from NDItk.multigroup import OutgoingParticleTypes
 from NDItk.multigroup import OutgoingParticleTransportData
+from NDItk.multigroup import LegendreMoment
+from NDItk.multigroup import ScatteringMatrix
 
 class Test_NDItk_MultigroupTable( unittest.TestCase ) :
     """Unit test for the MultigroupTable class."""
@@ -228,6 +230,21 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                  xs = ReactionCrossSections(
                                           xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
                                                  CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ),
+                                 scattering = ScatteringMatrix(
+                                     [ LegendreMoment( 0, [ 1, 0, 0, 0, 0, 0, 0,
+                                                            0, 1, 0, 0, 0, 0, 0,
+                                                            0, 0, 1, 0, 0, 0, 0,
+                                                            0, 0, 0, 1, 0, 0, 0,
+                                                            0, 0, 0, 0, 1, 0, 0,
+                                                            0, 0, 0, 0, 0, 1, 0,
+                                                            0, 0, 0, 0, 0, 0, 1 ], 7 ),
+                                       LegendreMoment( 1, [ 0, 0, 0, 0, 0, 0, 1,
+                                                             0, 0, 0, 0, 0, 1, 0,
+                                                             0, 0, 0, 0, 1, 0, 0,
+                                                             0, 0, 0, 1, 0, 0, 0,
+                                                             0, 0, 1, 0, 0, 0, 0,
+                                                             0, 1, 0, 0, 0, 0, 0,
+                                                             1, 0, 0, 0, 0, 0, 0 ], 7 ) ] ),
                                  release = AverageFissionEnergyRelease( 202.827, 181.238898, 4.827645,
                                                                         7.281253, 6.5, 169.13 ),
                                  primary_heating = HeatingNumbers( [ 11., 22., 33., 44., 55., 66., 77. ] ),

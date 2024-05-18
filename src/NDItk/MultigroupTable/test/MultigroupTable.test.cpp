@@ -42,6 +42,20 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
+      multigroup::ScatteringMatrix scattering( { { 0, { 1, 0, 0, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 0, 0, 1 }, 7 },
+                                                 { 1, { 0, 0, 0, 0, 0, 0, 1,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        1, 0, 0, 0, 0, 0, 0 }, 7 } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
@@ -61,7 +75,8 @@ SCENARIO( "MultigroupTable" ) {
                              std::move( process ), awr, temperature, dilution,
                              std::move( structure ), std::move( outgoing ),
                              std::move( velocities ), std::move( weights ),
-                             std::move( xs ), std::move( source ), weight,
+                             std::move( xs ), std::move( scattering ),
+                             std::move( source ), weight,
                              std::move( total ), std::move( release ),
                              std::move( types ), std::move( transport ),
                              std::move( primaryHeating ), std::move( outgoingHeating ),
@@ -140,6 +155,20 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04 } );                       // <-- 5 groups
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70., 80. } },    // <-- 8 groups
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7., 8. } } } );
+      multigroup::ScatteringMatrix scattering( { { 0, { 1, 0, 0, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 0, 0, 1 }, 7 },
+                                                 { 1, { 0, 0, 0, 0, 0, 0, 1,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        1, 0, 0, 0, 0, 0, 0 }, 7 } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
@@ -161,6 +190,7 @@ SCENARIO( "MultigroupTable" ) {
                                        std::move( process ), awr, temperature, dilution,
                                        std::move( structure ), {}, std::move( velocities ),
                                        std::move( weights ), std::move( xs ),
+                                       std::move( scattering ),
                                        std::move( source ), weight,
                                        std::move( total ), std::move( release ),
                                        std::move( types ), std::move( transport ),
@@ -194,7 +224,7 @@ std::string chunk() {
          "num_reac\n"
          "    2\n"
          "pn_order\n"
-         "    0\n"
+         "    2\n"
          "num_sec_parts\n"
          "    2\n"
          "num_grps_0\n"
@@ -220,6 +250,29 @@ std::string chunk() {
          "    16 1.1234567\n"
          "    1 2 3 4 5\n"
          "    6 7\n"
+         "pn_full\n"
+         "    0\n"
+         "    1 0 0 0 0\n"
+         "    0 0 0 1 0\n"
+         "    0 0 0 0 0\n"
+         "    0 1 0 0 0\n"
+         "    0 0 0 0 1\n"
+         "    0 0 0 0 0\n"
+         "    0 0 1 0 0\n"
+         "    0 0 0 0 0\n"
+         "    1 0 0 0 0\n"
+         "    0 0 0 1\n"
+         "    1\n"
+         "    0 0 0 0 0\n"
+         "    0 1 0 0 0\n"
+         "    0 0 1 0 0\n"
+         "    0 0 0 1 0\n"
+         "    0 0 0 0 1\n"
+         "    0 0 0 0 0\n"
+         "    1 0 0 0 0\n"
+         "    0 1 0 0 0\n"
+         "    0 0 1 0 0\n"
+         "    0 0 0 0\n"
          "fiss_q\n"
          "    181.238898 202.827 6.5 7.281253 169.13\n"
          "    4.827645\n"

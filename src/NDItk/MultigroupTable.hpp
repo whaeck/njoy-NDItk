@@ -16,6 +16,7 @@
 #include "NDItk/multigroup/OutgoingParticleTransportData.hpp"
 #include "NDItk/multigroup/HeatingNumbers.hpp"
 #include "NDItk/multigroup/Kerma.hpp"
+#include "NDItk/multigroup/ScatteringMatrix.hpp"
 
 namespace njoy {
 namespace NDItk {
@@ -33,12 +34,14 @@ class MultigroupTable {
   multigroup::FluxWeights weights_;
   multigroup::TotalCrossSection total_;
   multigroup::ReactionCrossSections xs_;
+  multigroup::ScatteringMatrix scattering_;
   multigroup::AverageFissionEnergyRelease release_;
   multigroup::HeatingNumbers primary_heating_;
   multigroup::Kerma primary_kerma_;
   multigroup::OutgoingParticleTypes outgoing_particles_;
   multigroup::OutgoingParticleTransportData outgoing_zaids_;
   std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;
+  std::vector< multigroup::ScatteringMatrix > outgoing_production_;
   std::vector< multigroup::HeatingNumbers > outgoing_heating_;
   std::vector< multigroup::Kerma > outgoing_kerma_;
 
@@ -100,6 +103,14 @@ public:
   const multigroup::ReactionCrossSections& reactionCrossSections() const {
 
     return this->xs_;
+  }
+
+  /**
+   *  @brief Return the scattering matrix record
+   */
+  const multigroup::ScatteringMatrix& scatteringMatrix() const {
+
+    return this->scattering_;
   }
 
   /**
@@ -170,6 +181,30 @@ public:
   }
 
   /**
+   *  @brief Return the production matrix record for an outgoing particle
+   */
+  const multigroup::ScatteringMatrix&
+  outgoingProductionMatrix( unsigned int particle ) const {
+
+    auto pos = std::lower_bound( this->outgoing_production_.begin(),
+                                 this->outgoing_production_.end(),
+                                 particle,
+                                 [] ( auto&& left, auto&& right ) {
+
+                                   return left.particle() < right;
+                                 } );
+    if ( pos != this->outgoing_production_.end() ) {
+
+      if ( pos->particle() == particle ) {
+
+        return *pos;
+      }
+    }
+    Log::error( "The requested outgoing particle \'{}\' has no outgoing production matrix", particle );
+    throw std::exception();
+  }
+
+  /**
    *  @brief Return the heating numbers record for an outgoing particle
    */
   const multigroup::HeatingNumbers&
@@ -235,6 +270,7 @@ public:
     this->weights_.print( iter );
     this->total_.print( iter );
     this->xs_.print( iter );
+    this->scattering_.print( iter );
     this->release_.print( iter );
     this->primary_heating_.print( iter );
     this->primary_kerma_.print( iter );

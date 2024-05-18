@@ -178,19 +178,9 @@ void read( Iterator& iter, const Iterator& end ) {
       }
     }
     // outgoing production matrices
-    else if ( this->outgoing_particles_.keyword().find( "pn_prod_full" ) == 0 ) {
+    else if ( keyword.find( "pn_prod_full" ) == 0 ) {
 
-      if ( this->metadata_.numberOutgoingParticles().has_value() ) {
-
-        readRecord( this->outgoing_particles_, iter, end,
-                    this->metadata_.numberOutgoingParticles().value() );
-      }
-      else {
-
-        Log::error( "Metadata required for the \'\' record was not found", keyword );
-        Log::info( "Required metadata is missing: number of outgoing particle types" );
-        throw std::exception();
-      }
+      readOutgoingProductionMatrix( keyword, iter, end );
     }
     // unknown or end keyword
     else {

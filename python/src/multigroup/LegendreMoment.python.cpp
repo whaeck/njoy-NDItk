@@ -31,6 +31,18 @@ void wrapLegendreMoment( python::module& module, python::module& ) {
   record
   .def(
 
+    python::init< int, std::vector< double >, unsigned int >(),
+    python::arg( "order" ), python::arg( "values" ),
+    python::arg( "incident" ),
+    "Initialise the subrecord\n\n"
+    "Arguments:\n"
+    "    self        the record\n"
+    "    order       the Legendre order\n"
+    "    values      the values of the matrix\n"
+    "    incident    the number of primary groups"
+  )
+  .def(
+
     python::init< int, std::vector< double >, unsigned int, unsigned int >(),
     python::arg( "order" ), python::arg( "values" ),
     python::arg( "incident" ), python::arg( "outgoing" ),

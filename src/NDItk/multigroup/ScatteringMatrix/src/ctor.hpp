@@ -5,9 +5,23 @@ private:
  */
 ScatteringMatrix( std::vector< LegendreMoment >&& moments,
                   unsigned int incident,
-                  unsigned int outgoing,
                   unsigned int number ) :
     RealListRecord( base::Keyword( "pn_full" ), generateData( std::move( moments ) ) ),
+    incident_( incident ), outgoing_( incident ), number_moments_( number ) {
+
+  this->generateBlocks();
+}
+
+/**
+ *  @brief Private intermediate constructor
+ */
+ScatteringMatrix( unsigned int particle,
+                  std::vector< LegendreMoment >&& moments,
+                  unsigned int incident,
+                  unsigned int outgoing,
+                  unsigned int number ) :
+    RealListRecord( base::Keyword( "pn_prod_full", particle ),
+                    generateData( std::move( moments ) ) ),
     incident_( incident ), outgoing_( outgoing ), number_moments_( number ) {
 
   this->generateBlocks();
@@ -16,17 +30,38 @@ ScatteringMatrix( std::vector< LegendreMoment >&& moments,
 public:
 
 /**
- *  @brief Default constructor
+ *  @brief Default constructor for the scattering matrix
  */
 ScatteringMatrix() : RealListRecord( base::Keyword( "pn_full" ) ) {}
 
 /**
- *  @brief Constructor
+ *  @brief Default constructor for a secondary particle's production matrix
+ *
+ *  @param[in] particle    the secondary particle identifier
+ */
+ScatteringMatrix( unsigned int particle ) :
+    RealListRecord( base::Keyword( "pn_prod_full", particle ) ) {}
+
+/**
+ *  @brief Constructor for the scattering matrix
  *
  *  @param[in] moments   the Legendre moments of the scattering matrix
  */
 ScatteringMatrix( std::vector< LegendreMoment > moments ) :
     ScatteringMatrix( std::move( moments ),
+                      moments.size() == 0 ? 0 : moments.front().numberPrimaryGroups(),
+                      moments.size() ) {}
+
+/**
+ *  @brief Constructor for a secondary particle's production matrix
+ *
+ *  @param[in] particle   the secondary particle identifier
+ *  @param[in] moments    the Legendre moments of the production matrix
+ */
+ScatteringMatrix( unsigned int particle,
+                  std::vector< LegendreMoment > moments ) :
+    ScatteringMatrix( particle,
+                      std::move( moments ),
                       moments.size() == 0 ? 0 : moments.front().numberPrimaryGroups(),
                       moments.size() == 0 ? 0 : moments.front().numberOutgoingGroups(),
                       moments.size() ) {}

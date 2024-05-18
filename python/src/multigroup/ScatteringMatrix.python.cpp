@@ -40,6 +40,22 @@ void wrapScatteringMatrix( python::module& module, python::module& ) {
     "    self      the record\n"
     "    moments   the Legendre moments of the scattering matrix"
   )
+  .def(
+
+    python::init< unsigned int, std::vector< LegendreMoment > >(),
+    python::arg( "particle" ), python::arg( "moments" ),
+    "Initialise the record\n\n"
+    "Arguments:\n"
+    "    self       the record\n"
+    "    particle   the secondary particle identifier\n"
+    "    moments    the Legendre moments of the scattering matrix"
+  )
+  .def_property_readonly(
+
+    "particle",
+    [] ( const Record& self ) { return self.particle(); },
+    "The particle identifier"
+  )
   .def_property_readonly(
 
     "number_primary_groups",
@@ -86,8 +102,24 @@ void wrapScatteringMatrix( python::module& module, python::module& ) {
 
     "from_string",
     [] ( const std::string& string, unsigned int incident,
+         unsigned int number ) -> Record
+       { return readWithSubtype< Record >( string, incident, number ); },
+    python::arg( "string" ), python::arg( "incident" ),
+    python::arg( "number" ),
+    "Read the record from a string\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "record\n\n"
+    "Arguments:\n"
+    "    string      the string representing the record\n"
+    "    incident    the number of incident energy groups\n"
+    "    number      the number of moments"
+  )
+  .def_static(
+
+    "from_string",
+    [] ( const std::string& string, unsigned int incident,
          unsigned int outgoing, unsigned int number ) -> Record
-       { return read< Record >( string, incident, outgoing, number ); },
+       { return readWithSubtype< Record >( string, incident, outgoing, number ); },
     python::arg( "string" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "number" ),
     "Read the record from a string\n\n"

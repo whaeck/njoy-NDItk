@@ -75,9 +75,23 @@ SCENARIO( "ScatteringMatrix" ) {
 
   GIVEN( "invalid data for a ScatteringMatrix instance" ) {
 
-    WHEN( "the number of reactions is insufficient" ) {
+    WHEN( "the number of moments is insufficient" ) {
 
       std::vector< LegendreMoment > moments = {};
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( ScatteringMatrix( std::move( moments ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the number of groups is inconsistent" ) {
+
+      std::vector< LegendreMoment > moments = {
+
+        { 0, { 1, 2, 3, 4, 5, 6 }, 3, 2 },       // <-- incident = 3, outgoing = 2
+        { 1, { 11, 12, 13, 14, 15, 16 }, 2, 3 }  // <-- incident = 2, outgoing = 3
+      };
 
       THEN( "an exception is thrown" ) {
 

@@ -278,6 +278,104 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertEqual( '92000', transport.values[0] )
             self.assertEqual( '92235.proton', transport.values[1] )
 
+            # verify content - production matrix: 0
+            matrix = chunk.outgoing_production_matrix( 0 )
+            self.assertEqual( "pn_prod_full_0", matrix.keyword )
+            self.assertEqual( 0, matrix.particle )
+            self.assertEqual( False, matrix.empty )
+            self.assertEqual( 44, matrix.size )
+            self.assertEqual( 7, matrix.number_primary_groups )
+            self.assertEqual( 3, matrix.number_outgoing_groups )
+            self.assertEqual( 2, matrix.number_legendre_moments )
+            moment = matrix.moment( 0 )
+            self.assertEqual( 0, moment.order )
+            self.assertAlmostEqual( 1, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 0, moment.matrix[0][2] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 1, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][2] )
+            self.assertAlmostEqual( 0, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 1, moment.matrix[2][2] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 1, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][2] )
+            self.assertAlmostEqual( 1, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 0, moment.matrix[4][2] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 1, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][2] )
+            self.assertAlmostEqual( 0, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            self.assertAlmostEqual( 1, moment.matrix[6][2] )
+            moment = matrix.moment( 1 )
+            self.assertEqual( 1, moment.order )
+            self.assertAlmostEqual( 0, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 1, moment.matrix[0][2] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 1, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][2] )
+            self.assertAlmostEqual( 1, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 0, moment.matrix[2][2] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 1, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][2] )
+            self.assertAlmostEqual( 0, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 1, moment.matrix[4][2] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 1, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][2] )
+            self.assertAlmostEqual( 1, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            self.assertAlmostEqual( 0, moment.matrix[6][2] )
+
+            # verify content - production matrix: 1001
+            matrix = chunk.outgoing_production_matrix( 1001 )
+            self.assertEqual( "pn_prod_full_1001", matrix.keyword )
+            self.assertEqual( 1001, matrix.particle )
+            self.assertEqual( False, matrix.empty )
+            self.assertEqual( 30, matrix.size )
+            self.assertEqual( 7, matrix.number_primary_groups )
+            self.assertEqual( 2, matrix.number_outgoing_groups )
+            self.assertEqual( 2, matrix.number_legendre_moments )
+            moment = matrix.moment( 0 )
+            self.assertEqual( 0, moment.order )
+            self.assertAlmostEqual( 1, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 1, moment.matrix[1][1] )
+            self.assertAlmostEqual( 1, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 1, moment.matrix[3][1] )
+            self.assertAlmostEqual( 1, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 1, moment.matrix[5][1] )
+            self.assertAlmostEqual( 1, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            moment = matrix.moment( 1 )
+            self.assertEqual( 1, moment.order )
+            self.assertAlmostEqual( 0, moment.matrix[0][0] )
+            self.assertAlmostEqual( 1, moment.matrix[0][1] )
+            self.assertAlmostEqual( 1, moment.matrix[1][0] )
+            self.assertAlmostEqual( 0, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[2][0] )
+            self.assertAlmostEqual( 1, moment.matrix[2][1] )
+            self.assertAlmostEqual( 1, moment.matrix[3][0] )
+            self.assertAlmostEqual( 0, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[4][0] )
+            self.assertAlmostEqual( 1, moment.matrix[4][1] )
+            self.assertAlmostEqual( 1, moment.matrix[5][0] )
+            self.assertAlmostEqual( 0, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[6][0] )
+            self.assertAlmostEqual( 1, moment.matrix[6][1] )
+
             # verify content - primary kerma
             kerma = chunk.primary_kerma
             self.assertEqual( 7, kerma.number_groups )
@@ -362,6 +460,38 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                  primary_kerma = Kerma( [ 110., 220., 330., 440., 550., 660., 770. ] ),
                                  types = OutgoingParticleTypes( [ 0, 1001 ] ),
                                  transport = OutgoingParticleTransportData( [ "92000", "92235.proton" ] ),
+                                 production = [
+
+                                     ScatteringMatrix( 0,
+                                         [ LegendreMoment( 0, [ 1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1 ], 7, 3 ),
+                                           LegendreMoment( 1, [ 0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0 ], 7, 3 ) ] ),
+                                     ScatteringMatrix( 1001,
+                                         [ LegendreMoment( 0, [ 1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0 ], 7, 2 ),
+                                           LegendreMoment( 1, [ 0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1 ], 7, 2 ) ] )                                 ],
                                  outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
                                               EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] ) ],
                                  outgoing_heating = [ HeatingNumbers( 0, [ 21., 11., 5.1 ] ),

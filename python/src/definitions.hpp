@@ -146,4 +146,3 @@ void addStandardTableDefinitions( PythonClass& table ) {
 }
 
 #endif
-

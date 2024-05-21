@@ -1,0 +1,1 @@
+add_cpp_test( MultigroupTable MultigroupTable.test.cpp )

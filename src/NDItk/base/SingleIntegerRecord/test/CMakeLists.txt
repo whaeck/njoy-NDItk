@@ -1,0 +1,1 @@
+add_cpp_test( base.SingleIntegerRecord SingleIntegerRecord.test.cpp )

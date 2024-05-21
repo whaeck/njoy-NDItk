@@ -37,6 +37,7 @@ void wrapMetadata( python::module& module, python::module& ) {
                   unsigned int, std::map< unsigned int, unsigned int >,
                   unsigned int, unsigned int,
                   std::optional< std::string >,
+                  std::optional< std::string >,
                   std::optional< double >,
                   std::optional< int >,
                   std::optional< int > >(),
@@ -44,6 +45,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     python::arg( "process" ), python::arg( "awr" ),
     python::arg( "temperature" ), python::arg( "dilution" ), python::arg( "groups" ),
     python::arg( "outgoing" ), python::arg( "reactions" ), python::arg( "legendre" ),
+    python::arg( "information" ) = std::nullopt,
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
     python::arg( "upscatter" ) = std::nullopt,
@@ -62,6 +64,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     "    outgoing       the number of groups in the outgoing group structures\n"
     "    reactions      the number of reactions defined in the table\n"
     "    legendre       the number of Legendre moments in the table\n"
+    "    information    the table information line (optional)\n"
     "    source         the source date (optional)\n"
     "    weight         the atomic weight of the target (optional)\n"
     "    upscatter      the number of upscatter groups (optional)\n"
@@ -72,6 +75,12 @@ void wrapMetadata( python::module& module, python::module& ) {
     "zaid",
     &Record::zaid,
     "The zaid of the table"
+  )
+  .def_property_readonly(
+
+    "information",
+    &Record::information,
+    "The table information line"
   )
   .def_property_readonly(
 

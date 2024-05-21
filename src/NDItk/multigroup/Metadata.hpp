@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "NDItk/base/InformationRecord.hpp"
 #include "NDItk/base/SingleIntegerRecord.hpp"
 #include "NDItk/base/SingleRealRecord.hpp"
 #include "NDItk/base/SingleStringRecord.hpp"
@@ -22,6 +23,7 @@ class Metadata {
   /* fields */
 
   base::SingleStringRecord zaid_;
+  base::InformationRecord information_;
   base::SingleStringRecord library_name_;
   base::SingleStringRecord source_date_;
   base::SingleStringRecord process_date_;
@@ -55,7 +57,8 @@ public:
    */
   bool isMetadataKey( const std::string& keyword ) const {
 
-    return ( keyword == this->zaid_.keyword() ) ||
+    return ( keyword == this->information_.keyword() ) ||
+           ( keyword == this->zaid_.keyword() ) ||
            ( keyword == this->library_name_.keyword() ) ||
            ( keyword == this->source_date_.keyword() ) ||
            ( keyword == this->process_date_.keyword() ) ||
@@ -75,6 +78,11 @@ public:
    *  @brief Return the zaid of the table
    */
   decltype(auto) zaid() const { return this->zaid_.data(); }
+
+  /**
+   *  @brief Return the table information line
+   */
+  decltype(auto) information() const { return this->information_.data(); }
 
   /**
    *  @brief Return the library name
@@ -186,6 +194,7 @@ public:
   void read( const std::string& keyword, Iterator& iter, const Iterator& end ) {
 
     if      ( keyword == this->zaid_.keyword() )               { readRecord( this->zaid_, iter, end ); }
+    else if ( keyword == this->information_.keyword() )        { readRecord( this->information_, iter, end ); }
     else if ( keyword == this->library_name_.keyword() )       { readRecord( this->library_name_, iter, end ); }
     else if ( keyword == this->source_date_.keyword() )        { readRecord( this->source_date_, iter, end ); }
     else if ( keyword == this->process_date_.keyword() )       { readRecord( this->process_date_, iter, end ); }
@@ -243,6 +252,7 @@ public:
   void print( OutputIterator& iter ) const {
 
     this->zaid_.print( iter );
+    this->information_.print( iter );
     this->library_name_.print( iter );
     this->source_date_.print( iter );
     this->process_date_.print( iter );

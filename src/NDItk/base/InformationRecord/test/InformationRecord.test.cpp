@@ -67,12 +67,12 @@ SCENARIO( "InformationRecord" ) {
 std::string chunk() {
 
   return "info\n"
-         "this is some information for the table\n";
+         "    this is some information for the table\n";
 }
 
 void verifyChunk( const InformationRecord& chunk ) {
 
   CHECK( "info" == chunk.keyword() );
   CHECK( false == chunk.empty() );
-  CHECK( "this is some information for the table" == chunk.line() );
+  CHECK( "this is some information for the table" == chunk.data() );
 }

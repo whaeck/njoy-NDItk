@@ -2,88 +2,105 @@
 #define NJOY_NDITK_BASE_INFORMATIONRECORD
 
 // system includes
-#include <optional>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 // other includes
-#include "NDItk/base/Record.hpp"
+#include "NDItk/base/SingleValueRecord.hpp"
 
 namespace njoy {
 namespace NDItk {
 namespace base {
 
 /**
- *  @brief An NDI base record with a single information string
+ *  @brief An NDI record with a line of information
  */
-class InformationRecord : protected Record {
+class InformationRecord : protected SingleValueRecord< InformationRecord, std::string > {
 
-  /* fields */
-  std::string information_;
+  friend class SingleValueRecord< InformationRecord, std::string >;
+  using Parent = SingleValueRecord< InformationRecord, std::string >;
+
+protected:
+
+  /**
+   *  @brief Write the record data
+   *
+   *  This assumes that the record is not empty.
+   *
+   *  @param[in] iter   the current position in the output
+   */
+  template< typename OutputIterator >
+  void write( OutputIterator& iter ) const {
+
+    unsigned int indent = 4;
+    while ( indent-- ) { *iter++ = ' '; }
+    for ( auto c : this->data().value() ) { *iter++ = c; }
+    *iter++ = '\n';
+  };
+
+  using Parent::key;
 
 public:
 
   /* constructor */
 
   /**
-   *  @brief Default constructor
+   *  @brief Constructor
+   *
+   *  @param[in] keyword   the keyword of the record
    */
-  InformationRecord() : Record( Keyword( "info" ) ) {}
+  InformationRecord() :
+      SingleValueRecord( Keyword( "info" ) ) {}
 
   /**
    *  @brief Constructor
    *
-   *  @param[in] weights    the flux weights
+   *  @param[in] keyword   the keyword of the record
+   *  @param[in] value     the value of the record
    */
-  InformationRecord( std::string information ) :
-      Record( Keyword( "info" ) ), information_( std::move( information ) ) {}
+  InformationRecord( std::string value ) :
+      SingleValueRecord( Keyword( "info" ), value ) {}
 
-  /**
-   *  @brief Return the record data
-   */
-  const std::string& line() const { return this->information_; }
+  /* methods */
 
-  using Record::keyword;
-
-  /**
-   *  @brief Return whether or not the record is empty
-   */
-  bool empty() const { return this->information_.size() == 0; }
-
-  /**
-   *  @brief Print the record (if it is not empty)
-   *
-   *  Printing the data contained in the record is delegated to the
-   *  derived class which knows how to format the data.
-   *
-   *  @param[in] iter   the current position in the output
-   */
-  template< typename OutputIterator >
-  void print( OutputIterator& iter ) const {
-
-    if ( ! this->empty() ) {
-
-      Record::print( iter );
-      for ( auto c : this->line() ) { *iter++ = c; }
-      *iter++ = '\n';
-    }
-  }
+  using Parent::keyword;
+  using Parent::data;
+  using Parent::empty;
+  using Parent::print;
 
   /**
    *  @brief Read the record data
    *
-   *  @param[in] iter    the current position in the input
-   *  @param[in] end     the end position in the input
+   *  @param[in] iter   the current position in the input
    */
   template< typename Iterator >
   void read( Iterator& iter, const Iterator& end ) {
 
-    while ( ( iter != end ) && ( *iter != '\n' ) ) {
+    // move over the first endline
+    while ( ( iter != end ) && std::isspace( *iter ) && ( *iter != '\n' ) ) {
 
       ++iter;
     }
+    if ( *iter != '\n' ) {
+
+      Log::error( "The table information line should start on a new line" );
+      throw std::exception();
+    }
     ++iter;
+    // move over initial white space
+    while ( ( iter != end ) && std::isspace( *iter ) && ( *iter != '\n' ) ) {
+
+      ++iter;
+    }
     auto pos = std::find_if( iter, end, [] ( auto&& character )
                                            { return character == '\n'; } );
-    this->information_ = std::string( iter, pos );
+    if ( pos == iter ) {
+
+      Log::error( "There appears to be no table information line" );
+      throw std::exception();
+    }
+    this->data() = std::string( iter, pos );
     if ( pos != end ) {
 
       iter = pos + 1;

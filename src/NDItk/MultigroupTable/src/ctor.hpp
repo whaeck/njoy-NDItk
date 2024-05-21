@@ -25,6 +25,7 @@ MultigroupTable() :
  *  @param[in] total             the total cross section
  *  @param[in] xs                the reaction cross section data
  *  @param[in] scattering        the scattering matrix
+ *  @param[in] information       the table information line (optional)
  *  @param[in] source            the source date (optional)
  *  @param[in] weight            the atomic weight of the target (optional)
  *  @param[in] release           the average fission energy release data (optional)
@@ -45,6 +46,7 @@ MultigroupTable( std::string zaid, std::string libname,
                  multigroup::FluxWeights weigths,
                  multigroup::ReactionCrossSections xs,
                  multigroup::ScatteringMatrix scattering,
+                 std::optional< std::string > information = std::nullopt,
                  std::optional< std::string > source = std::nullopt,
                  std::optional< double > weight = std::nullopt,
                  std::optional< multigroup::TotalCrossSection > total = std::nullopt,
@@ -60,7 +62,7 @@ MultigroupTable( std::string zaid, std::string libname,
                std::move( process ), awr, temperature, dilution,
                structure.numberGroups(), generateOutgoingStructureMetadata( outgoing ),
                xs.numberReactions(), scattering.numberLegendreMoments(),
-               std::move( source ), std::move( weight ),
+               std::move( information ), std::move( source ), std::move( weight ),
                std::nullopt, std::nullopt ),
     primary_structure_( std::move( structure ) ),
     velocities_( std::move( velocities ) ),

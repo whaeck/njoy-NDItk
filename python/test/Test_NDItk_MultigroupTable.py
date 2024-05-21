@@ -1,5 +1,6 @@
 # standard imports
 import unittest
+import os
 
 # third party imports
 
@@ -29,6 +30,7 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             # verify content - metadata
             metadata = chunk.metadata
             self.assertEqual( '92235.711nm', metadata.zaid )
+            self.assertEqual( 'this is some information for the table', metadata.information )
             self.assertEqual( 'mendf71x', metadata.library_name )
             self.assertEqual( '12/22/2011', metadata.source_date )
             self.assertEqual( '08/07/2013', metadata.process_date )
@@ -429,7 +431,8 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual( 150, kerma.values[1] )
 
         # the data is given explicitly
-        chunk = MultigroupTable( zaid = '92235.711nm', libname = 'mendf71x', source = '12/22/2011',
+        chunk = MultigroupTable( zaid = '92235.711nm', libname = 'mendf71x',
+                                 information = 'this is some information for the table', source = '12/22/2011',
                                  process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
                                  temperature = 2.53e-8, dilution = 1e+10,
                                  structure = EnergyGroupStructure( [ 20., 18.123456789, 16.0000000000001, 14., 10., 5, 1, 1e-11 ] ),
@@ -500,6 +503,12 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                                     Kerma( 1001, [ 250., 150. ] ) ] )
 
         verify_chunk( self, chunk )
+
+        # the data is read from a file
+        chunk.to_file( 'test.txt' )
+        chunk = MultigroupTable.from_file( 'test.txt' )
+        verify_chunk( self, chunk )
+        os.remove( 'test.txt' )
 
 if __name__ == '__main__' :
 

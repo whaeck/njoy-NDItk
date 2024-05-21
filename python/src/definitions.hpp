@@ -9,6 +9,7 @@
 #include <pybind11/stl.h>
 #include "tools/views/views-python.hpp"
 #include "NDItk/fromFile.hpp"
+#include "NDItk/toFile.hpp"
 
 namespace python = pybind11;
 
@@ -136,6 +137,19 @@ void addStandardTableDefinitions( PythonClass& table ) {
     [] ( const std::string& filename ) -> Table {
 
       return njoy::NDItk::fromFile< Table >( filename );
+    },
+    "Read an ACE table from a file\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "table\n\n"
+    "Arguments:\n"
+    "    filename    the file name and path"
+  )
+  .def(
+
+    "to_file",
+    [] ( const Table& self, const std::string& filename ) {
+
+      return njoy::NDItk::toFile( self, filename );
     },
     "Read an ACE table from a file\n\n"
     "An exception is raised if something goes wrong while reading the\n"

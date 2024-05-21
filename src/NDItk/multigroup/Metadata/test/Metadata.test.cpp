@@ -25,6 +25,7 @@ SCENARIO( "Metadata" ) {
 
       std::string zaid = "92235.711nm";
       std::string name = "mendf71x";
+      std::optional< std::string > information = "this is some information for the table";
       std::optional< std::string > source = "12/22/2011";
       std::string process = "08/07/2013";
       double awr = 233.0248;
@@ -42,6 +43,7 @@ SCENARIO( "Metadata" ) {
                       std::move( process ),
                       awr, temperature, dilution,
                       groups, outgoing, reactions, legendre,
+                      std::move( information ),
                       std::move( source ),
                       weight,
                       upscatter, downscatter );
@@ -89,6 +91,7 @@ SCENARIO( "Metadata" ) {
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {
@@ -112,6 +115,8 @@ std::string chunk() {
 
   return "zaid\n"
          "    92235.711nm\n"
+         "info\n"
+         "    this is some information for the table\n"
          "library_name\n"
          "    mendf71x\n"
          "date_source\n"
@@ -147,6 +152,7 @@ std::string chunk() {
 void verifyChunk( const Metadata& chunk ) {
 
   CHECK( "92235.711nm" == chunk.zaid() );
+  CHECK( "this is some information for the table" == chunk.information() );
   CHECK( "mendf71x" == chunk.libraryName() );
   CHECK( "12/22/2011" == chunk.sourceDate() );
   CHECK( "08/07/2013" == chunk.processDate() );

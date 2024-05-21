@@ -2,6 +2,7 @@
  *  @brief Default constructor
  */
 Metadata() : zaid_( base::Keyword( "zaid" ) ),
+             information_(),
              library_name_( base::Keyword( "library_name" ) ),
              source_date_( base::Keyword( "date_source" ) ),
              process_date_( base::Keyword( "date_processed" ) ),
@@ -40,11 +41,15 @@ Metadata( std::string zaid, std::string libname, std::string process,
           unsigned int groups,
           const std::map< unsigned int, unsigned int >& outgoing,
           unsigned int reactions, unsigned int legendre,
+          std::optional< std::string > information = std::nullopt,
           std::optional< std::string > source = std::nullopt,
           std::optional< double  > weight = std::nullopt,
           std::optional< int > upscatter = std::nullopt,
           std::optional< int > downscatter = std::nullopt ) :
     zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
+    information_( information.has_value()
+                  ? base::InformationRecord( std::move( information.value() ) )
+                  : base::InformationRecord() ),
     library_name_( base::Keyword( "library_name" ), std::move( libname ) ),
     source_date_( source.has_value()
                   ? base::SingleStringRecord( base::Keyword( "date_source" ), std::move( source.value() ) )

@@ -398,7 +398,7 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( "this is some information for the table" == chunk.metadata().information() );
   CHECK( "mendf71x" == chunk.metadata().libraryName() );
   CHECK( "12/22/2011" == chunk.metadata().sourceDate() );
-  CHECK( "08/07/2013" == chunk.metadata().processDate() );
+  CHECK( "08/07/2013" == chunk.metadata().processingDate() );
   CHECK_THAT( 233.0248, WithinRel( chunk.metadata().atomicWeightRatio().value() ) );
   CHECK_THAT( 235.043937521619, WithinRel( chunk.metadata().atomicWeight().value() ) );
   CHECK_THAT( 2.53e-8, WithinRel( chunk.metadata().temperature().value() ) );

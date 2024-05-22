@@ -16,9 +16,9 @@ AverageFissionEnergyRelease() : RealListRecord( base::Keyword( "fiss_q" ) ) {}
  *  @param[in] betas       the energy release through delayed betas
  *  @param[in] fragments   the kinetic energy of fission fragments
  */
-AverageFissionEnergyRelease( double total, double recoverable, double neutrons,
+AverageFissionEnergyRelease( double total, double prompt, double neutrons,
                              double gammas, double betas, double fragments ) :
-    RealListRecord( base::Keyword( "fiss_q" ), { recoverable, total, betas,
+    RealListRecord( base::Keyword( "fiss_q" ), { prompt, total, betas,
                                                  gammas, fragments, neutrons } ) {
 
   //! @todo do we want to do some verification here?

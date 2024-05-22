@@ -33,7 +33,7 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertEqual( 'this is some information for the table', metadata.information )
             self.assertEqual( 'mendf71x', metadata.library_name )
             self.assertEqual( '12/22/2011', metadata.source_date )
-            self.assertEqual( '08/07/2013', metadata.process_date )
+            self.assertEqual( '08/07/2013', metadata.processing_date )
             self.assertAlmostEqual( 233.0248, metadata.atomic_weight_ratio )
             self.assertAlmostEqual( 235.043937521619, metadata.atomic_weight )
             self.assertAlmostEqual( 2.53e-8, metadata.temperature )
@@ -438,10 +438,10 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                  structure = EnergyGroupStructure( [ 20., 18.123456789, 16.0000000000001, 14., 10., 5, 1, 1e-11 ] ),
                                  velocities = Velocities( [ 2.1, 2.2, 2.25, 2.05, 2.15, 2.04, 2.06 ] ),
                                  flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
-                                 total = TotalCrossSection( [ 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 ] ),
-                                 xs = ReactionCrossSections(
-                                          xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
-                                                 CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ),
+                                 total_xs = TotalCrossSection( [ 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 ] ),
+                                 reaction_xs = ReactionCrossSections(
+                                                   xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
+                                                          CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ),
                                  scattering = ScatteringMatrix(
                                      [ LegendreMoment( 0, [ 1, 0, 0, 0, 0, 0, 0,
                                                             0, 1, 0, 0, 0, 0, 0,

@@ -22,12 +22,12 @@ MultigroupTable() :
  *  @param[in] outgoing          the outgoing particle group structures
  *  @param[in] velocities        the group velocities
  *  @param[in] weights           the flux weights
- *  @param[in] total             the total cross section
- *  @param[in] xs                the reaction cross section data
+ *  @param[in] reaction_xs       the reaction cross section data
  *  @param[in] scattering        the scattering matrix
  *  @param[in] information       the table information line (optional)
  *  @param[in] source            the source date (optional)
  *  @param[in] weight            the atomic weight of the target (optional)
+ *  @param[in] total_xs          the total cross section (optional)
  *  @param[in] release           the average fission energy release data (optional)
  *  @param[in] types             the outgoing particle types (optional)
  *  @param[in] transport         the outgoing particle transport data (optional)
@@ -44,12 +44,12 @@ MultigroupTable( std::string zaid, std::string libname,
                  std::vector< multigroup::EnergyGroupStructure > outgoing,
                  multigroup::Velocities velocities,
                  multigroup::FluxWeights weigths,
-                 multigroup::ReactionCrossSections xs,
+                 multigroup::ReactionCrossSections reaction_xs,
                  multigroup::ScatteringMatrix scattering,
                  std::optional< std::string > information = std::nullopt,
                  std::optional< std::string > source = std::nullopt,
                  std::optional< double > weight = std::nullopt,
-                 std::optional< multigroup::TotalCrossSection > total = std::nullopt,
+                 std::optional< multigroup::TotalCrossSection > total_xs = std::nullopt,
                  std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTypes > types = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTransportData > transport = std::nullopt,
@@ -61,13 +61,13 @@ MultigroupTable( std::string zaid, std::string libname,
     metadata_( std::move( zaid ), std::move( libname ),
                std::move( process ), awr, temperature, dilution,
                structure.numberGroups(), generateOutgoingStructureMetadata( outgoing ),
-               xs.numberReactions(), scattering.numberLegendreMoments(),
+               reaction_xs.numberReactions(), scattering.numberLegendreMoments(),
                std::move( information ), std::move( source ), std::move( weight ),
                std::nullopt, std::nullopt ),
     primary_structure_( std::move( structure ) ),
     velocities_( std::move( velocities ) ),
     weights_( std::move( weigths ) ),
-    xs_( std::move( xs ) ),
+    xs_( std::move( reaction_xs ) ),
     scattering_( std::move( scattering ) ),
     release_( std::move( release.value() ) ),
     outgoing_structure_( std::move( outgoing ) ),
@@ -75,9 +75,9 @@ MultigroupTable( std::string zaid, std::string libname,
     outgoing_heating_( std::move( outgoingHeating ) ),
     outgoing_kerma_( std::move( outgoingKerma ) ) {
 
-  if ( total.has_value() ) {
+  if ( total_xs.has_value() ) {
 
-    this->total_ = std::move( total.value() );
+    this->total_ = std::move( total_xs.value() );
   }
   if ( primaryHeating.has_value() ) {
 

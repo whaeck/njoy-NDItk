@@ -66,11 +66,11 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "temperature" ), python::arg( "dilution" ),
     python::arg( "structure" ), python::arg( "outgoing" ),
     python::arg( "velocities" ), python::arg( "flux" ),
-    python::arg( "xs" ), python::arg( "scattering" ),
+    python::arg( "reaction_xs" ), python::arg( "scattering" ),
     python::arg( "information" ) = std::nullopt,
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
-    python::arg( "total" ) = std::nullopt,
+    python::arg( "total_xs" ) = std::nullopt,
     python::arg( "release" ) = std::nullopt,
     python::arg( "types" ) = std::nullopt,
     python::arg( "transport" ) = std::nullopt,
@@ -93,12 +93,12 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    outgoing           the outgoing particle group structures\n"
     "    velocities         the velocities\n"
     "    flux               the flux weights\n"
-    "    xs                 the reaction cross section data\n"
+    "    reaction_xs        the reaction cross section data\n"
     "    scattering         the scattering matrix\n"
     "    information        the table information line (optional)\n"
     "    source             the source date (optional)\n"
     "    weight             the atomic weight of the target (optional)\n"
-    "    total              the total cross section (optional)\n"
+    "    total_xs           the total cross section (optional)\n"
     "    release            the average fission energy release data (optional)\n"
     "    types              the outgoing particle types (optional)\n"
     "    transport          the outgoing particle transport data (optional)\n"

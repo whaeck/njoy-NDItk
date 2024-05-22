@@ -47,19 +47,19 @@ protected:
   bool owner() const { return this->values_.has_value(); }
 
   /**
-   *  @brief Return the begin iterator to the data of the record
+   *  @brief Return the begin iterator to the data of the subrecord
    */
   auto begin() const { return this->begin_; }
 
   /**
-   *  @brief Return the end iterator to the data of the record
+   *  @brief Return the end iterator to the data of the subrecord
    */
   auto end() const { return this->end_; }
 
   /**
-   *  @brief Return the length of the the xss array of the block
+   *  @brief Return the size of the subrecord
    */
-  std::size_t length() const { return this->length_; }
+  std::size_t size() const { return this->length_; }
 
   /**
    *  @brief Return an iterator to a data element
@@ -72,7 +72,7 @@ protected:
   }
 
   /**
-   *  @brief Return the data of the record
+   *  @brief Return the data of the subrecord
    */
   auto values() const {
 
@@ -90,7 +90,7 @@ protected:
   }
 
   /**
-   *  @brief Return a subrange of a given length from the data of the record
+   *  @brief Return a subrange of a given length from the data of the subrecord
    *
    *  @param[in] index    the index
    *  @param[in] length   the length of the subrange
@@ -106,12 +106,12 @@ protected:
 public:
 
   /**
-   *  @brief Return whether or not the record is empty
+   *  @brief Return whether or not the subrecord is empty
    */
   bool empty() const { return this->begin_ == this->end_; }
 
   /**
-   *  @brief Print the record (if it is not empty)
+   *  @brief Print the subrecord (if it is not empty)
    *
    *  Printing the data contained in the record is delegated to the
    *  derived class which knows how to format the data.

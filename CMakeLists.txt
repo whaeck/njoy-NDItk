@@ -93,6 +93,13 @@ if( NDItk.python )
 
   pybind11_add_module( NDItk.python
       python/src/NDItk.python.cpp
+      python/src/MultigroupTable.python.cpp
+      python/src/multigroup.python.cpp
+      python/src/multigroup/Metadata.python.cpp
+      python/src/multigroup/CrossSection.python.cpp
+      python/src/multigroup/FluxWeights.python.cpp
+      python/src/multigroup/Structure.python.cpp
+      python/src/multigroup/ReactionCrossSections.python.cpp
       )
 
   target_link_libraries( NDItk.python PRIVATE NDItk )
@@ -105,6 +112,7 @@ if( NDItk.python )
   message( STATUS "Building NDItk's python API" )
 
   list( APPEND NDItk_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR} )
+  list( APPEND tools_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR}/_deps/tools-build )
 
   if( NDItk.tests )
     include( cmake/unit_testing_python.cmake )

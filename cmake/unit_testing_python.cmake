@@ -12,7 +12,7 @@ function( add_python_test name source )
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/python )
   set_tests_properties( ${test_name}
                         PROPERTIES ENVIRONMENT
-                        PYTHONPATH=${NDItk_PYTHONPATH}:$ENV{PYTHONPATH})
+                        PYTHONPATH=${tools_PYTHONPATH}:${NDItk_PYTHONPATH}:$ENV{PYTHONPATH})
 
 endfunction()
 
@@ -21,3 +21,12 @@ endfunction()
 #######################################################################
 
 message( STATUS "Adding NDItk Python unit testing" )
+
+add_python_test( multigroup.Metadata              multigroup/Test_NDItk_multigroup_Metadata.py )
+add_python_test( multigroup.CrossSection          multigroup/Test_NDItk_multigroup_CrossSection.py )
+add_python_test( multigroup.FluxWeights           multigroup/Test_NDItk_multigroup_FluxWeights.py )
+add_python_test( multigroup.Structure             multigroup/Test_NDItk_multigroup_Structure.py )
+add_python_test( multigroup.ReactionCrossSections multigroup/Test_NDItk_multigroup_ReactionCrossSections.py )
+
+add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )
+

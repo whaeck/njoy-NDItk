@@ -16,11 +16,11 @@ void write( OutputIterator& iter ) const {
 
   while ( full-- ) {
 
-    buffer << "    " << x[0];
-    buffer << ' ' << x[1];
-    buffer << ' ' << x[2];
-    buffer << ' ' << x[3];
-    buffer << ' ' << x[4] << '\n';
+    buffer << "    " << std::setprecision( 15 ) << x[0];
+    buffer << ' ' << std::setprecision( 15 ) << x[1];
+    buffer << ' ' << std::setprecision( 15 ) << x[2];
+    buffer << ' ' << std::setprecision( 15 ) << x[3];
+    buffer << ' ' << std::setprecision( 15 ) << x[4] << '\n';
     x += 5;
   }
 
@@ -29,7 +29,7 @@ void write( OutputIterator& iter ) const {
     buffer << "   ";
     while ( partial-- ) {
 
-      buffer << ' ' << *x;
+      buffer << ' ' << std::setprecision( 15 ) << *x;
       ++x;
     }
      buffer << '\n';

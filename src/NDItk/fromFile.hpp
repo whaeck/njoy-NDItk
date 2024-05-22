@@ -51,7 +51,7 @@ namespace NDItk {
     auto end = content.end();
 
     // read over the first line of the file
-    while ( ! *iter == '\n' ) {
+    while ( *iter != '\n' ) {
 
       ++iter;
     }

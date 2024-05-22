@@ -11,7 +11,8 @@ void write( OutputIterator& iter ) const {
   std::ostringstream buffer;
 
   auto x = this->begin();
-  buffer << "    " << x[0] << ' ' << std::setprecision( 15 ) << x[1] << '\n';
+  buffer << "    " << static_cast< int >( std::round( x[0] ) )
+         << ' ' << std::setprecision( 15 ) << x[1] << '\n';
   x += 2;
 
   auto full = this->numberGroups() / 5;

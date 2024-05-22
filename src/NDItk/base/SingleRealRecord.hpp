@@ -34,7 +34,7 @@ protected:
   void write( OutputIterator& iter ) const {
 
     std::ostringstream buffer;
-    buffer << "    " << std::setprecision( 15 ) << std::right << this->data().value();
+    buffer << "    " << std::setprecision( 15 ) << this->data().value();
     for ( auto c : buffer.str() ) { *iter++ = c; }
     *iter++ = '\n';
   };

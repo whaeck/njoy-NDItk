@@ -98,7 +98,7 @@ if( NDItk.python )
       python/src/multigroup/Metadata.python.cpp
       python/src/multigroup/CrossSection.python.cpp
       python/src/multigroup/FluxWeights.python.cpp
-      python/src/multigroup/Structure.python.cpp
+      python/src/multigroup/EnergyGroupStructure.python.cpp
       python/src/multigroup/ReactionCrossSections.python.cpp
       )
 

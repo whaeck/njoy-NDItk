@@ -30,7 +30,8 @@ SCENARIO( "MultigroupTable" ) {
       double weight = 235.043937521619;
       double temperature = 2.53e-8;
       double dilution = 1e+10;
-      multigroup::Structure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );
+      multigroup::EnergyGroupStructure structure( { 20., 18.123456789, 16.0000000000001,
+                                                    14., 10., 5, 1, 1e-11 } );
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
@@ -92,7 +93,7 @@ SCENARIO( "MultigroupTable" ) {
       double weight = 235.043937521619;
       double temperature = 2.53e-8;
       double dilution = 1e+10;
-      multigroup::Structure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );                       // <-- 7 groups
+      multigroup::EnergyGroupStructure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );            // <-- 7 groups
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04 } );                           // <-- 6 groups
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70., 80. } },    // <-- 8 groups
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7., 8. } } } );
@@ -130,7 +131,7 @@ std::string chunk() {
          "num_reac\n"
          "    2\n"
          "e_bounds\n"
-         "    20 18 16 14 10\n"
+         "    20 18.123456789 16.0000000000001 14 10\n"
          "    5 1 1e-11\n"
          "wgts\n"
          "    0.1 0.2 0.25 0.05 0.15\n"
@@ -166,8 +167,8 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( 8 == chunk.structure().boundaries().size() );
   CHECK( 7 == chunk.structure().numberGroups() );
   CHECK_THAT(    20, WithinRel( chunk.structure().boundaries()[0] ) );
-  CHECK_THAT(    18, WithinRel( chunk.structure().boundaries()[1] ) );
-  CHECK_THAT(    16, WithinRel( chunk.structure().boundaries()[2] ) );
+  CHECK_THAT(    18.123456789, WithinRel( chunk.structure().boundaries()[1] ) );
+  CHECK_THAT(    16.0000000000001, WithinRel( chunk.structure().boundaries()[2] ) );
   CHECK_THAT(    14, WithinRel( chunk.structure().boundaries()[3] ) );
   CHECK_THAT(    10, WithinRel( chunk.structure().boundaries()[4] ) );
   CHECK_THAT(     5, WithinRel( chunk.structure().boundaries()[5] ) );

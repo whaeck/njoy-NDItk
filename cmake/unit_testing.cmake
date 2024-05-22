@@ -33,7 +33,7 @@ add_subdirectory( src/NDItk/base/IntegerListRecord/test )
 add_subdirectory( src/NDItk/base/RealListRecord/test )
 
 add_subdirectory( src/NDItk/multigroup/Metadata/test )
-add_subdirectory( src/NDItk/multigroup/Structure/test )
+add_subdirectory( src/NDItk/multigroup/EnergyGroupStructure/test )
 add_subdirectory( src/NDItk/multigroup/FluxWeights/test )
 add_subdirectory( src/NDItk/multigroup/CrossSection/test )
 add_subdirectory( src/NDItk/multigroup/ReactionCrossSections/test )

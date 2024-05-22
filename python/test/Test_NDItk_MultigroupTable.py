@@ -5,7 +5,7 @@ import unittest
 
 # local imports
 from NDItk import MultigroupTable
-from NDItk.multigroup import Structure
+from NDItk.multigroup import EnergyGroupStructure
 from NDItk.multigroup import FluxWeights
 from NDItk.multigroup import ReactionCrossSections
 from NDItk.multigroup import CrossSection
@@ -33,8 +33,8 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             structure = chunk.structure
             self.assertEqual( 7, structure.number_groups )
             self.assertAlmostEqual(    20, structure.boundaries[0] )
-            self.assertAlmostEqual(    18, structure.boundaries[1] )
-            self.assertAlmostEqual(    16, structure.boundaries[2] )
+            self.assertAlmostEqual(    18.123456789, structure.boundaries[1] )
+            self.assertAlmostEqual(    16.0000000000001, structure.boundaries[2] )
             self.assertAlmostEqual(    14, structure.boundaries[3] )
             self.assertAlmostEqual(    10, structure.boundaries[4] )
             self.assertAlmostEqual(     5, structure.boundaries[5] )
@@ -103,10 +103,10 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
         chunk = MultigroupTable( zaid = '92235.711nm', libname = 'mendf71x', source = '12/22/2011',
                                  process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
                                  temperature = 2.53e-8, dilution = 1e+10,
-                                 structure = Structure( [ 20., 18., 16., 14., 10., 5, 1, 1e-11 ] ),
+                                 structure = EnergyGroupStructure( [ 20., 18.123456789, 16.0000000000001, 14., 10., 5, 1, 1e-11 ] ),
                                  flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
-                                 xs = ReactionCrossSections( 
-                                          xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ), 
+                                 xs = ReactionCrossSections(
+                                          xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
                                                  CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ) )
 
         verify_chunk( self, chunk )
@@ -114,4 +114,3 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
 if __name__ == '__main__' :
 
     unittest.main()
-

@@ -138,7 +138,7 @@ void addStandardTableDefinitions( PythonClass& table ) {
 
       return njoy::NDItk::fromFile< Table >( filename );
     },
-    "Read an ACE table from a file\n\n"
+    "Read an NDI table from a file\n\n"
     "An exception is raised if something goes wrong while reading the\n"
     "table\n\n"
     "Arguments:\n"
@@ -151,10 +151,9 @@ void addStandardTableDefinitions( PythonClass& table ) {
 
       return njoy::NDItk::toFile( self, filename );
     },
-    "Read an ACE table from a file\n\n"
-    "An exception is raised if something goes wrong while reading the\n"
-    "table\n\n"
+    "Write an NDI table to a file\n\n"
     "Arguments:\n"
+    "    self        the table\n"
     "    filename    the file name and path"
   );
 }

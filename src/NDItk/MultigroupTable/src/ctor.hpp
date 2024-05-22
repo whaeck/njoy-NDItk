@@ -28,7 +28,7 @@ MultigroupTable() :
  *  @param[in] source            the source date (optional)
  *  @param[in] weight            the atomic weight of the target (optional)
  *  @param[in] total_xs          the total cross section (optional)
- *  @param[in] release           the average fission energy release data (optional)
+ *  @param[in] fission_q         the average fission energy release data (optional)
  *  @param[in] types             the outgoing particle types (optional)
  *  @param[in] transport         the outgoing particle transport data (optional)
  *  @param[in] production        the outgoing production matrices (optional)
@@ -50,7 +50,7 @@ MultigroupTable( std::string zaid, std::string libname,
                  std::optional< std::string > source = std::nullopt,
                  std::optional< double > weight = std::nullopt,
                  std::optional< multigroup::TotalCrossSection > total_xs = std::nullopt,
-                 std::optional< multigroup::AverageFissionEnergyRelease > release = std::nullopt,
+                 std::optional< multigroup::AverageFissionEnergyRelease > fission_q = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTypes > types = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTransportData > transport = std::nullopt,
                  std::vector< multigroup::ScatteringMatrix > production = {},
@@ -69,7 +69,7 @@ MultigroupTable( std::string zaid, std::string libname,
     weights_( std::move( weigths ) ),
     xs_( std::move( reaction_xs ) ),
     scattering_( std::move( scattering ) ),
-    release_( std::move( release.value() ) ),
+    release_( std::move( fission_q.value() ) ),
     outgoing_structure_( std::move( outgoing ) ),
     outgoing_production_( std::move( production ) ),
     outgoing_heating_( std::move( outgoingHeating ) ),

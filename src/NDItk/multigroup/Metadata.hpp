@@ -97,7 +97,7 @@ public:
   /**
    *  @brief Return the processing date
    */
-  decltype(auto) processDate() const { return this->process_date_.data(); }
+  decltype(auto) processingDate() const { return this->process_date_.data(); }
 
   /**
    *  @brief Return the atomic weight ratio of the target (with respect

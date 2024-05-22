@@ -33,7 +33,7 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertEqual( 'this is some information for the table', metadata.information )
             self.assertEqual( 'mendf71x', metadata.library_name )
             self.assertEqual( '12/22/2011', metadata.source_date )
-            self.assertEqual( '08/07/2013', metadata.process_date )
+            self.assertEqual( '08/07/2013', metadata.processing_date )
             self.assertAlmostEqual( 233.0248, metadata.atomic_weight_ratio )
             self.assertAlmostEqual( 235.043937521619, metadata.atomic_weight )
             self.assertAlmostEqual( 2.53e-8, metadata.temperature )

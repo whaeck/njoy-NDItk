@@ -96,8 +96,8 @@ void wrapMetadata( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
-    "process_date",
-    &Record::processDate,
+    "processing_date",
+    &Record::processingDate,
     "The process date"
   )
   .def_property_readonly(

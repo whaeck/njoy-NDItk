@@ -14,9 +14,6 @@ using AverageFissionEnergyRelease = multigroup::AverageFissionEnergyRelease;
 
 std::string chunk();
 void verifyChunk( const AverageFissionEnergyRelease& );
-std::string chunkWithInsufficientNumberBoundaries();
-std::string chunkWithNonDescendingBoundaries();
-std::string chunkWithNonUniqueBoundaries();
 
 SCENARIO( "AverageFissionEnergyRelease" ) {
 

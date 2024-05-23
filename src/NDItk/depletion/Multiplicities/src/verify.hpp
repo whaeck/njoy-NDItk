@@ -10,18 +10,17 @@
 template < typename Range >
 static void verify( const Range& data ) {
 
-  if ( data.size() < 3 ) {
+  if ( data.size() < 2 ) {
 
-    Log::error( "Expected at least 4 data values consisting of a reaction identifier,\n"
-                "the number of reaction products (in this case equal to 1) followed\n"
-                "by a reaction product identifier and multiplicity value" );
+    Log::error( "Expected at least 2 data values consisting of a reaction identifier,\n"
+                "and the number of reaction products" );
     Log::info( "Found {} data values", data.size() );
     throw std::exception();
   }
 
-  if ( data[1] <= 0 ) {
+  if ( data[1] < 0 ) {
 
-    Log::error( "The number of reaction products cannot be equal to or less than zero" );
+    Log::error( "The number of reaction products cannot be less than zero" );
     Log::info( "Found {} as the number of reaction products", data[1] );
     throw std::exception();
   }

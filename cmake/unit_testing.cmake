@@ -35,6 +35,8 @@ add_subdirectory( src/NDItk/base/RealListRecord/test )
 add_subdirectory( src/NDItk/base/StringListRecord/test )
 add_subdirectory( src/NDItk/base/InformationRecord/test )
 
+add_subdirectory( src/NDItk/depletion/Multiplicities/test )
+
 add_subdirectory( src/NDItk/multigroup/Metadata/test )
 add_subdirectory( src/NDItk/multigroup/EnergyGroupStructure/test )
 add_subdirectory( src/NDItk/multigroup/FluxWeights/test )

@@ -22,8 +22,8 @@ splitKeyword( std::string keyword ) {
     // A key is basically xxx_yyy with an optional particle type at the end (the
     // full keyword would be xxx_yyy_0 for the xxx_yyy subtype keyword for gammas).
     // "([a-z]+(?:_[a-z]+)*)" captures the subtype part of the key, i.e. 'xxx_yyy'
-    // and "([0-9]+)" captures an optional particle type.
-    const std::regex key{ "^([a-z]+(?:_[a-z]+)*)(?:_([0-9]+))?" };
+    // and "([0-9]+)" captures an optional particle type that must end the string.
+    const std::regex key{ "^([a-z]+(?:_[a-z]+)*)(?:_([0-9]+))?$" };
 
     std::smatch match;
     if ( std::regex_match( keyword, match, key ) ) {

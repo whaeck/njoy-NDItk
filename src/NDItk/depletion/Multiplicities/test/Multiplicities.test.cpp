@@ -74,14 +74,6 @@ SCENARIO( "Multiplicities" ) {
 
   GIVEN( "invalid data for a Multiplicities instance" ) {
 
-    WHEN( "the number of reaction products is insufficient" ) {
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( Multiplicities( 16, {}, {} ) );
-      } // THEN
-    } // WHEN
-
     WHEN( "the number of reaction products and multiplcities is insufficient" ) {
 
       THEN( "an exception is thrown" ) {
@@ -142,5 +134,5 @@ void verifyChunk( const Multiplicities& chunk ) {
 
 std::vector< int > dataWithInsufficientLength() {
 
-  return { 16, 0 };
+  return { 16 };
 }

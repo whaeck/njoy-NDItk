@@ -4,7 +4,7 @@
  *  The following verification tests are performed:
  *    - there is at least one value
  *
- *  @param[in] values    the cross seciton values to be verified
+ *  @param[in] values    the cross section values to be verified
  */
 template < typename Range >
 static void verify( const Range& values ) {

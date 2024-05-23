@@ -16,7 +16,7 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
              legendre_order_( base::Keyword( "pn_order" ) ),
              upscatter_groups_( base::Keyword( "up_grps" ) ),
              downscatter_groups_( base::Keyword( "down_grps" ) ),
-             reactions_( base::Keyword( "num_reac" ) ) {}
+             number_reactions_( base::Keyword( "num_reac" ) ) {}
 
 /**
  *  @brief Constructor
@@ -73,4 +73,4 @@ Metadata( std::string zaid, std::string libname, std::string process,
     downscatter_groups_( upscatter.has_value()
                          ? base::SingleIntegerRecord( base::Keyword( "down_grps" ), downscatter.value() )
                          : base::SingleIntegerRecord( base::Keyword( "down_grps" ) ) ),
-    reactions_( base::Keyword( "num_reac" ), reactions ) {}
+    number_reactions_( base::Keyword( "num_reac" ), reactions ) {}

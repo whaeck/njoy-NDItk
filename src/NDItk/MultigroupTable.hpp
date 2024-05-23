@@ -231,7 +231,7 @@ public:
   }
 
   /**
-   *  @brief Return the hkerma record for an outgoing particle
+   *  @brief Return the kerma record for an outgoing particle
    */
   const multigroup::Kerma&
   outgoingKerma( unsigned int particle ) const {

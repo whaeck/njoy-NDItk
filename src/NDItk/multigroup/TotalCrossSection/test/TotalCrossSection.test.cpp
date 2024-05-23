@@ -123,5 +123,5 @@ void verifyChunk( const TotalCrossSection& chunk ) {
 
 std::string chunkWithInsufficientNumberValues() {
 
-  return "wgts\n";
+  return "sig_tot\n";
 }

@@ -71,7 +71,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
     python::arg( "total_xs" ) = std::nullopt,
-    python::arg( "release" ) = std::nullopt,
+    python::arg( "fission_q" ) = std::nullopt,
     python::arg( "types" ) = std::nullopt,
     python::arg( "transport" ) = std::nullopt,
     python::arg( "production" ) = std::vector< ScatteringMatrix >{},
@@ -99,7 +99,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    source             the source date (optional)\n"
     "    weight             the atomic weight of the target (optional)\n"
     "    total_xs           the total cross section (optional)\n"
-    "    release            the average fission energy release data (optional)\n"
+    "    fission_q          the average fission energy release data (optional)\n"
     "    types              the outgoing particle types (optional)\n"
     "    transport          the outgoing particle transport data (optional)\n"
     "    primary_heating    the primary heating numbers (optional)\n"

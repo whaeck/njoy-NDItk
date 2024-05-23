@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief An energy group structure record
+ *  @brief An energy group structure record for multigroup neutron and photon data
  */
 class EnergyGroupStructure : protected base::RealListRecord {
 

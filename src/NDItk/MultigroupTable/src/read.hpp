@@ -62,6 +62,10 @@ void read( Iterator& iter, const Iterator& end ) {
         throw std::exception();
       }
     }
+    else if ( keyword == this->release_.keyword() ) {
+
+      readRecord( this->release_, iter, end );
+    }
     else {
 
       if ( keyword != "end" ) {

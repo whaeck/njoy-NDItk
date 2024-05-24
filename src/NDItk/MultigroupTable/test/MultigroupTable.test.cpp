@@ -59,7 +59,6 @@ SCENARIO( "MultigroupTable" ) {
                                                         1, 0, 0, 0, 0, 0, 0 }, 7 } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
-      multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
       multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
       std::vector< multigroup::ScatteringMatrix > production = {
@@ -93,14 +92,15 @@ SCENARIO( "MultigroupTable" ) {
                                                      1, 0,
                                                      0, 1 }, 7, 2 } } )
       };
+      multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
-          { 0, { 21., 11., 5.1 } },
-          { 1001, { 25., 15. } }
+          { 0, { 21., 11., 5.1, 3., 4., 6., 7. } },
+          { 1001, { 25., 15., 9.1, 7., 8., 10., 11. } }
       };
       multigroup::Kerma primaryKerma( { 110., 220., 330., 440., 550., 660., 770. } );
       std::vector< multigroup::Kerma > outgoingKerma =   {
-          { 0, { 210., 110., 51. } },
-          { 1001, { 250., 150. } }
+          { 0, { 210., 110., 51., 30., 40., 60., 70. } },
+          { 1001, { 250., 150., 91., 70., 80., 100., 110. } }
       };
 
       MultigroupTable chunk( std::move( zaid ), std::move( name ),
@@ -240,13 +240,13 @@ SCENARIO( "MultigroupTable" ) {
       };
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
-          { 0, { 21., 11., 5.1 } },
-          { 1001, { 25., 15. } }
+          { 0, { 21., 11., 5.1, 3., 4., 6., 7. } },
+          { 1001, { 25., 15., 9.1, 7., 8., 10., 11. } }
       };
       multigroup::Kerma primaryKerma( { 110., 220., 330., 440., 550., 660., 770. } );
       std::vector< multigroup::Kerma > outgoingKerma =   {
-          { 0, { 210., 110., 51. } },
-          { 1001, { 250., 150. } }
+          { 0, { 210., 110., 51., 30., 40., 60., 70. } },
+          { 1001, { 250., 150., 91., 70., 80., 100., 110. } }
       };
 
       THEN( "an exception is thrown" ) {
@@ -298,6 +298,10 @@ std::string chunk() {
          "num_grps_0\n"
          "    3\n"
          "num_grps_1001\n"
+         "    2\n"
+         "pn_order_0\n"
+         "    2\n"
+         "pn_order_1001\n"
          "    2\n"
          "e_bounds\n"
          "    20 18.123456789 16.0000000000001 14 10\n"
@@ -381,13 +385,17 @@ std::string chunk() {
          "    1 1 0 0 1\n"
          "    1 0 0 1\n"
          "heating_0\n"
-         "    21 11 5.1\n"
+         "    21 11 5.1 3 4\n"
+         "    6 7\n"
          "heating_1001\n"
-         "    25 15\n"
+         "    25 15 9.1 7 8\n"
+         "    10 11\n"
          "kerma_0\n"
-         "    210 110 51\n"
+         "    210 110 51 30 40\n"
+         "    60 70\n"
          "kerma_1001\n"
-         "    250 150\n"
+         "    250 150 91 70 80\n"
+         "    100 110\n"
          "end\n";
 }
 
@@ -406,6 +414,9 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( 7 == chunk.metadata().numberGroups() );
   CHECK( 2 == chunk.metadata().numberReactions() );
   CHECK( 2 == chunk.metadata().numberOutgoingParticles() );
+  CHECK( 2 == chunk.metadata().numberLegendreMoments() );
+  CHECK( 2 == chunk.metadata().numberOutgoingLegendreMoments( 0 ) );
+  CHECK( 2 == chunk.metadata().numberOutgoingLegendreMoments( 1001 ) );
 
   // principal group structure
   auto structure = chunk.primaryGroupBoundaries();
@@ -828,46 +839,64 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( "heating_0" == heating.keyword() );
   CHECK( 0 == heating.particle() );
   CHECK( false == heating.empty() );
-  CHECK( 3 == heating.size() );
-  CHECK( 3 == heating.values().size() );
-  CHECK( 3 == heating.numberGroups() );
+  CHECK( 7 == heating.size() );
+  CHECK( 7 == heating.values().size() );
+  CHECK( 7 == heating.numberGroups() );
   CHECK_THAT(  21, WithinRel( heating.values()[0] ) );
   CHECK_THAT(  11, WithinRel( heating.values()[1] ) );
   CHECK_THAT( 5.1, WithinRel( heating.values()[2] ) );
+  CHECK_THAT(   3, WithinRel( heating.values()[3] ) );
+  CHECK_THAT(   4, WithinRel( heating.values()[4] ) );
+  CHECK_THAT(   6, WithinRel( heating.values()[5] ) );
+  CHECK_THAT(   7, WithinRel( heating.values()[6] ) );
 
   // outgoing heating numbers: 1001
   heating = chunk.outgoingHeatingNumbers( 1001 );
   CHECK( "heating_1001" == heating.keyword() );
   CHECK( 1001 == heating.particle() );
   CHECK( false == heating.empty() );
-  CHECK( 2 == heating.size() );
-  CHECK( 2 == heating.values().size() );
-  CHECK( 2 == heating.numberGroups() );
+  CHECK( 7 == heating.size() );
+  CHECK( 7 == heating.values().size() );
+  CHECK( 7 == heating.numberGroups() );
   CHECK_THAT(  25, WithinRel( heating.values()[0] ) );
   CHECK_THAT(  15, WithinRel( heating.values()[1] ) );
+  CHECK_THAT( 9.1, WithinRel( heating.values()[2] ) );
+  CHECK_THAT(   7, WithinRel( heating.values()[3] ) );
+  CHECK_THAT(   8, WithinRel( heating.values()[4] ) );
+  CHECK_THAT(  10, WithinRel( heating.values()[5] ) );
+  CHECK_THAT(  11, WithinRel( heating.values()[6] ) );
 
   // outgoing kerma: 0
   kerma = chunk.outgoingKerma( 0 );
   CHECK( "kerma_0" == kerma.keyword() );
   CHECK( 0 == kerma.particle() );
   CHECK( false == kerma.empty() );
-  CHECK( 3 == kerma.size() );
-  CHECK( 3 == kerma.values().size() );
-  CHECK( 3 == kerma.numberGroups() );
-  CHECK_THAT( 210, WithinRel( kerma.values()[0] ) );
-  CHECK_THAT( 110, WithinRel( kerma.values()[1] ) );
-  CHECK_THAT(  51, WithinRel( kerma.values()[2] ) );
+  CHECK( 7 == kerma.size() );
+  CHECK( 7 == kerma.values().size() );
+  CHECK( 7 == kerma.numberGroups() );
+  CHECK_THAT(  210, WithinRel( kerma.values()[0] ) );
+  CHECK_THAT(  110, WithinRel( kerma.values()[1] ) );
+  CHECK_THAT(   51, WithinRel( kerma.values()[2] ) );
+  CHECK_THAT(   30, WithinRel( kerma.values()[3] ) );
+  CHECK_THAT(   40, WithinRel( kerma.values()[4] ) );
+  CHECK_THAT(   60, WithinRel( kerma.values()[5] ) );
+  CHECK_THAT(   70, WithinRel( kerma.values()[6] ) );
 
   // outgoing kerma: 1001
   kerma = chunk.outgoingKerma( 1001 );
   CHECK( "kerma_1001" == kerma.keyword() );
   CHECK( 1001 == kerma.particle() );
   CHECK( false == kerma.empty() );
-  CHECK( 2 == kerma.size() );
-  CHECK( 2 == kerma.values().size() );
-  CHECK( 2 == kerma.numberGroups() );
-  CHECK_THAT( 250, WithinRel( kerma.values()[0] ) );
-  CHECK_THAT( 150, WithinRel( kerma.values()[1] ) );
+  CHECK( 7 == kerma.size() );
+  CHECK( 7 == kerma.values().size() );
+  CHECK( 7 == kerma.numberGroups() );
+  CHECK_THAT(  250, WithinRel( kerma.values()[0] ) );
+  CHECK_THAT(  150, WithinRel( kerma.values()[1] ) );
+  CHECK_THAT(   91, WithinRel( kerma.values()[2] ) );
+  CHECK_THAT(   70, WithinRel( kerma.values()[3] ) );
+  CHECK_THAT(   80, WithinRel( kerma.values()[4] ) );
+  CHECK_THAT(  100, WithinRel( kerma.values()[5] ) );
+  CHECK_THAT(  110, WithinRel( kerma.values()[6] ) );
 }
 
 std::string chunkWithMissingRecords() {

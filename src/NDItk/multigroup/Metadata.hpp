@@ -35,6 +35,7 @@ class Metadata {
   base::SingleIntegerRecord outgoing_particles_;
   std::vector< base::SingleIntegerRecord > outgoing_groups_;
   base::SingleIntegerRecord legendre_order_;
+  std::vector< base::SingleIntegerRecord > outgoing_legendre_order_;
   base::SingleIntegerRecord upscatter_groups_;
   base::SingleIntegerRecord downscatter_groups_;
   base::SingleIntegerRecord number_reactions_;
@@ -42,6 +43,7 @@ class Metadata {
   /* auxiliary functions */
 
   #include "NDItk/multigroup/Metadata/src/generateSecondaryGroups.hpp"
+  #include "NDItk/multigroup/Metadata/src/generateSecondaryLegendreOrder.hpp"
   #include "NDItk/multigroup/Metadata/src/readRecord.hpp"
 
 public:
@@ -69,7 +71,7 @@ public:
            ( keyword == this->number_reactions_.keyword() ) ||
            ( keyword.find( this->primary_groups_.keyword() ) == 0 ) ||
            ( keyword == this->outgoing_particles_.keyword() ) ||
-           ( keyword == this->legendre_order_.keyword() ) ||
+           ( keyword.find( this->legendre_order_.keyword() ) == 0 ) ||
            ( keyword == this->upscatter_groups_.keyword() ) ||
            ( keyword == this->downscatter_groups_.keyword() );
   }
@@ -170,6 +172,32 @@ public:
   }
 
   /**
+   *  @brief Return the number of Legendre moments defined in the table
+   *         for a given particle
+   *
+   *  @param[int] particle   the outgoing particle identifier
+   */
+  decltype(auto) numberOutgoingLegendreMoments( unsigned int particle ) const {
+
+    auto pos = std::lower_bound( this->outgoing_legendre_order_.begin(),
+                                 this->outgoing_legendre_order_.end(),
+                                 particle,
+                                 [] ( auto&& left, auto&& right ) {
+
+                                   return left.particle() < right;
+                                 } );
+    if ( pos != this->outgoing_legendre_order_.end() ) {
+
+      if ( pos->particle() == particle ) {
+
+        return pos->data();
+      }
+    }
+    Log::error( "The requested outgoing particle \'{}\' is not present", particle );
+    throw std::exception();
+  }
+
+  /**
    *  @brief Return the number of upscatter groups defined in the table
    */
   decltype(auto) numberUpscatterGroups() const {
@@ -202,8 +230,7 @@ public:
     else if ( keyword == this->atomic_weight_.keyword() )      { readRecord( this->atomic_weight_, iter, end ); }
     else if ( keyword == this->temperature_.keyword() )        { readRecord( this->temperature_, iter, end ); }
     else if ( keyword == this->dilution_.keyword() )           { readRecord( this->dilution_, iter, end ); }
-    else if ( keyword == this->number_reactions_.keyword() )          { readRecord( this->number_reactions_, iter, end ); }
-    else if ( keyword == this->legendre_order_.keyword() )     { readRecord( this->legendre_order_, iter, end ); }
+    else if ( keyword == this->number_reactions_.keyword() )   { readRecord( this->number_reactions_, iter, end ); }
     else if ( keyword == this->upscatter_groups_.keyword() )   { readRecord( this->upscatter_groups_, iter, end ); }
     else if ( keyword == this->downscatter_groups_.keyword() ) { readRecord( this->downscatter_groups_, iter, end ); }
     else if ( keyword == this->outgoing_particles_.keyword() ) { readRecord( this->outgoing_particles_, iter, end ); }
@@ -232,6 +259,34 @@ public:
           }
         }
         pos = this->outgoing_groups_.insert( pos, base::SingleIntegerRecord( std::move( secondary ) ) );
+        readRecord( *pos, iter, end );
+      }
+    }
+    else if ( keyword.find( this->legendre_order_.keyword() ) == 0 ) {
+
+      if ( keyword == this->legendre_order_.keyword() ) {
+
+        readRecord( this->legendre_order_, iter, end );
+      }
+      else {
+
+        base::Keyword secondary( keyword );
+        auto pos = std::lower_bound( this->outgoing_legendre_order_.begin(),
+                                     this->outgoing_legendre_order_.end(),
+                                     secondary.particle(),
+                                     [] ( auto&& left, auto&& right ) {
+
+                                       return left.particle() < right;
+                                     } );
+        if ( pos != this->outgoing_legendre_order_.end() ) {
+
+          if ( pos->particle() == secondary.particle() ) {
+
+            Log::error( "Duplicate keyword found: \'{}\'", secondary.keyword() );
+            throw std::exception();
+          }
+        }
+        pos = this->outgoing_legendre_order_.insert( pos, base::SingleIntegerRecord( std::move( secondary ) ) );
         readRecord( *pos, iter, end );
       }
     }
@@ -267,6 +322,7 @@ public:
     this->downscatter_groups_.print( iter );
     this->outgoing_particles_.print( iter );
     for ( const auto& entry : this->outgoing_groups_ ) { entry.print( iter ); }
+    for ( const auto& entry : this->outgoing_legendre_order_ ) { entry.print( iter ); }
   };
 };
 

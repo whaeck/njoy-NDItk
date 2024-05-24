@@ -33,7 +33,8 @@ SCENARIO( "Metadata" ) {
       double temperature = 2.53e-8;
       double dilution = 1e+10;
       unsigned int groups = 618;
-      std::map< unsigned int, unsigned int > outgoing = { { 0, 30 }, { 1001, 250 } };
+      std::map< unsigned int, unsigned int > outgoing_groups = { { 0, 30 }, { 1001, 250 } };
+      std::map< unsigned int, unsigned int > outgoing_legendre = { { 0, 2 }, { 1001, 2 } };
       int legendre = 5;
       int upscatter = 3;
       int downscatter = 2;
@@ -42,7 +43,8 @@ SCENARIO( "Metadata" ) {
       Metadata chunk( std::move( zaid ), std::move( name ),
                       std::move( process ),
                       awr, temperature, dilution,
-                      groups, outgoing, reactions, legendre,
+                      groups, reactions, legendre,
+                      outgoing_groups, outgoing_legendre,
                       std::move( information ),
                       std::move( source ),
                       weight,
@@ -75,6 +77,8 @@ SCENARIO( "Metadata" ) {
       };
 
       Metadata chunk;
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
@@ -146,7 +150,11 @@ std::string chunk() {
          "num_grps_0\n"
          "    30\n"
          "num_grps_1001\n"
-         "    250\n";
+         "    250\n"
+         "pn_order_0\n"
+         "    2\n"
+         "pn_order_1001\n"
+         "    2\n";
 }
 
 void verifyChunk( const Metadata& chunk ) {
@@ -168,6 +176,8 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK(   2 == chunk.numberDownscatterGroups() );
   CHECK(   7 == chunk.numberReactions() );
   CHECK(   5 == chunk.numberLegendreMoments() );
+  CHECK(   2 == chunk.numberOutgoingLegendreMoments( 0 ) );
+  CHECK(   2 == chunk.numberOutgoingLegendreMoments( 1001 ) );
 
   CHECK_THROWS( chunk.numberOutgoingGroups( 1 ) );
 }

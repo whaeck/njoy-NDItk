@@ -4,7 +4,7 @@ void readOutgoingData( const std::string& key, std::vector< Record >& vector,
 
   base::Keyword secondary( key );
   unsigned int particle = secondary.particle().value();
-  if ( this->metadata_.numberOutgoingGroups( particle ).has_value() ) {
+  if ( this->metadata_.numberGroups().has_value() ) {
 
     auto pos = std::lower_bound( vector.begin(),
                                  vector.end(),
@@ -22,12 +22,12 @@ void readOutgoingData( const std::string& key, std::vector< Record >& vector,
       }
     }
     pos = vector.insert( pos, Record( particle ) );
-    readRecord( *pos, iter, end, this->metadata_.numberOutgoingGroups( particle ).value() );
+    readRecord( *pos, iter, end, this->metadata_.numberGroups().value() );
   }
   else {
 
     Log::error( "Metadata required for the \'\' record was not found", secondary.keyword() );
-    Log::info( "Required metadata is missing: number of groups in the outgoing group structure" );
+    Log::info( "Required metadata is missing: number of groups in the primary group structure" );
     throw std::exception();
   }
 }

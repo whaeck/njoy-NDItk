@@ -14,6 +14,7 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
              outgoing_particles_( base::Keyword( "num_sec_parts" ) ),
              outgoing_groups_(),
              legendre_order_( base::Keyword( "pn_order" ) ),
+             outgoing_legendre_order_(),
              upscatter_groups_( base::Keyword( "up_grps" ) ),
              downscatter_groups_( base::Keyword( "down_grps" ) ),
              number_reactions_( base::Keyword( "num_reac" ) ) {}
@@ -26,21 +27,26 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
  *  @param[in] process              the processing date
  *  @param[in] awr                  the atomic weight ratio of the target
  *                                  (with respect to the neutron mass)
- *  @param[in] weight               the atomic weight of the target
  *  @param[in] temperature          the temperature of the target
  *  @param[in] dilution             the dilution (aka sigma0)
  *  @param[in] groups               the number of groups in the primary group structure
- *  @param[in] outgoing             the number of groups in the outgoing group structures
+ *  @param[in] outgoing_groups      the number of groups in the outgoing group structures
  *  @param[in] reactions            the number of reactions defined in the table
+ *  @param[in] legendre             the number of legendre moments in the scattering matrix
+ *  @param[in] outgoing_legendre    the number of legendre moments in the outgoing
+ *                                  production matrices
+ *  @param[in] information          the table information line (optional)
  *  @param[in] source               the source date (optional)
+ *  @param[in] weight               the atomic weight of the target (optional)
  *  @param[in] upscatter            the number of upscatter groups (optional)
  *  @param[in] downscatter          the number of downscatter groups (optional)
  */
 Metadata( std::string zaid, std::string libname, std::string process,
           double awr, double temperature, double dilution,
           unsigned int groups,
-          const std::map< unsigned int, unsigned int >& outgoing,
           unsigned int reactions, unsigned int legendre,
+          const std::map< unsigned int, unsigned int >& outgoing_groups,
+          const std::map< unsigned int, unsigned int >& outgoing_legendre,
           std::optional< std::string > information = std::nullopt,
           std::optional< std::string > source = std::nullopt,
           std::optional< double  > weight = std::nullopt,
@@ -62,11 +68,12 @@ Metadata( std::string zaid, std::string libname, std::string process,
     temperature_( base::Keyword( "temp" ), temperature ),
     dilution_( base::Keyword( "sig_0" ), dilution ),
     primary_groups_( base::Keyword( "num_grps" ), groups ),
-    outgoing_particles_( outgoing.size() > 0
-                         ? base::SingleIntegerRecord( base::Keyword( "num_sec_parts" ), outgoing.size() )
+    outgoing_particles_( outgoing_groups.size() > 0
+                         ? base::SingleIntegerRecord( base::Keyword( "num_sec_parts" ), outgoing_groups.size() )
                          : base::SingleIntegerRecord( base::Keyword( "num_sec_parts" ) ) ),
-    outgoing_groups_( generateSecondaryGroups( outgoing ) ),
+    outgoing_groups_( generateSecondaryGroups( outgoing_groups ) ),
     legendre_order_( base::SingleIntegerRecord( base::Keyword( "pn_order" ), legendre ) ),
+    outgoing_legendre_order_( generateSecondaryLegendreOrder( outgoing_legendre ) ),
     upscatter_groups_( upscatter.has_value()
                        ? base::SingleIntegerRecord( base::Keyword( "up_grps" ), upscatter.value() )
                        : base::SingleIntegerRecord( base::Keyword( "up_grps" ) ) ),

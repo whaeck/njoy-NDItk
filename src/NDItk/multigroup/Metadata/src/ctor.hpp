@@ -33,7 +33,7 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
  *  @param[in] outgoing_groups      the number of groups in the outgoing group structures
  *  @param[in] reactions            the number of reactions defined in the table
  *  @param[in] legendre             the number of legendre moments in the scattering matrix
- *  @param[in] outgoing_groups      the number of legendre moments in the outgoing
+ *  @param[in] outgoing_legendre    the number of legendre moments in the outgoing
  *                                  production matrices
  *  @param[in] information          the table information line (optional)
  *  @param[in] source               the source date (optional)

@@ -3,9 +3,11 @@ private:
 /**
  *  @brief Private intermediate constructor
  */
-ReactionMultiplicities( std::vector< Multiplicities >&& multiplicities,
+ReactionMultiplicities( std::string postfix, std::vector< Multiplicities >&& multiplicities,
                         std::size_t reactions ) :
-    IntegerListRecord( base::Keyword( "rprod" ), generateData( std::move( multiplicities ) ) ),
+    IntegerListRecord( base::Keyword( postfix.size() > 1 ? std::string( "rprod_" ) + postfix
+                                                         : std::string( "rprod" ) ),
+                       generateData( std::move( multiplicities ) ) ),
     reactions_( reactions ) {
 
   this->generateBlocks();
@@ -19,12 +21,26 @@ public:
 ReactionMultiplicities() : IntegerListRecord( base::Keyword( "rprod" ) ) {}
 
 /**
+ *  @brief Default constructor
+ */
+ReactionMultiplicities( std::string postfix ) :
+    IntegerListRecord( base::Keyword( std::string( "rprod_" ) + postfix ) ) {}
+
+/**
  *  @brief Constructor
  *
  *  @param[in] xs    the cross section data
  */
 ReactionMultiplicities( std::vector< Multiplicities > multiplicities ) :
-    ReactionMultiplicities( std::move( multiplicities ), multiplicities.size() ) {}
+    ReactionMultiplicities( "", std::move( multiplicities ), multiplicities.size() ) {}
+
+/**
+ *  @brief Constructor
+ *
+ *  @param[in] xs    the cross section data
+ */
+ReactionMultiplicities( std::string postfix, std::vector< Multiplicities > multiplicities ) :
+    ReactionMultiplicities( postfix, std::move( multiplicities ), multiplicities.size() ) {}
 
 /**
  *  @brief Copy constructor

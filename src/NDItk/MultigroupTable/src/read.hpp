@@ -96,6 +96,30 @@ void read( Iterator& iter, const Iterator& end ) {
 
       readRecord( this->release_, iter, end );
     }
+    // primary and outgoing heating keyword
+    else if ( keyword.find( this->primary_heating_.keyword() ) == 0 ) {
+
+      if ( keyword == this->primary_heating_.keyword() ) {
+
+        readPrimaryData( this->primary_heating_, iter, end );
+      }
+      else {
+
+        readOutgoingData( keyword, this->outgoing_heating_, iter, end );
+      }
+    }
+    // primary and outgoing kerma keyword
+    else if ( keyword.find( this->primary_kerma_.keyword() ) == 0 ) {
+
+      if ( keyword == this->primary_kerma_.keyword() ) {
+
+        readPrimaryData( this->primary_kerma_, iter, end );
+      }
+      else {
+
+        readOutgoingData( keyword, this->outgoing_kerma_, iter, end );
+      }
+    }
     // unknown or end keyword
     else {
 

@@ -24,9 +24,9 @@ SCENARIO( "Velocities" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      std::vector< double > velocities = { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 };
+      std::vector< double > values = { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 };
 
-      Velocities chunk( std::move( velocities ) );
+      Velocities chunk( std::move( values ) );
 
       THEN( "a Velocities can be constructed and members can "
             "be tested" ) {

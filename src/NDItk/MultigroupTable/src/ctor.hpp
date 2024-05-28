@@ -45,12 +45,12 @@ MultigroupTable( std::string zaid, std::string libname,
                  std::vector< multigroup::EnergyGroupStructure > outgoing,
                  multigroup::Velocities velocities,
                  multigroup::FluxWeights weigths,
+                 multigroup::TotalCrossSection total_xs,
                  multigroup::ReactionCrossSections reaction_xs,
                  multigroup::ScatteringMatrix scattering,
                  std::optional< std::string > information = std::nullopt,
                  std::optional< std::string > source = std::nullopt,
                  std::optional< double > weight = std::nullopt,
-                 std::optional< multigroup::TotalCrossSection > total_xs = std::nullopt,
                  std::optional< multigroup::AverageFissionEnergyRelease > fission_q = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTypes > types = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTransportData > transport = std::nullopt,
@@ -69,6 +69,7 @@ MultigroupTable( std::string zaid, std::string libname,
     primary_structure_( std::move( structure ) ),
     velocities_( std::move( velocities ) ),
     weights_( std::move( weigths ) ),
+    total_( std::move( total_xs ) ),
     xs_( std::move( reaction_xs ) ),
     scattering_( std::move( scattering ) ),
     outgoing_structure_( std::move( outgoing ) ),
@@ -76,10 +77,6 @@ MultigroupTable( std::string zaid, std::string libname,
     outgoing_heating_( std::move( outgoingHeating ) ),
     outgoing_kerma_( std::move( outgoingKerma ) ) {
 
-  if ( total_xs.has_value() ) {
-
-    this->total_ = std::move( total_xs.value() );
-  }
   if ( fission_q.has_value() ) {
 
     this->release_ = std::move( fission_q.value() );

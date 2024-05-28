@@ -22,7 +22,7 @@ void verify() {
     Log::info( "Flux weight record: {}",
                this->fluxWeights().empty() ? "absent" : "present" );
     Log::info( "Total cross section record: {}",
-               this->totalCrossSections().empty() ? "absent" : "present" );
+               this->totalCrossSection().empty() ? "absent" : "present" );
     Log::info( "Reaction cross sections record: {}",
                this->reactionCrossSections().empty() ? "absent" : "present" );
     Log::info( "Scattering matrix record: {}",

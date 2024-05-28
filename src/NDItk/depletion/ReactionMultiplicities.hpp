@@ -8,6 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "NDItk/base/IntegerListRecord.hpp"
+#include "NDItk/depletion/ReactionMultiplicityType.hpp"
 #include "NDItk/depletion/Multiplicities.hpp"
 
 namespace njoy {
@@ -27,6 +28,7 @@ class ReactionMultiplicities : protected base::IntegerListRecord {
 
   /* auxiliary functions */
 
+  #include "NDItk/depletion/ReactionMultiplicities/src/getPostFix.hpp"
   #include "NDItk/depletion/ReactionMultiplicities/src/verify.hpp"
   #include "NDItk/depletion/ReactionMultiplicities/src/generateData.hpp"
   #include "NDItk/depletion/ReactionMultiplicities/src/generateBlocks.hpp"

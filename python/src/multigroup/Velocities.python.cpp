@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "NDItk/multigroup/FluxWeights.hpp"
+#include "NDItk/multigroup/Velocities.hpp"
 #include "tools/views/views-python.hpp"
 #include "definitions.hpp"
 #include "read.hpp"
@@ -13,10 +13,10 @@ namespace python = pybind11;
 
 namespace multigroup {
 
-void wrapFluxWeights( python::module& module, python::module& ) {
+void wrapVelocities( python::module& module, python::module& ) {
 
   // type aliases
-  using Record = njoy::NDItk::multigroup::FluxWeights;
+  using Record = njoy::NDItk::multigroup::Velocities;
 
   // wrap views created by this record
 
@@ -24,8 +24,8 @@ void wrapFluxWeights( python::module& module, python::module& ) {
   python::class_< Record > record(
 
     module,
-    "FluxWeights",
-    "A flux weight record for multigroup neutron and photon data"
+    "Velocities",
+    "A velocity record for multigroup neutron and photon data"
   );
 
   // wrap the record
@@ -33,11 +33,11 @@ void wrapFluxWeights( python::module& module, python::module& ) {
   .def(
 
     python::init< std::vector< double > >(),
-    python::arg( "weights" ),
+    python::arg( "values" ),
     "Initialise the record\n\n"
     "Arguments:\n"
-    "    self       the record\n"
-    "    weights    the flux weights"
+    "    self      the record\n"
+    "    values    the velocity values"
   )
   .def_property_readonly(
 
@@ -56,7 +56,7 @@ void wrapFluxWeights( python::module& module, python::module& ) {
     "record\n\n"
     "Arguments:\n"
     "    string    the string representing the record\n"
-    "    number    the number of weight values to be read"
+    "    number    the number of velocity values to be read"
   );
 
   // add standard record definitions

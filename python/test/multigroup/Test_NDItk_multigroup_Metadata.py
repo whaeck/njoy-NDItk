@@ -51,6 +51,8 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
             self.assertEqual(  30, chunk.number_outgoing_groups( 0 ) )
             self.assertEqual( 250, chunk.number_outgoing_groups( 1001 ) )
             self.assertEqual(   7, chunk.number_reactions )
+            self.assertEqual( None, chunk.number_upscatter_groups )
+            self.assertEqual( None, chunk.number_downscatter_groups )
 
             self.assertEqual( self.chunk_string, chunk.to_string() )
 

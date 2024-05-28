@@ -13,6 +13,7 @@ using namespace njoy::NDItk;
 
 std::string chunk();
 void verifyChunk( const MultigroupTable& );
+std::string chunkWithMissingRecords();
 
 SCENARIO( "MultigroupTable" ) {
 
@@ -36,16 +37,20 @@ SCENARIO( "MultigroupTable" ) {
           { 0, { 20., 10., 5, 1e-11 } },
           { 1001, { 20., 10., 1e-11 } }
       };
+      multigroup::Velocities velocities( { 2.1, 2.2, 2.25, 2.05, 2.15, 2.04, 2.06 } );
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
+      multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
 
-      MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
-                             std::move( process ), awr, weight, temperature, dilution,
-                             std::move( structure ), std::move( outgoing ), std::move( weights ),
-                             std::move( xs ), std::move( release ) );
+      MultigroupTable chunk( std::move( zaid ), std::move( name ),
+                             std::move( process ), awr, temperature, dilution,
+                             std::move( structure ), std::move( outgoing ),
+                             std::move( velocities ), std::move( weights ),
+                             std::move( xs ), std::move( source ), weight,
+                             std::move( total ), std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
             "be tested" ) {
@@ -90,6 +95,20 @@ SCENARIO( "MultigroupTable" ) {
 
   GIVEN( "invalid data for a MultigroupTable instance" ) {
 
+    WHEN( "required records are missing" ) {
+
+      std::string record = chunkWithMissingRecords();
+      auto iter = record.begin();
+      auto end = record.end();
+
+      MultigroupTable chunk;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( chunk.read( iter, end ) );
+      } // THEN
+    } // WHEN
+
     WHEN( "the number of groups is inconsistent" ) {
 
       std::string zaid = "92235.711nm";
@@ -101,15 +120,20 @@ SCENARIO( "MultigroupTable" ) {
       double temperature = 2.53e-8;
       double dilution = 1e+10;
       multigroup::EnergyGroupStructure structure( { 20., 18., 16., 14., 10., 5, 1, 1e-11 } );            // <-- 7 groups
+      multigroup::Velocities velocities( { 2.1, 2.2, 2.25, 2.05 } );                                     // <-- 4 groups
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04 } );                           // <-- 6 groups
+      multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04 } );                       // <-- 5 groups
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70., 80. } },    // <-- 8 groups
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7., 8. } } } );
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ), std::move( source ),
-                                       std::move( process ), awr, weight, temperature, dilution,
-                                       std::move( structure ), {}, std::move( weights ), std::move( xs ) ) );
+        CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ),
+                                       std::move( process ), awr, temperature, dilution,
+                                       std::move( structure ), {}, std::move( velocities ),
+                                       std::move( weights ), std::move( xs ),
+                                       std::move( source ), weight,
+                                       std::move( total ) ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -148,9 +172,15 @@ std::string chunk() {
          "    20 10 5 1e-11\n"
          "e_bounds_1001\n"
          "    20 10 1e-11\n"
+         "vel\n"
+         "    2.1 2.2 2.25 2.05 2.15\n"
+         "    2.04 2.06\n"
          "wgts\n"
          "    0.1 0.2 0.25 0.05 0.15\n"
          "    0.04 0.06\n"
+         "sig_tot\n"
+         "    1.1 1.2 1.25 1.05 1.15\n"
+         "    1.04 1.06\n"
          "sig_reac\n"
          "    2 0\n"
          "    10 20 30 40 50\n"
@@ -220,6 +250,21 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
   CHECK_THAT( 1e-11, WithinRel( structure.values()[2] ) );
 
+  // velocity values
+  auto velocities = chunk.velocities();
+  CHECK( "vel" == velocities.keyword() );
+  CHECK( false == velocities.empty() );
+  CHECK( 7 == velocities.size() );
+  CHECK( 7 == velocities.values().size() );
+  CHECK( 7 == velocities.numberGroups() );
+  CHECK_THAT( 2.10, WithinRel( velocities.values()[0] ) );
+  CHECK_THAT( 2.20, WithinRel( velocities.values()[1] ) );
+  CHECK_THAT( 2.25, WithinRel( velocities.values()[2] ) );
+  CHECK_THAT( 2.05, WithinRel( velocities.values()[3] ) );
+  CHECK_THAT( 2.15, WithinRel( velocities.values()[4] ) );
+  CHECK_THAT( 2.04, WithinRel( velocities.values()[5] ) );
+  CHECK_THAT( 2.06, WithinRel( velocities.values()[6] ) );
+
   // flux values
   auto flux = chunk.fluxWeights();
   CHECK( "wgts" == flux.keyword() );
@@ -234,6 +279,20 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 0.15, WithinRel( flux.values()[4] ) );
   CHECK_THAT( 0.04, WithinRel( flux.values()[5] ) );
   CHECK_THAT( 0.06, WithinRel( flux.values()[6] ) );
+
+  // total cross section
+  CHECK( "sig_tot" == chunk.totalCrossSection().keyword() );
+  CHECK( false == chunk.totalCrossSection().empty() );
+  CHECK( 7 == chunk.totalCrossSection().size() );
+  CHECK( 7 == chunk.totalCrossSection().values().size() );
+  CHECK( 7 == chunk.totalCrossSection().numberGroups() );
+  CHECK_THAT( 1.10, WithinRel( chunk.totalCrossSection().values()[0] ) );
+  CHECK_THAT( 1.20, WithinRel( chunk.totalCrossSection().values()[1] ) );
+  CHECK_THAT( 1.25, WithinRel( chunk.totalCrossSection().values()[2] ) );
+  CHECK_THAT( 1.05, WithinRel( chunk.totalCrossSection().values()[3] ) );
+  CHECK_THAT( 1.15, WithinRel( chunk.totalCrossSection().values()[4] ) );
+  CHECK_THAT( 1.04, WithinRel( chunk.totalCrossSection().values()[5] ) );
+  CHECK_THAT( 1.06, WithinRel( chunk.totalCrossSection().values()[6] ) );
 
   // reaction cross sections
   CHECK( 18 == chunk.reactionCrossSections().size() );
@@ -304,4 +363,54 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(   7.281253, WithinRel( chunk.averageFissionEnergyRelease().promptGammas() ) );
   CHECK_THAT(     169.13, WithinRel( chunk.averageFissionEnergyRelease().fissionFragments() ) );
   CHECK_THAT(   4.827645, WithinRel( chunk.averageFissionEnergyRelease().promptNeutrons() ) );
+}
+
+std::string chunkWithMissingRecords() {
+
+  // e_bounds and wgts are not present
+  return "zaid\n"
+         "    92235.711nm\n"
+         "library_name\n"
+         "    mendf71x\n"
+         "date_source\n"
+         "    12/22/2011\n"
+         "date_processed\n"
+         "    08/07/2013\n"
+         "awr\n"
+         "    233.0248\n"
+         "at_wgt\n"
+         "    235.043937521619\n"
+         "temp\n"
+         "    2.53e-08\n"
+         "sig_0\n"
+         "    10000000000\n"
+         "num_grps\n"
+         "    7\n"
+         "num_grps_0\n"
+         "    3\n"
+         "num_grps_1001\n"
+         "    2\n"
+         "num_reac\n"
+         "    2\n"
+         "e_bounds_0\n"
+         "    20 10 5 1e-11\n"
+         "e_bounds_1001\n"
+         "    20 10 1e-11\n"
+         "vel\n"
+         "    2.1 2.2 2.25 2.05 2.15\n"
+         "    2.04 2.06\n"
+         "sig_tot\n"
+         "    1.1 1.2 1.25 1.05 1.15\n"
+         "    1.04 1.06\n"
+         "sig_reac\n"
+         "    2 0\n"
+         "    10 20 30 40 50\n"
+         "    60 70\n"
+         "    16 1.1234567\n"
+         "    1 2 3 4 5\n"
+         "    6 7\n"
+         "fiss_q\n"
+         "    181.238898 202.827 6.5 7.281253 169.13\n"
+         "    4.827645\n"
+         "end\n";
 }

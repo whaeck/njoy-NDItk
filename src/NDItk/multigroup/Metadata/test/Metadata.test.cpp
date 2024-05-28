@@ -25,7 +25,7 @@ SCENARIO( "Metadata" ) {
 
       std::string zaid = "92235.711nm";
       std::string name = "mendf71x";
-      std::string source = "12/22/2011";
+      std::optional< std::string > source = "12/22/2011";
       std::string process = "08/07/2013";
       double awr = 233.0248;
       double weight = 235.043937521619;
@@ -33,12 +33,17 @@ SCENARIO( "Metadata" ) {
       double dilution = 1e+10;
       unsigned int groups = 618;
       std::map< unsigned int, unsigned int > outgoing = { { 0, 30 }, { 1001, 250 } };
+      int upscatter = 3;
+      int downscatter = 2;
       unsigned int reactions = 7;
 
       Metadata chunk( std::move( zaid ), std::move( name ),
-                      std::move( source ), std::move( process ),
-                      awr, weight, temperature, dilution,
-                      groups, outgoing, reactions );
+                      std::move( process ),
+                      awr, temperature, dilution,
+                      groups, outgoing, reactions,
+                      std::move( source ),
+                      weight,
+                      upscatter, downscatter );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {
@@ -67,6 +72,8 @@ SCENARIO( "Metadata" ) {
       };
 
       Metadata chunk;
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
@@ -122,6 +129,10 @@ std::string chunk() {
          "    30\n"
          "num_grps_1001\n"
          "    250\n"
+         "up_grps\n"
+         "    3\n"
+         "down_grps\n"
+         "    2\n"
          "num_reac\n"
          "    7\n";
 }
@@ -139,6 +150,8 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK( 618 == chunk.numberGroups().value() );
   CHECK(  30 == chunk.numberOutgoingGroups( 0 ).value() );
   CHECK( 250 == chunk.numberOutgoingGroups( 1001 ).value() );
+  CHECK(   3 == chunk.numberUpscatterGroups().value() );
+  CHECK(   2 == chunk.numberDownscatterGroups().value() );
   CHECK(   7 == chunk.numberReactions().value() );
 
   CHECK_THROWS( chunk.numberOutgoingGroups( 1 ) );

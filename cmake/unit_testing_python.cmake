@@ -22,10 +22,13 @@ endfunction()
 
 message( STATUS "Adding NDItk Python unit testing" )
 
-add_python_test( multigroup.Metadata              multigroup/Test_NDItk_multigroup_Metadata.py )
-add_python_test( multigroup.CrossSection          multigroup/Test_NDItk_multigroup_CrossSection.py )
-add_python_test( multigroup.FluxWeights           multigroup/Test_NDItk_multigroup_FluxWeights.py )
-add_python_test( multigroup.EnergyGroupStructure  multigroup/Test_NDItk_multigroup_EnergyGroupStructure.py )
-add_python_test( multigroup.ReactionCrossSections multigroup/Test_NDItk_multigroup_ReactionCrossSections.py )
+add_python_test( multigroup.Metadata                    multigroup/Test_NDItk_multigroup_Metadata.py )
+add_python_test( multigroup.CrossSection                multigroup/Test_NDItk_multigroup_CrossSection.py )
+add_python_test( multigroup.FluxWeights                 multigroup/Test_NDItk_multigroup_FluxWeights.py )
+add_python_test( multigroup.EnergyGroupStructure        multigroup/Test_NDItk_multigroup_EnergyGroupStructure.py )
+add_python_test( multigroup.ReactionCrossSections       multigroup/Test_NDItk_multigroup_ReactionCrossSections.py )
+add_python_test( multigroup.TotalCrossSection           multigroup/Test_NDItk_multigroup_TotalCrossSection.py )
+add_python_test( multigroup.AverageFissionEnergyRelease multigroup/Test_NDItk_multigroup_AverageFissionEnergyRelease.py )
+add_python_test( multigroup.Velocities                  multigroup/Test_NDItk_multigroup_Velocities.py )
 
 add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )

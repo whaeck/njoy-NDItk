@@ -16,7 +16,9 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   using Table = njoy::NDItk::MultigroupTable;
   using Metadata = njoy::NDItk::multigroup::Metadata;
   using EnergyGroupStructure = njoy::NDItk::multigroup::EnergyGroupStructure;
+  using Velocities = njoy::NDItk::multigroup::Velocities;
   using FluxWeights = njoy::NDItk::multigroup::FluxWeights;
+  using TotalCrossSection = njoy::NDItk::multigroup::TotalCrossSection;
   using ReactionCrossSections = njoy::NDItk::multigroup::ReactionCrossSections;
   using AverageFissionEnergyRelease = njoy::NDItk::multigroup::AverageFissionEnergyRelease;
 
@@ -34,36 +36,46 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   table
   .def(
 
-    python::init< std::string, std::string, std::string, std::string,
-                  double, double, double, double,
+    python::init< std::string, std::string, std::string,
+                  double, double, double,
                   EnergyGroupStructure,
                   std::vector< EnergyGroupStructure >,
+                  Velocities,
                   FluxWeights,
                   ReactionCrossSections,
+                  std::optional< std::string >,
+                  std::optional< double >,
+                  std::optional< TotalCrossSection >,
                   std::optional< AverageFissionEnergyRelease > >(),
-    python::arg( "zaid" ), python::arg( "libname" ), python::arg( "source" ),
-    python::arg( "process" ), python::arg( "awr" ), python::arg( "weight" ),
+    python::arg( "zaid" ), python::arg( "libname" ),
+    python::arg( "process" ), python::arg( "awr" ),
     python::arg( "temperature" ), python::arg( "dilution" ),
     python::arg( "structure" ), python::arg( "outgoing" ),
-    python::arg( "flux" ), python::arg( "xs" ),
+    python::arg( "velocities" ), python::arg( "flux" ),
+    python::arg( "xs" ),
+    python::arg( "source" ) = std::nullopt,
+    python::arg( "weight" ) = std::nullopt,
+    python::arg( "total" ) = std::nullopt,
     python::arg( "release" ) = std::nullopt,
     "Initialise the table\n\n"
     "Arguments:\n"
     "    self           the table\n"
     "    zaid           the zaid of the table\n"
     "    libname        the library name\n"
-    "    source         the source date\n"
     "    process        the processing date\n"
     "    awr            the atomic weight ratio of the target (with respect\n"
     "                   to the neutron mass)\n"
-    "    weight         the atomic weight of the target\n"
     "    temperature    the temperature of the target\n"
     "    dilution       the dilution (aka sigma0)\n"
     "    structure      the primary group structure\n"
     "    outgoing       the outgoing particle group structures\n"
+    "    velocities     the velocities\n"
     "    flux           the flux weights\n"
     "    xs             the reaction cross section data\n"
-    "    release        the average fission energy release data"
+    "    source         the source date (optional)\n"
+    "    weight         the atomic weight of the target (optional)\n"
+    "    total          the total cross section (optional)\n"
+    "    release        the average fission energy release data (optional)"
   )
   .def_property_readonly(
 
@@ -89,6 +101,12 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "velocities",
+    &Table::velocities,
+    "The velocity record"
+  )
+  .def_property_readonly(
+
     "flux_weights",
     &Table::fluxWeights,
     "The flux weight record"
@@ -98,6 +116,12 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "reaction_cross_sections",
     &Table::reactionCrossSections,
     "The reaction cross section record"
+  )
+  .def_property_readonly(
+
+    "total_cross_section",
+    &Table::totalCrossSection,
+    "The total cross section record"
   )
   .def_property_readonly(
 

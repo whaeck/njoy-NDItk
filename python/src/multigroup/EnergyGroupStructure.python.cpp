@@ -36,7 +36,7 @@ void wrapEnergyGroupStructure( python::module& module, python::module& ) {
     python::arg( "boundaries" ),
     "Initialise the record\n\n"
     "Arguments:\n"
-    "    self          the table\n"
+    "    self          the record\n"
     "    boundaries    the group structure boundaries"
   )
   .def(

@@ -100,7 +100,9 @@ if( NDItk.python )
       python/src/multigroup/FluxWeights.python.cpp
       python/src/multigroup/EnergyGroupStructure.python.cpp
       python/src/multigroup/ReactionCrossSections.python.cpp
+      python/src/multigroup/TotalCrossSection.python.cpp
       python/src/multigroup/AverageFissionEnergyRelease.python.cpp
+      python/src/multigroup/Velocities.python.cpp
       )
 
   target_link_libraries( NDItk.python PRIVATE NDItk )

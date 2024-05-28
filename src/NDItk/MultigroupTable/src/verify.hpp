@@ -10,6 +10,7 @@ void verify() {
   if ( this->primaryGroupBoundaries().empty() ||
        this->velocities().empty() ||
        this->fluxWeights().empty() ||
+       this->totalCrossSection().empty() ||
        this->reactionCrossSections().empty() ||
        this->scatteringMatrix().empty() ) {
 
@@ -20,6 +21,8 @@ void verify() {
                this->velocities().empty() ? "absent" : "present" );
     Log::info( "Flux weight record: {}",
                this->fluxWeights().empty() ? "absent" : "present" );
+    Log::info( "Total cross section record: {}",
+               this->totalCrossSections().empty() ? "absent" : "present" );
     Log::info( "Reaction cross sections record: {}",
                this->reactionCrossSections().empty() ? "absent" : "present" );
     Log::info( "Scattering matrix record: {}",

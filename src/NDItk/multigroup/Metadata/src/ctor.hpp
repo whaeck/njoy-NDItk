@@ -1,10 +1,17 @@
 /**
  *  @brief Default constructor
  */
-Metadata() : zaid_( "zaid" ), library_name_( "library_name" ), source_date_( "date_source" ),
-             process_date_( "date_processed" ), awr_( "awr" ), atomic_weight_( "at_wgt" ),
-             temperature_( "temp" ), dilution_( "sig_0" ), groups_( "num_grps" ),
-             reactions_( "num_reac" ) {}
+Metadata() : zaid_( base::Keyword( "zaid" ) ),
+             library_name_( base::Keyword( "library_name" ) ),
+             source_date_( base::Keyword( "date_source" ) ),
+             process_date_( base::Keyword( "date_processed" ) ),
+             awr_( base::Keyword( "awr" ) ),
+             atomic_weight_( base::Keyword( "at_wgt" ) ),
+             temperature_( base::Keyword( "temp" ) ),
+             dilution_( base::Keyword( "sig_0" ) ),
+             primary_groups_( base::Keyword( "num_grps" ) ),
+             outgoing_groups_(),
+             reactions_( base::Keyword( "num_reac" ) ) {}
 
 /**
  *  @brief Constructor
@@ -19,14 +26,22 @@ Metadata() : zaid_( "zaid" ), library_name_( "library_name" ), source_date_( "da
  *  @param[in] temperature    the temperature of the target
  *  @param[in] dilution       the dilution (aka sigma0)
  *  @param[in] groups         the number of groups in the primary group structure
+ *  @param[in] outgoing       the number of groups in the outgoing group structures
  *  @param[in] reactions      the number of reactions defined in the table
  */
 Metadata( std::string zaid, std::string libname, std::string source, std::string process,
           double awr, double weight, double temperature, double dilution,
-          unsigned int groups, unsigned int reactions ) :
-    zaid_( "zaid", std::move( zaid ) ), library_name_( "library_name", std::move( libname ) ),
-    source_date_( "date_source", std::move( source ) ),
-    process_date_( "date_processed", std::move( process ) ),
-    awr_( "awr", awr ), atomic_weight_( "at_wgt", weight ), temperature_( "temp", temperature ),
-    dilution_( "sig_0", dilution ), groups_( "num_grps", groups ),
-    reactions_( "num_reac", reactions ) {}
+          unsigned int groups,
+          const std::map< unsigned int, unsigned int >& outgoing,
+          unsigned int reactions ) :
+    zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
+    library_name_( base::Keyword( "library_name" ), std::move( libname ) ),
+    source_date_( base::Keyword( "date_source" ), std::move( source ) ),
+    process_date_( base::Keyword( "date_processed" ), std::move( process ) ),
+    awr_( base::Keyword( "awr" ), awr ),
+    atomic_weight_( base::Keyword( "at_wgt" ), weight ),
+    temperature_( base::Keyword( "temp" ), temperature ),
+    dilution_( base::Keyword( "sig_0" ), dilution ),
+    primary_groups_( base::Keyword( "num_grps" ), groups ),
+    outgoing_groups_( generateSecondaryGroups( outgoing ) ),
+    reactions_( base::Keyword( "num_reac" ), reactions ) {}

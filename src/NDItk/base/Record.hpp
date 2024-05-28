@@ -5,6 +5,7 @@
 #include <string>
 
 // other includes
+#include "NDItk/base/Keyword.hpp"
 
 namespace njoy {
 namespace NDItk {
@@ -16,7 +17,7 @@ namespace base {
 class Record {
 
   /* fields */
-  std::string keyword_;
+  Keyword keyword_;
 
 protected:
 
@@ -27,7 +28,7 @@ protected:
    *
    *  @param[in] keyword   the keyword of the record
    */
-  Record( std::string keyword ) : keyword_( std::move( keyword ) ) {}
+  Record( Keyword keyword ) : keyword_( std::move( keyword ) ) {}
 
   /**
    *  @brief Print the record keyword
@@ -37,16 +38,30 @@ protected:
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
 
-    for ( auto c : this->keyword() ) { *iter++ = c; }
-    *iter++ = '\n';
+    this->keyword_.print( iter );
   };
+
+  /**
+   *  @brief Return the keyword object
+   */
+  const Keyword& key() const { return this->keyword_; }
 
 public:
 
   /**
    *  @brief Return the record keyword
    */
-  const std::string& keyword() const { return this->keyword_; }
+  const std::string& keyword() const { return this->key().keyword(); }
+
+  /**
+   *  @brief Return the subtype (if any)
+   */
+  const std::optional< std::string >& subtype() const { return this->key().subtype(); }
+
+  /**
+   *  @brief Return the particle identifier (if any)
+   */
+  const std::optional< unsigned int >& particle() const { return this->key().particle(); }
 };
 
 } // base namespace

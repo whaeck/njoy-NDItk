@@ -32,6 +32,10 @@ SCENARIO( "MultigroupTable" ) {
       double dilution = 1e+10;
       multigroup::EnergyGroupStructure structure( { 20., 18.123456789, 16.0000000000001,
                                                     14., 10., 5, 1, 1e-11 } );
+      std::vector< multigroup::EnergyGroupStructure > outgoing =   {
+          { 0, { 20., 10., 5, 1e-11 } },
+          { 1001, { 20., 10., 1e-11 } }
+      };
       multigroup::FluxWeights weights( { 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
@@ -40,8 +44,8 @@ SCENARIO( "MultigroupTable" ) {
 
       MultigroupTable chunk( std::move( zaid ), std::move( name ), std::move( source ),
                              std::move( process ), awr, weight, temperature, dilution,
-                             std::move( structure ), std::move( weights ), std::move( xs ),
-                             std::move( release ) );
+                             std::move( structure ), std::move( outgoing ), std::move( weights ),
+                             std::move( xs ), std::move( release ) );
 
       THEN( "a MultigroupTable can be constructed and members can "
             "be tested" ) {
@@ -105,7 +109,7 @@ SCENARIO( "MultigroupTable" ) {
 
         CHECK_THROWS( MultigroupTable( std::move( zaid ), std::move( name ), std::move( source ),
                                        std::move( process ), awr, weight, temperature, dilution,
-                                       std::move( structure ), std::move( weights ), std::move( xs ) ) );
+                                       std::move( structure ), {}, std::move( weights ), std::move( xs ) ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -131,11 +135,19 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    7\n"
+         "num_grps_0\n"
+         "    3\n"
+         "num_grps_1001\n"
+         "    2\n"
          "num_reac\n"
          "    2\n"
          "e_bounds\n"
          "    20 18.123456789 16.0000000000001 14 10\n"
          "    5 1 1e-11\n"
+         "e_bounds_0\n"
+         "    20 10 5 1e-11\n"
+         "e_bounds_1001\n"
+         "    20 10 1e-11\n"
          "wgts\n"
          "    0.1 0.2 0.25 0.05 0.15\n"
          "    0.04 0.06\n"
@@ -167,33 +179,61 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( 2 == chunk.metadata().numberReactions().value() );
 
   // principal group structure
-  CHECK( "e_bounds" == chunk.structure().keyword() );
-  CHECK( false == chunk.structure().empty() );
-  CHECK( 8 == chunk.structure().size() );
-  CHECK( 8 == chunk.structure().boundaries().size() );
-  CHECK( 7 == chunk.structure().numberGroups() );
-  CHECK_THAT(    20, WithinRel( chunk.structure().boundaries()[0] ) );
-  CHECK_THAT(    18.123456789, WithinRel( chunk.structure().boundaries()[1] ) );
-  CHECK_THAT(    16.0000000000001, WithinRel( chunk.structure().boundaries()[2] ) );
-  CHECK_THAT(    14, WithinRel( chunk.structure().boundaries()[3] ) );
-  CHECK_THAT(    10, WithinRel( chunk.structure().boundaries()[4] ) );
-  CHECK_THAT(     5, WithinRel( chunk.structure().boundaries()[5] ) );
-  CHECK_THAT(     1, WithinRel( chunk.structure().boundaries()[6] ) );
-  CHECK_THAT( 1e-11, WithinRel( chunk.structure().boundaries()[7] ) );
+  auto structure = chunk.primaryGroupBoundaries();
+  CHECK( "e_bounds" == structure.keyword() );
+  CHECK( std::nullopt == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 8 == structure.size() );
+  CHECK( 8 == structure.values().size() );
+  CHECK( 7 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    18.123456789, WithinRel( structure.values()[1] ) );
+  CHECK_THAT(    16.0000000000001, WithinRel( structure.values()[2] ) );
+  CHECK_THAT(    14, WithinRel( structure.values()[3] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[4] ) );
+  CHECK_THAT(     5, WithinRel( structure.values()[5] ) );
+  CHECK_THAT(     1, WithinRel( structure.values()[6] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[7] ) );
 
-  // flux weights
-  CHECK( "wgts" == chunk.flux().keyword() );
-  CHECK( false == chunk.flux().empty() );
-  CHECK( 7 == chunk.flux().size() );
-  CHECK( 7 == chunk.flux().weights().size() );
-  CHECK( 7 == chunk.flux().numberGroups() );
-  CHECK_THAT( 0.10, WithinRel( chunk.flux().weights()[0] ) );
-  CHECK_THAT( 0.20, WithinRel( chunk.flux().weights()[1] ) );
-  CHECK_THAT( 0.25, WithinRel( chunk.flux().weights()[2] ) );
-  CHECK_THAT( 0.05, WithinRel( chunk.flux().weights()[3] ) );
-  CHECK_THAT( 0.15, WithinRel( chunk.flux().weights()[4] ) );
-  CHECK_THAT( 0.04, WithinRel( chunk.flux().weights()[5] ) );
-  CHECK_THAT( 0.06, WithinRel( chunk.flux().weights()[6] ) );
+  // outgoing group structure: 0
+  structure = chunk.outgoingGroupBoundaries( 0 );
+  CHECK( "e_bounds_0" == structure.keyword() );
+  CHECK( 0 == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 4 == structure.size() );
+  CHECK( 4 == structure.values().size() );
+  CHECK( 3 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
+  CHECK_THAT(     5, WithinRel( structure.values()[2] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[3] ) );
+
+  // outgoing group structure: 1001
+  structure = chunk.outgoingGroupBoundaries( 1001 );
+  CHECK( "e_bounds_1001" == structure.keyword() );
+  CHECK( 1001 == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 3 == structure.size() );
+  CHECK( 3 == structure.values().size() );
+  CHECK( 2 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[2] ) );
+
+  // flux values
+  auto flux = chunk.fluxWeights();
+  CHECK( "wgts" == flux.keyword() );
+  CHECK( false == flux.empty() );
+  CHECK( 7 == flux.size() );
+  CHECK( 7 == flux.values().size() );
+  CHECK( 7 == flux.numberGroups() );
+  CHECK_THAT( 0.10, WithinRel( flux.values()[0] ) );
+  CHECK_THAT( 0.20, WithinRel( flux.values()[1] ) );
+  CHECK_THAT( 0.25, WithinRel( flux.values()[2] ) );
+  CHECK_THAT( 0.05, WithinRel( flux.values()[3] ) );
+  CHECK_THAT( 0.15, WithinRel( flux.values()[4] ) );
+  CHECK_THAT( 0.04, WithinRel( flux.values()[5] ) );
+  CHECK_THAT( 0.06, WithinRel( flux.values()[6] ) );
 
   // reaction cross sections
   CHECK( 18 == chunk.reactionCrossSections().size() );

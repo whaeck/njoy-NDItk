@@ -32,11 +32,13 @@ SCENARIO( "Metadata" ) {
       double temperature = 2.53e-8;
       double dilution = 1e+10;
       unsigned int groups = 618;
+      std::map< unsigned int, unsigned int > outgoing = { { 0, 30 }, { 1001, 250 } };
       unsigned int reactions = 7;
+
       Metadata chunk( std::move( zaid ), std::move( name ),
                       std::move( source ), std::move( process ),
                       awr, weight, temperature, dilution,
-                      groups, reactions );
+                      groups, outgoing, reactions );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {
@@ -65,6 +67,8 @@ SCENARIO( "Metadata" ) {
       };
 
       Metadata chunk;
+      chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
@@ -114,6 +118,10 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    618\n"
+         "num_grps_0\n"
+         "    30\n"
+         "num_grps_1001\n"
+         "    250\n"
          "num_reac\n"
          "    7\n";
 }
@@ -129,5 +137,9 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK_THAT( 2.53e-8, WithinRel( chunk.temperature().value() ) );
   CHECK_THAT( 1e+10, WithinRel( chunk.dilution().value() ) );
   CHECK( 618 == chunk.numberGroups().value() );
+  CHECK(  30 == chunk.numberOutgoingGroups( 0 ).value() );
+  CHECK( 250 == chunk.numberOutgoingGroups( 1001 ).value() );
   CHECK(   7 == chunk.numberReactions().value() );
+
+  CHECK_THROWS( chunk.numberOutgoingGroups( 1 ) );
 }

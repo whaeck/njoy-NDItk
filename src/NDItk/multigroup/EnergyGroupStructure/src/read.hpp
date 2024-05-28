@@ -12,5 +12,5 @@ template< typename Iterator >
 void read( Iterator& iter, const Iterator& end, std::size_t number ) {
 
   base::RealListRecord::read( iter, end, number );
-  verify( this->boundaries() );
+  verify( this->values() );
 };

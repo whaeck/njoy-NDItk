@@ -28,6 +28,8 @@ protected:
 
   #include "NDItk/base/RealListRecord/src/write.hpp"
 
+  using Parent::key;
+
 public:
 
   /* constructor */
@@ -37,7 +39,7 @@ public:
    *
    *  @param[in] keyword   the keyword of the record
    */
-  RealListRecord( std::string keyword ) :
+  RealListRecord( Keyword keyword ) :
       ListRecord( std::move( keyword ) ) {}
 
   /**
@@ -46,12 +48,14 @@ public:
    *  @param[in] keyword   the keyword of the record
    *  @param[in] value     the value of the record
    */
-  RealListRecord( std::string keyword, std::vector< double > value ) :
+  RealListRecord( Keyword keyword, std::vector< double > value ) :
       ListRecord( std::move( keyword ), std::move( value ) ) {}
 
   /* methods */
 
   using Parent::keyword;
+  using Parent::subtype;
+  using Parent::particle;
   using Parent::values;
   using Parent::size;
   using Parent::empty;

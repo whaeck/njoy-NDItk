@@ -15,18 +15,15 @@ void read( Iterator& iter, const Iterator& end ) {
 
       this->metadata_.read( keyword, iter, end );
     }
-    else if ( keyword == this->structure_.keyword() ) {
+    else if ( keyword.find( this->primary_structure_.keyword() ) == 0 ) {
 
-      if ( this->metadata_.numberGroups().has_value() ) {
+      if ( keyword == this->primary_structure_.keyword() ) {
 
-        readRecord( this->structure_, iter, end,
-                    this->metadata_.numberGroups().value() + 1 );
+        readPrimaryStructure( iter, end );
       }
       else {
 
-        Log::error( "Metadata required for the \'\' record was not found", keyword );
-        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
-        throw std::exception();
+        readOutgoingStructure( keyword, iter, end );
       }
     }
     else if ( keyword == this->weights_.keyword() ) {

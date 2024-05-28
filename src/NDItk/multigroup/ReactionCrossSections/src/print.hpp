@@ -8,8 +8,7 @@ void print( OutputIterator& iter ) const {
 
   if ( ! this->empty() ) {
 
-    for ( auto c : this->keyword() ) { *iter++ = c; }
-    *iter++ = '\n';
+    this->key().print( iter );
     for ( const auto& entry : this->xs_ ) {
 
       entry.print( iter );

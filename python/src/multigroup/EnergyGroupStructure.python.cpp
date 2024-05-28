@@ -39,12 +39,15 @@ void wrapEnergyGroupStructure( python::module& module, python::module& ) {
     "    self          the table\n"
     "    boundaries    the group structure boundaries"
   )
-  .def_property_readonly(
+  .def(
 
-    "boundaries",
-    [] ( const Record& self ) -> DoubleRange
-       { return self.boundaries(); },
-    "The group structure boundaries"
+    python::init< unsigned int, std::vector< double > >(),
+    python::arg( "particle" ), python::arg( "boundaries" ),
+    "Initialise the record\n\n"
+    "Arguments:\n"
+    "    self          the table\n"
+    "    particle      the secondary particle identifier\n"
+    "    boundaries    the group structure boundaries"
   )
   .def_property_readonly(
 
@@ -56,7 +59,7 @@ void wrapEnergyGroupStructure( python::module& module, python::module& ) {
 
     "from_string",
     [] ( const std::string& string, std::size_t number ) -> Record
-       { return read< Record >( string, number ); },
+       { return readWithSubtype< Record >( string, number ); },
     python::arg( "string" ), python::arg( "number" ),
     "Read the record from a string\n\n"
     "An exception is raised if something goes wrong while reading the\n"

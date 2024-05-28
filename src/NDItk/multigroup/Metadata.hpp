@@ -2,6 +2,7 @@
 #define NJOY_NDITK_MULTIGROUP_METADATA
 
 // system includes
+#include <map>
 
 // other includes
 #include "tools/Log.hpp"
@@ -28,11 +29,13 @@ class Metadata {
   base::SingleRealRecord atomic_weight_;
   base::SingleRealRecord temperature_;
   base::SingleRealRecord dilution_;
-  base::SingleIntegerRecord groups_;
   base::SingleIntegerRecord reactions_;
+  base::SingleIntegerRecord primary_groups_;
+  std::vector< base::SingleIntegerRecord > outgoing_groups_;
 
   /* auxiliary functions */
 
+  #include "NDItk/multigroup/Metadata/src/generateSecondaryGroups.hpp"
   #include "NDItk/multigroup/Metadata/src/readRecord.hpp"
 
 public:
@@ -48,10 +51,16 @@ public:
    */
   bool isMetadataKey( const std::string& keyword ) const {
 
-    return ( keyword == "zaid" ) || ( keyword == "library_name" ) || ( keyword == "date_source" ) ||
-           ( keyword == "date_processed" ) || ( keyword == "awr" ) || ( keyword == "at_wgt" ) ||
-           ( keyword == "temp" ) || ( keyword == "sig_0" ) || ( keyword == "num_grps" ) ||
-           ( keyword == "num_reac" );
+    return ( keyword == this->zaid_.keyword() ) ||
+           ( keyword == this->library_name_.keyword() ) ||
+           ( keyword == this->source_date_.keyword() ) ||
+           ( keyword == this->process_date_.keyword() ) ||
+           ( keyword == this->awr_.keyword() ) ||
+           ( keyword == this->atomic_weight_.keyword() ) ||
+           ( keyword == this->temperature_.keyword() ) ||
+           ( keyword == this->dilution_.keyword() ) ||
+           ( keyword == this->reactions_.keyword() ||
+           ( keyword.find( this->primary_groups_.keyword() ) == 0 ) );
   }
 
   /**
@@ -98,7 +107,33 @@ public:
   /**
    *  @brief Return the number of groups in the primary group structure
    */
-  decltype(auto) numberGroups() const { return this->groups_.data(); }
+  decltype(auto) numberGroups() const { return this->primary_groups_.data(); }
+
+  /**
+   *  @brief Return the number of groups in the outgoing group structure
+   *         for a given particle
+   *
+   *  @param[int] particle   the outgoing particle identifier
+   */
+  decltype(auto) numberOutgoingGroups( unsigned int particle ) const {
+
+    auto pos = std::lower_bound( this->outgoing_groups_.begin(),
+                                 this->outgoing_groups_.end(),
+                                 particle,
+                                 [] ( auto&& left, auto&& right ) {
+
+                                   return left.particle() < right;
+                                 } );
+    if ( pos != this->outgoing_groups_.end() ) {
+
+      if ( pos->particle() == particle ) {
+
+        return pos->data();
+      }
+    }
+    Log::error( "The requested outgoing particle \'{}\' is not present", particle );
+    throw std::exception();
+  }
 
   /**
    *  @brief Return the number of reactions defined in the table
@@ -113,16 +148,43 @@ public:
   template< typename Iterator >
   void read( const std::string& keyword, Iterator& iter, const Iterator& end ) {
 
-    if      ( keyword == this->zaid_.keyword() )           { readRecord( this->zaid_, iter, end ); }
-    else if ( keyword == this->library_name_.keyword() )   { readRecord( this->library_name_, iter, end ); }
-    else if ( keyword == this->source_date_.keyword() )    { readRecord( this->source_date_, iter, end ); }
-    else if ( keyword == this->process_date_.keyword() )   { readRecord( this->process_date_, iter, end ); }
-    else if ( keyword == this->awr_.keyword() )            { readRecord( this->awr_, iter, end ); }
-    else if ( keyword == this->atomic_weight_.keyword() )  { readRecord( this->atomic_weight_, iter, end ); }
-    else if ( keyword == this->temperature_.keyword() )    { readRecord( this->temperature_, iter, end ); }
-    else if ( keyword == this->dilution_.keyword() )       { readRecord( this->dilution_, iter, end ); }
-    else if ( keyword == this->groups_.keyword() )         { readRecord( this->groups_, iter, end ); }
-    else if ( keyword == this->reactions_.keyword() )      { readRecord( this->reactions_, iter, end ); }
+    if      ( keyword == this->zaid_.keyword() )          { readRecord( this->zaid_, iter, end ); }
+    else if ( keyword == this->library_name_.keyword() )  { readRecord( this->library_name_, iter, end ); }
+    else if ( keyword == this->source_date_.keyword() )   { readRecord( this->source_date_, iter, end ); }
+    else if ( keyword == this->process_date_.keyword() )  { readRecord( this->process_date_, iter, end ); }
+    else if ( keyword == this->awr_.keyword() )           { readRecord( this->awr_, iter, end ); }
+    else if ( keyword == this->atomic_weight_.keyword() ) { readRecord( this->atomic_weight_, iter, end ); }
+    else if ( keyword == this->temperature_.keyword() )   { readRecord( this->temperature_, iter, end ); }
+    else if ( keyword == this->dilution_.keyword() )      { readRecord( this->dilution_, iter, end ); }
+    else if ( keyword == this->reactions_.keyword() )     { readRecord( this->reactions_, iter, end ); }
+    else if ( keyword.find( this->primary_groups_.keyword() ) == 0 ) {
+
+      if ( keyword == this->primary_groups_.keyword() ) {
+
+        readRecord( this->primary_groups_, iter, end );
+      }
+      else {
+
+        base::Keyword secondary( keyword );
+        auto pos = std::lower_bound( this->outgoing_groups_.begin(),
+                                     this->outgoing_groups_.end(),
+                                     secondary.particle(),
+                                     [] ( auto&& left, auto&& right ) {
+
+                                       return left.particle() < right;
+                                     } );
+        if ( pos != this->outgoing_groups_.end() ) {
+
+          if ( pos->particle() == secondary.particle() ) {
+
+            Log::error( "Duplicate keyword found: \'{}\'", secondary.keyword() );
+            throw std::exception();
+          }
+        }
+        pos = this->outgoing_groups_.insert( pos, base::SingleIntegerRecord( std::move( secondary ) ) );
+        readRecord( *pos, iter, end );
+      }
+    }
     else {
 
       Log::error( "Record with keyword \'{}\' is not part of the "
@@ -147,7 +209,8 @@ public:
     this->atomic_weight_.print( iter );
     this->temperature_.print( iter );
     this->dilution_.print( iter );
-    this->groups_.print( iter );
+    this->primary_groups_.print( iter );
+    for ( const auto& entry : this->outgoing_groups_ ) { entry.print( iter ); }
     this->reactions_.print( iter );
   };
 };

@@ -27,6 +27,10 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
                      '    10000000000\n'
                      'num_grps\n'
                      '    618\n'
+                     'num_grps_0\n'
+                     '    30\n'
+                     'num_grps_1001\n'
+                     '    250\n'
                      'num_reac\n'
                      '    7\n' )
 
@@ -44,6 +48,8 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
             self.assertAlmostEqual( 2.53e-8, chunk.temperature )
             self.assertAlmostEqual( 1e+10, chunk.dilution )
             self.assertEqual( 618, chunk.number_groups )
+            self.assertEqual(  30, chunk.number_outgoing_groups( 0 ) )
+            self.assertEqual( 250, chunk.number_outgoing_groups( 1001 ) )
             self.assertEqual(   7, chunk.number_reactions )
 
             self.assertEqual( self.chunk_string, chunk.to_string() )
@@ -51,8 +57,8 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
         # the data is given explicitly
         chunk = Metadata( zaid = '92235.711nm', libname = 'mendf71x', source = '12/22/2011',
                           process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
-                          temperature = 2.53e-8, dilution = 1e+10, groups = 618, 
-                          reactions = 7 )
+                          temperature = 2.53e-8, dilution = 1e+10, groups = 618,
+                          outgoing = { 0 : 30, 1001 : 250 }, reactions = 7 )
 
         verify_chunk( self, chunk )
 

@@ -1,7 +1,7 @@
 /**
  *  @brief Default constructor for the primary group structure
  */
-AverageFissionEnergyRelease() : RealListRecord( "fiss_q" ) {}
+AverageFissionEnergyRelease() : RealListRecord( base::Keyword( "fiss_q" ) ) {}
 
 
 /**
@@ -18,8 +18,8 @@ AverageFissionEnergyRelease() : RealListRecord( "fiss_q" ) {}
  */
 AverageFissionEnergyRelease( double total, double recoverable, double neutrons,
                              double gammas, double betas, double fragments ) :
-    RealListRecord( "fiss_q", { recoverable, total, betas,
-                                gammas, fragments, neutrons } ) {
+    RealListRecord( base::Keyword( "fiss_q" ), { recoverable, total, betas,
+                                                 gammas, fragments, neutrons } ) {
 
   //! @todo do we want to do some verification here?
 }

@@ -13,6 +13,14 @@ namespace multigroup {
 
 /**
  *  @brief An energy group structure record for multigroup neutron and photon data
+ *
+ *  This corresponds to an e_bounds or e_bounds_x record for the primary
+ *  energy boundaries or outgoing particle energy boundaries.
+ *
+ *  The boundary values are given in MeV and must in be descending order.
+ *  The number of values is equal to the number of groups plus 1 (the
+ *  corresponding num_grps or num_grps_x metadata records must be given
+ *  before the energy group structure record can be read).
  */
 class EnergyGroupStructure : protected base::RealListRecord {
 
@@ -38,12 +46,8 @@ public:
     return this->empty() ? 0 : this->size() - 1;
   }
 
-  /**
-   *  @brief Return the group structure boundaries
-   */
-  auto boundaries() const { return this->values(); }
-
   using base::RealListRecord::keyword;
+  using base::RealListRecord::particle;
   using base::RealListRecord::values;
   using base::RealListRecord::size;
   using base::RealListRecord::empty;

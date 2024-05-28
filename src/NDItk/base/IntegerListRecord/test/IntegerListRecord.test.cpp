@@ -11,6 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::NDItk;
 using IntegerListRecord = base::IntegerListRecord;
+using Keyword = base::Keyword;
 
 std::string chunk();
 void verifyChunk( const IntegerListRecord& );
@@ -23,7 +24,7 @@ SCENARIO( "IntegerListRecord" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      IntegerListRecord chunk( "rprod_all", { 1, 2, 3, 4, 5, 6, 7, 8 } );
+      IntegerListRecord chunk( Keyword( "rprod_all" ), { 1, 2, 3, 4, 5, 6, 7, 8 } );
 
       THEN( "a IntegerListRecord can be constructed and members can "
             "be tested" ) {
@@ -45,7 +46,7 @@ SCENARIO( "IntegerListRecord" ) {
 
       auto iter = record.begin() + 9;
       auto end = record.end();
-      IntegerListRecord chunk( "rprod_all" );
+      IntegerListRecord chunk( Keyword( "rprod_all" ) );
       chunk.read( iter, end, 8 );
 
       THEN( "a IntegerListRecord can be constructed and members can "

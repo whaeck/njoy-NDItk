@@ -1,0 +1,1 @@
+add_cpp_test( base.StringListRecord StringListRecord.test.cpp )

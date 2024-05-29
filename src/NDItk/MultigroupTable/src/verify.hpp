@@ -12,7 +12,7 @@ void verify() {
        this->fluxWeights().empty() ||
        this->reactionCrossSections().empty() ) {
 
-    Log::error( "One or more required records are not founs in the table" );
+    Log::error( "One or more required records are not found in the table" );
     Log::info( "Primary group structure record: {}",
                this->primaryGroupBoundaries().empty() ? "absent" : "present" );
     Log::info( "Velocity record: {}",
@@ -24,7 +24,7 @@ void verify() {
     throw std::exception();
   }
 
-  // consistent group structure
+  // consistent group structure: primary
   const auto groups = this->metadata().numberGroups().value();
   if ( ( this->primaryGroupBoundaries().numberGroups() != groups ) ||
        ( this->velocities().numberGroups() != groups ) ||
@@ -61,5 +61,20 @@ void verify() {
                  this->primaryKerma().numberGroups() );
     }
     throw std::exception();
+  }
+
+  // secondary particles
+  const auto types = this->metadata().numberOutgoingParticles().value();
+  if ( types > 0 ) {
+
+    if ( ( this->outgoing_structure_.size() != types ) ) {
+
+      Log::error( "Found inconsistent number of outgoing particle types across the table" );
+      Log::info( "Number of outgoing particles in the metadata: {}",
+                 this->metadata().numberOutgoingParticles().value() );
+      Log::info( "Number of types in the outgoing particle types: {}",
+                 this->outgoingParticleTypes().numberOutgoingParticles() );
+      throw std::exception();
+    }
   }
 };

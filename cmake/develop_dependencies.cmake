@@ -7,7 +7,7 @@ include( FetchContent )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  https://github.com/njoy/tools
-    GIT_TAG         v0.3.0
+    GIT_TAG         develop
     GIT_SHALLOW     TRUE
     )
 

@@ -45,6 +45,8 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
+      multigroup::OutgoingParticleTypes types( { 0, 1001 } );
+      multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
           { 1001, { 25., 15. } }
@@ -61,6 +63,7 @@ SCENARIO( "MultigroupTable" ) {
                              std::move( velocities ), std::move( weights ),
                              std::move( xs ), std::move( source ), weight,
                              std::move( total ), std::move( release ),
+                             std::move( types ), std::move( transport ),
                              std::move( primaryHeating ), std::move( outgoingHeating ),
                              std::move( primaryKerma ), std::move( outgoingKerma ) );
 
@@ -139,6 +142,8 @@ SCENARIO( "MultigroupTable" ) {
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7., 8. } } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
+      multigroup::OutgoingParticleTypes types( { 0, 1001 } );
+      multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
@@ -158,6 +163,7 @@ SCENARIO( "MultigroupTable" ) {
                                        std::move( weights ), std::move( xs ),
                                        std::move( source ), weight,
                                        std::move( total ), std::move( release ),
+                                       std::move( types ), std::move( transport ),
                                        std::move( primaryHeating ), std::move( outgoingHeating ),
                                        std::move( primaryKerma ), std::move( outgoingKerma ) ) );
       } // THEN
@@ -185,19 +191,17 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    7\n"
+         "num_reac\n"
+         "    2\n"
+         "num_sec_parts\n"
+         "    2\n"
          "num_grps_0\n"
          "    3\n"
          "num_grps_1001\n"
          "    2\n"
-         "num_reac\n"
-         "    2\n"
          "e_bounds\n"
          "    20 18.123456789 16.0000000000001 14 10\n"
          "    5 1 1e-11\n"
-         "e_bounds_0\n"
-         "    20 10 5 1e-11\n"
-         "e_bounds_1001\n"
-         "    20 10 1e-11\n"
          "vel\n"
          "    2.1 2.2 2.25 2.05 2.15\n"
          "    2.04 2.06\n"
@@ -220,13 +224,21 @@ std::string chunk() {
          "heating\n"
          "    11 22 33 44 55\n"
          "    66 77\n"
+         "kerma\n"
+         "    110 220 330 440 550\n"
+         "    660 770\n"
+         "sec_part_types\n"
+         "    0 1001\n"
+         "sec_part_zaids\n"
+         "    92000 92235.proton\n"
+         "e_bounds_0\n"
+         "    20 10 5 1e-11\n"
+         "e_bounds_1001\n"
+         "    20 10 1e-11\n"
          "heating_0\n"
          "    21 11 5.1\n"
          "heating_1001\n"
          "    25 15\n"
-         "kerma\n"
-         "    110 220 330 440 550\n"
-         "    660 770\n"
          "kerma_0\n"
          "    210 110 51\n"
          "kerma_1001\n"
@@ -237,16 +249,17 @@ std::string chunk() {
 void verifyChunk( const MultigroupTable& chunk ) {
 
   // metadata
-  CHECK( "92235.711nm" == chunk.metadata().zaid().value() );
-  CHECK( "mendf71x" == chunk.metadata().libraryName().value() );
-  CHECK( "12/22/2011" == chunk.metadata().sourceDate().value() );
-  CHECK( "08/07/2013" == chunk.metadata().processDate().value() );
+  CHECK( "92235.711nm" == chunk.metadata().zaid() );
+  CHECK( "mendf71x" == chunk.metadata().libraryName() );
+  CHECK( "12/22/2011" == chunk.metadata().sourceDate() );
+  CHECK( "08/07/2013" == chunk.metadata().processDate() );
   CHECK_THAT( 233.0248, WithinRel( chunk.metadata().atomicWeightRatio().value() ) );
   CHECK_THAT( 235.043937521619, WithinRel( chunk.metadata().atomicWeight().value() ) );
   CHECK_THAT( 2.53e-8, WithinRel( chunk.metadata().temperature().value() ) );
   CHECK_THAT( 1e+10, WithinRel( chunk.metadata().dilution().value() ) );
-  CHECK( 7 == chunk.metadata().numberGroups().value() );
-  CHECK( 2 == chunk.metadata().numberReactions().value() );
+  CHECK( 7 == chunk.metadata().numberGroups() );
+  CHECK( 2 == chunk.metadata().numberReactions() );
+  CHECK( 2 == chunk.metadata().numberOutgoingParticles() );
 
   // principal group structure
   auto structure = chunk.primaryGroupBoundaries();
@@ -264,31 +277,6 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(     5, WithinRel( structure.values()[5] ) );
   CHECK_THAT(     1, WithinRel( structure.values()[6] ) );
   CHECK_THAT( 1e-11, WithinRel( structure.values()[7] ) );
-
-  // outgoing group structure: 0
-  structure = chunk.outgoingGroupBoundaries( 0 );
-  CHECK( "e_bounds_0" == structure.keyword() );
-  CHECK( 0 == structure.particle() );
-  CHECK( false == structure.empty() );
-  CHECK( 4 == structure.size() );
-  CHECK( 4 == structure.values().size() );
-  CHECK( 3 == structure.numberGroups() );
-  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
-  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
-  CHECK_THAT(     5, WithinRel( structure.values()[2] ) );
-  CHECK_THAT( 1e-11, WithinRel( structure.values()[3] ) );
-
-  // outgoing group structure: 1001
-  structure = chunk.outgoingGroupBoundaries( 1001 );
-  CHECK( "e_bounds_1001" == structure.keyword() );
-  CHECK( 1001 == structure.particle() );
-  CHECK( false == structure.empty() );
-  CHECK( 3 == structure.size() );
-  CHECK( 3 == structure.values().size() );
-  CHECK( 2 == structure.numberGroups() );
-  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
-  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
-  CHECK_THAT( 1e-11, WithinRel( structure.values()[2] ) );
 
   // velocity values
   auto velocities = chunk.velocities();
@@ -420,6 +408,67 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 66, WithinRel( heating.values()[5] ) );
   CHECK_THAT( 77, WithinRel( heating.values()[6] ) );
 
+  // principal kerma
+  auto kerma = chunk.primaryKerma();
+  CHECK( "kerma" == kerma.keyword() );
+  CHECK( std::nullopt == kerma.particle() );
+  CHECK( false == kerma.empty() );
+  CHECK( 7 == kerma.size() );
+  CHECK( 7 == kerma.values().size() );
+  CHECK( 7 == kerma.numberGroups() );
+  CHECK_THAT( 110, WithinRel( kerma.values()[0] ) );
+  CHECK_THAT( 220, WithinRel( kerma.values()[1] ) );
+  CHECK_THAT( 330, WithinRel( kerma.values()[2] ) );
+  CHECK_THAT( 440, WithinRel( kerma.values()[3] ) );
+  CHECK_THAT( 550, WithinRel( kerma.values()[4] ) );
+  CHECK_THAT( 660, WithinRel( kerma.values()[5] ) );
+  CHECK_THAT( 770, WithinRel( kerma.values()[6] ) );
+
+  // outgoing particle types
+  auto types = chunk.outgoingParticleTypes();
+  CHECK( "sec_part_types" == types.keyword() );
+  CHECK( false == types.empty() );
+  CHECK( 2 == types.size() );
+  CHECK( 2 == types.values().size() );
+  CHECK( 2 == types.numberOutgoingParticles() );
+  CHECK(    0 == types.values()[0] );
+  CHECK( 1001 == types.values()[1] );
+
+  // outgoing particle transport data
+  auto transport = chunk.outgoingParticleTransportData();
+  CHECK( "sec_part_zaids" == transport.keyword() );
+  CHECK( false == transport.empty() );
+  CHECK( 2 == transport.size() );
+  CHECK( 2 == transport.values().size() );
+  CHECK( 2 == transport.numberOutgoingParticles() );
+  CHECK( "92000" == transport.values()[0] );
+  CHECK( "92235.proton" == transport.values()[1] );
+
+  // outgoing group structure: 0
+  structure = chunk.outgoingGroupBoundaries( 0 );
+  CHECK( "e_bounds_0" == structure.keyword() );
+  CHECK( 0 == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 4 == structure.size() );
+  CHECK( 4 == structure.values().size() );
+  CHECK( 3 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
+  CHECK_THAT(     5, WithinRel( structure.values()[2] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[3] ) );
+
+  // outgoing group structure: 1001
+  structure = chunk.outgoingGroupBoundaries( 1001 );
+  CHECK( "e_bounds_1001" == structure.keyword() );
+  CHECK( 1001 == structure.particle() );
+  CHECK( false == structure.empty() );
+  CHECK( 3 == structure.size() );
+  CHECK( 3 == structure.values().size() );
+  CHECK( 2 == structure.numberGroups() );
+  CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
+  CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
+  CHECK_THAT( 1e-11, WithinRel( structure.values()[2] ) );
+
   // outgoing heating numbers: 0
   heating = chunk.outgoingHeatingNumbers( 0 );
   CHECK( "heating_0" == heating.keyword() );
@@ -442,22 +491,6 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK( 2 == heating.numberGroups() );
   CHECK_THAT(  25, WithinRel( heating.values()[0] ) );
   CHECK_THAT(  15, WithinRel( heating.values()[1] ) );
-
-  // principal kerma
-  auto kerma = chunk.primaryKerma();
-  CHECK( "kerma" == kerma.keyword() );
-  CHECK( std::nullopt == kerma.particle() );
-  CHECK( false == kerma.empty() );
-  CHECK( 7 == kerma.size() );
-  CHECK( 7 == kerma.values().size() );
-  CHECK( 7 == kerma.numberGroups() );
-  CHECK_THAT( 110, WithinRel( kerma.values()[0] ) );
-  CHECK_THAT( 220, WithinRel( kerma.values()[1] ) );
-  CHECK_THAT( 330, WithinRel( kerma.values()[2] ) );
-  CHECK_THAT( 440, WithinRel( kerma.values()[3] ) );
-  CHECK_THAT( 550, WithinRel( kerma.values()[4] ) );
-  CHECK_THAT( 660, WithinRel( kerma.values()[5] ) );
-  CHECK_THAT( 770, WithinRel( kerma.values()[6] ) );
 
   // outgoing kerma: 0
   kerma = chunk.outgoingKerma( 0 );

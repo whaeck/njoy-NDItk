@@ -18,7 +18,7 @@ splitKeyword( std::string keyword ) {
   }
   else {
 
-    const std::regex key{ "^([a-z]+(?:_[a-z]+)?)(?:_([0-9]+))?" };
+    const std::regex key{ "^([a-z]+(?:_[a-z]+)*)(?:_([0-9]+))?" };
 
     std::smatch match;
     if ( std::regex_match( keyword, match, key ) ) {

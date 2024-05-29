@@ -105,6 +105,8 @@ if( NDItk.python )
       python/src/multigroup/Velocities.python.cpp
       python/src/multigroup/HeatingNumbers.python.cpp
       python/src/multigroup/Kerma.python.cpp
+      python/src/multigroup/OutgoingParticleTypes.python.cpp
+      python/src/multigroup/OutgoingParticleTransportData.python.cpp
       )
 
   target_link_libraries( NDItk.python PRIVATE NDItk )

@@ -21,6 +21,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   using TotalCrossSection = njoy::NDItk::multigroup::TotalCrossSection;
   using ReactionCrossSections = njoy::NDItk::multigroup::ReactionCrossSections;
   using AverageFissionEnergyRelease = njoy::NDItk::multigroup::AverageFissionEnergyRelease;
+  using OutgoingParticleTypes = njoy::NDItk::multigroup::OutgoingParticleTypes;
+  using OutgoingParticleTransportData = njoy::NDItk::multigroup::OutgoingParticleTransportData;
   using HeatingNumbers = njoy::NDItk::multigroup::HeatingNumbers;
   using Kerma = njoy::NDItk::multigroup::Kerma;
 
@@ -49,6 +51,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
                   std::optional< double >,
                   std::optional< TotalCrossSection >,
                   std::optional< AverageFissionEnergyRelease >,
+                  std::optional< OutgoingParticleTypes >,
+                  std::optional< OutgoingParticleTransportData >,
                   std::optional< HeatingNumbers >,
                   std::vector< HeatingNumbers >,
                   std::optional< Kerma >,
@@ -63,6 +67,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "weight" ) = std::nullopt,
     python::arg( "total" ) = std::nullopt,
     python::arg( "release" ) = std::nullopt,
+    python::arg( "types" ) = std::nullopt,
+    python::arg( "transport" ) = std::nullopt,
     python::arg( "primary_heating" ) = std::nullopt,
     python::arg( "outgoing_heating" ) = std::vector< HeatingNumbers >{},
     python::arg( "primary_kerma" ) = std::nullopt,
@@ -86,6 +92,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    weight             the atomic weight of the target (optional)\n"
     "    total              the total cross section (optional)\n"
     "    release            the average fission energy release data (optional)\n"
+    "    types              the outgoing particle types (optional)\n"
+    "    transport          the outgoing particle transport data (optional)\n"
     "    primary_heating    the primary heating numbers (optional)\n"
     "    outgoing_heating   the outgoing particle heating numbers (optional)\n"
     "    primary_kerma      the primary kerma (optional)\n"
@@ -102,16 +110,6 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "primary_group_boundaries",
     &Table::primaryGroupBoundaries,
     "The primary group structure record"
-  )
-  .def(
-
-    "outgoing_group_boundaries",
-    &Table::outgoingGroupBoundaries,
-    python::arg( "particle" ),
-    "The group structure record for an outgoing particle\n\n"
-    "Arguments:\n"
-    "    self       the table\n"
-    "    particle   the outgoing particle identifier"
   )
   .def_property_readonly(
 
@@ -149,6 +147,34 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     &Table::primaryHeatingNumbers,
     "The primary heating numbers record"
   )
+  .def_property_readonly(
+
+    "primary_kerma",
+    &Table::primaryKerma,
+    "The primary kerma record"
+  )
+  .def_property_readonly(
+
+    "outgoing_particle_types",
+    &Table::outgoingParticleTypes,
+    "The outgoing particle types record"
+  )
+  .def_property_readonly(
+
+    "outgoing_particle_transport_data",
+    &Table::outgoingParticleTransportData,
+    "The outgoing particle transport data record"
+  )
+  .def(
+
+    "outgoing_group_boundaries",
+    &Table::outgoingGroupBoundaries,
+    python::arg( "particle" ),
+    "The group structure record for an outgoing particle\n\n"
+    "Arguments:\n"
+    "    self       the table\n"
+    "    particle   the outgoing particle identifier"
+  )
   .def(
 
     "outgoing_heating_numbers",
@@ -158,12 +184,6 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "Arguments:\n"
     "    self       the table\n"
     "    particle   the outgoing particle identifier"
-  )
-  .def_property_readonly(
-
-    "primary_kerma",
-    &Table::primaryKerma,
-    "The primary kerma record"
   )
   .def(
 

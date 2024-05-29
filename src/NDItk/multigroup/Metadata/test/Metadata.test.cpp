@@ -86,6 +86,7 @@ SCENARIO( "Metadata" ) {
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
       chunk.read( readKey( iter, end ), iter, end );
+      chunk.read( readKey( iter, end ), iter, end );
 
       THEN( "a Metadata can be constructed and members can "
             "be tested" ) {
@@ -125,34 +126,37 @@ std::string chunk() {
          "    10000000000\n"
          "num_grps\n"
          "    618\n"
-         "num_grps_0\n"
-         "    30\n"
-         "num_grps_1001\n"
-         "    250\n"
+         "num_reac\n"
+         "    7\n"
          "up_grps\n"
          "    3\n"
          "down_grps\n"
          "    2\n"
-         "num_reac\n"
-         "    7\n";
+         "num_sec_parts\n"
+         "    2\n"
+         "num_grps_0\n"
+         "    30\n"
+         "num_grps_1001\n"
+         "    250\n";
 }
 
 void verifyChunk( const Metadata& chunk ) {
 
-  CHECK( "92235.711nm" == chunk.zaid().value() );
-  CHECK( "mendf71x" == chunk.libraryName().value() );
-  CHECK( "12/22/2011" == chunk.sourceDate().value() );
-  CHECK( "08/07/2013" == chunk.processDate().value() );
+  CHECK( "92235.711nm" == chunk.zaid() );
+  CHECK( "mendf71x" == chunk.libraryName() );
+  CHECK( "12/22/2011" == chunk.sourceDate() );
+  CHECK( "08/07/2013" == chunk.processDate() );
   CHECK_THAT( 233.0248, WithinRel( chunk.atomicWeightRatio().value() ) );
   CHECK_THAT( 235.043937521619, WithinRel( chunk.atomicWeight().value() ) );
   CHECK_THAT( 2.53e-8, WithinRel( chunk.temperature().value() ) );
   CHECK_THAT( 1e+10, WithinRel( chunk.dilution().value() ) );
-  CHECK( 618 == chunk.numberGroups().value() );
-  CHECK(  30 == chunk.numberOutgoingGroups( 0 ).value() );
-  CHECK( 250 == chunk.numberOutgoingGroups( 1001 ).value() );
-  CHECK(   3 == chunk.numberUpscatterGroups().value() );
-  CHECK(   2 == chunk.numberDownscatterGroups().value() );
-  CHECK(   7 == chunk.numberReactions().value() );
+  CHECK( 618 == chunk.numberGroups() );
+  CHECK(  30 == chunk.numberOutgoingGroups( 0 ) );
+  CHECK( 250 == chunk.numberOutgoingGroups( 1001 ) );
+  CHECK(   2 == chunk.numberOutgoingParticles() );
+  CHECK(   3 == chunk.numberUpscatterGroups() );
+  CHECK(   2 == chunk.numberDownscatterGroups() );
+  CHECK(   7 == chunk.numberReactions() );
 
   CHECK_THROWS( chunk.numberOutgoingGroups( 1 ) );
 }

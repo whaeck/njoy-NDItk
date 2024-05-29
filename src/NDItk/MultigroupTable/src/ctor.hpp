@@ -23,12 +23,12 @@ MultigroupTable() :
  *  @param[in] outgoing          the outgoing particle group structures
  *  @param[in] velocities        the group velocities
  *  @param[in] weights           the flux weights
+ *  @param[in] total_xs          the total cross section
  *  @param[in] reaction_xs       the reaction cross section data
  *  @param[in] scattering        the scattering matrix
  *  @param[in] information       the table information line (optional)
  *  @param[in] source            the source date (optional)
  *  @param[in] weight            the atomic weight of the target (optional)
- *  @param[in] total_xs          the total cross section (optional)
  *  @param[in] fission_q         the average fission energy release data (optional)
  *  @param[in] types             the outgoing particle types (optional)
  *  @param[in] transport         the outgoing particle transport data (optional)

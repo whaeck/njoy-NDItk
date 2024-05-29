@@ -1,5 +1,5 @@
 /**
- *  @brief Verify the weights
+ *  @brief Verify the outgoing transport data
  *
  *  The following verification tests are performed:
  *    - there is at least one value

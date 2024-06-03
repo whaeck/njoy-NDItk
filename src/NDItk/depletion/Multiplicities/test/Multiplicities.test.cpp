@@ -125,6 +125,8 @@ void verifyChunk( const Multiplicities& chunk ) {
   CHECK( 6 == chunk.size() );
 
   CHECK( 2 == chunk.numberReactionProducts() );
+  CHECK( 2 == chunk.reactionProducts().size() );
+  CHECK( 2 == chunk.multiplicities().size() );
   CHECK( 16 == chunk.identifier() );
   CHECK( 1 == chunk.reactionProducts()[0] );
   CHECK( 92234 == chunk.reactionProducts()[1] );

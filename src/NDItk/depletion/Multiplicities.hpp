@@ -51,7 +51,7 @@ public:
   auto reactionProducts() const {
 
     using namespace njoy::tools;
-    return this->values( 2, this->numberReactionProducts() )
+    return this->values( 2, 2 * this->numberReactionProducts() )
                | std23::views::stride( 2 );
   }
 
@@ -61,7 +61,7 @@ public:
   auto multiplicities() const {
 
     using namespace njoy::tools;
-    return this->values( 3, this->numberReactionProducts() )
+    return this->values( 3, 2 * this->numberReactionProducts() )
                | std23::views::stride( 2 );
   }
 

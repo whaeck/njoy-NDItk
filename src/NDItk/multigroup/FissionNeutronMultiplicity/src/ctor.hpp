@@ -6,11 +6,11 @@ FissionNeutronMultiplicity( FissionType type ) : RealListRecord( base::Keyword( 
 /**
  *  @brief Constructor
  *
- *  @param[in] nubar    the fission neutron multiplicities
+ *  @param[in] values    the fission neutron multiplicity values
  */
 FissionNeutronMultiplicity( FissionType type,
-                            std::vector< double > nubar ) :
-    RealListRecord( base::Keyword( "nu", type ), std::move( nubar ) ) {
+                            std::vector< double > values ) :
+    RealListRecord( base::Keyword( "nu", type ), std::move( values ) ) {
 
   verify( this->values() );
 }

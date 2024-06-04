@@ -155,7 +155,7 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK( "this is some information for the table" == chunk.information() );
   CHECK( "mendf71x" == chunk.libraryName() );
   CHECK( "12/22/2011" == chunk.sourceDate() );
-  CHECK( "08/07/2013" == chunk.processDate() );
+  CHECK( "08/07/2013" == chunk.processingDate() );
   CHECK_THAT( 233.0248, WithinRel( chunk.atomicWeightRatio().value() ) );
   CHECK_THAT( 235.043937521619, WithinRel( chunk.atomicWeight().value() ) );
   CHECK_THAT( 2.53e-8, WithinRel( chunk.temperature().value() ) );

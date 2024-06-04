@@ -4,7 +4,7 @@
  *  The following verification tests are performed:
  *    - there is at least one value
  *
- *  @param[in] values    the haeting numbers to be verified
+ *  @param[in] values    the heating numbers to be verified
  */
 template < typename Range >
 static void verify( const Range& values ) {

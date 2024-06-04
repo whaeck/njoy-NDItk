@@ -36,7 +36,11 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
                      'num_grps_0\n'
                      '    30\n'
                      'num_grps_1001\n'
-                     '    250\n' )
+                     '    250\n'
+                     'pn_order_0\n'
+                     '    2\n'
+                     'pn_order_1001\n'
+                     '    2\n' )
 
     def test_component( self ) :
 
@@ -58,6 +62,8 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
             self.assertEqual(   5, chunk.number_legendre_moments )
             self.assertEqual( None, chunk.number_upscatter_groups )
             self.assertEqual( None, chunk.number_downscatter_groups )
+            self.assertEqual(   2, chunk.number_outgoing_legendre_moments( 0 ) )
+            self.assertEqual(   2, chunk.number_outgoing_legendre_moments( 1001 ) )
 
             self.assertEqual( self.chunk_string, chunk.to_string() )
 
@@ -65,7 +71,8 @@ class Test_NDItk_multigroup_Metadata( unittest.TestCase ) :
         chunk = Metadata( zaid = '92235.711nm', libname = 'mendf71x', source = '12/22/2011',
                           process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
                           temperature = 2.53e-8, dilution = 1e+10, groups = 618,
-                          outgoing = { 0 : 30, 1001 : 250 }, reactions = 7, legendre = 5 )
+                          reactions = 7, legendre = 5, outgoing_groups = { 0 : 30, 1001 : 250 },
+                          outgoing_legendre = { 0 : 2, 1001 : 2 } )
 
         verify_chunk( self, chunk )
 

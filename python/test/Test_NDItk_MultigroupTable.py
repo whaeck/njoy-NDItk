@@ -42,6 +42,9 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertEqual( 3, metadata.number_outgoing_groups( 0 ) )
             self.assertEqual( 2, metadata.number_outgoing_groups( 1001 ) )
             self.assertEqual( 2, metadata.number_reactions )
+            self.assertEqual( 2, metadata.number_legendre_moments )
+            self.assertEqual( 2, metadata.number_outgoing_legendre_moments( 0 ) )
+            self.assertEqual( 2, metadata.number_outgoing_legendre_moments( 1001 ) )
 
             # verify content - primary energy boundaries
             structure = chunk.primary_group_boundaries
@@ -406,29 +409,47 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
 
             # verify content - outgoing heating numbers: 0
             heating = chunk.outgoing_heating_numbers( 0 )
-            self.assertEqual( 3, heating.number_groups )
+            self.assertEqual( 7, heating.number_groups )
             self.assertAlmostEqual( 21  , heating.values[0] )
             self.assertAlmostEqual( 11  , heating.values[1] )
             self.assertAlmostEqual(  5.1, heating.values[2] )
+            self.assertAlmostEqual(  3  , heating.values[3] )
+            self.assertAlmostEqual(  4  , heating.values[4] )
+            self.assertAlmostEqual(  6  , heating.values[5] )
+            self.assertAlmostEqual(  7  , heating.values[6] )
 
             # verify content - outgoing heating numbers: 1001
             heating = chunk.outgoing_heating_numbers( 1001 )
-            self.assertEqual( 2, heating.number_groups )
-            self.assertAlmostEqual( 25, heating.values[0] )
-            self.assertAlmostEqual( 15, heating.values[1] )
+            self.assertEqual( 7, heating.number_groups )
+            self.assertAlmostEqual( 25  , heating.values[0] )
+            self.assertAlmostEqual( 15  , heating.values[1] )
+            self.assertAlmostEqual(  9.1, heating.values[2] )
+            self.assertAlmostEqual(  7  , heating.values[3] )
+            self.assertAlmostEqual(  8  , heating.values[4] )
+            self.assertAlmostEqual( 10  , heating.values[5] )
+            self.assertAlmostEqual( 11  , heating.values[6] )
 
             # verify content - outgoing kerma: 0
             kerma = chunk.outgoing_kerma( 0 )
-            self.assertEqual( 3, kerma.number_groups )
+            self.assertEqual( 7, kerma.number_groups )
             self.assertAlmostEqual( 210, kerma.values[0] )
             self.assertAlmostEqual( 110, kerma.values[1] )
             self.assertAlmostEqual(  51, kerma.values[2] )
+            self.assertAlmostEqual(  30, kerma.values[3] )
+            self.assertAlmostEqual(  40, kerma.values[4] )
+            self.assertAlmostEqual(  60, kerma.values[5] )
+            self.assertAlmostEqual(  70, kerma.values[6] )
 
             # verify content - outgoing kerma: 1001
             kerma = chunk.outgoing_kerma( 1001 )
-            self.assertEqual( 2, kerma.number_groups )
+            self.assertEqual( 7, kerma.number_groups )
             self.assertAlmostEqual( 250, kerma.values[0] )
             self.assertAlmostEqual( 150, kerma.values[1] )
+            self.assertAlmostEqual(  91, kerma.values[2] )
+            self.assertAlmostEqual(  70, kerma.values[3] )
+            self.assertAlmostEqual(  80, kerma.values[4] )
+            self.assertAlmostEqual( 100, kerma.values[5] )
+            self.assertAlmostEqual( 110, kerma.values[6] )
 
         # the data is given explicitly
         chunk = MultigroupTable( zaid = '92235.711nm', libname = 'mendf71x',
@@ -497,10 +518,10 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                                                 0, 1 ], 7, 2 ) ] )                                 ],
                                  outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
                                               EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] ) ],
-                                 outgoing_heating = [ HeatingNumbers( 0, [ 21., 11., 5.1 ] ),
-                                                      HeatingNumbers( 1001, [ 25., 15. ] ) ],
-                                 outgoing_kerma = [ Kerma( 0, [ 210., 110., 51. ] ),
-                                                    Kerma( 1001, [ 250., 150. ] ) ] )
+                                 outgoing_heating = [ HeatingNumbers( 0, [ 21., 11., 5.1, 3., 4., 6., 7. ] ),
+                                                      HeatingNumbers( 1001, [ 25., 15., 9.1, 7., 8., 10., 11. ] ) ],
+                                 outgoing_kerma = [ Kerma( 0, [ 210., 110., 51., 30., 40., 60., 70. ] ),
+                                                    Kerma( 1001, [ 250., 150., 91., 70., 80., 100., 110. ] ) ] )
 
         verify_chunk( self, chunk )
 

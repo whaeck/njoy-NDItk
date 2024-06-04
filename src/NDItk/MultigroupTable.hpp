@@ -48,6 +48,7 @@ class MultigroupTable {
   /* auxiliary functions */
 
   #include "NDItk/MultigroupTable/src/generateOutgoingStructureMetadata.hpp"
+  #include "NDItk/MultigroupTable/src/generateOutgoingLegendreOrderMetadata.hpp"
   #include "NDItk/MultigroupTable/src/readRecord.hpp"
   #include "NDItk/MultigroupTable/src/readPrimaryStructure.hpp"
   #include "NDItk/MultigroupTable/src/readOutgoingStructure.hpp"

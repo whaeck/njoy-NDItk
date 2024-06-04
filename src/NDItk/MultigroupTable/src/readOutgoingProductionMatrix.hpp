@@ -5,7 +5,7 @@ void readOutgoingProductionMatrix( const std::string& key, Iterator& iter, const
   unsigned int particle = secondary.particle().value();
   if ( this->metadata_.numberGroups().has_value() &&
        this->metadata_.numberOutgoingGroups( particle ).has_value() &&
-       this->metadata_.numberLegendreMoments().has_value() ) {
+       this->metadata_.numberOutgoingLegendreMoments( particle ).has_value() ) {
 
     auto pos = std::lower_bound( this->outgoing_production_.begin(),
                                  this->outgoing_production_.end(),
@@ -26,7 +26,7 @@ void readOutgoingProductionMatrix( const std::string& key, Iterator& iter, const
     readRecord( *pos, iter, end,
                 this->metadata_.numberGroups().value(),
                 this->metadata_.numberOutgoingGroups( particle ).value(),
-                this->metadata_.numberLegendreMoments().value() );
+                this->metadata_.numberOutgoingLegendreMoments( particle ).value() );
   }
   else {
 
@@ -39,9 +39,9 @@ void readOutgoingProductionMatrix( const std::string& key, Iterator& iter, const
 
       Log::info( "Required metadata is missing: number of groups in the outgoing group structure" );
     }
-    if ( ! this->metadata_.numberLegendreMoments().has_value() ) {
+    if ( ! this->metadata_.numberOutgoingLegendreMoments( particle ).has_value() ) {
 
-      Log::info( "Required metadata is missing: number of Legendre moments" );
+      Log::info( "Required metadata is missing: number of Legendre moments for the outgoing particle" );
     }
     throw std::exception();
   }

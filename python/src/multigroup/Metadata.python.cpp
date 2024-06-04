@@ -34,8 +34,9 @@ void wrapMetadata( python::module& module, python::module& ) {
 
     python::init< std::string, std::string, std::string,
                   double, double, double,
-                  unsigned int, std::map< unsigned int, unsigned int >,
-                  unsigned int, unsigned int,
+                  unsigned int, unsigned int, unsigned int,
+                  std::map< unsigned int, unsigned int >,
+                  std::map< unsigned int, unsigned int >,
                   std::optional< std::string >,
                   std::optional< std::string >,
                   std::optional< double >,
@@ -43,8 +44,11 @@ void wrapMetadata( python::module& module, python::module& ) {
                   std::optional< int > >(),
     python::arg( "zaid" ), python::arg( "libname" ),
     python::arg( "process" ), python::arg( "awr" ),
-    python::arg( "temperature" ), python::arg( "dilution" ), python::arg( "groups" ),
-    python::arg( "outgoing" ), python::arg( "reactions" ), python::arg( "legendre" ),
+    python::arg( "temperature" ), python::arg( "dilution" ),
+    python::arg( "groups" ),
+    python::arg( "reactions" ), python::arg( "legendre" ),
+    python::arg( "outgoing_groups" ) = std::map< unsigned int, unsigned int >{},
+    python::arg( "outgoing_legendre" ) = std::map< unsigned int, unsigned int >{},
     python::arg( "information" ) = std::nullopt,
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
@@ -52,23 +56,24 @@ void wrapMetadata( python::module& module, python::module& ) {
     python::arg( "downscatter" ) = std::nullopt,
     "Initialise the record\n\n"
     "Arguments:\n"
-    "    self           the metadata\n"
-    "    zaid           the zaid of the table\n"
-    "    libname        the library name\n"
-    "    process        the processing date\n"
-    "    awr            the atomic weight ratio of the target (with respect\n"
-    "                   to the neutron mass)\n"
-    "    temperature    the temperature of the target\n"
-    "    dilution       the dilution (aka sigma0)\n"
-    "    groups         the number of groups in the primary group structure\n"
-    "    outgoing       the number of groups in the outgoing group structures\n"
-    "    reactions      the number of reactions defined in the table\n"
-    "    legendre       the number of Legendre moments in the table\n"
-    "    information    the table information line (optional)\n"
-    "    source         the source date (optional)\n"
-    "    weight         the atomic weight of the target (optional)\n"
-    "    upscatter      the number of upscatter groups (optional)\n"
-    "    downscatter    the number of downscatter groups (optional)"
+    "    self                the metadata\n"
+    "    zaid                the zaid of the table\n"
+    "    libname             the library name\n"
+    "    process             the processing date\n"
+    "    awr                 the atomic weight ratio of the target (with respect\n"
+    "                        to the neutron mass)\n"
+    "    temperature         the temperature of the target\n"
+    "    dilution            the dilution (aka sigma0)\n"
+    "    groups              the number of groups in the primary group structure\n"
+    "    reactions           the number of reactions defined in the table\n"
+    "    legendre            the number of Legendre moments in the table\n"
+    "    outgoing_group      the number of groups in the outgoing group structures (optional)\n"
+    "    outgoing_legendre   the number of groups in the outgoing group structures (optional)\n"
+    "    information         the table information line (optional)\n"
+    "    source              the source date (optional)\n"
+    "    weight              the atomic weight of the target (optional)\n"
+    "    upscatter           the number of upscatter groups (optional)\n"
+    "    downscatter         the number of downscatter groups (optional)"
   )
   .def_property_readonly(
 
@@ -160,6 +165,16 @@ void wrapMetadata( python::module& module, python::module& ) {
     &Record::numberOutgoingGroups,
     python::arg( "particle" ),
     "The number of outgoing groups defined by this record for the particle\n\n"
+    "Arguments:\n"
+    "    self       the metadata\n"
+    "    particle   the outgoing particle identifier"
+  )
+  .def(
+
+    "number_outgoing_legendre_moments",
+    &Record::numberOutgoingLegendreMoments,
+    python::arg( "particle" ),
+    "The number of outgoing Legendre moments defined by this record"
     "Arguments:\n"
     "    self       the metadata\n"
     "    particle   the outgoing particle identifier"

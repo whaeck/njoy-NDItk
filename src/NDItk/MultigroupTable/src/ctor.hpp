@@ -3,10 +3,11 @@
  */
 MultigroupTable() :
     metadata_(), primary_structure_(),
-    velocities_(), weights_(), total_(), xs_(), release_(),
-    outgoing_particles_(), outgoing_structure_(),
-    primary_heating_(), outgoing_heating_(),
-    primary_kerma_(), outgoing_kerma_() {}
+    velocities_(), weights_(), total_(), xs_(), scattering_(),
+    release_(), primary_heating_(), primary_kerma_(),
+    outgoing_particles_(), outgoing_zaids_(),
+    outgoing_structure_(), outgoing_production_(),
+    outgoing_heating_(), outgoing_kerma_() {}
 
 /**
  *  @brief Constructor
@@ -60,8 +61,9 @@ MultigroupTable( std::string zaid, std::string libname,
                  std::vector< multigroup::Kerma > outgoingKerma = {} ) :
     metadata_( std::move( zaid ), std::move( libname ),
                std::move( process ), awr, temperature, dilution,
-               structure.numberGroups(), generateOutgoingStructureMetadata( outgoing ),
-               reaction_xs.numberReactions(), scattering.numberLegendreMoments(),
+               structure.numberGroups(), reaction_xs.numberReactions(),
+               scattering.numberLegendreMoments(), generateOutgoingStructureMetadata( outgoing ),
+               generateOutgoingLegendreOrderMetadata( production ),
                std::move( information ), std::move( source ), std::move( weight ),
                std::nullopt, std::nullopt ),
     primary_structure_( std::move( structure ) ),

@@ -23,8 +23,8 @@ static void verify( const Range& reactions ) {
 
       Log::error( "Inconsistent number of groups detected for reaction "
                   "with identifier \'{}\'", reactions[i].identifier() );
-      Log::info( "Expected number of groups: ", groups );
-      Log::info( "Found number of groups: ", reactions[i].numberGroups() );
+      Log::info( "Expected number of groups: {}", groups );
+      Log::info( "Found number of groups: {}", reactions[i].numberGroups() );
       throw std::exception();
     }
   }

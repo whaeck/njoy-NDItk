@@ -73,9 +73,12 @@ void read( Iterator& iter, const Iterator& end ) {
     // reaction cross sections
     else if ( keyword == this->xs_.keyword() ) {
 
-      if ( this->metadata_.numberGroups().has_value() && this->metadata_.numberReactions().has_value() ) {
+      if ( this->metadata_.numberGroups().has_value() &&
+           this->metadata_.numberReactions().has_value() ) {
 
-        readRecord( this->xs_, iter, end, this->metadata_.numberReactions().value(), this->metadata_.numberGroups().value() );
+        readRecord( this->xs_, iter, end,
+                    this->metadata_.numberReactions().value(),
+                    this->metadata_.numberGroups().value() );
       }
       else {
 
@@ -87,6 +90,30 @@ void read( Iterator& iter, const Iterator& end ) {
         if ( ! this->metadata_.numberReactions().has_value() ) {
 
           Log::info( "Required metadata is missing: number of reactions" );
+        }
+        throw std::exception();
+      }
+    }
+    // scattering matrix
+    else if ( keyword == this->scattering_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() &&
+           this->metadata_.numberLegendreMoments().has_value() ) {
+
+        readRecord( this->scattering_, iter, end,
+                    this->metadata_.numberGroups().value(),
+                    this->metadata_.numberLegendreMoments().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        if ( ! this->metadata_.numberGroups().has_value() ) {
+
+          Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        }
+        if ( ! this->metadata_.numberLegendreMoments().has_value() ) {
+
+          Log::info( "Required metadata is missing: number of Legendre moments" );
         }
         throw std::exception();
       }
@@ -125,7 +152,8 @@ void read( Iterator& iter, const Iterator& end ) {
 
       if ( this->metadata_.numberOutgoingParticles().has_value() ) {
 
-        readRecord( this->outgoing_particles_, iter, end, this->metadata_.numberOutgoingParticles().value() );
+        readRecord( this->outgoing_particles_, iter, end,
+                    this->metadata_.numberOutgoingParticles().value() );
       }
       else {
 
@@ -139,7 +167,8 @@ void read( Iterator& iter, const Iterator& end ) {
 
       if ( this->metadata_.numberOutgoingParticles().has_value() ) {
 
-        readRecord( this->outgoing_zaids_, iter, end, this->metadata_.numberOutgoingParticles().value() );
+        readRecord( this->outgoing_zaids_, iter, end,
+                    this->metadata_.numberOutgoingParticles().value() );
       }
       else {
 
@@ -147,6 +176,11 @@ void read( Iterator& iter, const Iterator& end ) {
         Log::info( "Required metadata is missing: number of outgoing particle types" );
         throw std::exception();
       }
+    }
+    // outgoing production matrices
+    else if ( keyword.find( "pn_prod_full" ) == 0 ) {
+
+      readOutgoingProductionMatrix( keyword, iter, end );
     }
     // unknown or end keyword
     else {

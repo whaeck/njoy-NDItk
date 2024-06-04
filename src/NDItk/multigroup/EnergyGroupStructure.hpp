@@ -41,7 +41,7 @@ public:
   /**
    *  @brief Return the number of groups defined by this record
    */
-  std::size_t numberGroups() const {
+  unsigned int numberGroups() const {
 
     return this->empty() ? 0 : this->size() - 1;
   }

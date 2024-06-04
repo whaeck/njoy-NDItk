@@ -25,6 +25,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   using OutgoingParticleTransportData = njoy::NDItk::multigroup::OutgoingParticleTransportData;
   using HeatingNumbers = njoy::NDItk::multigroup::HeatingNumbers;
   using Kerma = njoy::NDItk::multigroup::Kerma;
+  using ScatteringMatrix = njoy::NDItk::multigroup::ScatteringMatrix;
 
   // wrap views created by this table
 
@@ -47,12 +48,14 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
                   Velocities,
                   FluxWeights,
                   ReactionCrossSections,
+                  ScatteringMatrix,
                   std::optional< std::string >,
                   std::optional< double >,
                   std::optional< TotalCrossSection >,
                   std::optional< AverageFissionEnergyRelease >,
                   std::optional< OutgoingParticleTypes >,
                   std::optional< OutgoingParticleTransportData >,
+                  std::vector< ScatteringMatrix >,
                   std::optional< HeatingNumbers >,
                   std::vector< HeatingNumbers >,
                   std::optional< Kerma >,
@@ -62,13 +65,14 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     python::arg( "temperature" ), python::arg( "dilution" ),
     python::arg( "structure" ), python::arg( "outgoing" ),
     python::arg( "velocities" ), python::arg( "flux" ),
-    python::arg( "xs" ),
+    python::arg( "xs" ), python::arg( "scattering" ),
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
     python::arg( "total" ) = std::nullopt,
     python::arg( "release" ) = std::nullopt,
     python::arg( "types" ) = std::nullopt,
     python::arg( "transport" ) = std::nullopt,
+    python::arg( "production" ) = std::vector< ScatteringMatrix >{},
     python::arg( "primary_heating" ) = std::nullopt,
     python::arg( "outgoing_heating" ) = std::vector< HeatingNumbers >{},
     python::arg( "primary_kerma" ) = std::nullopt,
@@ -88,6 +92,7 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "    velocities         the velocities\n"
     "    flux               the flux weights\n"
     "    xs                 the reaction cross section data\n"
+    "    scattering         the scattering matrix\n"
     "    source             the source date (optional)\n"
     "    weight             the atomic weight of the target (optional)\n"
     "    total              the total cross section (optional)\n"
@@ -125,15 +130,21 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "total_cross_section",
+    &Table::totalCrossSection,
+    "The total cross section record"
+  )
+  .def_property_readonly(
+
     "reaction_cross_sections",
     &Table::reactionCrossSections,
     "The reaction cross section record"
   )
   .def_property_readonly(
 
-    "total_cross_section",
-    &Table::totalCrossSection,
-    "The total cross section record"
+    "scattering_matrix",
+    &Table::scatteringMatrix,
+    "The scattering matrix record"
   )
   .def_property_readonly(
 
@@ -171,6 +182,16 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     &Table::outgoingGroupBoundaries,
     python::arg( "particle" ),
     "The group structure record for an outgoing particle\n\n"
+    "Arguments:\n"
+    "    self       the table\n"
+    "    particle   the outgoing particle identifier"
+  )
+  .def(
+
+    "outgoing_production_matrix",
+    &Table::outgoingProductionMatrix,
+    python::arg( "particle" ),
+    "The production record for an outgoing particle\n\n"
     "Arguments:\n"
     "    self       the table\n"
     "    particle   the outgoing particle identifier"

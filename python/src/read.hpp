@@ -56,12 +56,12 @@ Record readWithSubtype( const std::string& string, Arguments... arguments ) {
   auto end = string.end();
 
   base::Keyword key( disco::FreeFormatCharacter::read< std::string >( iter, end ) );
-  if ( key.keyword().find( record.keyword() ) == 0 ) {
+  if ( key.particle().has_value() ) {
 
-    if ( key.particle().has_value() ) {
+    record = Record( key.particle().value() );
+  }
+  if ( key.keyword() == record.keyword() ) {
 
-      record = Record( key.particle().value() );
-    }
     record.read( iter, end, arguments... );
 
     //! @todo verify the string is now empty

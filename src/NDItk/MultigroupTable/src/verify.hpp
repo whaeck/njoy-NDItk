@@ -10,7 +10,8 @@ void verify() {
   if ( this->primaryGroupBoundaries().empty() ||
        this->velocities().empty() ||
        this->fluxWeights().empty() ||
-       this->reactionCrossSections().empty() ) {
+       this->reactionCrossSections().empty() ||
+       this->scatteringMatrix().empty() ) {
 
     Log::error( "One or more required records are not found in the table" );
     Log::info( "Primary group structure record: {}",
@@ -21,18 +22,32 @@ void verify() {
                this->fluxWeights().empty() ? "absent" : "present" );
     Log::info( "Reaction cross sections record: {}",
                this->reactionCrossSections().empty() ? "absent" : "present" );
+    Log::info( "Scattering matrix record: {}",
+               this->reactionCrossSections().empty() ? "absent" : "present" );
     throw std::exception();
   }
 
   // consistent group structure: primary
   const auto groups = this->metadata().numberGroups().value();
+  bool bTestScatteringMatrix = false;
+  for ( auto&& moment : this->scatteringMatrix().moments() ) {
+
+    if ( moment.numberPrimaryGroups() != groups ) {
+
+      bTestScatteringMatrix = true;
+    }
+  }
   if ( ( this->primaryGroupBoundaries().numberGroups() != groups ) ||
        ( this->velocities().numberGroups() != groups ) ||
        ( this->fluxWeights().numberGroups() != groups ) ||
-       ( ( ! this->totalCrossSection().empty() ) && this->totalCrossSection().numberGroups() != groups ) ||
+       ( ( ! this->totalCrossSection().empty() )
+         && this->totalCrossSection().numberGroups() != groups ) ||
        ( this->reactionCrossSections().numberGroups() != groups ) ||
-       ( ( ! this->primaryHeatingNumbers().empty() ) && this->primaryHeatingNumbers().numberGroups() != groups ) ||
-       ( ( ! this->primaryKerma().empty() ) && this->primaryKerma().numberGroups() != groups ) ) {
+       ( bTestScatteringMatrix ) ||
+       ( ( ! this->primaryHeatingNumbers().empty() )
+         && this->primaryHeatingNumbers().numberGroups() != groups ) ||
+       ( ( ! this->primaryKerma().empty() )
+         && this->primaryKerma().numberGroups() != groups ) ) {
 
     Log::error( "Found inconsistent number of primary groups across the table" );
     Log::info( "Number of primary groups in the metadata: {}",
@@ -50,6 +65,11 @@ void verify() {
     }
     Log::info( "Number of primary groups in the reaction cross section data: {}",
                this->reactionCrossSections().numberGroups() );
+    for ( auto&& moment : this->scatteringMatrix().moments() ) {
+
+      Log::info( "Number of primary groups in moment {} of the scattering matrix: {}",
+                 moment.order(), moment.numberPrimaryGroups() );
+    }
     if ( ! this->primaryHeatingNumbers().empty() ) {
 
       Log::info( "Number of primary groups in the heating numbers: {}",

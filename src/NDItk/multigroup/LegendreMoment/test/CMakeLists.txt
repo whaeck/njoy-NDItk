@@ -1,0 +1,1 @@
+add_cpp_test( multigroup.LegendreMoment LegendreMoment.test.cpp )

@@ -35,7 +35,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     python::init< std::string, std::string, std::string,
                   double, double, double,
                   unsigned int, std::map< unsigned int, unsigned int >,
-                  unsigned int,
+                  unsigned int, unsigned int,
                   std::optional< std::string >,
                   std::optional< double >,
                   std::optional< int >,
@@ -43,7 +43,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     python::arg( "zaid" ), python::arg( "libname" ),
     python::arg( "process" ), python::arg( "awr" ),
     python::arg( "temperature" ), python::arg( "dilution" ), python::arg( "groups" ),
-    python::arg( "outgoing" ), python::arg( "reactions" ),
+    python::arg( "outgoing" ), python::arg( "reactions" ), python::arg( "legendre" ),
     python::arg( "source" ) = std::nullopt,
     python::arg( "weight" ) = std::nullopt,
     python::arg( "upscatter" ) = std::nullopt,
@@ -61,6 +61,7 @@ void wrapMetadata( python::module& module, python::module& ) {
     "    groups         the number of groups in the primary group structure\n"
     "    outgoing       the number of groups in the outgoing group structures\n"
     "    reactions      the number of reactions defined in the table\n"
+    "    legendre       the number of Legendre moments in the table\n"
     "    source         the source date (optional)\n"
     "    weight         the atomic weight of the target (optional)\n"
     "    upscatter      the number of upscatter groups (optional)\n"
@@ -122,21 +123,27 @@ void wrapMetadata( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "number_legendre_moments",
+    &Record::numberLegendreMoments,
+    "The number of Legendre moments defined by this record"
+  )
+  .def_property_readonly(
+
     "number_upscatter_groups",
     &Record::numberUpscatterGroups,
     "The number of upscatter groups defined by this record"
   )
   .def_property_readonly(
 
-    "number_outgoing_particles",
-    &Record::numberOutgoingParticles,
-    "The number of outgoing particles by this record"
-  )
-  .def_property_readonly(
-
     "number_downscatter_groups",
     &Record::numberDownscatterGroups,
     "The number of downscatter groups defined by this record"
+  )
+  .def_property_readonly(
+
+    "number_outgoing_particles",
+    &Record::numberOutgoingParticles,
+    "The number of outgoing particles by this record"
   )
   .def(
 

@@ -52,7 +52,7 @@ public:
   /**
    *  @brief Return the number of groups defined by this record
    */
-  std::size_t numberGroups() const { return this->size() - 2; }
+  unsigned int numberGroups() const { return this->size() - 2; }
 
   using Parent::values;
   using Parent::size;

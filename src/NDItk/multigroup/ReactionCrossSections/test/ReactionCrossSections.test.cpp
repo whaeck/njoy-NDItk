@@ -128,7 +128,7 @@ SCENARIO( "ReactionCrossSections" ) {
         CHECK_THROWS( chunk.read( iter, end, 2, 0 ) );
       } // THEN
     } // WHEN
-  }
+  } // GIVEN
 } // SCENARIO
 
 std::string chunk() {

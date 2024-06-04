@@ -16,6 +16,8 @@ from NDItk.multigroup import HeatingNumbers
 from NDItk.multigroup import Kerma
 from NDItk.multigroup import OutgoingParticleTypes
 from NDItk.multigroup import OutgoingParticleTransportData
+from NDItk.multigroup import LegendreMoment
+from NDItk.multigroup import ScatteringMatrix
 
 class Test_NDItk_MultigroupTable( unittest.TestCase ) :
     """Unit test for the MultigroupTable class."""
@@ -133,6 +135,117 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual( 6.0, xs.cross_sections[5] )
             self.assertAlmostEqual( 7.0, xs.cross_sections[6] )
 
+            # verify content - scattering matrix
+            matrix = chunk.scattering_matrix
+            self.assertEqual( "pn_full", matrix.keyword )
+            self.assertEqual( False, matrix.empty )
+            self.assertEqual( 100, matrix.size )
+            self.assertEqual( 7, matrix.number_primary_groups )
+            self.assertEqual( 7, matrix.number_outgoing_groups )
+            self.assertEqual( 2, matrix.number_legendre_moments )
+            moment = matrix.moment( 0 )
+            self.assertEqual( 0, moment.order )
+            self.assertAlmostEqual( 1, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 0, moment.matrix[0][2] )
+            self.assertAlmostEqual( 0, moment.matrix[0][3] )
+            self.assertAlmostEqual( 0, moment.matrix[0][4] )
+            self.assertAlmostEqual( 0, moment.matrix[0][5] )
+            self.assertAlmostEqual( 0, moment.matrix[0][6] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 1, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][2] )
+            self.assertAlmostEqual( 0, moment.matrix[1][3] )
+            self.assertAlmostEqual( 0, moment.matrix[1][4] )
+            self.assertAlmostEqual( 0, moment.matrix[1][5] )
+            self.assertAlmostEqual( 0, moment.matrix[1][6] )
+            self.assertAlmostEqual( 0, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 1, moment.matrix[2][2] )
+            self.assertAlmostEqual( 0, moment.matrix[2][3] )
+            self.assertAlmostEqual( 0, moment.matrix[2][4] )
+            self.assertAlmostEqual( 0, moment.matrix[2][5] )
+            self.assertAlmostEqual( 0, moment.matrix[2][6] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 0, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][2] )
+            self.assertAlmostEqual( 1, moment.matrix[3][3] )
+            self.assertAlmostEqual( 0, moment.matrix[3][4] )
+            self.assertAlmostEqual( 0, moment.matrix[3][5] )
+            self.assertAlmostEqual( 0, moment.matrix[3][6] )
+            self.assertAlmostEqual( 0, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 0, moment.matrix[4][2] )
+            self.assertAlmostEqual( 0, moment.matrix[4][3] )
+            self.assertAlmostEqual( 1, moment.matrix[4][4] )
+            self.assertAlmostEqual( 0, moment.matrix[4][5] )
+            self.assertAlmostEqual( 0, moment.matrix[4][6] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 0, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][2] )
+            self.assertAlmostEqual( 0, moment.matrix[5][3] )
+            self.assertAlmostEqual( 0, moment.matrix[5][4] )
+            self.assertAlmostEqual( 1, moment.matrix[5][5] )
+            self.assertAlmostEqual( 0, moment.matrix[5][6] )
+            self.assertAlmostEqual( 0, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            self.assertAlmostEqual( 0, moment.matrix[6][2] )
+            self.assertAlmostEqual( 0, moment.matrix[6][3] )
+            self.assertAlmostEqual( 0, moment.matrix[6][4] )
+            self.assertAlmostEqual( 0, moment.matrix[6][5] )
+            self.assertAlmostEqual( 1, moment.matrix[6][6] )
+            moment = matrix.moment( 1 )
+            self.assertEqual( 1, moment.order )
+            self.assertAlmostEqual( 0, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 0, moment.matrix[0][2] )
+            self.assertAlmostEqual( 0, moment.matrix[0][3] )
+            self.assertAlmostEqual( 0, moment.matrix[0][4] )
+            self.assertAlmostEqual( 0, moment.matrix[0][5] )
+            self.assertAlmostEqual( 1, moment.matrix[0][6] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 0, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][2] )
+            self.assertAlmostEqual( 0, moment.matrix[1][3] )
+            self.assertAlmostEqual( 0, moment.matrix[1][4] )
+            self.assertAlmostEqual( 1, moment.matrix[1][5] )
+            self.assertAlmostEqual( 0, moment.matrix[1][6] )
+            self.assertAlmostEqual( 0, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 0, moment.matrix[2][2] )
+            self.assertAlmostEqual( 0, moment.matrix[2][3] )
+            self.assertAlmostEqual( 1, moment.matrix[2][4] )
+            self.assertAlmostEqual( 0, moment.matrix[2][5] )
+            self.assertAlmostEqual( 0, moment.matrix[2][6] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 0, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][2] )
+            self.assertAlmostEqual( 1, moment.matrix[3][3] )
+            self.assertAlmostEqual( 0, moment.matrix[3][4] )
+            self.assertAlmostEqual( 0, moment.matrix[3][5] )
+            self.assertAlmostEqual( 0, moment.matrix[3][6] )
+            self.assertAlmostEqual( 0, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 1, moment.matrix[4][2] )
+            self.assertAlmostEqual( 0, moment.matrix[4][3] )
+            self.assertAlmostEqual( 0, moment.matrix[4][4] )
+            self.assertAlmostEqual( 0, moment.matrix[4][5] )
+            self.assertAlmostEqual( 0, moment.matrix[4][6] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 1, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][2] )
+            self.assertAlmostEqual( 0, moment.matrix[5][3] )
+            self.assertAlmostEqual( 0, moment.matrix[5][4] )
+            self.assertAlmostEqual( 0, moment.matrix[5][5] )
+            self.assertAlmostEqual( 0, moment.matrix[5][6] )
+            self.assertAlmostEqual( 1, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            self.assertAlmostEqual( 0, moment.matrix[6][2] )
+            self.assertAlmostEqual( 0, moment.matrix[6][3] )
+            self.assertAlmostEqual( 0, moment.matrix[6][4] )
+            self.assertAlmostEqual( 0, moment.matrix[6][5] )
+            self.assertAlmostEqual( 0, moment.matrix[6][6] )
+
             # verify content - average fission energy release
             release = chunk.average_fission_energy_release
             self.assertAlmostEqual( 181.238898, release.prompt_energy_release )
@@ -164,6 +277,104 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertEqual( 2, transport.number_outgoing_particles )
             self.assertEqual( '92000', transport.values[0] )
             self.assertEqual( '92235.proton', transport.values[1] )
+
+            # verify content - production matrix: 0
+            matrix = chunk.outgoing_production_matrix( 0 )
+            self.assertEqual( "pn_prod_full_0", matrix.keyword )
+            self.assertEqual( 0, matrix.particle )
+            self.assertEqual( False, matrix.empty )
+            self.assertEqual( 44, matrix.size )
+            self.assertEqual( 7, matrix.number_primary_groups )
+            self.assertEqual( 3, matrix.number_outgoing_groups )
+            self.assertEqual( 2, matrix.number_legendre_moments )
+            moment = matrix.moment( 0 )
+            self.assertEqual( 0, moment.order )
+            self.assertAlmostEqual( 1, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 0, moment.matrix[0][2] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 1, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][2] )
+            self.assertAlmostEqual( 0, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 1, moment.matrix[2][2] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 1, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][2] )
+            self.assertAlmostEqual( 1, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 0, moment.matrix[4][2] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 1, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][2] )
+            self.assertAlmostEqual( 0, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            self.assertAlmostEqual( 1, moment.matrix[6][2] )
+            moment = matrix.moment( 1 )
+            self.assertEqual( 1, moment.order )
+            self.assertAlmostEqual( 0, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 1, moment.matrix[0][2] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 1, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][2] )
+            self.assertAlmostEqual( 1, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 0, moment.matrix[2][2] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 1, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][2] )
+            self.assertAlmostEqual( 0, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 1, moment.matrix[4][2] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 1, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][2] )
+            self.assertAlmostEqual( 1, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            self.assertAlmostEqual( 0, moment.matrix[6][2] )
+
+            # verify content - production matrix: 1001
+            matrix = chunk.outgoing_production_matrix( 1001 )
+            self.assertEqual( "pn_prod_full_1001", matrix.keyword )
+            self.assertEqual( 1001, matrix.particle )
+            self.assertEqual( False, matrix.empty )
+            self.assertEqual( 30, matrix.size )
+            self.assertEqual( 7, matrix.number_primary_groups )
+            self.assertEqual( 2, matrix.number_outgoing_groups )
+            self.assertEqual( 2, matrix.number_legendre_moments )
+            moment = matrix.moment( 0 )
+            self.assertEqual( 0, moment.order )
+            self.assertAlmostEqual( 1, moment.matrix[0][0] )
+            self.assertAlmostEqual( 0, moment.matrix[0][1] )
+            self.assertAlmostEqual( 0, moment.matrix[1][0] )
+            self.assertAlmostEqual( 1, moment.matrix[1][1] )
+            self.assertAlmostEqual( 1, moment.matrix[2][0] )
+            self.assertAlmostEqual( 0, moment.matrix[2][1] )
+            self.assertAlmostEqual( 0, moment.matrix[3][0] )
+            self.assertAlmostEqual( 1, moment.matrix[3][1] )
+            self.assertAlmostEqual( 1, moment.matrix[4][0] )
+            self.assertAlmostEqual( 0, moment.matrix[4][1] )
+            self.assertAlmostEqual( 0, moment.matrix[5][0] )
+            self.assertAlmostEqual( 1, moment.matrix[5][1] )
+            self.assertAlmostEqual( 1, moment.matrix[6][0] )
+            self.assertAlmostEqual( 0, moment.matrix[6][1] )
+            moment = matrix.moment( 1 )
+            self.assertEqual( 1, moment.order )
+            self.assertAlmostEqual( 0, moment.matrix[0][0] )
+            self.assertAlmostEqual( 1, moment.matrix[0][1] )
+            self.assertAlmostEqual( 1, moment.matrix[1][0] )
+            self.assertAlmostEqual( 0, moment.matrix[1][1] )
+            self.assertAlmostEqual( 0, moment.matrix[2][0] )
+            self.assertAlmostEqual( 1, moment.matrix[2][1] )
+            self.assertAlmostEqual( 1, moment.matrix[3][0] )
+            self.assertAlmostEqual( 0, moment.matrix[3][1] )
+            self.assertAlmostEqual( 0, moment.matrix[4][0] )
+            self.assertAlmostEqual( 1, moment.matrix[4][1] )
+            self.assertAlmostEqual( 1, moment.matrix[5][0] )
+            self.assertAlmostEqual( 0, moment.matrix[5][1] )
+            self.assertAlmostEqual( 0, moment.matrix[6][0] )
+            self.assertAlmostEqual( 1, moment.matrix[6][1] )
 
             # verify content - primary kerma
             kerma = chunk.primary_kerma
@@ -228,12 +439,59 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
                                  xs = ReactionCrossSections(
                                           xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
                                                  CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ),
+                                 scattering = ScatteringMatrix(
+                                     [ LegendreMoment( 0, [ 1, 0, 0, 0, 0, 0, 0,
+                                                            0, 1, 0, 0, 0, 0, 0,
+                                                            0, 0, 1, 0, 0, 0, 0,
+                                                            0, 0, 0, 1, 0, 0, 0,
+                                                            0, 0, 0, 0, 1, 0, 0,
+                                                            0, 0, 0, 0, 0, 1, 0,
+                                                            0, 0, 0, 0, 0, 0, 1 ], 7 ),
+                                       LegendreMoment( 1, [ 0, 0, 0, 0, 0, 0, 1,
+                                                             0, 0, 0, 0, 0, 1, 0,
+                                                             0, 0, 0, 0, 1, 0, 0,
+                                                             0, 0, 0, 1, 0, 0, 0,
+                                                             0, 0, 1, 0, 0, 0, 0,
+                                                             0, 1, 0, 0, 0, 0, 0,
+                                                             1, 0, 0, 0, 0, 0, 0 ], 7 ) ] ),
                                  release = AverageFissionEnergyRelease( 202.827, 181.238898, 4.827645,
                                                                         7.281253, 6.5, 169.13 ),
                                  primary_heating = HeatingNumbers( [ 11., 22., 33., 44., 55., 66., 77. ] ),
                                  primary_kerma = Kerma( [ 110., 220., 330., 440., 550., 660., 770. ] ),
                                  types = OutgoingParticleTypes( [ 0, 1001 ] ),
                                  transport = OutgoingParticleTransportData( [ "92000", "92235.proton" ] ),
+                                 production = [
+
+                                     ScatteringMatrix( 0,
+                                         [ LegendreMoment( 0, [ 1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1 ], 7, 3 ),
+                                           LegendreMoment( 1, [ 0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0 ], 7, 3 ) ] ),
+                                     ScatteringMatrix( 1001,
+                                         [ LegendreMoment( 0, [ 1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0 ], 7, 2 ),
+                                           LegendreMoment( 1, [ 0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1 ], 7, 2 ) ] )                                 ],
                                  outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
                                               EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] ) ],
                                  outgoing_heating = [ HeatingNumbers( 0, [ 21., 11., 5.1 ] ),

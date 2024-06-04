@@ -42,11 +42,56 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 } );
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70. } },
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7. } } } );
+      multigroup::ScatteringMatrix scattering( { { 0, { 1, 0, 0, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 0, 0, 1 }, 7 },
+                                                 { 1, { 0, 0, 0, 0, 0, 0, 1,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        1, 0, 0, 0, 0, 0, 0 }, 7 } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
       multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
+      std::vector< multigroup::ScatteringMatrix > production = {
+
+        multigroup::ScatteringMatrix( 0, { { 0, { 1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1, }, 7, 3 },
+                                           { 1, { 0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0 }, 7, 3 } } ),
+        multigroup::ScatteringMatrix( 1001, { { 0, { 1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0, }, 7, 2 },
+                                              { 1, { 0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1 }, 7, 2 } } )
+      };
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
           { 1001, { 25., 15. } }
@@ -61,9 +106,11 @@ SCENARIO( "MultigroupTable" ) {
                              std::move( process ), awr, temperature, dilution,
                              std::move( structure ), std::move( outgoing ),
                              std::move( velocities ), std::move( weights ),
-                             std::move( xs ), std::move( source ), weight,
+                             std::move( xs ), std::move( scattering ),
+                             std::move( source ), weight,
                              std::move( total ), std::move( release ),
                              std::move( types ), std::move( transport ),
+                             std::move( production ),
                              std::move( primaryHeating ), std::move( outgoingHeating ),
                              std::move( primaryKerma ), std::move( outgoingKerma ) );
 
@@ -140,10 +187,55 @@ SCENARIO( "MultigroupTable" ) {
       multigroup::TotalCrossSection total( { 1.1, 1.2, 1.25, 1.05, 1.15, 1.04 } );                       // <-- 5 groups
       multigroup::ReactionCrossSections xs( { { 2, 0.0, { 10., 20., 30., 40., 50., 60., 70., 80. } },    // <-- 8 groups
                                               { 16, 1.1234567, { 1., 2., 3., 4., 5., 6., 7., 8. } } } );
+      multigroup::ScatteringMatrix scattering( { { 0, { 1, 0, 0, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 0, 0, 1 }, 7 },
+                                                 { 1, { 0, 0, 0, 0, 0, 0, 1,
+                                                        0, 0, 0, 0, 0, 1, 0,
+                                                        0, 0, 0, 0, 1, 0, 0,
+                                                        0, 0, 0, 1, 0, 0, 0,
+                                                        0, 0, 1, 0, 0, 0, 0,
+                                                        0, 1, 0, 0, 0, 0, 0,
+                                                        1, 0, 0, 0, 0, 0, 0 }, 7 } } );
       multigroup::AverageFissionEnergyRelease release( 202.827, 181.238898, 4.827645,
                                                        7.281253, 6.5, 169.13 );
       multigroup::OutgoingParticleTypes types( { 0, 1001 } );
       multigroup::OutgoingParticleTransportData transport( { "92000", "92235.proton" } );
+      std::vector< multigroup::ScatteringMatrix > production = {
+
+        multigroup::ScatteringMatrix( 0, { { 0, { 1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1, }, 7, 3 },
+                                           { 1, { 0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0,
+                                                  0, 1, 0,
+                                                  0, 0, 1,
+                                                  0, 1, 0,
+                                                  1, 0, 0 }, 7, 3 } } ),
+        multigroup::ScatteringMatrix( 1001, { { 0, { 1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0, }, 7, 2 },
+                                              { 1, { 0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1,
+                                                     1, 0,
+                                                     0, 1 }, 7, 2 } } )
+      };
       multigroup::HeatingNumbers primaryHeating( { 11., 22., 33., 44., 55., 66., 77. } );
       std::vector< multigroup::HeatingNumbers > outgoingHeating =   {
           { 0, { 21., 11., 5.1 } },
@@ -161,9 +253,11 @@ SCENARIO( "MultigroupTable" ) {
                                        std::move( process ), awr, temperature, dilution,
                                        std::move( structure ), {}, std::move( velocities ),
                                        std::move( weights ), std::move( xs ),
+                                       std::move( scattering ),
                                        std::move( source ), weight,
                                        std::move( total ), std::move( release ),
                                        std::move( types ), std::move( transport ),
+                                       std::move( production ),
                                        std::move( primaryHeating ), std::move( outgoingHeating ),
                                        std::move( primaryKerma ), std::move( outgoingKerma ) ) );
       } // THEN
@@ -193,6 +287,8 @@ std::string chunk() {
          "    7\n"
          "num_reac\n"
          "    2\n"
+         "pn_order\n"
+         "    2\n"
          "num_sec_parts\n"
          "    2\n"
          "num_grps_0\n"
@@ -218,6 +314,29 @@ std::string chunk() {
          "    16 1.1234567\n"
          "    1 2 3 4 5\n"
          "    6 7\n"
+         "pn_full\n"
+         "    0\n"
+         "    1 0 0 0 0\n"
+         "    0 0 0 1 0\n"
+         "    0 0 0 0 0\n"
+         "    0 1 0 0 0\n"
+         "    0 0 0 0 1\n"
+         "    0 0 0 0 0\n"
+         "    0 0 1 0 0\n"
+         "    0 0 0 0 0\n"
+         "    1 0 0 0 0\n"
+         "    0 0 0 1\n"
+         "    1\n"
+         "    0 0 0 0 0\n"
+         "    0 1 0 0 0\n"
+         "    0 0 1 0 0\n"
+         "    0 0 0 1 0\n"
+         "    0 0 0 0 1\n"
+         "    0 0 0 0 0\n"
+         "    1 0 0 0 0\n"
+         "    0 1 0 0 0\n"
+         "    0 0 1 0 0\n"
+         "    0 0 0 0\n"
          "fiss_q\n"
          "    181.238898 202.827 6.5 7.281253 169.13\n"
          "    4.827645\n"
@@ -235,6 +354,28 @@ std::string chunk() {
          "    20 10 5 1e-11\n"
          "e_bounds_1001\n"
          "    20 10 1e-11\n"
+         "pn_prod_full_0\n"
+         "    0\n"
+         "    1 0 0 0 1\n"
+         "    0 0 0 1 0\n"
+         "    1 0 1 0 0\n"
+         "    0 1 0 0 0\n"
+         "    1\n"
+         "    1\n"
+         "    0 0 1 0 1\n"
+         "    0 1 0 0 0\n"
+         "    1 0 0 0 1\n"
+         "    0 1 0 1 0\n"
+         "    0\n"
+         "pn_prod_full_1001\n"
+         "    0\n"
+         "    1 0 0 1 1\n"
+         "    0 0 1 1 0\n"
+         "    0 1 1 0\n"
+         "    1\n"
+         "    0 1 1 0 0\n"
+         "    1 1 0 0 1\n"
+         "    1 0 0 1\n"
          "heating_0\n"
          "    21 11 5.1\n"
          "heating_1001\n"
@@ -381,6 +522,116 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 6.0, WithinRel( xs.crossSections()[5] ) );
   CHECK_THAT( 7.0, WithinRel( xs.crossSections()[6] ) );
 
+  // the scattering matrix
+  CHECK( "pn_full" == chunk.scatteringMatrix().keyword() );
+  CHECK( false == chunk.scatteringMatrix().empty() );
+  CHECK( 100 == chunk.scatteringMatrix().size() );
+  CHECK( 7 == chunk.scatteringMatrix().numberPrimaryGroups() );
+  CHECK( 7 == chunk.scatteringMatrix().numberOutgoingGroups() );
+  CHECK( 2 == chunk.scatteringMatrix().numberLegendreMoments() );
+  auto moment = chunk.scatteringMatrix().moment( 0 );
+  CHECK( 0 == moment.order() );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[0][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[1][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[2][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][2] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[3][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][3] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[4][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][4] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[5][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][5] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[6][6] ) );
+  moment = chunk.scatteringMatrix().moment( 1 );
+  CHECK( 1 == moment.order() );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][5] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[0][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][4] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[1][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][3] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[2][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][2] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[3][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[4][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][6] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[5][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][6] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[6][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][3] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][4] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][5] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][6] ) );
+
   // average fission energy release
   CHECK( "fiss_q" == chunk.averageFissionEnergyRelease().keyword() );
   CHECK( false == chunk.averageFissionEnergyRelease().empty() );
@@ -468,6 +719,104 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT(    20, WithinRel( structure.values()[0] ) );
   CHECK_THAT(    10, WithinRel( structure.values()[1] ) );
   CHECK_THAT( 1e-11, WithinRel( structure.values()[2] ) );
+
+  // the outgoing production matrix: 0
+  auto production = chunk.outgoingProductionMatrix( 0 );
+  CHECK( "pn_prod_full_0" == production.keyword() );
+  CHECK( 0 == production.particle() );
+  CHECK( false == production.empty() );
+  CHECK( 44 == production.size() );
+  CHECK( 7 == production.numberPrimaryGroups() );
+  CHECK( 3 == production.numberOutgoingGroups() );
+  CHECK( 2 == production.numberLegendreMoments() );
+  moment = production.moment( 0 );
+  CHECK( 0 == moment.order() );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[0][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[1][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[2][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[3][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][2] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[4][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[5][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[6][2] ) );
+  moment = production.moment( 1 );
+  CHECK( 1 == moment.order() );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[0][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[1][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][2] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[2][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[3][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[4][2] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[5][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][2] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[6][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][2] ) );
+
+  // the outgoing production matrix: 1001
+  production = chunk.outgoingProductionMatrix( 1001 );
+  CHECK( "pn_prod_full_1001" == production.keyword() );
+  CHECK( 1001 == production.particle() );
+  CHECK( false == production.empty() );
+  CHECK( 30 == production.size() );
+  CHECK( 7 == production.numberPrimaryGroups() );
+  CHECK( 2 == production.numberOutgoingGroups() );
+  CHECK( 2 == production.numberLegendreMoments() );
+  moment = production.moment( 0 );
+  CHECK( 0 == moment.order() );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[0][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[1][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[2][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[3][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[4][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[5][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[6][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][1] ) );
+  moment = production.moment( 1 );
+  CHECK( 1 == moment.order() );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[0][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[0][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[1][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[1][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[2][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[2][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[3][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[3][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[4][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[4][1] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[5][0] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[5][1] ) );
+  CHECK_THAT( 0, WithinRel( moment.matrix()[6][0] ) );
+  CHECK_THAT( 1, WithinRel( moment.matrix()[6][1] ) );
 
   // outgoing heating numbers: 0
   heating = chunk.outgoingHeatingNumbers( 0 );

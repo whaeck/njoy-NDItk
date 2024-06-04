@@ -32,6 +32,7 @@ class Metadata {
   base::SingleIntegerRecord primary_groups_;
   base::SingleIntegerRecord outgoing_particles_;
   std::vector< base::SingleIntegerRecord > outgoing_groups_;
+  base::SingleIntegerRecord legendre_order_;
   base::SingleIntegerRecord upscatter_groups_;
   base::SingleIntegerRecord downscatter_groups_;
   base::SingleIntegerRecord reactions_;
@@ -65,6 +66,7 @@ public:
            ( keyword == this->reactions_.keyword() ) ||
            ( keyword.find( this->primary_groups_.keyword() ) == 0 ) ||
            ( keyword == this->outgoing_particles_.keyword() ) ||
+           ( keyword == this->legendre_order_.keyword() ) ||
            ( keyword == this->upscatter_groups_.keyword() ) ||
            ( keyword == this->downscatter_groups_.keyword() );
   }
@@ -152,6 +154,14 @@ public:
   decltype(auto) numberReactions() const { return this->reactions_.data(); }
 
   /**
+   *  @brief Return the number of Legendre moments defined in the table
+   */
+  decltype(auto) numberLegendreMoments() const {
+
+    return this->legendre_order_.data();
+  }
+
+  /**
    *  @brief Return the number of upscatter groups defined in the table
    */
   decltype(auto) numberUpscatterGroups() const {
@@ -184,6 +194,7 @@ public:
     else if ( keyword == this->temperature_.keyword() )        { readRecord( this->temperature_, iter, end ); }
     else if ( keyword == this->dilution_.keyword() )           { readRecord( this->dilution_, iter, end ); }
     else if ( keyword == this->reactions_.keyword() )          { readRecord( this->reactions_, iter, end ); }
+    else if ( keyword == this->legendre_order_.keyword() )     { readRecord( this->legendre_order_, iter, end ); }
     else if ( keyword == this->upscatter_groups_.keyword() )   { readRecord( this->upscatter_groups_, iter, end ); }
     else if ( keyword == this->downscatter_groups_.keyword() ) { readRecord( this->downscatter_groups_, iter, end ); }
     else if ( keyword == this->outgoing_particles_.keyword() ) { readRecord( this->outgoing_particles_, iter, end ); }
@@ -241,6 +252,7 @@ public:
     this->dilution_.print( iter );
     this->primary_groups_.print( iter );
     this->reactions_.print( iter );
+    this->legendre_order_.print( iter );
     this->upscatter_groups_.print( iter );
     this->downscatter_groups_.print( iter );
     this->outgoing_particles_.print( iter );

@@ -79,8 +79,8 @@ void wrapReactionCrossSections( python::module& module, python::module& ) {
   .def_static(
 
     "from_string",
-    [] ( const std::string& string, std::size_t reactions, 
-         std::size_t groups ) -> Record
+    [] ( const std::string& string, unsigned int reactions,
+         unsigned int groups ) -> Record
        { return read< Record >( string, reactions, groups ); },
     python::arg( "string" ), python::arg( "reactions" ),
     python::arg( "groups" ),

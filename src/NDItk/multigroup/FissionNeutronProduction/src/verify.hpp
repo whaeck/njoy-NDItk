@@ -11,7 +11,7 @@ static void verify( const Range& values ) {
 
   if ( values.size() < 1 ) {
 
-    Log::error( "Expected at least one production value, found {}",
+    Log::error( "Expected at least one fission neutron production value, found {}",
                 values.size() );
     throw std::exception();
   }

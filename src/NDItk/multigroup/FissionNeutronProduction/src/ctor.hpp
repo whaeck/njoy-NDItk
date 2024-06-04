@@ -6,11 +6,11 @@ FissionNeutronProduction( FissionType type ) : RealListRecord( base::Keyword( "n
 /**
  *  @brief Constructor
  *
- *  @param[in] weights    the flux weights
+ *  @param[in] production    the fission neutron production values
  */
 FissionNeutronProduction( FissionType type,
-                          std::vector< double > values ) :
-    RealListRecord( base::Keyword( "nu_sig_f", type ), std::move( values ) ) {
+                          std::vector< double > production ) :
+    RealListRecord( base::Keyword( "nu_sig_f", type ), std::move( production ) ) {
 
   verify( this->values() );
 }

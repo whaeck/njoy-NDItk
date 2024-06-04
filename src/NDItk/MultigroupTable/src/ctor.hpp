@@ -69,7 +69,6 @@ MultigroupTable( std::string zaid, std::string libname,
     weights_( std::move( weigths ) ),
     xs_( std::move( xs ) ),
     scattering_( std::move( scattering ) ),
-    release_( std::move( release.value() ) ),
     outgoing_structure_( std::move( outgoing ) ),
     outgoing_production_( std::move( production ) ),
     outgoing_heating_( std::move( outgoingHeating ) ),
@@ -78,6 +77,10 @@ MultigroupTable( std::string zaid, std::string libname,
   if ( total.has_value() ) {
 
     this->total_ = std::move( total.value() );
+  }
+  if ( release.has_value() ) {
+
+    this->release_ = std::move( release.value() );
   }
   if ( primaryHeating.has_value() ) {
 

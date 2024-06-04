@@ -81,10 +81,6 @@ MultigroupTable( std::string zaid, std::string libname,
 
     this->release_ = std::move( fission_q.value() );
   }
-  if ( release.has_value() ) {
-
-    this->release_ = std::move( release.value() );
-  }
   if ( primaryHeating.has_value() ) {
 
     this->primary_heating_ = std::move( primaryHeating.value() );

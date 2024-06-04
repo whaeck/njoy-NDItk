@@ -40,7 +40,7 @@ ReactionMultiplicities( const ReactionMultiplicityType& type ) :
 /**
  *  @brief Constructor
  *
- *  @param[in] xs    the cross section data
+ *  @param[in] multiplicities    the multiplicity data
  */
 ReactionMultiplicities( std::vector< Multiplicities > multiplicities ) :
     ReactionMultiplicities( "", std::move( multiplicities ),
@@ -49,7 +49,8 @@ ReactionMultiplicities( std::vector< Multiplicities > multiplicities ) :
 /**
  *  @brief Constructor
  *
- *  @param[in] xs    the cross section data
+ *  @param[in] type              the multiplicity type (all, few or rmo)
+ *  @param[in] multiplicities    the multiplicity data
  */
 ReactionMultiplicities( const ReactionMultiplicityType& type,
                         std::vector< Multiplicities > multiplicities ) :

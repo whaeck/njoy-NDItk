@@ -17,7 +17,6 @@ namespace depletion {
 
 /**
  *  @brief A reaction product multiplicity record for depletion data
- *         data
  */
 class ReactionMultiplicities : protected base::IntegerListRecord {
 

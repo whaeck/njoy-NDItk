@@ -14,6 +14,7 @@ namespace depletion {
 
   // declarations - NDI records and subrecords
   void wrapMultiplicities( python::module&, python::module& );
+  void wrapReactionMultiplicities( python::module&, python::module& );
 }
 
 void wrapDepletion( python::module& module, python::module& viewmodule ) {
@@ -27,4 +28,5 @@ void wrapDepletion( python::module& module, python::module& viewmodule ) {
 
   depletion::wrapReactionMultiplicityType( submodule, viewmodule );
   depletion::wrapMultiplicities( submodule, viewmodule );
+  depletion::wrapReactionMultiplicities( submodule, viewmodule );
 }

@@ -96,7 +96,9 @@ if( NDItk.python )
       python/src/depletion.python.cpp
       python/src/depletion/ReactionMultiplicityType.python.cpp
       python/src/depletion/Multiplicities.python.cpp
+      python/src/depletion/ReactionMultiplicities.python.cpp
       python/src/multigroup.python.cpp
+      python/src/multigroup/FissionType.python.cpp
       python/src/multigroup/Metadata.python.cpp
       python/src/multigroup/CrossSection.python.cpp
       python/src/multigroup/FluxWeights.python.cpp

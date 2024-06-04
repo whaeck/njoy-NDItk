@@ -24,6 +24,7 @@ SCENARIO( "MultigroupTable" ) {
     WHEN( "the data is given explicitly" ) {
 
       std::string zaid = "92235.711nm";
+      std::string information = "this is some information for the table";
       std::string name = "mendf71x";
       std::string source = "12/22/2011";
       std::string process = "08/07/2013";
@@ -107,7 +108,7 @@ SCENARIO( "MultigroupTable" ) {
                              std::move( structure ), std::move( outgoing ),
                              std::move( velocities ), std::move( weights ),
                              std::move( xs ), std::move( scattering ),
-                             std::move( source ), weight,
+                             std::move( information ), std::move( source ), weight,
                              std::move( total ), std::move( release ),
                              std::move( types ), std::move( transport ),
                              std::move( production ),
@@ -174,6 +175,7 @@ SCENARIO( "MultigroupTable" ) {
     WHEN( "the number of groups is inconsistent" ) {
 
       std::string zaid = "92235.711nm";
+      std::string information = "this is some information for the table";
       std::string name = "mendf71x";
       std::string source = "12/22/2011";
       std::string process = "08/07/2013";
@@ -254,7 +256,7 @@ SCENARIO( "MultigroupTable" ) {
                                        std::move( structure ), {}, std::move( velocities ),
                                        std::move( weights ), std::move( xs ),
                                        std::move( scattering ),
-                                       std::move( source ), weight,
+                                       std::move( information ), std::move( source ), weight,
                                        std::move( total ), std::move( release ),
                                        std::move( types ), std::move( transport ),
                                        std::move( production ),
@@ -269,6 +271,8 @@ std::string chunk() {
 
   return "zaid\n"
          "    92235.711nm\n"
+         "info\n"
+         "    this is some information for the table\n"
          "library_name\n"
          "    mendf71x\n"
          "date_source\n"
@@ -391,6 +395,7 @@ void verifyChunk( const MultigroupTable& chunk ) {
 
   // metadata
   CHECK( "92235.711nm" == chunk.metadata().zaid() );
+  CHECK( "this is some information for the table" == chunk.metadata().information() );
   CHECK( "mendf71x" == chunk.metadata().libraryName() );
   CHECK( "12/22/2011" == chunk.metadata().sourceDate() );
   CHECK( "08/07/2013" == chunk.metadata().processDate() );

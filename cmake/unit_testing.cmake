@@ -33,6 +33,7 @@ add_subdirectory( src/NDItk/base/SingleStringRecord/test )
 add_subdirectory( src/NDItk/base/IntegerListRecord/test )
 add_subdirectory( src/NDItk/base/RealListRecord/test )
 add_subdirectory( src/NDItk/base/StringListRecord/test )
+add_subdirectory( src/NDItk/base/InformationRecord/test )
 
 add_subdirectory( src/NDItk/multigroup/Metadata/test )
 add_subdirectory( src/NDItk/multigroup/EnergyGroupStructure/test )

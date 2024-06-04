@@ -1,0 +1,1 @@
+add_cpp_test( base.InformationRecord InformationRecord.test.cpp )

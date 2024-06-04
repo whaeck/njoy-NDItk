@@ -23,12 +23,12 @@ MultigroupTable() :
  *  @param[in] outgoing          the outgoing particle group structures
  *  @param[in] velocities        the group velocities
  *  @param[in] weights           the flux weights
+ *  @param[in] total_xs          the total cross section
  *  @param[in] reaction_xs       the reaction cross section data
  *  @param[in] scattering        the scattering matrix
  *  @param[in] information       the table information line (optional)
  *  @param[in] source            the source date (optional)
  *  @param[in] weight            the atomic weight of the target (optional)
- *  @param[in] total_xs          the total cross section (optional)
  *  @param[in] fission_q         the average fission energy release data (optional)
  *  @param[in] types             the outgoing particle types (optional)
  *  @param[in] transport         the outgoing particle transport data (optional)
@@ -45,12 +45,12 @@ MultigroupTable( std::string zaid, std::string libname,
                  std::vector< multigroup::EnergyGroupStructure > outgoing,
                  multigroup::Velocities velocities,
                  multigroup::FluxWeights weigths,
+                 multigroup::TotalCrossSection total_xs,
                  multigroup::ReactionCrossSections reaction_xs,
                  multigroup::ScatteringMatrix scattering,
                  std::optional< std::string > information = std::nullopt,
                  std::optional< std::string > source = std::nullopt,
                  std::optional< double > weight = std::nullopt,
-                 std::optional< multigroup::TotalCrossSection > total_xs = std::nullopt,
                  std::optional< multigroup::AverageFissionEnergyRelease > fission_q = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTypes > types = std::nullopt,
                  std::optional< multigroup::OutgoingParticleTransportData > transport = std::nullopt,
@@ -69,6 +69,7 @@ MultigroupTable( std::string zaid, std::string libname,
     primary_structure_( std::move( structure ) ),
     velocities_( std::move( velocities ) ),
     weights_( std::move( weigths ) ),
+    total_( std::move( total_xs ) ),
     xs_( std::move( reaction_xs ) ),
     scattering_( std::move( scattering ) ),
     outgoing_structure_( std::move( outgoing ) ),
@@ -76,10 +77,6 @@ MultigroupTable( std::string zaid, std::string libname,
     outgoing_heating_( std::move( outgoingHeating ) ),
     outgoing_kerma_( std::move( outgoingKerma ) ) {
 
-  if ( total_xs.has_value() ) {
-
-    this->total_ = std::move( total_xs.value() );
-  }
   if ( fission_q.has_value() ) {
 
     this->release_ = std::move( fission_q.value() );

@@ -71,7 +71,7 @@ SCENARIO( "OutgoingParticleTypes" ) {
 
   GIVEN( "invalid data for an OutgoingParticleTypes instance" ) {
 
-    WHEN( "the number of weight values is insufficient" ) {
+    WHEN( "the number of particle types is insufficient" ) {
 
       THEN( "an exception is thrown" ) {
 

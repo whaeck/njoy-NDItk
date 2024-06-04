@@ -6,7 +6,7 @@ OutgoingParticleTypes() : IntegerListRecord( base::Keyword( "sec_part_types" ) )
 /**
  *  @brief Constructor
  *
- *  @param[in] weights    the flux weights
+ *  @param[in] values    the outgoing particle types
  */
 OutgoingParticleTypes( std::vector< int > values ) :
     IntegerListRecord( base::Keyword( "sec_part_types" ), std::move( values ) ) {

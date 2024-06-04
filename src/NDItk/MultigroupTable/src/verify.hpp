@@ -10,6 +10,7 @@ void verify() {
   if ( this->primaryGroupBoundaries().empty() ||
        this->velocities().empty() ||
        this->fluxWeights().empty() ||
+       this->totalCrossSection().empty() ||
        this->reactionCrossSections().empty() ||
        this->scatteringMatrix().empty() ) {
 
@@ -20,6 +21,8 @@ void verify() {
                this->velocities().empty() ? "absent" : "present" );
     Log::info( "Flux weight record: {}",
                this->fluxWeights().empty() ? "absent" : "present" );
+    Log::info( "Total cross section record: {}",
+               this->totalCrossSection().empty() ? "absent" : "present" );
     Log::info( "Reaction cross sections record: {}",
                this->reactionCrossSections().empty() ? "absent" : "present" );
     Log::info( "Scattering matrix record: {}",
@@ -87,13 +90,28 @@ void verify() {
   const auto types = this->metadata().numberOutgoingParticles().value();
   if ( types > 0 ) {
 
-    if ( ( this->outgoing_structure_.size() != types ) ) {
+    if ( ( this->outgoingParticleTypes().numberOutgoingParticles() != types ) ||
+         ( this->outgoingParticleTransportData().numberOutgoingParticles() != types ) ||
+         ( this->outgoing_structure_.size() != types ) ||
+         ( this->outgoing_production_.size() != types ) ||
+         ( this->outgoing_heating_.size() != types ) ||
+         ( this->outgoing_kerma_.size() != types ) ) {
 
       Log::error( "Found inconsistent number of outgoing particle types across the table" );
       Log::info( "Number of outgoing particles in the metadata: {}",
                  this->metadata().numberOutgoingParticles().value() );
       Log::info( "Number of types in the outgoing particle types: {}",
                  this->outgoingParticleTypes().numberOutgoingParticles() );
+      Log::info( "Number of types in the outgoing transport data: {}",
+                 this->outgoingParticleTransportData().numberOutgoingParticles() );
+      Log::info( "Number of types in the outgoing group structures: {}",
+                 this->outgoing_structure_.size() );
+      Log::info( "Number of types in the outgoing production matrices: {}",
+                 this->outgoing_production_.size() );
+      Log::info( "Number of types in the outgoing heating numbers: {}",
+                 this->outgoing_heating_.size() );
+      Log::info( "Number of types in the outgoing kerma values: {}",
+                 this->outgoing_kerma_.size() );
       throw std::exception();
     }
   }

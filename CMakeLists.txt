@@ -72,6 +72,7 @@ endif()
 
 add_library( NDItk INTERFACE )
 add_library( njoy::NDItk ALIAS NDItk )
+target_compile_features( NDItk INTERFACE cxx_std_17 )
 target_include_directories( NDItk
   INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>

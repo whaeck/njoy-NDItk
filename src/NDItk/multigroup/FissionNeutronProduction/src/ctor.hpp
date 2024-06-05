@@ -1,6 +1,11 @@
 /**
  *  @brief Default constructor
  */
+FissionNeutronProduction() : RealListRecord( base::Keyword( "nu_sig_f" ) ) {}
+
+/**
+ *  @brief Default constructor
+ */
 FissionNeutronProduction( FissionType type ) : RealListRecord( base::Keyword( "nu_sig_f", type ) ) {}
 
 /**

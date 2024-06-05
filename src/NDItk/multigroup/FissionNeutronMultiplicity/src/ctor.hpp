@@ -1,6 +1,11 @@
 /**
  *  @brief Default constructor
  */
+FissionNeutronMultiplicity() : RealListRecord( base::Keyword( "nu" ) ) {}
+
+/**
+ *  @brief Default constructor
+ */
 FissionNeutronMultiplicity( FissionType type ) : RealListRecord( base::Keyword( "nu", type ) ) {}
 
 /**

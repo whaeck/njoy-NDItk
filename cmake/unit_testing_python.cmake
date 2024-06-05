@@ -34,6 +34,8 @@ add_python_test( multigroup.TotalCrossSection             multigroup/Test_NDItk_
 add_python_test( multigroup.AverageFissionEnergyRelease   multigroup/Test_NDItk_multigroup_AverageFissionEnergyRelease.py )
 add_python_test( multigroup.FissionNeutronMultiplicity    multigroup/Test_NDItk_multigroup_FissionNeutronMultiplicity.py )
 add_python_test( multigroup.FissionNeutronProduction      multigroup/Test_NDItk_multigroup_FissionNeutronProduction.py )
+add_python_test( multigroup.FissionNeutronSpectrumMatrix  multigroup/Test_NDItk_multigroup_FissionNeutronSpectrumMatrix.py )
+add_python_test( multigroup.FissionNeutronSpectrumVector  multigroup/Test_NDItk_multigroup_FissionNeutronSpectrumVector.py )
 add_python_test( multigroup.Velocities                    multigroup/Test_NDItk_multigroup_Velocities.py )
 add_python_test( multigroup.HeatingNumbers                multigroup/Test_NDItk_multigroup_HeatingNumbers.py )
 add_python_test( multigroup.Kerma                         multigroup/Test_NDItk_multigroup_Kerma.py )

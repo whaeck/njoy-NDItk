@@ -123,7 +123,7 @@ void read( Iterator& iter, const Iterator& end ) {
 
       readRecord( this->release_, iter, end );
     }
-    // prompt fission neutorn multiplicity
+    // prompt fission neutron multiplicity
     else if ( keyword == this->nubar_prompt_.keyword() ) {
 
       if ( this->metadata_.numberGroups().has_value() ) {
@@ -137,7 +137,7 @@ void read( Iterator& iter, const Iterator& end ) {
         throw std::exception();
       }
     }
-    // delayed fission neutorn multiplicity
+    // delayed fission neutron multiplicity
     else if ( keyword == this->nubar_delayed_.keyword() ) {
 
       if ( this->metadata_.numberGroups().has_value() ) {
@@ -151,12 +151,96 @@ void read( Iterator& iter, const Iterator& end ) {
         throw std::exception();
       }
     }
-    // total fission neutorn multiplicity
+    // total fission neutron multiplicity
     else if ( keyword == this->nubar_total_.keyword() ) {
 
       if ( this->metadata_.numberGroups().has_value() ) {
 
         readRecord( this->nubar_total_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // prompt fission neutron spectrum vector
+    else if ( keyword == this->chi_vector_prompt_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->chi_vector_prompt_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // delayed fission neutron spectrum vector
+    else if ( keyword == this->chi_vector_delayed_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->chi_vector_delayed_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // total fission neutron spectrum vector
+    else if ( keyword == this->chi_vector_total_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->chi_vector_total_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // prompt fission neutron spectrum matrix
+    else if ( keyword == this->chi_matrix_prompt_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->chi_matrix_prompt_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // delayed fission neutron spectrum matrix
+    else if ( keyword == this->chi_matrix_delayed_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->chi_matrix_delayed_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // total fission neutron spectrum matrix
+    else if ( keyword == this->chi_matrix_total_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->chi_matrix_total_, iter, end, this->metadata_.numberGroups().value() );
       }
       else {
 

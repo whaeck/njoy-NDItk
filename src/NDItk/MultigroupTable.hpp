@@ -15,6 +15,8 @@
 #include "NDItk/multigroup/AverageFissionEnergyRelease.hpp"
 #include "NDItk/multigroup/FissionNeutronMultiplicity.hpp"
 #include "NDItk/multigroup/FissionNeutronProduction.hpp"
+#include "NDItk/multigroup/FissionNeutronSpectrumVector.hpp"
+#include "NDItk/multigroup/FissionNeutronSpectrumMatrix.hpp"
 #include "NDItk/multigroup/OutgoingParticleTypes.hpp"
 #include "NDItk/multigroup/OutgoingParticleTransportData.hpp"
 #include "NDItk/multigroup/HeatingNumbers.hpp"
@@ -42,6 +44,12 @@ class MultigroupTable {
   multigroup::FissionNeutronMultiplicity nubar_prompt_;
   multigroup::FissionNeutronMultiplicity nubar_delayed_;
   multigroup::FissionNeutronMultiplicity nubar_total_;
+  multigroup::FissionNeutronSpectrumVector chi_vector_prompt_;
+  multigroup::FissionNeutronSpectrumVector chi_vector_delayed_;
+  multigroup::FissionNeutronSpectrumVector chi_vector_total_;
+  multigroup::FissionNeutronSpectrumMatrix chi_matrix_prompt_;
+  multigroup::FissionNeutronSpectrumMatrix chi_matrix_delayed_;
+  multigroup::FissionNeutronSpectrumMatrix chi_matrix_total_;
   multigroup::HeatingNumbers primary_heating_;
   multigroup::Kerma primary_kerma_;
   depletion::ReactionMultiplicities product_multiplicities_all_;
@@ -286,6 +294,12 @@ public:
     this->nubar_prompt_.print( iter );
     this->nubar_delayed_.print( iter );
     this->nubar_total_.print( iter );
+    this->chi_vector_prompt_.print( iter );
+    this->chi_vector_delayed_.print( iter );
+    this->chi_vector_total_.print( iter );
+    this->chi_matrix_prompt_.print( iter );
+    this->chi_matrix_delayed_.print( iter );
+    this->chi_matrix_total_.print( iter );
     this->primary_heating_.print( iter );
     this->primary_kerma_.print( iter );
     this->product_multiplicities_all_.print( iter );

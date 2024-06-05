@@ -4,7 +4,11 @@
 MultigroupTable() :
     metadata_(), primary_structure_(),
     velocities_(), weights_(), total_(), xs_(), scattering_(),
-    release_(), primary_heating_(), primary_kerma_(),
+    release_(),
+    nubar_prompt_( multigroup::FissionType::Prompt ),
+    nubar_delayed_( multigroup::FissionType::Delayed ),
+    nubar_total_( multigroup::FissionType::Total ),
+    primary_heating_(), primary_kerma_(),
     product_multiplicities_all_( depletion::ReactionMultiplicityType::All ),
     product_multiplicities_few_( depletion::ReactionMultiplicityType::Few ),
     product_multiplicities_rmo_( depletion::ReactionMultiplicityType::RMO ),

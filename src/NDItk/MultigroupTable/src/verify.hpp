@@ -91,11 +91,11 @@ void verify() {
   if ( types > 0 ) {
 
     if ( ( this->outgoingParticleTypes().numberOutgoingParticles() != types ) ||
-         ( this->outgoingParticleTransportData().numberOutgoingParticles() != types ) ||
-         ( this->outgoing_structure_.size() != types ) ||
-         ( this->outgoing_production_.size() != types ) ||
-         ( this->outgoing_heating_.size() != types ) ||
-         ( this->outgoing_kerma_.size() != types ) ) {
+         ( ! this->outgoingParticleTransportData().empty() && this->outgoingParticleTransportData().numberOutgoingParticles() != types ) ||
+         ( this->outgoing_structure_.size() && this->outgoing_structure_.size() != types ) ||
+         ( this->outgoing_production_.size() && this->outgoing_production_.size() != types ) ||
+         ( this->outgoing_heating_.size() && this->outgoing_heating_.size() != types ) ||
+         ( this->outgoing_kerma_.size() && this->outgoing_kerma_.size() != types ) ) {
 
       Log::error( "Found inconsistent number of outgoing particle types across the table" );
       Log::info( "Number of outgoing particles in the metadata: {}",

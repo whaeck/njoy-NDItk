@@ -13,6 +13,8 @@
 #include "NDItk/multigroup/ReactionCrossSections.hpp"
 #include "NDItk/multigroup/TotalCrossSection.hpp"
 #include "NDItk/multigroup/AverageFissionEnergyRelease.hpp"
+#include "NDItk/multigroup/FissionNeutronMultiplicity.hpp"
+#include "NDItk/multigroup/FissionNeutronProduction.hpp"
 #include "NDItk/multigroup/OutgoingParticleTypes.hpp"
 #include "NDItk/multigroup/OutgoingParticleTransportData.hpp"
 #include "NDItk/multigroup/HeatingNumbers.hpp"
@@ -37,6 +39,9 @@ class MultigroupTable {
   multigroup::ReactionCrossSections xs_;
   multigroup::ScatteringMatrix scattering_;
   multigroup::AverageFissionEnergyRelease release_;
+  multigroup::FissionNeutronMultiplicity nubar_prompt_;
+  multigroup::FissionNeutronMultiplicity nubar_delayed_;
+  multigroup::FissionNeutronMultiplicity nubar_total_;
   multigroup::HeatingNumbers primary_heating_;
   multigroup::Kerma primary_kerma_;
   depletion::ReactionMultiplicities product_multiplicities_all_;
@@ -278,6 +283,9 @@ public:
     this->xs_.print( iter );
     this->scattering_.print( iter );
     this->release_.print( iter );
+    this->nubar_prompt_.print( iter );
+    this->nubar_delayed_.print( iter );
+    this->nubar_total_.print( iter );
     this->primary_heating_.print( iter );
     this->primary_kerma_.print( iter );
     this->product_multiplicities_all_.print( iter );

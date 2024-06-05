@@ -123,6 +123,48 @@ void read( Iterator& iter, const Iterator& end ) {
 
       readRecord( this->release_, iter, end );
     }
+    // prompt fission neutorn multiplicity
+    else if ( keyword == this->nubar_prompt_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->nubar_prompt_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // delayed fission neutorn multiplicity
+    else if ( keyword == this->nubar_delayed_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->nubar_delayed_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // total fission neutorn multiplicity
+    else if ( keyword == this->nubar_total_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->nubar_total_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
     // primary and outgoing heating keyword
     else if ( keyword.find( this->primary_heating_.keyword() ) == 0 ) {
 

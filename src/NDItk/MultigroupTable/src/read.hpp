@@ -165,6 +165,48 @@ void read( Iterator& iter, const Iterator& end ) {
         throw std::exception();
       }
     }
+    // prompt fission neutron production
+    else if ( keyword == this->production_prompt_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->production_prompt_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // delayed fission neutron production
+    else if ( keyword == this->production_delayed_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->production_delayed_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
+    // total fission neutron production
+    else if ( keyword == this->production_total_.keyword() ) {
+
+      if ( this->metadata_.numberGroups().has_value() ) {
+
+        readRecord( this->production_total_, iter, end, this->metadata_.numberGroups().value() );
+      }
+      else {
+
+        Log::error( "Metadata required for the \'\' record was not found", keyword );
+        Log::info( "Required metadata is missing: number of groups in the primary group structure" );
+        throw std::exception();
+      }
+    }
     // prompt fission neutron spectrum vector
     else if ( keyword == this->chi_vector_prompt_.keyword() ) {
 

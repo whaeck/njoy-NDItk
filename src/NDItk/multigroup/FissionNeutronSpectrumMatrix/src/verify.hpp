@@ -15,4 +15,11 @@ static void verify( const Range& values ) {
                 values.size() );
     throw std::exception();
   }
+  unsigned int size = std::sqrt( values.size() );
+  if ( values.size() != size * size ) {
+
+    Log::error( "Expected an array of size {} but found {} whoich does not represent a matrix",
+                size * size, values.size() );
+    throw std::exception();
+  }
 }

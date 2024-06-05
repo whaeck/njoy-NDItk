@@ -5,6 +5,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "tools/std23/views.hpp"
 #include "NDItk/base/RealListRecord.hpp"
 #include "NDItk/multigroup/FissionType.hpp"
 
@@ -40,6 +41,16 @@ public:
    *  @brief Return the number of groups defined by this record
    */
   unsigned int numberGroups() const { return std::sqrt( this->size() ); }
+
+  /**
+   *  @brief Return the matrix defined by this record
+   */
+  auto matrix() const {
+
+    using namespace njoy::tools;
+    return this->values()
+               | std23::views::chunk( this->numberGroups() );
+  }
 
   using base::RealListRecord::keyword;
   using base::RealListRecord::values;

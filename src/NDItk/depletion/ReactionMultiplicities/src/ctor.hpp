@@ -33,7 +33,7 @@ public:
 ReactionMultiplicities() : IntegerListRecord( base::Keyword( "rprod" ) ) {}
 
 /**
- *  @brief Default constructor
+ *  @brief Constructor for a multiplicity type
  */
 ReactionMultiplicities( ReactionMultiplicityType type ) :
     IntegerListRecord( base::Keyword( "rprod", type ) ) {}

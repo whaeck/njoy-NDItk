@@ -13,6 +13,7 @@
     std::vector< int > data;
     while ( reactions-- ) {
 
+      // read MT number and number of reaction products
       data.push_back( njoy::tools::disco::FreeFormatInteger::read< int >( iter, end ) );
       data.push_back( njoy::tools::disco::FreeFormatInteger::read< int >( iter, end ) );
       int number = data.back();
@@ -24,6 +25,7 @@
       }
       else {
 
+        // read 2 numbers for each reaction product
         number *= 2;
         while ( number-- ) {
 

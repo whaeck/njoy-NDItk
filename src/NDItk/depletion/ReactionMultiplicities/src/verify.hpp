@@ -3,7 +3,6 @@
  *
  *  The following verification tests are performed:
  *    - there is at least one reaction
- *    - the number of groups for each reaction is the same
  *
  *  @param[in] reactions    the reactions to be verified
  */

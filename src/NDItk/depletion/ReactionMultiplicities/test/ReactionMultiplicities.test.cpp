@@ -214,7 +214,6 @@ void verifyChunk( const ReactionMultiplicities& chunk ) {
   CHECK( 2 == chunk.reactions()[1].multiplicities()[0] );
   CHECK( 1 == chunk.reactions()[1].multiplicities()[1] );
 
-  auto multiplicities = chunk.reaction( 2 );
   CHECK( 2 == chunk.reaction( 2 ).identifier() );
   CHECK( 2 == chunk.reaction( 2 ).numberReactionProducts() );
   CHECK( 1 == chunk.reaction( 2 ).reactionProducts()[0] );

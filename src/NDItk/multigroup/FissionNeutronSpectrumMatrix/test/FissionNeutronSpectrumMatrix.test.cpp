@@ -78,13 +78,23 @@ SCENARIO( "FissionNeutronSpectrumMatrix" ) {
 
   GIVEN( "invalid data for a FissionNeutronSpectrumMatrix instance" ) {
 
-    WHEN( "the number of weight values is insufficient" ) {
+    WHEN( "the number of matrix values is insufficient" ) {
 
       THEN( "an exception is thrown" ) {
 
         std::vector< double > empty = {};
 
         CHECK_THROWS( FissionNeutronSpectrumMatrix( FissionType::Prompt, std::move( empty ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the matrix is not square" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        std::vector< double > three = { 1., 2., 3. };
+
+        CHECK_THROWS( FissionNeutronSpectrumMatrix( FissionType::Prompt, std::move( three ) ) );
       } // THEN
     } // WHEN
 

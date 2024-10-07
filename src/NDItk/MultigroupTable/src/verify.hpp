@@ -89,15 +89,15 @@ void verify() {
   // secondary particles
   if ( this->metadata().numberOutgoingParticles().has_value() ) {
 
-    const auto types = this->metadata().numberOutgoingParticles().value();
-    if ( types > 0 ) {
+    const auto number = this->metadata().numberOutgoingParticles().value();
+    if ( number > 0 ) {
 
-      if ( ( this->outgoingParticleTypes().numberOutgoingParticles() != types ) ||
-           ( ! this->outgoingParticleTransportData().empty() && this->outgoingParticleTransportData().numberOutgoingParticles() != types ) ||
-           ( this->outgoing_structure_.size() && this->outgoing_structure_.size() != types ) ||
-           ( this->outgoing_production_.size() && this->outgoing_production_.size() != types ) ||
-           ( this->outgoing_heating_.size() && this->outgoing_heating_.size() != types ) ||
-           ( this->outgoing_kerma_.size() && this->outgoing_kerma_.size() != types ) ) {
+      if ( ( this->outgoingParticleTypes().numberOutgoingParticles() != number ) ||
+           ( ! this->outgoingParticleTransportData().empty() && this->outgoingParticleTransportData().numberOutgoingParticles() != number ) ||
+           ( this->outgoing_structure_.size() && this->outgoing_structure_.size() != number ) ||
+           ( this->outgoing_production_.size() && this->outgoing_production_.size() != number ) ||
+           ( this->outgoing_heating_.size() && this->outgoing_heating_.size() != number ) ||
+           ( this->outgoing_kerma_.size() && this->outgoing_kerma_.size() != number ) ) {
 
         Log::error( "Found inconsistent number of outgoing particle types across the table" );
         Log::info( "Number of outgoing particles in the metadata: {}",

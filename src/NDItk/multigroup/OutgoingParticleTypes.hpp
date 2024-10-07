@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief An outgoing particle type record for multigroup neutron and photon data
+ *  @brief An outgoing particle type record for multigroup neutron data
  */
 class OutgoingParticleTypes : protected base::IntegerListRecord {
 

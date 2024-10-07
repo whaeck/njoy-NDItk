@@ -15,8 +15,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A scattering matrix record for multigroup neutron and photon
- *         data
+ *  @brief A scattering matrix record for multigroup neutron data
  */
 class ScatteringMatrix : protected base::RealListRecord {
 

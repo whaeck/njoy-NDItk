@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A kerma record for multigroup neutron and photon data
+ *  @brief A kerma record for multigroup neutron data
  */
 class Kerma : protected base::RealListRecord {
 

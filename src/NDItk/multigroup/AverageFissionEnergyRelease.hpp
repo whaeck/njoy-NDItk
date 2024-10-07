@@ -13,7 +13,7 @@ namespace multigroup {
 
 /**
  *  @brief An average fission energy release record for multigroup
- *         neutron and photon data
+ *         neutron data
  */
 class AverageFissionEnergyRelease : protected base::RealListRecord {
 

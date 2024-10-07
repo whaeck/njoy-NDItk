@@ -72,7 +72,7 @@ SCENARIO( "FissionNeutronMultiplicity" ) {
 
   GIVEN( "invalid data for a FissionNeutronMultiplicity instance" ) {
 
-    WHEN( "the number of weight values is insufficient" ) {
+    WHEN( "the number of multiplicity values is insufficient" ) {
 
       THEN( "an exception is thrown" ) {
 

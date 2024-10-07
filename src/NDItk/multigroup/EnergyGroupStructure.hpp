@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief An energy group structure record for multigroup neutron and photon data
+ *  @brief An energy group structure record for multigroup neutron data
  *
  *  This corresponds to an e_bounds or e_bounds_x record for the primary
  *  energy boundaries or outgoing particle energy boundaries.

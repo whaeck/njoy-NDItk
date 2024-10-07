@@ -3,6 +3,7 @@
  *
  *  The following verification tests are performed:
  *    - there is at least one value
+ *    - verify matrix size
  *
  *  @param[in] values    the production values to be verified
  */

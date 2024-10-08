@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A velocity record for multigroup neutron and photon data
+ *  @brief A velocity record for multigroup neutron data
  */
 class Velocities : protected base::RealListRecord {
 

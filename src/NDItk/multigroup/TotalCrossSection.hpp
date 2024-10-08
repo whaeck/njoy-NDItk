@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A total cross section record for multigroup neutron and photon data
+ *  @brief A total cross section record for multigroup neutron data
  */
 class TotalCrossSection : protected base::RealListRecord {
 

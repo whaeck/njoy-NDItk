@@ -33,7 +33,9 @@ public:
 ReactionMultiplicities() : IntegerListRecord( base::Keyword( "rprod" ) ) {}
 
 /**
- *  @brief Default constructor
+ *  @brief Constructor for a multiplicity type
+ *
+ *  @param[in] type    the multiplicity type (all, few or rmo)
  */
 ReactionMultiplicities( ReactionMultiplicityType type ) :
     IntegerListRecord( base::Keyword( "rprod", type ) ) {}
@@ -41,6 +43,7 @@ ReactionMultiplicities( ReactionMultiplicityType type ) :
 /**
  *  @brief Constructor
  *
+ *  @param[in] type              the multiplicity type (all, few or rmo)
  *  @param[in] multiplicities    the multiplicity data
  */
 ReactionMultiplicities( std::vector< Multiplicities > multiplicities ) :

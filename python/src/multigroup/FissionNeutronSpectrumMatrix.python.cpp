@@ -38,6 +38,7 @@ void wrapFissionNeutronSpectrumMatrix( python::module& module, python::module& )
     "Initialise the record\n\n"
     "Arguments:\n"
     "    self      the record\n"
+    "    type      the fission type (prompt, delayed or total)\n"
     "    values    the fission neutron spectrum matrix values"
   )
   .def_property_readonly(

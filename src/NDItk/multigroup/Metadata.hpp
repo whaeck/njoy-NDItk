@@ -16,7 +16,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief Metadata associated with multigroup neutron and photon data
+ *  @brief Metadata associated with multigroup neutron data
  */
 class Metadata {
 

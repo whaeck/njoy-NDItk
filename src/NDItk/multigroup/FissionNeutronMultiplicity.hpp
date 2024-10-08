@@ -13,7 +13,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A fission neutron multiplicity record for multigroup neutron and photon data
+ *  @brief A fission neutron multiplicity record for multigroup neutron data
  */
 class FissionNeutronMultiplicity : protected base::RealListRecord {
 

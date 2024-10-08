@@ -23,7 +23,7 @@ void wrapDepletion( python::module& module, python::module& viewmodule ) {
   python::module submodule = module.def_submodule(
 
     "depletion",
-    "Depeltion NDI records and subrecords"
+    "Depletion NDI records and subrecords"
   );
 
   depletion::wrapReactionMultiplicityType( submodule, viewmodule );

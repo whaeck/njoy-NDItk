@@ -14,7 +14,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A Legendre moment subrecord for multigroup neutron and photon data
+ *  @brief A Legendre moment subrecord for multigroup neutron data
  */
 class LegendreMoment : protected base::SubListRecord< LegendreMoment, double > {
 

@@ -38,6 +38,7 @@ void wrapFissionNeutronProduction( python::module& module, python::module& ) {
     "Initialise the record\n\n"
     "Arguments:\n"
     "    self      the record\n"
+    "    type      the fission type (prompt, delayed or total)\n"
     "    values    the fission neutron production values"
   )
   .def_property_readonly(
@@ -63,7 +64,7 @@ void wrapFissionNeutronProduction( python::module& module, python::module& ) {
     "record\n\n"
     "Arguments:\n"
     "    string    the string representing the record\n"
-    "    number    the fission neutron production values"
+    "    number    the number of groups"
   );
 
   // add standard record definitions

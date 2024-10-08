@@ -12,7 +12,7 @@ namespace NDItk {
 namespace multigroup {
 
 /**
- *  @brief A heating numbers record for multigroup neutron and photon data
+ *  @brief A heating numbers record for multigroup neutron data
  */
 class HeatingNumbers : protected base::RealListRecord {
 

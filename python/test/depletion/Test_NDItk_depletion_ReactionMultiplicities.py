@@ -144,6 +144,7 @@ class Test_NDItk_depletion_ReactionMultiplicities( unittest.TestCase ) :
 
             # verify the record
             self.assertEqual( 'rprod_all', chunk.keyword )
+            self.assertEqual( ReactionMultiplicityType.All, chunk.type )
             self.assertEqual( False, chunk.empty )
             self.assertEqual( 12, chunk.size )
 

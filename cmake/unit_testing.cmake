@@ -2,7 +2,6 @@
 # Setup
 #######################################################################
 
-message( STATUS "Adding NDItk unit testing" )
 enable_testing()
 
 FetchContent_MakeAvailable( Catch2 )
@@ -25,6 +24,8 @@ endfunction()
 #######################################################################
 # Unit testing directories
 #######################################################################
+
+message( STATUS "Adding NDItk C++ unit testing" )
 
 add_subdirectory( src/NDItk/base/Keyword/test )
 add_subdirectory( src/NDItk/base/SingleIntegerRecord/test )

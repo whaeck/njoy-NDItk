@@ -17,6 +17,7 @@ std::string chunk();
 void verifyChunk( const ScatteringMatrix& );
 std::string chunkForProductionMatrix();
 void verifyChunkForProductionMatrix( const ScatteringMatrix& );
+ScatteringMatrix makeDummyRecord();
 
 SCENARIO( "ScatteringMatrix" ) {
 
@@ -73,6 +74,108 @@ SCENARIO( "ScatteringMatrix" ) {
         CHECK( buffer == record );
       } // THEN
     } // WHEN
+
+    WHEN( "using the copy constructor" ) {
+
+      auto iter = record.begin() + 7;
+      auto end = record.end();
+      ScatteringMatrix chunk;
+      chunk.read( iter, end, 3, 2 );
+
+      ScatteringMatrix copy( chunk );
+
+      THEN( "a ScatteringMatrix can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the move constructor" ) {
+
+      auto iter = record.begin() + 7;
+      auto end = record.end();
+      ScatteringMatrix chunk;
+      chunk.read( iter, end, 3, 2 );
+
+      ScatteringMatrix move( std::move( chunk ) );
+
+      THEN( "a ScatteringMatrix can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using copy assignment" ) {
+
+      auto iter = record.begin() + 7;
+      auto end = record.end();
+      ScatteringMatrix chunk;
+      chunk.read( iter, end, 3, 2 );
+
+      ScatteringMatrix copy = makeDummyRecord();
+      copy = chunk;
+
+      THEN( "a ScatteringMatrix can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunk( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using move assignment" ) {
+
+      auto iter = record.begin() + 7;
+      auto end = record.end();
+      ScatteringMatrix chunk;
+      chunk.read( iter, end, 3, 2 );
+
+      ScatteringMatrix move = makeDummyRecord();
+      move = std::move( chunk );
+
+      THEN( "a ScatteringMatrix can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunk( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "valid data for a ScatteringMatrix instance for a secondary particle" ) {
@@ -124,6 +227,108 @@ SCENARIO( "ScatteringMatrix" ) {
         std::string buffer;
         auto output = std::back_inserter( buffer );
         chunk.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the copy constructor" ) {
+
+      auto iter = record.begin() + 17;
+      auto end = record.end();
+      ScatteringMatrix chunk( 1001 );
+      chunk.read( iter, end, 3, 2, 2 );
+
+      ScatteringMatrix copy( chunk );
+
+      THEN( "a ScatteringMatrix can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunkForProductionMatrix( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the move constructor" ) {
+
+      auto iter = record.begin() + 17;
+      auto end = record.end();
+      ScatteringMatrix chunk( 1001 );
+      chunk.read( iter, end, 3, 2, 2 );
+
+      ScatteringMatrix move( std::move( chunk ) );
+
+      THEN( "a ScatteringMatrix can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunkForProductionMatrix( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using copy assignment" ) {
+
+      auto iter = record.begin() + 17;
+      auto end = record.end();
+      ScatteringMatrix chunk( 1001 );
+      chunk.read( iter, end, 3, 2, 2 );
+
+      ScatteringMatrix copy = makeDummyRecord();
+      copy = chunk;
+
+      THEN( "a ScatteringMatrix can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunkForProductionMatrix( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using move assignment" ) {
+
+      auto iter = record.begin() + 17;
+      auto end = record.end();
+      ScatteringMatrix chunk( 1001 );
+      chunk.read( iter, end, 3, 2, 2 );
+
+      ScatteringMatrix move = makeDummyRecord();
+      move = std::move( chunk );
+
+      THEN( "a ScatteringMatrix can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunkForProductionMatrix( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
 
         CHECK( buffer == record );
       } // THEN
@@ -334,4 +539,9 @@ void verifyChunkForProductionMatrix( const ScatteringMatrix& chunk ) {
   CHECK_THAT( 14, WithinRel( moment.matrix()[1][1] ) );
   CHECK_THAT( 15, WithinRel( moment.matrix()[2][0] ) );
   CHECK_THAT( 16, WithinRel( moment.matrix()[2][1] ) );
+}
+
+ScatteringMatrix makeDummyRecord() {
+
+  return { { { 0, { 1, 2, 3, 4 }, 2 } } };
 }

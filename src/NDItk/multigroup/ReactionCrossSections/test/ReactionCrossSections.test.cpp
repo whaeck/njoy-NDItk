@@ -17,6 +17,7 @@ std::string chunk();
 void verifyChunk( const ReactionCrossSections& );
 std::string chunkWithInsufficientNumberReactions();
 std::string chunkWithInsufficientNumberCrossSectionValues();
+ReactionCrossSections makeDummyRecord();
 
 SCENARIO( "ReactionCrossSections" ) {
 
@@ -69,6 +70,108 @@ SCENARIO( "ReactionCrossSections" ) {
         std::string buffer;
         auto output = std::back_inserter( buffer );
         chunk.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the copy constructor" ) {
+
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      ReactionCrossSections chunk;
+      chunk.read( iter, end, 2, 7 );
+
+      ReactionCrossSections copy( chunk );
+
+      THEN( "a ReactionCrossSections can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the move constructor" ) {
+
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      ReactionCrossSections chunk;
+      chunk.read( iter, end, 2, 7 );
+
+      ReactionCrossSections move( std::move( chunk ) );
+
+      THEN( "a ReactionCrossSections can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using copy assignment" ) {
+
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      ReactionCrossSections chunk;
+      chunk.read( iter, end, 2, 7 );
+
+      ReactionCrossSections copy = makeDummyRecord();
+      copy = chunk;
+
+      THEN( "a ReactionCrossSections can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunk( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using move assignment" ) {
+
+      auto iter = record.begin() + 8;
+      auto end = record.end();
+      ReactionCrossSections chunk;
+      chunk.read( iter, end, 2, 7 );
+
+      ReactionCrossSections move = makeDummyRecord();
+      move = std::move( chunk );
+
+      THEN( "a ReactionCrossSections can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunk( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
 
         CHECK( buffer == record );
       } // THEN
@@ -227,4 +330,9 @@ std::string chunkWithInsufficientNumberCrossSectionValues() {
   return "sig_reac\n"
          "    2 0\n"
          "    16 1.1234567\n";
+}
+
+ReactionCrossSections makeDummyRecord() {
+
+  return ReactionCrossSections( { { 18, 200.0, { 10., 20. } } } );
 }

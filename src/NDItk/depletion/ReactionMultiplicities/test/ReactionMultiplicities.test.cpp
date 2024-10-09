@@ -19,6 +19,7 @@ void verifyChunk( const ReactionMultiplicities& );
 std::string chunkWithMultiplicityType();
 void verifyChunkWithMultiplicityType( const ReactionMultiplicities& );
 std::string chunkWithInsufficientNumberReactions();
+ReactionMultiplicities makeDummyRecord();
 
 SCENARIO( "ReactionMultiplicities" ) {
 
@@ -75,6 +76,108 @@ SCENARIO( "ReactionMultiplicities" ) {
         CHECK( buffer == record );
       } // THEN
     } // WHEN
+
+    WHEN( "using the copy constructor" ) {
+
+      auto iter = record.begin() + 5;
+      auto end = record.end();
+      ReactionMultiplicities chunk;
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities copy( chunk );
+
+      THEN( "a ReactionMultiplicities can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the move constructor" ) {
+
+      auto iter = record.begin() + 5;
+      auto end = record.end();
+      ReactionMultiplicities chunk;
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities move( std::move( chunk ) );
+
+      THEN( "a ReactionMultiplicities can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunk( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using copy assignment" ) {
+
+      auto iter = record.begin() + 5;
+      auto end = record.end();
+      ReactionMultiplicities chunk;
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities copy = makeDummyRecord();
+      copy = chunk;
+
+      THEN( "an ReactionMultiplicities can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunk( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using move assignment" ) {
+
+      auto iter = record.begin() + 5;
+      auto end = record.end();
+      ReactionMultiplicities chunk;
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities move = makeDummyRecord();
+      move = std::move( chunk );
+
+      THEN( "an ReactionMultiplicities can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunk( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "valid data for a ReactionMultiplicities instance with a multiplicity type" ) {
@@ -127,6 +230,108 @@ SCENARIO( "ReactionMultiplicities" ) {
         std::string buffer;
         auto output = std::back_inserter( buffer );
         chunk.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the copy constructor" ) {
+
+      auto iter = record.begin() + 9;
+      auto end = record.end();
+      ReactionMultiplicities chunk( ReactionMultiplicityType::All );
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities copy( chunk );
+
+      THEN( "a ReactionMultiplicities can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunkWithMultiplicityType( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using the move constructor" ) {
+
+      auto iter = record.begin() + 9;
+      auto end = record.end();
+      ReactionMultiplicities chunk( ReactionMultiplicityType::All );
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities move( std::move( chunk ) );
+
+      THEN( "a ReactionMultiplicities can be constructed and members can "
+            "be tested" ) {
+
+        verifyChunkWithMultiplicityType( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using copy assignment" ) {
+
+      auto iter = record.begin() + 9;
+      auto end = record.end();
+      ReactionMultiplicities chunk( ReactionMultiplicityType::All );
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities copy = makeDummyRecord();
+      copy = chunk;
+
+      THEN( "an ReactionMultiplicities can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunkWithMultiplicityType( copy );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        copy.print( output );
+
+        CHECK( buffer == record );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using move assignment" ) {
+
+      auto iter = record.begin() + 9;
+      auto end = record.end();
+      ReactionMultiplicities chunk( ReactionMultiplicityType::All );
+      chunk.read( iter, end, 2 );
+
+      ReactionMultiplicities move = makeDummyRecord();
+      move = std::move( chunk );
+
+      THEN( "an ReactionMultiplicities can be copy assigned and "
+            "members can be tested" ) {
+
+        verifyChunkWithMultiplicityType( move );
+      } // THEN
+
+      THEN( "the record can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        move.print( output );
 
         CHECK( buffer == record );
       } // THEN
@@ -301,4 +506,9 @@ void verifyChunkWithMultiplicityType( const ReactionMultiplicities& chunk ) {
 std::string chunkWithInsufficientNumberReactions() {
 
   return "rprod\n";
+}
+
+ReactionMultiplicities makeDummyRecord() {
+
+  return ReactionMultiplicities( { { 102, { 1 }, { 1 } } } );
 }

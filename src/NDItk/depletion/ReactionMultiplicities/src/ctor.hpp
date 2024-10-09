@@ -85,7 +85,12 @@ ReactionMultiplicities( ReactionMultiplicities&& base ) :
  */
 ReactionMultiplicities& operator=( const ReactionMultiplicities& base ) {
 
-  new (this) ReactionMultiplicities( base );
+  if ( this != &base ) {
+
+    base::IntegerListRecord::operator=( base );
+    this->reactions_ = base.reactions_;
+    this->generateBlocks();
+  }
   return *this;
 }
 
@@ -94,6 +99,11 @@ ReactionMultiplicities& operator=( const ReactionMultiplicities& base ) {
  */
 ReactionMultiplicities& operator=( ReactionMultiplicities&& base ) {
 
-  new (this) ReactionMultiplicities( std::move( base ) );
+  if ( this != &base ) {
+
+    base::IntegerListRecord::operator=( std::move( base ) );
+    this->reactions_ = base.reactions_;
+    this->generateBlocks();
+  }
   return *this;
 }

@@ -50,7 +50,13 @@ ReactionCrossSections( ReactionCrossSections&& base ) :
  */
 ReactionCrossSections& operator=( const ReactionCrossSections& base ) {
 
-  new (this) ReactionCrossSections( base );
+  if ( this != &base ) {
+
+    base::RealListRecord::operator=( base );
+    this->groups_ = base.groups_;
+    this->reactions_ = base.reactions_;
+    this->generateBlocks();
+  }
   return *this;
 }
 
@@ -59,6 +65,12 @@ ReactionCrossSections& operator=( const ReactionCrossSections& base ) {
  */
 ReactionCrossSections& operator=( ReactionCrossSections&& base ) {
 
-  new (this) ReactionCrossSections( std::move( base ) );
+  if ( this != &base ) {
+
+    base::RealListRecord::operator=( std::move( base ) );
+    this->groups_ = base.groups_;
+    this->reactions_ = base.reactions_;
+    this->generateBlocks();
+  }
   return *this;
 }

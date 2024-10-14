@@ -91,7 +91,14 @@ ScatteringMatrix( ScatteringMatrix&& base ) :
  */
 ScatteringMatrix& operator=( const ScatteringMatrix& base ) {
 
-  new (this) ScatteringMatrix( base );
+  if ( this != &base ) {
+
+    base::RealListRecord::operator=( base );
+    this->incident_ = base.incident_;
+    this->outgoing_ = base.outgoing_;
+    this->number_moments_ = base.number_moments_;
+    this->generateBlocks();
+  }
   return *this;
 }
 
@@ -100,6 +107,13 @@ ScatteringMatrix& operator=( const ScatteringMatrix& base ) {
  */
 ScatteringMatrix& operator=( ScatteringMatrix&& base ) {
 
-  new (this) ScatteringMatrix( std::move( base ) );
+  if ( this != &base ) {
+
+    base::RealListRecord::operator=( std::move( base ) );
+    this->incident_ = base.incident_;
+    this->outgoing_ = base.outgoing_;
+    this->number_moments_ = base.number_moments_;
+    this->generateBlocks();
+  }
   return *this;
 }

@@ -24,6 +24,7 @@ message( STATUS "Adding NDItk Python unit testing" )
 
 add_python_test( depletion.Multiplicities         depletion/Test_NDItk_depletion_Multiplicities.py )
 add_python_test( depletion.ReactionMultiplicities depletion/Test_NDItk_depletion_ReactionMultiplicities.py )
+add_python_test( depletion.Product                depletion/Test_NDItk_depletion_Product.py )
 
 add_python_test( multigroup.Metadata                      multigroup/Test_NDItk_multigroup_Metadata.py )
 add_python_test( multigroup.CrossSection                  multigroup/Test_NDItk_multigroup_CrossSection.py )

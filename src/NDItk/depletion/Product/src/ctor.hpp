@@ -15,8 +15,8 @@ Product( int product, std::vector< int > reactions,
 /**
  *  @brief Constructor
  *
- *  @param[in] begin    the begin iterator of the cross section
- *  @param[in] end      the end iterator of the cross section
+ *  @param[in] begin    the begin iterator of the product data 
+ *  @param[in] end      the end iterator of the product data
  */
 Product( Iterator begin, Iterator end ) :
   Parent( begin, end ) {

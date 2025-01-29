@@ -14,7 +14,7 @@ namespace NDItk {
 namespace depletion {
 
 /**
- *  @brief 
+ *  @brief A reaction identifier and multiplicity subrecord for a given product in depletion data
  */
 class Product : protected base::SubListRecord< Product, int > {
 

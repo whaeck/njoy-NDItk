@@ -45,27 +45,27 @@ void wrapProduct( python::module& module, python::module& ) {
 
     "reaction_product",
     &Record::reactionProduct,
-    "The reaction product identifier"
+    "Return the reaction product identifier"
   )
   .def_property_readonly(
 
     "number_reactions",
     &Record::numberReactions,
-    "The number of reactions with this product"
+    "Return the number of reactions with this product"
   )
   .def_property_readonly(
 
     "reaction_identifiers",
     [] ( const Record& self ) -> IntRange
        { return self.reactionIdentifiers(); },
-    "The reaction identifiers"
+    "Return the reaction identifiers"
   )
   .def_property_readonly(
 
     "multiplicities",
     [] ( const Record& self ) -> IntRange
        { return self.multiplicities(); },
-    "The reaction product multiplicities"
+    "Return the reaction product multiplicities"
   );
 
   // add standard record definitions

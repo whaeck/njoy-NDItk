@@ -124,12 +124,12 @@ void verifyChunk( const Multiplicities& chunk ) {
   CHECK( false == chunk.empty() );
   CHECK( 6 == chunk.size() );
 
-  CHECK( 2 == chunk.numberReactionProducts() );
-  CHECK( 2 == chunk.reactionProducts().size() );
+  CHECK( 2 == chunk.numberReactionData() );
+  CHECK( 2 == chunk.reactionData().size() );
   CHECK( 2 == chunk.multiplicities().size() );
   CHECK( 16 == chunk.identifier() );
-  CHECK( 1 == chunk.reactionProducts()[0] );
-  CHECK( 92234 == chunk.reactionProducts()[1] );
+  CHECK( 1 == chunk.reactionData()[0] );
+  CHECK( 92234 == chunk.reactionData()[1] );
   CHECK( 2 == chunk.multiplicities()[0] );
   CHECK( 1 == chunk.multiplicities()[1] );
 }

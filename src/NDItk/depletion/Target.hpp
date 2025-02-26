@@ -22,8 +22,8 @@ class Target : protected base::Record {
 
 public:
 
-  unsigned int target_identifier_;
-
+  /* fields */
+  int identifier_;
   std::vector< Product > products_;
 
   /* constructor */
@@ -35,7 +35,7 @@ public:
   /**
    *  @brief Return the target particle's identifier
    */
-  unsigned int targetIdentifier() const { return this->target_identifier_; }
+  int targetIdentifier() const { return this->identifier_; }
 
   /**
    *  @brief Return the number of products for this target

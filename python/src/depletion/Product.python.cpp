@@ -16,6 +16,7 @@ void wrapProduct( python::module& module, python::module& ) {
 
   // type aliases
   using Record = njoy::NDItk::depletion::Product;
+  using Multiplicities = njoy::NDItk::depletion::Multiplicities;
 
   // wrap views created by this record
 
@@ -31,15 +32,12 @@ void wrapProduct( python::module& module, python::module& ) {
   record
   .def(
 
-    python::init< int, std::vector< int >, std::vector< int > >(),
-    python::arg( "product" ), python::arg( "reactions" ),
+    python::init< Multiplicities >(),
     python::arg( "multiplicities" ),
-    "Initialise the subrecord\n\n"
+    "Initialise the record\n\n"
     "Arguments:\n"
     "    self              the record\n"
-    "    product           the reaction product identifier\n"
-    "    reactions         the reaction identifier values\n"
-    "    multiplicities    the multiplicity values"
+    "    multiplicities    the multiplicity data"
   )
   .def_property_readonly(
 

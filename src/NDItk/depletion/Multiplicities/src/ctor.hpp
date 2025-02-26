@@ -1,4 +1,9 @@
 /**
+ *  @brief Default constructor
+ */
+Multiplicities() = default;
+
+/**
  *  @brief Constructor
  *
  *  @param[in] 

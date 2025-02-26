@@ -3,7 +3,7 @@
  */
 Product() : 
     IntegerListRecord( base::Keyword( "product" ) ),
-    multiplicities_( this->begin(), this->end() ) {}
+    multiplicities_() {}
 
 /**
  *  @brief Constructor

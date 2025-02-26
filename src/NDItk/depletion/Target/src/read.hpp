@@ -13,34 +13,16 @@ void read( Iterator& iter, const Iterator& end ) {
 
   // skip over "num_products" keyword (not part of record)
   skip_keyword = njoy::tools::disco::FreeFormatCharacter::read<std::string>( iter, end );
-
   auto numberProducts = njoy::tools::disco::FreeFormatInteger::read<int>( iter, end );
 
-  this->products_.reserve(numberProducts);
-  for ( auto entry : this->products_ ) {
+  // read in the vector of products
+  this->products_.resize(numberProducts);
+  for ( auto& entry : this->products_ ) {
+
+    // skip over "product" keyword
+    skip_keyword = njoy::tools::disco::FreeFormatCharacter::read<std::string>( iter, end );
+
     entry.read( iter, end );
   }
 
-/*
-  for ( size_t i=0; i < numberProducts; ++i ) {
-
-    // skip over "product" keyword (not part of record)
-    skip_keyword = njoy::tools::disco::FreeFormatCharacter::read<std::string>( iter, end );
-
-    auto product_identifier = njoy::tools::disco::FreeFormatInteger::read<int>( iter, end );
-    auto number_reactions   = njoy::tools::disco::FreeFormatInteger::read<int>( iter, end );
-
-    std::vector< int > reactions;
-    std::vector< int > multiplicities;
-    
-    for ( size_t j=0; j < number_reactions; ++j ) {
-
-      reactions.push_back( njoy::tools::disco::FreeFormatInteger::read<int>( iter, end ) );
-      multiplicities.push_back( njoy::tools::disco::FreeFormatInteger::read<int>( iter, end ) );
-    } 
-  
-    // product will own the data
-    this->products_.emplace_back( product_identifier, reactions, multiplicities );
-  }
-*/
 }

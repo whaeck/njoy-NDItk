@@ -24,7 +24,7 @@ void print( OutputIterator& iter, int indentLevel=1 ) const {
 
       std::string tmp;
       auto tmp_output = std::back_inserter(tmp);
-      entry.print( tmp_output, indentLevel+2 );
+      entry.print( tmp_output, indentLevel+1 );
       buffer << tmp;
     }
 

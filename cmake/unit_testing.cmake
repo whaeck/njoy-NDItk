@@ -41,6 +41,7 @@ add_subdirectory( src/NDItk/depletion/ReactionMultiplicities/test )
 add_subdirectory( src/NDItk/depletion/Product/test )
 add_subdirectory( src/NDItk/depletion/Target/test )
 add_subdirectory( src/NDItk/depletion/IncidentParticle/test )
+add_subdirectory( src/NDItk/depletion/Metadata/test )
 
 add_subdirectory( src/NDItk/multigroup/Metadata/test )
 add_subdirectory( src/NDItk/multigroup/EnergyGroupStructure/test )

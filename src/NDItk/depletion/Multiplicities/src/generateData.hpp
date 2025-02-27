@@ -1,27 +1,27 @@
 /**
  *  @brief Generate the subrecord's data vector
  *
- *  @param[in] reaction          the reaction number
- *  @param[in] products          the reaction product identifiers
+ *  @param[in] 
+ *  @param[in] 
  *  @param[in] multiplicities    the multiplicity values
  */
 static std::vector< int >
-generateData( int reaction, std::vector< int > products,
+generateData( int identifier, std::vector< int > reactionData,
               std::vector< int > multiplicities ) {
 
-  auto size = products.size();
+  auto size = reactionData.size();
   if ( multiplicities.size() != size ) {
 
-    Log::error( "The number of reaction product identifiers and multiplicities "
+    Log::error( "The number of reaction data and multiplicities "
                 "is inconsistent" );
-    Log::info( "Found {} reaction product identifiers", products.size() );
+    Log::info( "Found {} reaction data", reactionData.size() );
     Log::info( "Found {} multiplicity values", multiplicities.size() );
     throw std::exception();
   }
-  std::vector< int > data = { reaction, static_cast< int >( size ) };
+  std::vector< int > data = { identifier, static_cast< int >( size ) };
   for ( unsigned int i = 0; i < size; ++i ) {
 
-    data.push_back( products[i] );
+    data.push_back( reactionData[i] );
     data.push_back( multiplicities[i] );
   }
   return data;

@@ -50,14 +50,14 @@ void wrapMultiplicities( python::module& module, python::module& ) {
   .def_property_readonly(
 
     "number_reaction_products",
-    &Record::numberReactionProducts,
+    &Record::numberReactionData,
     "The number of reaction products"
   )
   .def_property_readonly(
 
     "reaction_products",
     [] ( const Record& self ) -> IntRange
-       { return self.reactionProducts(); },
+       { return self.reactionData(); },
     "The reaction product identifiers"
   )
   .def_property_readonly(

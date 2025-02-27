@@ -406,30 +406,30 @@ void verifyChunk( const ReactionMultiplicities& chunk ) {
   CHECK( false == chunk.hasReaction( 102 ) );
 
   CHECK( 2 == chunk.reactions()[0].identifier() );
-  CHECK( 2 == chunk.reactions()[0].numberReactionProducts() );
-  CHECK( 1 == chunk.reactions()[0].reactionProducts()[0] );
-  CHECK( 92235 == chunk.reactions()[0].reactionProducts()[1] );
+  CHECK( 2 == chunk.reactions()[0].numberReactionData() );
+  CHECK( 1 == chunk.reactions()[0].reactionData()[0] );
+  CHECK( 92235 == chunk.reactions()[0].reactionData()[1] );
   CHECK( 1 == chunk.reactions()[0].multiplicities()[0] );
   CHECK( 1 == chunk.reactions()[0].multiplicities()[1] );
 
   CHECK( 16 == chunk.reactions()[1].identifier() );
-  CHECK( 2 == chunk.reactions()[1].numberReactionProducts() );
-  CHECK( 1 == chunk.reactions()[1].reactionProducts()[0] );
-  CHECK( 92234 == chunk.reactions()[1].reactionProducts()[1] );
+  CHECK( 2 == chunk.reactions()[1].numberReactionData() );
+  CHECK( 1 == chunk.reactions()[1].reactionData()[0] );
+  CHECK( 92234 == chunk.reactions()[1].reactionData()[1] );
   CHECK( 2 == chunk.reactions()[1].multiplicities()[0] );
   CHECK( 1 == chunk.reactions()[1].multiplicities()[1] );
 
   CHECK( 2 == chunk.reaction( 2 ).identifier() );
-  CHECK( 2 == chunk.reaction( 2 ).numberReactionProducts() );
-  CHECK( 1 == chunk.reaction( 2 ).reactionProducts()[0] );
-  CHECK( 92235 == chunk.reaction( 2 ).reactionProducts()[1] );
+  CHECK( 2 == chunk.reaction( 2 ).numberReactionData() );
+  CHECK( 1 == chunk.reaction( 2 ).reactionData()[0] );
+  CHECK( 92235 == chunk.reaction( 2 ).reactionData()[1] );
   CHECK( 1 == chunk.reaction( 2 ).multiplicities()[0] );
   CHECK( 1 == chunk.reaction( 2 ).multiplicities()[1] );
 
   CHECK( 16 == chunk.reaction( 16 ).identifier() );
-  CHECK( 2 == chunk.reaction( 16 ).numberReactionProducts() );
-  CHECK( 1 == chunk.reaction( 16 ).reactionProducts()[0] );
-  CHECK( 92234 == chunk.reaction( 16 ).reactionProducts()[1] );
+  CHECK( 2 == chunk.reaction( 16 ).numberReactionData() );
+  CHECK( 1 == chunk.reaction( 16 ).reactionData()[0] );
+  CHECK( 92234 == chunk.reaction( 16 ).reactionData()[1] );
   CHECK( 2 == chunk.reaction( 16 ).multiplicities()[0] );
   CHECK( 1 == chunk.reaction( 16 ).multiplicities()[1] );
 }
@@ -474,31 +474,31 @@ void verifyChunkWithMultiplicityType( const ReactionMultiplicities& chunk ) {
   CHECK( false == chunk.hasReaction( 102 ) );
 
   CHECK( 2 == chunk.reactions()[0].identifier() );
-  CHECK( 2 == chunk.reactions()[0].numberReactionProducts() );
-  CHECK( 1 == chunk.reactions()[0].reactionProducts()[0] );
-  CHECK( 92235 == chunk.reactions()[0].reactionProducts()[1] );
+  CHECK( 2 == chunk.reactions()[0].numberReactionData() );
+  CHECK( 1 == chunk.reactions()[0].reactionData()[0] );
+  CHECK( 92235 == chunk.reactions()[0].reactionData()[1] );
   CHECK( 1 == chunk.reactions()[0].multiplicities()[0] );
   CHECK( 1 == chunk.reactions()[0].multiplicities()[1] );
 
   CHECK( 16 == chunk.reactions()[1].identifier() );
-  CHECK( 2 == chunk.reactions()[1].numberReactionProducts() );
-  CHECK( 1 == chunk.reactions()[1].reactionProducts()[0] );
-  CHECK( 92234 == chunk.reactions()[1].reactionProducts()[1] );
+  CHECK( 2 == chunk.reactions()[1].numberReactionData() );
+  CHECK( 1 == chunk.reactions()[1].reactionData()[0] );
+  CHECK( 92234 == chunk.reactions()[1].reactionData()[1] );
   CHECK( 2 == chunk.reactions()[1].multiplicities()[0] );
   CHECK( 1 == chunk.reactions()[1].multiplicities()[1] );
 
   auto multiplicities = chunk.reaction( 2 );
   CHECK( 2 == chunk.reaction( 2 ).identifier() );
-  CHECK( 2 == chunk.reaction( 2 ).numberReactionProducts() );
-  CHECK( 1 == chunk.reaction( 2 ).reactionProducts()[0] );
-  CHECK( 92235 == chunk.reaction( 2 ).reactionProducts()[1] );
+  CHECK( 2 == chunk.reaction( 2 ).numberReactionData() );
+  CHECK( 1 == chunk.reaction( 2 ).reactionData()[0] );
+  CHECK( 92235 == chunk.reaction( 2 ).reactionData()[1] );
   CHECK( 1 == chunk.reaction( 2 ).multiplicities()[0] );
   CHECK( 1 == chunk.reaction( 2 ).multiplicities()[1] );
 
   CHECK( 16 == chunk.reaction( 16 ).identifier() );
-  CHECK( 2 == chunk.reaction( 16 ).numberReactionProducts() );
-  CHECK( 1 == chunk.reaction( 16 ).reactionProducts()[0] );
-  CHECK( 92234 == chunk.reaction( 16 ).reactionProducts()[1] );
+  CHECK( 2 == chunk.reaction( 16 ).numberReactionData() );
+  CHECK( 1 == chunk.reaction( 16 ).reactionData()[0] );
+  CHECK( 92234 == chunk.reaction( 16 ).reactionData()[1] );
   CHECK( 2 == chunk.reaction( 16 ).multiplicities()[0] );
   CHECK( 1 == chunk.reaction( 16 ).multiplicities()[1] );
 }

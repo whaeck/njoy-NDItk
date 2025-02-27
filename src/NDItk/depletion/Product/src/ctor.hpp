@@ -1,25 +1,58 @@
 /**
- *  @brief Constructor
- *
- *  @param[in] product           the reaction product identifier
- *  @param[in] reactions         the reaction numbers
- *  @param[in] multiplicities    the multiplicity values
+ *  @brief Default constructor
  */
-Product( int product, std::vector< int > reactions,
-                std::vector< int > multiplicities ) :
-  Parent( generateData( product, std::move( reactions ), std::move( multiplicities ) ) ) {
-
-  verify( this->values() );
-}
+Product() : 
+    IntegerListRecord( base::Keyword( "product" ) ),
+    multiplicities_() {}
 
 /**
  *  @brief Constructor
  *
- *  @param[in] begin    the begin iterator of the product data 
- *  @param[in] end      the end iterator of the product data
+ *  @param[in] 
  */
-Product( Iterator begin, Iterator end ) :
-  Parent( begin, end ) {
+Product( Multiplicities multiplicities ) : 
+    IntegerListRecord( base::Keyword( "product" ), 
+                       generateData( std::move( multiplicities ) ) ),
+    multiplicities_( this->begin(), this->end() ) {}
 
-  verify( this->values() );
+/**
+ *  @brief Copy constructor
+ */
+Product( const Product& base ) : 
+    IntegerListRecord( base ),
+    multiplicities_( this->begin(), this->end() ) {}
+
+
+/**
+ *  @brief Move constructor
+ */
+Product( Product&& base ) : 
+    IntegerListRecord( std::move( base ) ), 
+    multiplicities_( this->begin(), this->end() ) {}
+
+
+/**
+ *  @brief Copy assignment
+ */
+Product& operator=( const Product& base ) {
+
+  if ( this != &base ) {
+
+    base::IntegerListRecord::operator=( base );
+    this->multiplicities_ = Multiplicities( this->begin(), this->end() );
+  }
+  return *this;
+}
+
+/**
+ *  @brief Move assignment
+ */
+Product& operator=( Product&& base ) {
+
+  if ( this != &base ) {
+
+    base::IntegerListRecord::operator=( std::move( base ) );
+    this->multiplicities_ = Multiplicities( this->begin(), this->end() );
+  }
+  return *this;
 }

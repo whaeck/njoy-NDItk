@@ -1,11 +1,11 @@
 /**
- *  @brief Verify the production/depletion chain target data values
+ *  @brief Verify the cross section data values
  *
  *  The following verification tests are performed:
- *    - there is at least one product
- *    - the specified number of products match the number of products found
+ *    - there are at least two values
+ *    - the reaction identifier looks to be an integer
  *
- *  @param[in] data    the data values in the target subrecord
+ *  @param[in] data    the data values in the cross section subrecord
  */
 template < typename Range >
 static void verify( const Range& data ) {

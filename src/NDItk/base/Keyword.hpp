@@ -10,7 +10,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "NDItk/multigroup/FissionType.hpp"
-#include "NDItk/depletion/ReactionMultiplicityType.hpp"
+#include "NDItk/multigroup/ReactionMultiplicityType.hpp"
 
 namespace njoy {
 namespace NDItk {
@@ -27,7 +27,7 @@ class Keyword {
   std::string keyword_;
   std::optional< std::string > subtype_ = std::nullopt;
   std::optional< unsigned int > particle_ = std::nullopt;
-  std::optional< depletion::ReactionMultiplicityType > multiplicity_ = std::nullopt;
+  std::optional< multigroup::ReactionMultiplicityType > multiplicity_ = std::nullopt;
   std::optional< multigroup::FissionType > fission_ = std::nullopt;
 
   /* auxilairy functions */
@@ -62,7 +62,7 @@ public:
   /**
    *  @brief Return the multiplicity type (if any)
    */
-  const std::optional< depletion::ReactionMultiplicityType >& multiplicityType() const {
+  const std::optional< multigroup::ReactionMultiplicityType >& multiplicityType() const {
 
     return this->multiplicity_;
   }

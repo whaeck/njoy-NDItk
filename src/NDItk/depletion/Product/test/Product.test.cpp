@@ -99,6 +99,7 @@ SCENARIO( "Product" ) {
 
 std::string chunk() {
 
+  // indentation level = 2
   return "    product\n"
          "      1001\n"
          "      5\n"

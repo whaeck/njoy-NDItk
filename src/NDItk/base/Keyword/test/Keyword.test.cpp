@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::NDItk;
 using Keyword = base::Keyword;
-using ReactionMultiplicityType = depletion::ReactionMultiplicityType;
+using ReactionMultiplicityType = multigroup::ReactionMultiplicityType;
 using FissionType = multigroup::FissionType;
 
 SCENARIO( "Keyword" ) {
@@ -76,7 +76,7 @@ SCENARIO( "Keyword" ) {
   CHECK( "rprod_all" == result.keyword() );
   CHECK( "rprod" == result.subtype() );
   CHECK( std::nullopt == result.particle() );
-  CHECK( depletion::ReactionMultiplicityType::All == result.multiplicityType() );
+  CHECK( multigroup::ReactionMultiplicityType::All == result.multiplicityType() );
   CHECK( std::nullopt == result.fissionType() );
   CHECK( true == result.hasSubtype() );
 
@@ -84,7 +84,7 @@ SCENARIO( "Keyword" ) {
   CHECK( "rprod_all" == result.keyword() );
   CHECK( "rprod" == result.subtype() );
   CHECK( std::nullopt == result.particle() );
-  CHECK( depletion::ReactionMultiplicityType::All == result.multiplicityType() );
+  CHECK( multigroup::ReactionMultiplicityType::All == result.multiplicityType() );
   CHECK( std::nullopt == result.fissionType() );
   CHECK( true == result.hasSubtype() );
 
@@ -92,7 +92,7 @@ SCENARIO( "Keyword" ) {
   CHECK( "rprod_few" == result.keyword() );
   CHECK( "rprod" == result.subtype() );
   CHECK( std::nullopt == result.particle() );
-  CHECK( depletion::ReactionMultiplicityType::Few == result.multiplicityType() );
+  CHECK( multigroup::ReactionMultiplicityType::Few == result.multiplicityType() );
   CHECK( std::nullopt == result.fissionType() );
   CHECK( true == result.hasSubtype() );
 
@@ -100,7 +100,7 @@ SCENARIO( "Keyword" ) {
   CHECK( "rprod_few" == result.keyword() );
   CHECK( "rprod" == result.subtype() );
   CHECK( std::nullopt == result.particle() );
-  CHECK( depletion::ReactionMultiplicityType::Few == result.multiplicityType() );
+  CHECK( multigroup::ReactionMultiplicityType::Few == result.multiplicityType() );
   CHECK( std::nullopt == result.fissionType() );
   CHECK( true == result.hasSubtype() );
 
@@ -108,7 +108,7 @@ SCENARIO( "Keyword" ) {
   CHECK( "rprod_rmo" == result.keyword() );
   CHECK( "rprod" == result.subtype() );
   CHECK( std::nullopt == result.particle() );
-  CHECK( depletion::ReactionMultiplicityType::RMO == result.multiplicityType() );
+  CHECK( multigroup::ReactionMultiplicityType::RMO == result.multiplicityType() );
   CHECK( std::nullopt == result.fissionType() );
   CHECK( true == result.hasSubtype() );
 
@@ -116,7 +116,7 @@ SCENARIO( "Keyword" ) {
   CHECK( "rprod_rmo" == result.keyword() );
   CHECK( "rprod" == result.subtype() );
   CHECK( std::nullopt == result.particle() );
-  CHECK( depletion::ReactionMultiplicityType::RMO == result.multiplicityType() );
+  CHECK( multigroup::ReactionMultiplicityType::RMO == result.multiplicityType() );
   CHECK( std::nullopt == result.fissionType() );
   CHECK( true == result.hasSubtype() );
 

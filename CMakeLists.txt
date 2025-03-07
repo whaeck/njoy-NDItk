@@ -88,11 +88,12 @@ if( NDItk.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/NDItk.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/MultigroupTable.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/ReactionMultiplicityType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Multiplicities.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/ReactionMultiplicities.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Product.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ReactionMultiplicityType.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Multiplicities.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ReactionMultiplicities.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/FissionType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Metadata.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/CrossSection.python.cpp

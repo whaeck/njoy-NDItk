@@ -9,7 +9,12 @@ namespace python = pybind11;
 
 namespace multigroup {
 
+  // declarations - NDI enumerators
+  void wrapReactionMultiplicityType( python::module&, python::module& );
+
   // declarations - NDI records and subrecords
+  void wrapMultiplicities( python::module&, python::module& );
+  void wrapReactionMultiplicities( python::module&, python::module& );
   void wrapFissionType( python::module&, python::module& );
   void wrapMetadata( python::module&, python::module& );
   void wrapCrossSection( python::module&, python::module& );
@@ -40,6 +45,9 @@ void wrapMultigroup( python::module& module, python::module& viewmodule ) {
     "Multigroup neutron and photon NDI records and subrecords"
   );
 
+  multigroup::wrapReactionMultiplicityType( submodule, viewmodule );
+  multigroup::wrapMultiplicities( submodule, viewmodule );
+  multigroup::wrapReactionMultiplicities( submodule, viewmodule );
   multigroup::wrapFissionType( submodule, viewmodule );
   multigroup::wrapMetadata( submodule, viewmodule );
   multigroup::wrapCrossSection( submodule, viewmodule );

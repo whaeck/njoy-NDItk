@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "NDItk/depletion/Multiplicities.hpp"
 #include "NDItk/depletion/Product.hpp"
 #include "tools/views/views-python.hpp"
 #include "definitions.hpp"
@@ -25,7 +26,7 @@ void wrapProduct( python::module& module, python::module& ) {
 
     module,
     "Product",
-    "A reaction identifier and multiplicity subrecord for a given product in depletion data"
+    "A product record for depletion data"
   );
 
   // wrap the record
@@ -34,10 +35,10 @@ void wrapProduct( python::module& module, python::module& ) {
 
     python::init< Multiplicities >(),
     python::arg( "multiplicities" ),
-    "Initialise the record\n\n"
+    "Initialise the subrecord\n\n"
     "Arguments:\n"
     "    self              the record\n"
-    "    multiplicities    the multiplicity data"
+    "    multiplicities    a depletion::Multiplicities SubListRecord"
   )
   .def_property_readonly(
 
@@ -63,11 +64,11 @@ void wrapProduct( python::module& module, python::module& ) {
     "multiplicities",
     [] ( const Record& self ) -> IntRange
        { return self.multiplicities(); },
-    "Return the reaction product multiplicities"
+    "Return the reaction multiplicities"
   );
 
   // add standard record definitions
-  addStandardSubrecordDefinitions< Record, IntRange >( record );
+  addStandardRecordDefinitions<Record, IntRange >( record );
 }
 
 } // depletion namespace

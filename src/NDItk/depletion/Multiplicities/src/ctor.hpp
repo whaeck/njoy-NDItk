@@ -6,13 +6,13 @@ Multiplicities() = default;
 /**
  *  @brief Constructor
  *
- *  @param[in] 
- *  @param[in] 
- *  @param[in] multiplicities    the multiplicity values
+ *  @param[in] product          the reaction product identifier
+ *  @param[in] reactions        the reaction identifiers
+ *  @param[in] multiplicities   the multiplicity values
  */
-Multiplicities( int identifier, std::vector< int > reactionData,
+Multiplicities( int product, std::vector< int > reactions,
                 std::vector< int > multiplicities ) :
-  Parent( generateData( identifier, std::move( reactionData ), std::move( multiplicities ) ) ) {
+  Parent( generateData( product, std::move( reactions ), std::move( multiplicities ) ) ) {
 
   verify( this->values() );
 }

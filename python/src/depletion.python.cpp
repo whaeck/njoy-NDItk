@@ -10,6 +10,7 @@ namespace python = pybind11;
 namespace depletion {
 
   // declarations - NDI records and subrecords
+  void wrapMultiplicities( python::module&, python::module& );
   void wrapProduct( python::module&, python::module& );
 }
 
@@ -22,5 +23,6 @@ void wrapDepletion( python::module& module, python::module& viewmodule ) {
     "Depletion NDI records and subrecords"
   );
 
+  depletion::wrapMultiplicities( submodule, viewmodule );
   depletion::wrapProduct( submodule, viewmodule );
 }

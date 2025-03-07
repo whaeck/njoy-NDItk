@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "NDItk/depletion/Multiplicities.hpp"
+#include "NDItk/multigroup/Multiplicities.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::NDItk;
-using Multiplicities = depletion::Multiplicities;
+using Multiplicities = multigroup::Multiplicities;
 
 std::string chunk();
 std::vector< int > data();

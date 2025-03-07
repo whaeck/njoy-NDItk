@@ -1,7 +1,7 @@
 /**
  *  @brief Generate the record's data vector
  *
- *  @param[in] xs    the cross section data
+ *  @param[in] multiplicities    the multiplicity data
  */
 static std::vector< int > generateData( std::vector< Multiplicities > multiplicities ) {
 

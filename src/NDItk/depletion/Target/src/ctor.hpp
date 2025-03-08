@@ -15,4 +15,7 @@ Target():
 Target( int identifier, std::vector< Product > products ):
   Record( base::Keyword( "target" ) ), 
   identifier_( identifier ),
-  products_( std::move(products) ) {}
+  products_( std::move(products) ) {
+
+    verify( this->products() );
+  }

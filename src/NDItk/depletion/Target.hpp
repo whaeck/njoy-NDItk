@@ -20,6 +20,10 @@ namespace depletion {
  */
 class Target : protected base::Record {
 
+  /* auxiliary functions */
+
+  #include "NDItk/depletion/Target/src/verify.hpp"
+
 public:
 
   /* fields */

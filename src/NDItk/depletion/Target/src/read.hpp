@@ -40,4 +40,6 @@ void read( Iterator& iter, const Iterator& end ) {
     // read in product and add to the data
     entry.read( iter, end );
   }
+
+  verify( this->products() );
 }

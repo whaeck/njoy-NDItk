@@ -117,14 +117,13 @@ public:
    *  derived class which knows how to format the data.
    *
    *  @param[in] iter   the current position in the output
-   *  @param[in] args   any additional number of arguments
    */
-  template< typename OutputIterator, typename... ArgTs >
-  void print( OutputIterator& iter, ArgTs... args ) const {
+  template< typename OutputIterator >
+  void print( OutputIterator& iter ) const {
 
     if ( ! this->empty() ) {
 
-      static_cast< const Derived* >( this )->write( iter, args... );
+      static_cast< const Derived* >( this )->write( iter );
     }
   };
 };

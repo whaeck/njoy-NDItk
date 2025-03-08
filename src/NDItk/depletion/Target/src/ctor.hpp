@@ -9,10 +9,10 @@ Target():
 /**
  *  @brief Constructor
  *
- *  @param[in] target_identifier
- *  @param[in] products
+ *  @param[in] identifier   target particle identifier
+ *  @param[in] products     vector of depletion products
  */
-Target( int target_identifier, std::vector< Product > products ):
+Target( int identifier, std::vector< Product > products ):
   Record( base::Keyword( "target" ) ), 
-  identifier_( target_identifier ),
+  identifier_( identifier ),
   products_( std::move(products) ) {}

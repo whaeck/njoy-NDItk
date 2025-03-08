@@ -33,7 +33,7 @@ public:
   /* methods */
 
   /**
-   *  @brief Return the target particle's identifier
+   *  @brief Return the target particle identifier
    */
   int targetIdentifier() const { return this->identifier_; }
 

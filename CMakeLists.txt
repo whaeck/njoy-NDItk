@@ -91,6 +91,7 @@ if( NDItk.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Multiplicities.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Product.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Target.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/IncidentParticle.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ReactionMultiplicityType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Multiplicities.python.cpp

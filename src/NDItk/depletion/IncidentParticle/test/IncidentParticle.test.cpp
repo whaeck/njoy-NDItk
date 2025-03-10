@@ -171,24 +171,23 @@ SCENARIO( "IncidentParticle" ) {
     } // WHEN
   } // GIVEN
 
-/*
-  GIVEN( "invalid data for a Target instance" ) {
+  GIVEN( "invalid data for an IncidentParticle instance" ) {
 
-    WHEN( "the number of products is insufficient" ) {
+    WHEN( "the number of targets is insufficient" ) {
 
-      std::vector< Product > products = {};
+      std::vector< Target > targets = {};
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( Target( 3006, std::move( products ) ) );
+        CHECK_THROWS( IncidentParticle( 1, std::move( targets ) ) );
       } // THEN
     } // WHEN
 
-    WHEN( "reading the data of the record and the number of products "
+    WHEN( "reading the data of the record and the number of targets "
           "values is insufficient" ) {
 
-      std::string record = chunkWithInsufficientNumberProducts();
-      auto iter = record.begin() + 6;
+      std::string record = chunkWithInsufficientNumberTargets();
+      auto iter = record.begin() + 8;
       auto end = record.end();
       Target chunk;
 
@@ -198,7 +197,6 @@ SCENARIO( "IncidentParticle" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-*/
 } // SCENARIO
 
 void verifyChunk( const IncidentParticle& chunk ) {

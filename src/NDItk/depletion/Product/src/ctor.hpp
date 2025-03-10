@@ -8,7 +8,7 @@ Product() :
 /**
  *  @brief Constructor
  *
- *  @param[in] 
+ *  @param[in] multiplicities   a depletion::Multiplicities SubListRecord
  */
 Product( Multiplicities multiplicities ) : 
     IntegerListRecord( base::Keyword( "product" ), 

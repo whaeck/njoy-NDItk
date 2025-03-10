@@ -175,7 +175,6 @@ SCENARIO( "Target" ) {
     } // WHEN
   } // GIVEN
 
-/*
   GIVEN( "invalid data for a Target instance" ) {
 
     WHEN( "the number of products is insufficient" ) {
@@ -202,7 +201,6 @@ SCENARIO( "Target" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-*/
 } // SCENARIO
 
 void verifyChunk( const Target& chunk ) {

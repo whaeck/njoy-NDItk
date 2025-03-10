@@ -22,10 +22,12 @@ endfunction()
 
 message( STATUS "Adding NDItk Python unit testing" )
 
-add_python_test( depletion.Multiplicities         depletion/Test_NDItk_depletion_Multiplicities.py )
-add_python_test( depletion.ReactionMultiplicities depletion/Test_NDItk_depletion_ReactionMultiplicities.py )
-add_python_test( depletion.Product                depletion/Test_NDItk_depletion_Product.py )
+add_python_test( depletion.Multiplicities                 depletion/Test_NDItk_depletion_Multiplicities.py )
+add_python_test( depletion.Product                        depletion/Test_NDItk_depletion_Product.py )
+add_python_test( depletion.Target                         depletion/Test_NDItk_depletion_Target.py )
 
+add_python_test( multigroup.Multiplicities                multigroup/Test_NDItk_multigroup_Multiplicities.py )
+add_python_test( multigroup.ReactionMultiplicities        multigroup/Test_NDItk_multigroup_ReactionMultiplicities.py )
 add_python_test( multigroup.Metadata                      multigroup/Test_NDItk_multigroup_Metadata.py )
 add_python_test( multigroup.CrossSection                  multigroup/Test_NDItk_multigroup_CrossSection.py )
 add_python_test( multigroup.FluxWeights                   multigroup/Test_NDItk_multigroup_FluxWeights.py )

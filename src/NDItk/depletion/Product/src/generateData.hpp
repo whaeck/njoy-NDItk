@@ -1,7 +1,7 @@
 /**
  *  @brief Generate the record's data vector
  *
- *  @param[in] 
+ *  @param[in] multiplicities   a depletion::Multiplicities SubListRecord
  */
 static std::vector< int > generateData( Multiplicities  multiplicities ) {
 

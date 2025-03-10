@@ -8,21 +8,18 @@
 template< typename OutputIterator >
 void write( OutputIterator& iter ) const {
 
-  auto indentLevel  = 3;
-  auto indentPrefix = [](int n){ return std::string(2*n, ' '); };
-
   std::ostringstream buffer;
 
   auto x = this->begin();
-  buffer << indentPrefix(indentLevel) << x[0] << '\n'
-         << indentPrefix(indentLevel) << x[1] << '\n';
+  buffer << "    " << x[0] << '\n'
+         << "    " << x[1] << '\n';
   x += 2;
 
-  auto lines = this->numberReactions();
+  auto lines = this->numberReactionProducts();
 
   while ( lines-- ) {
 
-    buffer << indentPrefix(indentLevel) << x[0] << ' ' << x[1] << '\n';
+    buffer << "    " << x[0] << ' ' << x[1] << '\n';
     x += 2;
   }
 

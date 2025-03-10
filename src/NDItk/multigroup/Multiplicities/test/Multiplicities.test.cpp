@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "NDItk/depletion/Multiplicities.hpp"
+#include "NDItk/multigroup/Multiplicities.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::NDItk;
-using Multiplicities = depletion::Multiplicities;
+using Multiplicities = multigroup::Multiplicities;
 
 std::string chunk();
 std::vector< int > data();
@@ -99,11 +99,10 @@ SCENARIO( "Multiplicities" ) {
 
 std::string chunk() {
 
-  // indentation level = 3
-  return "      16\n"
-         "      2\n"
-         "      1 2\n"
-         "      92234 1\n";
+  return "    16\n"
+         "    2\n"
+         "    1 2\n"
+         "    92234 1\n";
 }
 
 std::vector< int > data() {
@@ -125,14 +124,14 @@ void verifyChunk( const Multiplicities& chunk ) {
   CHECK( false == chunk.empty() );
   CHECK( 6 == chunk.size() );
 
-  CHECK( 2     == chunk.numberReactions() );
-  CHECK( 2     == chunk.reactionIdentifiers().size() );
-  CHECK( 2     == chunk.multiplicities().size() );
-  CHECK( 16    == chunk.reactionProduct() );
-  CHECK( 1     == chunk.reactionIdentifiers()[0] );
-  CHECK( 92234 == chunk.reactionIdentifiers()[1] );
-  CHECK( 2     == chunk.multiplicities()[0] );
-  CHECK( 1     == chunk.multiplicities()[1] );
+  CHECK( 2 == chunk.numberReactionProducts() );
+  CHECK( 2 == chunk.reactionProducts().size() );
+  CHECK( 2 == chunk.multiplicities().size() );
+  CHECK( 16 == chunk.identifier() );
+  CHECK( 1 == chunk.reactionProducts()[0] );
+  CHECK( 92234 == chunk.reactionProducts()[1] );
+  CHECK( 2 == chunk.multiplicities()[0] );
+  CHECK( 1 == chunk.multiplicities()[1] );
 }
 
 std::vector< int > dataWithInsufficientLength() {

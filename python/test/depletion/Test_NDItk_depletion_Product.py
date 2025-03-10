@@ -4,19 +4,21 @@ import unittest
 # third party imports
 
 # local imports
+from NDItk.depletion import Multiplicities
 from NDItk.depletion import Product
 
 class Test_NDItk_depletion_Product( unittest.TestCase ) :
     """Unit test for the Product class."""
 
     chunk_values = [ 1001, 5, 28, 1, 45, 1, 103, 1, 111, 2, 112, 1 ]
-    chunk_string = ( '    1001\n'
-                     '    5\n'
-                     '    28 1\n'
-                     '    45 1\n'
-                     '    103 1\n'
-                     '    111 2\n'
-                     '    112 1\n' )
+    chunk_string = ( '    product\n'
+                     '      1001\n'
+                     '      5\n'
+                     '      28 1\n'
+                     '      45 1\n'
+                     '      103 1\n'
+                     '      111 2\n'
+                     '      112 1\n' )
 
     def test_component( self ) :
 
@@ -41,6 +43,7 @@ class Test_NDItk_depletion_Product( unittest.TestCase ) :
             self.assertEqual( self.chunk_string, chunk.to_string() )
 
             # verify the record
+            self.assertEqual( 'product', chunk.keyword )
             self.assertEqual( False, chunk.empty )
             self.assertEqual( 12, chunk.size )
 
@@ -50,8 +53,9 @@ class Test_NDItk_depletion_Product( unittest.TestCase ) :
                 self.assertAlmostEqual( self.chunk_values[index], values[index] )
 
         # the data is given explicitly
-        chunk = Product( product = 1001, reactions = [ 28, 45, 103, 111, 112 ],
-                                multiplicities = [ 1, 1, 1, 2, 1 ] )
+        chunk = Product( 
+            Multiplicities( product = 1001, reactions = [ 28, 45, 103, 111, 112 ], multiplicities = [ 1, 1, 1, 2, 1 ] )
+        )
 
         verify_chunk( self, chunk )
 

@@ -20,6 +20,10 @@ namespace depletion {
  */
 class Target : protected base::Record {
 
+  /* auxiliary functions */
+
+  #include "NDItk/depletion/Target/src/verify.hpp"
+
 public:
 
   /* fields */
@@ -33,7 +37,7 @@ public:
   /* methods */
 
   /**
-   *  @brief Return the target particle's identifier
+   *  @brief Return the target particle identifier
    */
   int targetIdentifier() const { return this->identifier_; }
 

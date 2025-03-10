@@ -14,7 +14,7 @@ namespace NDItk {
 namespace depletion {
 
 /**
- *  @brief 
+ *  @brief A reaction product multiplicity subrecord for depletion data
  */
 class Multiplicities : protected base::SubListRecord< Multiplicities, int > {
 
@@ -36,32 +36,32 @@ public:
   /* methods */
 
   /**
-   *  @brief 
+   *  @brief Return the reaction product identifier
    */
-  int identifier() const { return this->value( 0 ); }
+  int reactionProduct() const { return this->value( 0 ); }
 
   /**
-   *  @brief 
+   *  @brief Return the number of reactions identifiers 
    */
-  int numberReactionData() const { return this->value( 1 ); }
+  int numberReactions() const { return this->value( 1 ); }
 
   /**
-   *  @brief 
+   *  @brief Return the reaction identifiers
    */
-  auto reactionData() const {
+  auto reactionIdentifiers() const {
 
     using namespace njoy::tools;
-    return this->values( 2, 2 * this->numberReactionData() )
+    return this->values( 2, 2 * this->numberReactions() )
                | std23::views::stride( 2 );
   }
 
   /**
-   *  @brief Return the reaction product multiplicities
+   *  @brief Return the reaction multiplicities
    */
   auto multiplicities() const {
 
     using namespace njoy::tools;
-    return this->values( 3, 2 * this->numberReactionData() )
+    return this->values( 3, 2 * this->numberReactions() )
                | std23::views::stride( 2 );
   }
 

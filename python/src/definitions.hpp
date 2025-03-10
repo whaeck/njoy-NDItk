@@ -120,6 +120,43 @@ void addStandardRecordDefinitions( PythonClass& record ) {
 }
 
 /**
+ *  @brief Add standard record definitions
+ *
+ *  This adds the following standard properties:
+ *    - keyword
+ *
+ *  This adds the following standard functions:
+ *    - to_string()
+ *
+ *  @param[in] record   the record to which the definitions have to be added
+ */
+template < typename Record, typename PythonClass >
+void addBaseRecordDefinitions( PythonClass& record ) {
+
+  record
+  .def_property_readonly(
+
+    "keyword",
+    [] ( const Record& self ) { return self.keyword(); },
+    "The record keyword"
+  )
+  .def(
+
+    "to_string",
+    [] ( const Record& self ) -> std::string {
+
+      std::string buffer;
+      auto output = std::back_inserter( buffer );
+      self.print( output );
+      return buffer;
+    },
+    "Return the string representation of the record\n\n"
+    "Arguments:\n"
+    "    self    the record"
+  );
+}
+
+/**
  *  @brief Add standard table definitions
  *
  *  This adds the following standard functions:

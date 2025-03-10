@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "NDItk/depletion/ReactionMultiplicities.hpp"
+#include "NDItk/multigroup/ReactionMultiplicities.hpp"
 #include "tools/views/views-python.hpp"
 #include "definitions.hpp"
 #include "read.hpp"
@@ -11,14 +11,14 @@
 // namespace aliases
 namespace python = pybind11;
 
-namespace depletion {
+namespace multigroup {
 
 void wrapReactionMultiplicities( python::module& module, python::module& ) {
 
   // type aliases
-  using Record = njoy::NDItk::depletion::ReactionMultiplicities;
-  using Multiplicities = njoy::NDItk::depletion::Multiplicities;
-  using ReactionMultiplicityType = njoy::NDItk::depletion::ReactionMultiplicityType;
+  using Record = njoy::NDItk::multigroup::ReactionMultiplicities;
+  using Multiplicities = njoy::NDItk::multigroup::Multiplicities;
+  using ReactionMultiplicityType = njoy::NDItk::multigroup::ReactionMultiplicityType;
 
   // wrap views created by this record
 
@@ -27,7 +27,7 @@ void wrapReactionMultiplicities( python::module& module, python::module& ) {
 
     module,
     "ReactionMultiplicities",
-    "A reaction product multiplicity record for depletion data"
+    "A reaction product multiplicity record for multigroup data"
   );
 
   // wrap the record
@@ -106,4 +106,4 @@ void wrapReactionMultiplicities( python::module& module, python::module& ) {
   addStandardRecordDefinitions< Record, DoubleRange >( record );
 }
 
-} // depletion namespace
+} // multigroup namespace

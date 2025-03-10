@@ -20,6 +20,10 @@ namespace depletion {
  */
 class IncidentParticle : protected base::Record {
 
+  /* auxiliary functions */
+
+  #include "NDItk/depletion/IncidentParticle/src/verify.hpp"
+
 public:
 
   /* fields */
@@ -33,17 +37,17 @@ public:
   /* methods */
 
   /**
-   *  @brief Return the target particle's identifier
+   *  @brief Return the incident particle identifier
    */
   int incidentIdentifier() const { return this->identifier_; }
 
   /**
-   *  @brief Return the number of products for this target
+   *  @brief Return the number of targets for this incident particle
    */
   int numberTargets() const { return this->targets_.size(); }
 
   /**
-   *  @brief Return the product data for this target
+   *  @brief Return the target data for this incident particle
    */
   const std::vector< Target >& targets() const { return this->targets_; }
 

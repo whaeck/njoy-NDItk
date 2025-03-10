@@ -15,7 +15,7 @@ namespace NDItk {
 namespace depletion {
 
 /**
- *  @brief A reaction identifier and multiplicity subrecord for a given product in depletion data
+ *  @brief A product record for depletion data
  */
 class Product : protected base::IntegerListRecord {
 
@@ -34,20 +34,20 @@ public:
   /**
    *  @brief Return the reaction product identifier
    */
-  int reactionProduct() const { return this->multiplicities_.identifier(); }
+  int reactionProduct() const { return this->multiplicities_.reactionProduct(); }
 
   /**
    *  @brief Return the number of reactions with this product 
    */
-  int numberReactions() const { return this->multiplicities_.numberReactionData(); }
+  int numberReactions() const { return this->multiplicities_.numberReactions(); }
 
   /**
    *  @brief Return the reaction identifiers
    */
-  auto reactionIdentifiers() const { return this->multiplicities_.reactionData(); }
+  auto reactionIdentifiers() const { return this->multiplicities_.reactionIdentifiers(); }
 
   /**
-   *  @brief Return the reaction product multiplicities
+   *  @brief Return the reaction multiplicities
    */
   auto multiplicities() const { return this->multiplicities_.multiplicities(); }
 

@@ -5,7 +5,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "NDItk/depletion/ReactionMultiplicities.hpp"
+#include "NDItk/multigroup/ReactionMultiplicities.hpp"
 #include "NDItk/multigroup/FissionType.hpp"
 #include "NDItk/multigroup/Metadata.hpp"
 #include "NDItk/multigroup/EnergyGroupStructure.hpp"
@@ -56,9 +56,9 @@ class MultigroupTable {
   multigroup::FissionNeutronSpectrumMatrix chi_matrix_total_;
   multigroup::HeatingNumbers primary_heating_;
   multigroup::Kerma primary_kerma_;
-  depletion::ReactionMultiplicities product_multiplicities_all_;
-  depletion::ReactionMultiplicities product_multiplicities_few_;
-  depletion::ReactionMultiplicities product_multiplicities_rmo_;
+  multigroup::ReactionMultiplicities product_multiplicities_all_;
+  multigroup::ReactionMultiplicities product_multiplicities_few_;
+  multigroup::ReactionMultiplicities product_multiplicities_rmo_;
   multigroup::OutgoingParticleTypes outgoing_particles_;
   multigroup::OutgoingParticleTransportData outgoing_zaids_;
   std::vector< multigroup::EnergyGroupStructure > outgoing_structure_;

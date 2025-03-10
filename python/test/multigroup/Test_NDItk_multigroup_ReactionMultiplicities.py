@@ -4,11 +4,11 @@ import unittest
 # third party imports
 
 # local imports
-from NDItk.depletion import ReactionMultiplicities
-from NDItk.depletion import Multiplicities
-from NDItk.depletion import ReactionMultiplicityType
+from NDItk.multigroup import ReactionMultiplicities
+from NDItk.multigroup import Multiplicities
+from NDItk.multigroup import ReactionMultiplicityType
 
-class Test_NDItk_depletion_ReactionMultiplicities( unittest.TestCase ) :
+class Test_NDItk_multigroup_ReactionMultiplicities( unittest.TestCase ) :
     """Unit test for the ReactionMultiplicities class."""
 
     chunk_values = [ 2, 2, 1, 1, 92235, 1, 16, 2, 1, 2, 92234, 1 ]

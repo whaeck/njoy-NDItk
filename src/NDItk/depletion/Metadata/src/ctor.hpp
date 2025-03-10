@@ -18,16 +18,20 @@ Metadata() : zaid_( base::Keyword( "zaid" ) ),
  *  @param[in] information          the table information line (optional)
  *  @param[in] source               the source date (optional)
  */
-Metadata( std::string zaid, std::string libname, std::string process, int incident,
-          std::optional< std::string > information = std::nullopt,
-          std::optional< std::string > source = std::nullopt ):
-    zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
-    information_( information.has_value()
-                  ? base::InformationRecord( std::move( information.value() ) )
-                  : base::InformationRecord() ),
-    library_name_( base::Keyword( "library_name" ), std::move( libname ) ),
-    source_date_( source.has_value()
-                  ? base::SingleStringRecord( base::Keyword( "date_source" ), std::move( source.value() ) )
-                  : base::SingleStringRecord( base::Keyword( "date_source" ) ) ),
-    process_date_( base::Keyword( "date_processed" ), std::move( process ) ),
-    number_incident_( base::Keyword( "num_inc_parts" ), incident ) {}
+Metadata( 
+    std::string zaid, 
+    std::string libname, 
+    std::string process, 
+    int incident,
+    std::optional< std::string > information = std::nullopt,
+    std::optional< std::string > source = std::nullopt ):
+        zaid_( base::Keyword( "zaid" ), std::move( zaid ) ),
+        information_( information.has_value()
+                    ? base::InformationRecord( std::move( information.value() ) )
+                    : base::InformationRecord() ),
+        library_name_( base::Keyword( "library_name" ), std::move( libname ) ),
+        source_date_( source.has_value()
+                    ? base::SingleStringRecord( base::Keyword( "date_source" ), std::move( source.value() ) )
+                    : base::SingleStringRecord( base::Keyword( "date_source" ) ) ),
+        process_date_( base::Keyword( "date_processed" ), std::move( process ) ),
+        number_incident_( base::Keyword( "num_inc_parts" ), incident ) {}

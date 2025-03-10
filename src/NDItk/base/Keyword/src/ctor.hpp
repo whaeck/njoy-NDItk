@@ -8,7 +8,7 @@ private:
 Keyword( std::tuple< std::string,
                      std::optional< std::string >,
                      std::optional< int >,
-                     std::optional< depletion::ReactionMultiplicityType >,
+                     std::optional< multigroup::ReactionMultiplicityType >,
                      std::optional< multigroup::FissionType > > tuple ) :
     keyword_( std::move( std::get< 0 >( tuple ) ) ),
     subtype_( std::move( std::get< 1 >( tuple ) ) ),
@@ -43,11 +43,11 @@ Keyword( std::string subtype, unsigned int particle ) :
  *  @param[in] subtype    the subtype of the record
  *  @param[in] type       the multiplicity type
  */
-Keyword( std::string subtype, depletion::ReactionMultiplicityType type ) :
+Keyword( std::string subtype, multigroup::ReactionMultiplicityType type ) :
     Keyword( subtype +
-             ( type == depletion::ReactionMultiplicityType::All
+             ( type == multigroup::ReactionMultiplicityType::All
                ? std::string( "_all" )
-               : type == depletion::ReactionMultiplicityType::Few
+               : type == multigroup::ReactionMultiplicityType::Few
                  ? std::string( "_few" )
                  : std::string( "_rmo" ) ) ) {}
 

@@ -9,10 +9,13 @@ IncidentParticle():
 /**
  *  @brief Constructor
  *
- *  @param[in] 
- *  @param[in] 
+ *  @param[in] identifier   The incident particle identifier
+ *  @param[in] targets      A vector of depletion targets
  */
-IncidentParticle( int incident_identifier, std::vector< Target > targets ):
+IncidentParticle( int identifier, std::vector< Target > targets ):
   Record( base::Keyword( "inc_part" ) ), 
-  identifier_( incident_identifier ),
-  targets_( std::move(targets) ) {}
+  identifier_( identifier ),
+  targets_( std::move(targets) ) {
+
+    verify( this->targets() );
+  }

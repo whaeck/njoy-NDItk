@@ -11,7 +11,7 @@
 static std::tuple< std::string,
                    std::optional< std::string >,
                    std::optional< int >,
-                   std::optional< depletion::ReactionMultiplicityType >,
+                   std::optional< multigroup::ReactionMultiplicityType >,
                    std::optional< multigroup::FissionType > >
 splitKeyword( std::string keyword ) {
 
@@ -43,9 +43,9 @@ splitKeyword( std::string keyword ) {
             std::string subtype = keyword.substr( 0, keyword.size() - suffixes[i].size() );
             switch ( i ) {
 
-              case 0 : return { std::move( keyword ), std::move( subtype ), std::nullopt, depletion::ReactionMultiplicityType::All, std::nullopt };
-              case 1 : return { std::move( keyword ), std::move( subtype ), std::nullopt, depletion::ReactionMultiplicityType::Few, std::nullopt };
-              case 2 : return { std::move( keyword ), std::move( subtype ), std::nullopt, depletion::ReactionMultiplicityType::RMO, std::nullopt };
+              case 0 : return { std::move( keyword ), std::move( subtype ), std::nullopt, multigroup::ReactionMultiplicityType::All, std::nullopt };
+              case 1 : return { std::move( keyword ), std::move( subtype ), std::nullopt, multigroup::ReactionMultiplicityType::Few, std::nullopt };
+              case 2 : return { std::move( keyword ), std::move( subtype ), std::nullopt, multigroup::ReactionMultiplicityType::RMO, std::nullopt };
               case 3 : return { std::move( keyword ), std::move( subtype ), std::nullopt, std::nullopt, multigroup::FissionType::Prompt };
               case 4 : return { std::move( keyword ), std::move( subtype ), std::nullopt, std::nullopt, multigroup::FissionType::Delayed };
               case 5 : return { std::move( keyword ), std::move( subtype ), std::nullopt, std::nullopt, multigroup::FissionType::Total };

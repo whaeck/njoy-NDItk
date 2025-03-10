@@ -15,9 +15,9 @@ MultigroupTable() :
     chi_matrix_delayed_( multigroup::FissionType::Delayed ),
     chi_matrix_total_( multigroup::FissionType::Total ),
     primary_heating_(), primary_kerma_(),
-    product_multiplicities_all_( depletion::ReactionMultiplicityType::All ),
-    product_multiplicities_few_( depletion::ReactionMultiplicityType::Few ),
-    product_multiplicities_rmo_( depletion::ReactionMultiplicityType::RMO ),
+    product_multiplicities_all_( multigroup::ReactionMultiplicityType::All ),
+    product_multiplicities_few_( multigroup::ReactionMultiplicityType::Few ),
+    product_multiplicities_rmo_( multigroup::ReactionMultiplicityType::RMO ),
     outgoing_particles_(), outgoing_zaids_(),
     outgoing_structure_(), outgoing_production_(),
     outgoing_heating_(), outgoing_kerma_() {}

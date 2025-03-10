@@ -60,16 +60,7 @@ void wrapTarget( python::module& module, python::module& ) {
     "products",
     &Record::products,
     "Return the product data for this target"
-  )
-/*
-  .def_property_readonly(
-
-    "keyword",
-    &Record::keyword,
-    "The record keyword"
-  )
-*/
-  ;
+  );
 
   // add standard record definitions
   addBaseRecordDefinitions<Record>( record );

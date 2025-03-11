@@ -25,4 +25,4 @@
 #include "NDItk/depletion/Metadata.hpp"
 
 #include "NDItk/MultigroupTable.hpp"
-#include "NDItk/DepletionTabl.hpp"
+#include "NDItk/DepletionTable.hpp"

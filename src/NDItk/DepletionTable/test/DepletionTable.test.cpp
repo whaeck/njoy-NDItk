@@ -159,13 +159,42 @@ std::string chunk() {
 
 void verifyChunk( const DepletionTable& chunk ) {
 
-  // metadata
-  CHECK( "nosub.010zpd" == chunk.metadata().zaid() );
-  CHECK( "this is some information for the table" == chunk.metadata().information() );
-  CHECK( "e66_618_chain" == chunk.metadata().libraryName() );
-  CHECK( "02/01/2007" == chunk.metadata().sourceDate() );
-  CHECK( "02/01/2007" == chunk.metadata().processingDate() );
+  CHECK( 1 == chunk.numberIncidentParticles() );
 
+  auto metadata = chunk.metadata();
+  CHECK( "nosub.010zpd" == metadata.zaid() );
+  CHECK( "this is some information for the table" == metadata.information() );
+  CHECK( "e66_618_chain" == metadata.libraryName() );
+  CHECK( "02/01/2007" == metadata.sourceDate() );
+  CHECK( "02/01/2007" == metadata.processingDate() );
+
+  auto incident0 = chunk.incidentParticles()[0];
+  CHECK( 1 == chunk.incidentParticle(1).incidentIdentifier() )
+  CHECK( "inc_part" == incident0.keyword() );
+  CHECK(          1 == incident0.incidentIdentifier() );
+  CHECK(          2 == incident0.numberTargets() );
+
+  auto target0 = incident0.targets()[0];
+  CHECK( "target" == target0.keyword() );
+  CHECK(     1001 == target0.targetIdentifier() );
+  CHECK(        1 == target0.numberProducts() );
+  CHECK(     1002 == target0.products()[0].reactionProduct() );
+  CHECK(        1 == target0.products()[0].numberReactions() );
+  CHECK(      102 == target0.products()[0].reactionIdentifiers()[0] );
+  CHECK(        1 == target0.products()[0].multiplicities()[0] );
+
+  auto target1 = incident0.targets()[1];
+  CHECK( "target" == target1.keyword() );
+  CHECK(     1002 == target1.targetIdentifier() );
+  CHECK(        2 == target1.numberProducts() );
+  CHECK(     1001 == target1.products()[0].reactionProduct() );
+  CHECK(        1 == target1.products()[0].numberReactions() );
+  CHECK(       16 == target1.products()[0].reactionIdentifiers()[0] );
+  CHECK(        1 == target1.products()[0].multiplicities()[0] );
+  CHECK(     1003 == target1.products()[1].reactionProduct() );
+  CHECK(        1 == target1.products()[1].numberReactions() );
+  CHECK(      102 == target1.products()[1].reactionIdentifiers()[0] );
+  CHECK(        1 == target1.products()[1].multiplicities()[0] );
 }
 
 std::string chunkWithMissingRecords() {

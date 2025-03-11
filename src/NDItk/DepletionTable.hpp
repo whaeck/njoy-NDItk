@@ -68,6 +68,12 @@ public:
     throw std::exception();
   }
 
+  /**
+   *  @brief Return the vector containing all incident particle records
+   */
+  const std::vector< depletion::IncidentParticle >&
+  incidentParticles() const { return this->incident_particles_; }
+
   #include "NDItk/DepletionTable/src/read.hpp"
 
   /**

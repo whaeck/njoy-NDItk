@@ -64,7 +64,7 @@ void wrapDepletionTable( python::module& module, python::module& ) {
     &Table::numberIncidentParticles,
     "Return the number of incident particles"
   )
-  .def(
+  .def_property_readonly(
 
     "incident_particle",
     &Table::incidentParticle,
@@ -73,6 +73,12 @@ void wrapDepletionTable( python::module& module, python::module& ) {
     "Arguments:\n"
     "    self       the table\n"
     "    particle   the incident particle identifier"
+  )
+  .def_property_readonly(
+
+    "incident_particles",
+    &Table::incidentParticles,
+    "Return the vector containing all incident particle records"
   );
 
   // add standard table definitions

@@ -14,10 +14,10 @@
 #include "NDItk/multigroup/ScatteringMatrix.hpp"
 #include "NDItk/multigroup/TotalCrossSection.hpp"
 #include "NDItk/multigroup/Velocities.hpp"
+#include "NDItk/multigroup/Multiplicities.hpp"
+#include "NDItk/multigroup/ReactionMultiplicities.hpp"
+#include "NDItk/multigroup/ReactionMultiplicityType.hpp"
 
-#include "NDItk/depletion/Multiplicities.hpp"
-#include "NDItk/depletion/ReactionMultiplicities.hpp"
-#include "NDItk/depletion/ReactionMultiplicityType.hpp"
 #include "NDItk/depletion/Product.hpp"
 #include "NDItk/depletion/Target.hpp"
 

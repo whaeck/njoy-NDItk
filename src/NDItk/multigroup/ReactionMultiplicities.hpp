@@ -1,5 +1,5 @@
-#ifndef NJOY_NDITK_DEPLETION_REACTIONPRODUCTMULTIPLICITIES
-#define NJOY_NDITK_DEPLETION_REACTIONPRODUCTMULTIPLICITIES
+#ifndef NJOY_NDITK_MULTIGROUP_REACTIONMULTIPLICITIES
+#define NJOY_NDITK_MULTIGROUP_REACTIONMULTIPLICITIES
 
 // system includes
 #include <algorithm>
@@ -8,15 +8,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "NDItk/base/IntegerListRecord.hpp"
-#include "NDItk/depletion/ReactionMultiplicityType.hpp"
-#include "NDItk/depletion/Multiplicities.hpp"
+#include "NDItk/multigroup/ReactionMultiplicityType.hpp"
+#include "NDItk/multigroup/Multiplicities.hpp"
 
 namespace njoy {
 namespace NDItk {
-namespace depletion {
+namespace multigroup {
 
 /**
- *  @brief A reaction product multiplicity record for depletion data
+ *  @brief A reaction product multiplicity record for multigroup data
  */
 class ReactionMultiplicities : protected base::IntegerListRecord {
 
@@ -27,9 +27,9 @@ class ReactionMultiplicities : protected base::IntegerListRecord {
 
   /* auxiliary functions */
 
-  #include "NDItk/depletion/ReactionMultiplicities/src/verify.hpp"
-  #include "NDItk/depletion/ReactionMultiplicities/src/generateData.hpp"
-  #include "NDItk/depletion/ReactionMultiplicities/src/generateBlocks.hpp"
+  #include "NDItk/multigroup/ReactionMultiplicities/src/verify.hpp"
+  #include "NDItk/multigroup/ReactionMultiplicities/src/generateData.hpp"
+  #include "NDItk/multigroup/ReactionMultiplicities/src/generateBlocks.hpp"
 
   using base::IntegerListRecord::key;
 
@@ -37,7 +37,7 @@ public:
 
   /* constructor */
 
-  #include "NDItk/depletion/ReactionMultiplicities/src/ctor.hpp"
+  #include "NDItk/multigroup/ReactionMultiplicities/src/ctor.hpp"
 
   /* methods */
 
@@ -105,11 +105,11 @@ public:
   using base::IntegerListRecord::begin;
   using base::IntegerListRecord::end;
 
-  #include "NDItk/depletion/ReactionMultiplicities/src/read.hpp"
-  #include "NDItk/depletion/ReactionMultiplicities/src/print.hpp"
+  #include "NDItk/multigroup/ReactionMultiplicities/src/read.hpp"
+  #include "NDItk/multigroup/ReactionMultiplicities/src/print.hpp"
 };
 
-} // depletion namespace
+} // multigroup namespace
 } // NDItk namespace
 } // njoy namespace
 

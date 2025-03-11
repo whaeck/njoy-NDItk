@@ -1,5 +1,5 @@
-#ifndef NJOY_NDITK_DEPLETION_MULTIPLICITIES
-#define NJOY_NDITK_DEPLETION_MULTIPLICITIES
+#ifndef NJOY_NDITK_MULTIGROUP_MULTIPLICITIES
+#define NJOY_NDITK_MULTIGROUP_MULTIPLICITIES
 
 // system includes
 #include <sstream>
@@ -11,10 +11,10 @@
 
 namespace njoy {
 namespace NDItk {
-namespace depletion {
+namespace multigroup {
 
 /**
- *  @brief A reaction product multiplicity subrecord for depletion data
+ *  @brief A reaction product multiplicity subrecord for multigroup data
  */
 class Multiplicities : protected base::SubListRecord< Multiplicities, int > {
 
@@ -23,15 +23,15 @@ class Multiplicities : protected base::SubListRecord< Multiplicities, int > {
 
   /* auxiliary functions */
 
-  #include "NDItk/depletion/Multiplicities/src/verify.hpp"
-  #include "NDItk/depletion/Multiplicities/src/generateData.hpp"
-  #include "NDItk/depletion/Multiplicities/src/write.hpp"
+  #include "NDItk/multigroup/Multiplicities/src/verify.hpp"
+  #include "NDItk/multigroup/Multiplicities/src/generateData.hpp"
+  #include "NDItk/multigroup/Multiplicities/src/write.hpp"
 
 public:
 
   /* constructor */
 
-  #include "NDItk/depletion/Multiplicities/src/ctor.hpp"
+  #include "NDItk/multigroup/Multiplicities/src/ctor.hpp"
 
   /* methods */
 
@@ -73,7 +73,7 @@ public:
   using Parent::print;
 };
 
-} // depletion namespace
+} // multigroup namespace
 } // NDItk namespace
 } // njoy namespace
 

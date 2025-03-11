@@ -3,17 +3,17 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "NDItk/depletion/ReactionMultiplicityType.hpp"
+#include "NDItk/multigroup/ReactionMultiplicityType.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-namespace depletion {
+namespace multigroup {
 
 void wrapReactionMultiplicityType( python::module& module, python::module& ) {
 
   // type aliases
-  using Component = njoy::NDItk::depletion::ReactionMultiplicityType;
+  using Component = njoy::NDItk::multigroup::ReactionMultiplicityType;
 
   // wrap views created by this component
 
@@ -33,4 +33,4 @@ void wrapReactionMultiplicityType( python::module& module, python::module& ) {
   .value( "RMO", Component::RMO );
 }
 
-} // namespace depletion
+} // namespace multigroup

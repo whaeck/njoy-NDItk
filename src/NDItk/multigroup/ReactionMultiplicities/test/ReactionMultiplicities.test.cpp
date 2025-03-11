@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "NDItk/depletion/ReactionMultiplicities.hpp"
+#include "NDItk/multigroup/ReactionMultiplicities.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::NDItk;
-using Multiplicities = depletion::Multiplicities;
-using ReactionMultiplicities = depletion::ReactionMultiplicities;
-using ReactionMultiplicityType = depletion::ReactionMultiplicityType;
+using Multiplicities = multigroup::Multiplicities;
+using ReactionMultiplicities = multigroup::ReactionMultiplicities;
+using ReactionMultiplicityType = multigroup::ReactionMultiplicityType;
 
 std::string chunk();
 void verifyChunk( const ReactionMultiplicities& );

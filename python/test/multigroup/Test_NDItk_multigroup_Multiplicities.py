@@ -4,9 +4,9 @@ import unittest
 # third party imports
 
 # local imports
-from NDItk.depletion import Multiplicities
+from NDItk.multigroup import Multiplicities
 
-class Test_NDItk_depletion_Multiplicities( unittest.TestCase ) :
+class Test_NDItk_multigroup_Multiplicities( unittest.TestCase ) :
     """Unit test for the Multiplicities class."""
 
     chunk_values = [ 16, 2, 1, 2, 92234, 1 ]

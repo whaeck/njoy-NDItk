@@ -1,5 +1,5 @@
-#ifndef NJOY_NDITK_DEPLETION_REACTIONMULTIPLICITYTYPE
-#define NJOY_NDITK_DEPLETION_REACTIONMULTIPLICITYTYPE
+#ifndef NJOY_NDITK_MULTIGROUP_REACTIONMULTIPLICITYTYPE
+#define NJOY_NDITK_MULTIGROUP_REACTIONMULTIPLICITYTYPE
 
 // system includes
 
@@ -7,7 +7,7 @@
 
 namespace njoy {
 namespace NDItk {
-namespace depletion {
+namespace multigroup {
 
 enum class ReactionMultiplicityType : short {
 
@@ -16,7 +16,7 @@ enum class ReactionMultiplicityType : short {
   RMO = 3 //! @todo change this name to be more understandable
 };
 
-} // depletion namespace
+} // multigroup namespace
 } // NDItk namespace
 } // njoy namespace
 

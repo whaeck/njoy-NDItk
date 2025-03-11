@@ -169,7 +169,7 @@ void verifyChunk( const DepletionTable& chunk ) {
   CHECK( "02/01/2007" == metadata.processingDate() );
 
   auto incident0 = chunk.incidentParticles()[0];
-  CHECK( 1 == chunk.incidentParticle(1).incidentIdentifier() )
+  CHECK( 1 == chunk.incidentParticle(1).incidentIdentifier() );
   CHECK( "inc_part" == incident0.keyword() );
   CHECK(          1 == incident0.incidentIdentifier() );
   CHECK(          2 == incident0.numberTargets() );

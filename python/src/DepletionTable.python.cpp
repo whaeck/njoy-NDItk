@@ -14,6 +14,7 @@ void wrapDepletionTable( python::module& module, python::module& ) {
 
   // type aliases
   using Table = njoy::NDItk::DepletionTable;
+  using IncidentParticle = njoy::NDItk::depletion::IncidentParticle;
 
   // wrap views created by this table
 
@@ -33,7 +34,7 @@ void wrapDepletionTable( python::module& module, python::module& ) {
       std::string, 
       std::string, 
       std::string,
-      std::vector< depletion::IncidentParticle > incident,
+      std::vector< IncidentParticle >,
       std::optional< std::string >,
       std::optional< std::string > >(),
     python::arg( "zaid" ), 
@@ -64,7 +65,7 @@ void wrapDepletionTable( python::module& module, python::module& ) {
     &Table::numberIncidentParticles,
     "Return the number of incident particles"
   )
-  .def_property_readonly(
+  .def(
 
     "incident_particle",
     &Table::incidentParticle,

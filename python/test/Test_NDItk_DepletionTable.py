@@ -34,7 +34,7 @@ class Test_NDItk_DepletionTable( unittest.TestCase ) :
             self.assertEqual( 1, incident0.incident_identifier )
             self.assertEqual( 2, incident0.number_targets )
 
-            target0 = chunk.incident0.targets[0]
+            target0 = incident0.targets[0]
             self.assertEqual( "target", target0.keyword )
             self.assertEqual(     1001, target0.target_identifier)
             self.assertEqual(        1, target0.number_products)
@@ -43,7 +43,7 @@ class Test_NDItk_DepletionTable( unittest.TestCase ) :
             self.assertEqual(      102, target0.products[0].reaction_identifiers[0])
             self.assertEqual(        1, target0.products[0].multiplicities[0])
 
-            target1 = chunk.incident0.targets[1]
+            target1 = incident0.targets[1]
             self.assertEqual( "target", target1.keyword )
             self.assertEqual(     1002, target1.target_identifier)
             self.assertEqual(        2, target1.number_products)

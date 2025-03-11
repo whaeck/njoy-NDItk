@@ -29,7 +29,7 @@ SCENARIO( "Product" ) {
       std::vector< int > reactions = { 28, 45, 103, 111, 112 };
       std::vector< int > multiplicities = { 1, 1, 1, 2, 1 };
 
-      Product chunk( product, std::move( reactions ), std::move( multiplicities ) );
+      Product chunk( {product, std::move( reactions ), std::move( multiplicities )} );
 
       THEN( "a Product can be constructed and members can "
             "be tested" ) {
@@ -53,7 +53,7 @@ SCENARIO( "Product" ) {
       auto begin = values.begin();
       auto end = values.end();
 
-      Product chunk( begin, end );
+      Product chunk( {begin, end} );
 
       THEN( "a Product can be constructed and members can "
             "be tested" ) {
@@ -78,7 +78,7 @@ SCENARIO( "Product" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( Product( 1001, { 28, 45 }, { 1 } ) );
+        CHECK_THROWS( Product( {1001, { 28, 45 }, { 1 }} ) );
       } // THEN
     } // WHEN
 
@@ -91,7 +91,7 @@ SCENARIO( "Product" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( Product( begin, end ) );
+        CHECK_THROWS( Product( {begin, end} ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -99,13 +99,15 @@ SCENARIO( "Product" ) {
 
 std::string chunk() {
 
-  return "    1001\n"
-         "    5\n"
-         "    28 1\n"
-         "    45 1\n"
-         "    103 1\n"
-         "    111 2\n"
-         "    112 1\n";
+  // indentation level = 2
+  return "    product\n"
+         "      1001\n"
+         "      5\n"
+         "      28 1\n"
+         "      45 1\n"
+         "      103 1\n"
+         "      111 2\n"
+         "      112 1\n";
 }
 
 std::vector< int > data() {

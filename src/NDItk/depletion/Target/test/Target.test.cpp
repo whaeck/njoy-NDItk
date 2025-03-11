@@ -28,12 +28,12 @@ SCENARIO( "Target" ) {
 
       std::vector< Product > products = {
 
-        { 1001, { 24, 103 }, { 1, 1 } },
-        { 1002, { 32 }, { 1 } },
-        { 1003, { 105 }, { 1 } },
-        { 2004, { 24, 32, 105 }, { 1, 1, 1 } },
-        { 2006, { 103 }, { 1 } },
-        { 3007, { 102 }, { 1 } }
+        {{ 1001, { 24, 103 }, { 1, 1 } }},
+        {{ 1002, { 32 }, { 1 } }},
+        {{ 1003, { 105 }, { 1 } }},
+        {{ 2004, { 24, 32, 105 }, { 1, 1, 1 } }},
+        {{ 2006, { 103 }, { 1 } }},
+        {{ 3007, { 102 }, { 1 } }}
       };
 
       Target chunk( 3006, std::move( products ) );
@@ -55,7 +55,7 @@ SCENARIO( "Target" ) {
 
     WHEN( "the data is defined using iterators" ) {
 
-      auto iter = record.begin() + 6;
+      auto iter = record.begin() + 8;
       auto end = record.end();
 
       Target chunk;
@@ -78,7 +78,7 @@ SCENARIO( "Target" ) {
 
     WHEN( "using the copy constructor" ) {
 
-      auto iter = record.begin() + 6;
+      auto iter = record.begin() + 8;
       auto end = record.end();
       Target chunk;
       chunk.read( iter, end );
@@ -102,7 +102,7 @@ SCENARIO( "Target" ) {
 
     WHEN( "using the move constructor" ) {
 
-      auto iter = record.begin() + 6;
+      auto iter = record.begin() + 8;
       auto end = record.end();
       Target chunk;
       chunk.read( iter, end );
@@ -126,7 +126,7 @@ SCENARIO( "Target" ) {
 
     WHEN( "using copy assignment" ) {
 
-      auto iter = record.begin() + 6;
+      auto iter = record.begin() + 8;
       auto end = record.end();
       Target chunk;
       chunk.read( iter, end );
@@ -151,7 +151,7 @@ SCENARIO( "Target" ) {
 
     WHEN( "using move assignment" ) {
 
-      auto iter = record.begin() + 6;
+      auto iter = record.begin() + 8;
       auto end = record.end();
       Target chunk;
       chunk.read( iter, end );
@@ -175,7 +175,6 @@ SCENARIO( "Target" ) {
     } // WHEN
   } // GIVEN
 
-/*
   GIVEN( "invalid data for a Target instance" ) {
 
     WHEN( "the number of products is insufficient" ) {
@@ -202,7 +201,6 @@ SCENARIO( "Target" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-*/
 } // SCENARIO
 
 void verifyChunk( const Target& chunk ) {
@@ -250,37 +248,37 @@ void verifyChunk( const Target& chunk ) {
 
 std::string chunk() {
 
-  return "target\n"
-         "  3006\n"
-         "  num_products\n"
-         "    6\n"
-         "  product\n"
-         "    1001\n"
-         "    2\n"
-         "    24 1\n"
-         "    103 1\n"
-         "  product\n"
-         "    1002\n"
-         "    1\n"
-         "    32 1\n"
-         "  product\n"
-         "    1003\n"
-         "    1\n"
-         "    105 1\n"
-         "  product\n"
-         "    2004\n"
-         "    3\n"
-         "    24 1\n"
-         "    32 1\n"
-         "    105 1\n"
-         "  product\n"
-         "    2006\n"
-         "    1\n"
-         "    103 1\n"
-         "  product\n"
-         "    3007\n"
-         "    1\n"
-         "    102 1\n";
+  return "  target\n"
+         "    3006\n"
+         "    num_products\n"
+         "      6\n"
+         "    product\n"
+         "      1001\n"
+         "      2\n"
+         "      24 1\n"
+         "      103 1\n"
+         "    product\n"
+         "      1002\n"
+         "      1\n"
+         "      32 1\n"
+         "    product\n"
+         "      1003\n"
+         "      1\n"
+         "      105 1\n"
+         "    product\n"
+         "      2004\n"
+         "      3\n"
+         "      24 1\n"
+         "      32 1\n"
+         "      105 1\n"
+         "    product\n"
+         "      2006\n"
+         "      1\n"
+         "      103 1\n"
+         "    product\n"
+         "      3007\n"
+         "      1\n"
+         "      102 1\n";
 }
 
 std::string chunkWithInsufficientNumberProducts() {
@@ -290,5 +288,5 @@ std::string chunkWithInsufficientNumberProducts() {
 
 Target makeDummyRecord() {
 
-  return Target( 1001, { { 1002, { 102 }, { 1 } } } );
+  return Target( 1001, { {{ 1002, { 102 }, { 1 } }} } );
 }

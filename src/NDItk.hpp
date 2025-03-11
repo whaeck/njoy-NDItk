@@ -18,6 +18,7 @@
 #include "NDItk/multigroup/ReactionMultiplicities.hpp"
 #include "NDItk/multigroup/ReactionMultiplicityType.hpp"
 
+#include "NDItk/depletion/Multiplicities.hpp"
 #include "NDItk/depletion/Product.hpp"
 #include "NDItk/depletion/Target.hpp"
 

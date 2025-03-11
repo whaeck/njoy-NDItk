@@ -1,36 +1,30 @@
 /**
-*   @brief Print the record (if it is not empty)
+*   @brief Print the record 
 *
-*   @param[in] iter           the current position in the output
- *  @param[in] indent_level   an optional specification for which indentation level to start printing at
+*   @param[in] iter     the current position in the output
 */
 template< typename OutputIterator >
-void print( OutputIterator& iter, int indent_level=0 ) const {
+void print( OutputIterator& iter ) const {
 
-  if ( this->numberProducts() > 0 ) {
+  auto indentLevel  = 1;
+  auto indentPrefix = [](int n){ return std::string(2*n, ' '); };
 
-    auto indent_prefix = [](int n){ return std::string(2*n, ' '); };
+  std::ostringstream buffer;
+
+  buffer << indentPrefix(indentLevel) << this->keyword() << "\n";
+
+  buffer << indentPrefix(indentLevel+1) << this->targetIdentifier() << "\n";
+
+  buffer << indentPrefix(indentLevel+1) << "num_products\n";
+  buffer << indentPrefix(indentLevel+2) << this->numberProducts() << "\n";
   
-    std::ostringstream buffer;
-  
-    buffer << indent_prefix(indent_level) << this->keyword() << "\n";
+  for (const auto& entry : this->products() ) {
 
-    buffer << indent_prefix(indent_level+1) << this->targetIdentifier() << "\n";
-
-    buffer << indent_prefix(indent_level+1) << "num_products\n";
-
-    buffer << indent_prefix(indent_level+2) << this->numberProducts() << "\n";
-    
-    for (const auto& entry : this->products() ) {
-
-      buffer << indent_prefix(indent_level+1) << "product\n";
-
-      std::string tmp;
-      auto tmp_output = std::back_inserter(tmp);
-      entry.print( tmp_output, indent_level+2 );
-      buffer << tmp;
-    }
-
-    for ( auto c : buffer.str() ) { *iter++ = c; }
+    std::string tmp;
+    auto tmp_output = std::back_inserter(tmp);
+    entry.print( tmp_output );
+    buffer << tmp;
   }
+
+  for ( auto c : buffer.str() ) { *iter++ = c; }
 }

@@ -3,16 +3,19 @@
  */
 Target():
   Record( base::Keyword( "target" ) ), 
-  target_identifier_(),
+  identifier_(),
   products_() {}
 
 /**
  *  @brief Constructor
  *
- *  @param[in] target_identifier
- *  @param[in] products
+ *  @param[in] identifier   target particle identifier
+ *  @param[in] products     vector of depletion products
  */
-Target( unsigned int target_identifier, std::vector< Product > products ):
+Target( int identifier, std::vector< Product > products ):
   Record( base::Keyword( "target" ) ), 
-  target_identifier_( target_identifier ),
-  products_( std::move(products) ) {}
+  identifier_( identifier ),
+  products_( std::move(products) ) {
+
+    verify( this->products() );
+  }

@@ -20,10 +20,14 @@ namespace depletion {
  */
 class Target : protected base::Record {
 
+  /* auxiliary functions */
+
+  #include "NDItk/depletion/Target/src/verify.hpp"
+
 public:
 
-  unsigned int target_identifier_;
-
+  /* fields */
+  int identifier_;
   std::vector< Product > products_;
 
   /* constructor */
@@ -33,9 +37,9 @@ public:
   /* methods */
 
   /**
-   *  @brief Return the target particle's identifier
+   *  @brief Return the target particle identifier
    */
-  unsigned int targetIdentifier() const { return this->target_identifier_; }
+  int targetIdentifier() const { return this->identifier_; }
 
   /**
    *  @brief Return the number of products for this target

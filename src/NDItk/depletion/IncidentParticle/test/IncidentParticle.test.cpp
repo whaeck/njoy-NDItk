@@ -230,10 +230,8 @@ std::string chunk() {
 
  return "inc_part\n"
         "  1\n"
-//        "\n"
         "  num_targets\n"
         "    2\n"
-//        "\n"
         "  target\n"
         "    1001\n"
         "    num_products\n"
@@ -242,7 +240,6 @@ std::string chunk() {
         "      1002\n"
         "      1\n"
         "      102 1\n"
-//        "\n"
         "  target\n"
         "    1002\n"
         "    num_products\n"

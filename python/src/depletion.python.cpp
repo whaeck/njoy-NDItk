@@ -14,6 +14,7 @@ namespace depletion {
   void wrapProduct( python::module&, python::module& );
   void wrapTarget( python::module&, python::module& );
   void wrapIncidentParticle( python::module&, python::module& );
+  void wrapMetadata( python::module&, python::module& );
 }
 
 void wrapDepletion( python::module& module, python::module& viewmodule ) {
@@ -29,4 +30,5 @@ void wrapDepletion( python::module& module, python::module& viewmodule ) {
   depletion::wrapProduct( submodule, viewmodule );
   depletion::wrapTarget( submodule, viewmodule );
   depletion::wrapIncidentParticle( submodule, viewmodule );
+  depletion::wrapMetadata( submodule, viewmodule );
 }

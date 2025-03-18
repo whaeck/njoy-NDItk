@@ -26,6 +26,7 @@ add_python_test( depletion.Multiplicities                 depletion/Test_NDItk_d
 add_python_test( depletion.Product                        depletion/Test_NDItk_depletion_Product.py )
 add_python_test( depletion.Target                         depletion/Test_NDItk_depletion_Target.py )
 add_python_test( depletion.IncidentParticle               depletion/Test_NDItk_depletion_IncidentParticle.py )
+add_python_test( depletion.Metadata                       depletion/Test_NDItk_depletion_Metadata.py )
 
 add_python_test( multigroup.Multiplicities                multigroup/Test_NDItk_multigroup_Multiplicities.py )
 add_python_test( multigroup.ReactionMultiplicities        multigroup/Test_NDItk_multigroup_ReactionMultiplicities.py )

@@ -21,5 +21,6 @@
 #include "NDItk/depletion/Multiplicities.hpp"
 #include "NDItk/depletion/Product.hpp"
 #include "NDItk/depletion/Target.hpp"
+#include "NDItk/depletion/IncidentParticle.hpp"
 
 #include "NDItk/MultigroupTable.hpp"

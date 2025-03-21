@@ -22,6 +22,8 @@ endfunction()
 
 message( STATUS "Adding NDItk Python unit testing" )
 
+add_python_test( thermonuclear.Temperatures               thermonuclear/Test_NDItk_thermonuclear_Temperatures.py )
+
 add_python_test( depletion.Multiplicities                 depletion/Test_NDItk_depletion_Multiplicities.py )
 add_python_test( depletion.Product                        depletion/Test_NDItk_depletion_Product.py )
 add_python_test( depletion.Target                         depletion/Test_NDItk_depletion_Target.py )

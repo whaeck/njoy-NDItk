@@ -45,6 +45,8 @@ public:
 
   /**
    *  @brief Return the record for an incident particle
+   *
+   * @param[in] particle  the incident particle identifier to find
    */
   const depletion::IncidentParticle&
   incidentParticle( unsigned int particle ) const {

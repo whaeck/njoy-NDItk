@@ -73,7 +73,7 @@ void wrapDepletionTable( python::module& module, python::module& ) {
     "Return the record for an incident particle\n\n"
     "Arguments:\n"
     "    self       the table\n"
-    "    particle   the incident particle identifier"
+    "    particle   the incident particle identifier to find"
   )
   .def_property_readonly(
 

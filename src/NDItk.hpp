@@ -27,3 +27,4 @@
 #include "NDItk/thermonuclear/Temperatures.hpp"
 
 #include "NDItk/MultigroupTable.hpp"
+#include "NDItk/DepletionTable.hpp"

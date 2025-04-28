@@ -87,6 +87,7 @@ if( NDItk.python )
   pybind11_add_module( NDItk.python
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/NDItk.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/MultigroupTable.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/DepletionTable.python.cpp
 
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/thermonuclear.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/thermonuclear/Temperatures.python.cpp

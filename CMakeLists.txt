@@ -88,12 +88,17 @@ if( NDItk.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/NDItk.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/MultigroupTable.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/DepletionTable.python.cpp
+
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/thermonuclear.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/thermonuclear/Temperatures.python.cpp
+
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Multiplicities.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Product.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Target.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/IncidentParticle.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Metadata.python.cpp
+
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ReactionMultiplicityType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Multiplicities.python.cpp

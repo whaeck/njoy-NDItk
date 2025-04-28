@@ -1,0 +1,76 @@
+// system includes
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+// local includes
+#include "NDItk/MultigroupTable.hpp"
+#include "NDItk/MultigroupLibrary.hpp"
+#include "definitions.hpp"
+#include "read.hpp"
+
+// namespace aliases
+namespace python = pybind11;
+
+void wrapMultigroupLibrary( python::module& module, python::module& ) {
+
+  // type aliases
+  using Table = njoy::NDItk::MultigroupTable;
+  using Library = njoy::NDItk::MultigroupLibrary;
+
+  // wrap views created by this table
+
+  // create the table
+  python::class_< Library > library(
+
+    module,
+    "MultigroupLibrary",
+    "A library containing multigroup tables"
+  );
+
+  // wrap the table
+  library
+  .def(
+
+    python::init< 
+      std::string, 
+      std::vector< Table > >(),
+    python::arg( "header" ), 
+    python::arg( "tables" ),
+    "Initialise the library\n\n"
+    "Arguments:\n"
+    "    self               the library\n"
+    "    header             the string header of the library\n"
+    "    tables             a vector of MultigroupTable\n"
+  )
+  .def_property_readonly(
+
+    "number_tables",
+    &Library::numberTables,
+    "Return the number of data tables in the library"
+  )
+  .def_property_readonly(
+
+    "header",
+    &Library::header,
+    "Return the header in the library"
+  )
+  .def_property_readonly(
+
+    "tables",
+    &Library::tables,
+    "Return a vector of tables in the library"
+  )
+  .def(
+
+    "get_table",
+    &Library::getTable,
+    python::arg( "zaid" ),
+    "Return the table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    zaid       the zaid string of the table in the library file"
+  );
+
+  // add standard table definitions
+  addStandardTableDefinitions< Library >( library );
+}

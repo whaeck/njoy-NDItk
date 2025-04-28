@@ -88,6 +88,8 @@ if( NDItk.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/NDItk.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/MultigroupTable.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/DepletionTable.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/MultigroupLibrary.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/DepletionLibrary.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Multiplicities.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Product.python.cpp

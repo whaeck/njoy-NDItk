@@ -69,3 +69,4 @@ add_subdirectory( src/NDItk/multigroup/ScatteringMatrix/test )
 
 add_subdirectory( src/NDItk/MultigroupTable/test )
 add_subdirectory( src/NDItk/DepletionTable/test )
+add_subdirectory( src/NDItk/DosimetryTable/test )

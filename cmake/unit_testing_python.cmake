@@ -58,3 +58,4 @@ add_python_test( dosimetry.Metadata                       dosimetry/Test_NDItk_d
 
 add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )
 add_python_test( DepletionTable    Test_NDItk_DepletionTable.py )
+add_python_test( DosimetryTable    Test_NDItk_DosimetryTable.py )

@@ -1,10 +1,11 @@
 from __future__ import annotations
 import typing
 from . import depletion
+from . import dosimetry
 from . import multigroup
 from . import sequence
 from . import thermonuclear
-__all__ = ['DepletionTable', 'MultigroupTable', 'depletion', 'multigroup', 'sequence', 'thermonuclear']
+__all__ = ['DepletionTable', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
 class DepletionTable:
     """
     A production/depletion table

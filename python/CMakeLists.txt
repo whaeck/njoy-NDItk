@@ -55,7 +55,7 @@ if( NDItk.python )
     set_target_properties( NDItk.python PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
 
     set(PyVersion "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
-    set( py_library_install_prefix ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}${PyVersion}/site-packages )
+    set( py_library_install_prefix ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/python${PyVersion}/site-packages )
 
     if (NDItk.installation)
         install( TARGETS NDItk.python LIBRARY DESTINATION ${py_library_install_prefix} )

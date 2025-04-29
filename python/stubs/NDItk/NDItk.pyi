@@ -5,7 +5,7 @@ from . import dosimetry
 from . import multigroup
 from . import sequence
 from . import thermonuclear
-__all__ = ['DepletionTable', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
+__all__ = ['DepletionTable', 'DosimetryTable', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
 class DepletionTable:
     """
     A production/depletion table
@@ -64,6 +64,75 @@ class DepletionTable:
     def number_incident_particles(self) -> int:
         """
         Return the number of incident particles
+        """
+class DosimetryTable:
+    """
+    A dosimetry data table
+    """
+    @staticmethod
+    def from_file(arg0: str) -> DosimetryTable:
+        """
+        Read an NDI table from a file
+        
+        An exception is raised if something goes wrong while reading the
+        table
+        
+        Arguments:
+            filename    the file name and path
+        """
+    def __init__(self, zaid: str, libname: str, process: str, awr: float, temperature: float, dilution: float, structure: multigroup.EnergyGroupStructure, flux: multigroup.FluxWeights, total_xs: multigroup.TotalCrossSection, reaction_xs: multigroup.ReactionCrossSections, information: str | None = None, source: str | None = None, weight: float | None = None) -> None:
+        """
+        Initialise the table
+        
+        Arguments:
+            self               the table
+            zaid               the zaid of the table
+            libname            the library name
+            process            the processing date
+            awr                the atomic weight ratio of the target (with respect
+                               to the neutron mass)
+            temperature        the temperature of the target
+            dilution           the dilution (aka sigma0)
+            structure          the primary group structure
+            flux               the flux weights
+            total_xs           the total cross section
+            reaction_xs        the reaction cross section data
+            information        the table information line (optional)
+            source             the source date (optional)
+            weight             the atomic weight of the target (optional)
+        """
+    def to_file(self, arg0: str) -> None:
+        """
+        Write an NDI table to a file
+        
+        Arguments:
+            self        the table
+            filename    the file name and path
+        """
+    @property
+    def flux_weights(self) -> multigroup.FluxWeights:
+        """
+        The flux weight record
+        """
+    @property
+    def metadata(self) -> dosimetry.Metadata:
+        """
+        The metadata of the table
+        """
+    @property
+    def primary_group_boundaries(self) -> multigroup.EnergyGroupStructure:
+        """
+        The primary group structure record
+        """
+    @property
+    def reaction_cross_sections(self) -> multigroup.ReactionCrossSections:
+        """
+        The reaction cross section record
+        """
+    @property
+    def total_cross_section(self) -> multigroup.TotalCrossSection:
+        """
+        The total cross section record
         """
 class MultigroupTable:
     """

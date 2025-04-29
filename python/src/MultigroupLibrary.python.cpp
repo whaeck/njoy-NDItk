@@ -45,27 +45,47 @@ void wrapMultigroupLibrary( python::module& module, python::module& ) {
   .def_property_readonly(
 
     "number_tables",
-    &Library::numberTables,
+    [] (const Library& self) -> decltype(auto) {
+      return self.numberTables();
+    },
     "Return the number of data tables in the library"
   )
   .def_property_readonly(
 
     "header",
-    &Library::header,
+    [] (const Library& self) -> decltype(auto) {
+      return self.header();
+    },
     "Return the header in the library"
   )
   .def_property_readonly(
 
     "tables",
-    &Library::tables,
+    [] (const Library& self) -> decltype(auto) {
+      return self.tables();
+    },
     "Return a vector of tables in the library"
   )
   .def(
 
     "get_table",
-    &Library::getTable,
+    [] (const Library& self, const std::string& zaid) -> decltype(auto) {
+      return self.getTable(zaid);
+    },
     python::arg( "zaid" ),
     "Return the table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    zaid       the zaid string of the table in the library file"
+  )
+  .def(
+
+    "has_table",
+    [] (const Library& self, const std::string& zaid) -> decltype(auto) {
+      return self.hasTable(zaid);
+    },
+    python::arg( "zaid" ),
+    "Check if there is a table in the library with the associated zaid\n\n"
     "Arguments:\n"
     "    self       the library\n"
     "    zaid       the zaid string of the table in the library file"

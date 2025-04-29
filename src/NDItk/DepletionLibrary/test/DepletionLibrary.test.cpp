@@ -5,26 +5,24 @@ using Catch::Matchers::WithinRel;
 
 // what we are testing
 #include "NDItk/DepletionTable.hpp"
-#include "NDItk/base/Library.hpp"
+#include "NDItk/DepletionLibrary.hpp"
 
 // other includes
 #include <type_traits>
 
 // convenience typedefs
 using namespace njoy::NDItk;
-
-template<typename T>
-using Library = njoy::NDItk::base::Library<T>;
+using Library = njoy::NDItk::DepletionLibrary;
 
 std::string chunk();
-void verifyChunk( const Library<DepletionTable>& );
+void verifyChunk( const DepletionLibrary& );
 void verifySubChunk1( const DepletionTable& );
 void verifySubChunk2( const DepletionTable& );
 void verifySubChunk3( const DepletionTable& );
 
-SCENARIO( "Library" ) {
+SCENARIO( "DepletionLibrary" ) {
 
-  GIVEN( "valid data for a Library instance" ) {
+  GIVEN( "valid data for a DepletionLibrary instance" ) {
 
     std::string record = chunk();
 
@@ -33,16 +31,16 @@ SCENARIO( "Library" ) {
       auto iter = record.begin();
       auto end = record.end();
 
-      Library<DepletionTable> chunk;
+      DepletionLibrary chunk;
       chunk.read( iter, end );
 
-      THEN( "a Library can be constructed and members can "
+      THEN( "a DepletionLibrary can be constructed and members can "
             "be tested" ) {
 
         verifyChunk( chunk );
       } // THEN
 
-      THEN( "the Library record can be printed" ) {
+      THEN( "the DepletionLibrary record can be printed" ) {
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -169,7 +167,7 @@ std::string chunk() {
          "end\n";
 }
 
-void verifyChunk( const Library<DepletionTable>& chunk ) {
+void verifyChunk( const DepletionLibrary& chunk ) {
   std::string header( 
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"
     "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n"

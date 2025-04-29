@@ -17,6 +17,7 @@ void wrapDosimetry( python::module&, python::module& );
 
 // declarations - NDI table types
 void wrapDepletionTable( python::module&, python::module& );
+void wrapDosimetryTable( python::module&, python::module& );
 void wrapMultigroupTable( python::module&, python::module& );
 
 /**
@@ -44,5 +45,6 @@ PYBIND11_MODULE( NDItk, module ) {
 
   // wrap ACE table types
   wrapDepletionTable( module, viewmodule );
+  wrapDosimetryTable( module, viewmodule );
   wrapMultigroupTable( module, viewmodule );
 }

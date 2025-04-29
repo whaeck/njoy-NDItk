@@ -54,5 +54,7 @@ add_python_test( multigroup.OutgoingParticleTransportData multigroup/Test_NDItk_
 add_python_test( multigroup.LegendreMoment                multigroup/Test_NDItk_multigroup_LegendreMoment.py )
 add_python_test( multigroup.ScatteringMatrix              multigroup/Test_NDItk_multigroup_ScatteringMatrix.py )
 
+add_python_test( dosimetry.Metadata                       dosimetry/Test_NDItk_dosimetry_Metadata.py )
+
 add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )
 add_python_test( DepletionTable    Test_NDItk_DepletionTable.py )

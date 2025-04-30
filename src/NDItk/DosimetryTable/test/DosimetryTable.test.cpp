@@ -294,6 +294,11 @@ void verifyChunk( const DosimetryTable& chunk ) {
   CHECK_THAT( 5.0, WithinRel( xs.crossSections()[4] ) );
   CHECK_THAT( 6.0, WithinRel( xs.crossSections()[5] ) );
   CHECK_THAT( 7.0, WithinRel( xs.crossSections()[6] ) );
+
+  // reaction product multiplicities
+  CHECK( true == chunk.reactionProductMultiplicities( multigroup::ReactionMultiplicityType::All ).empty() );
+  CHECK( true == chunk.reactionProductMultiplicities( multigroup::ReactionMultiplicityType::Few ).empty() );
+  CHECK( true == chunk.reactionProductMultiplicities( multigroup::ReactionMultiplicityType::RMO ).empty() );
 }
 
 std::string chunkWithMissingRecords() {

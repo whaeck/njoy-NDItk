@@ -82,6 +82,24 @@ public:
     return this->xs_;
   }
 
+  /**
+   *  @brief Return the reaction product multipliciies record for the requested multiplicity type
+   */
+  const multigroup::ReactionMultiplicities&
+  reactionProductMultiplicities( const multigroup::ReactionMultiplicityType& type ) const {
+
+    switch ( type ) {
+
+      case multigroup::ReactionMultiplicityType::All  : return this->product_multiplicities_all_;
+      case multigroup::ReactionMultiplicityType::Few  : return this->product_multiplicities_few_;
+      case multigroup::ReactionMultiplicityType::RMO  : return this->product_multiplicities_rmo_;
+      default : {
+
+        throw std::runtime_error( "This code is unreachable, contact a developer" );
+      }
+    }
+  }
+
   #include "NDItk/DosimetryTable/src/read.hpp"
 
   /**

@@ -101,6 +101,12 @@ class DosimetryTable:
             source             the source date (optional)
             weight             the atomic weight of the target (optional)
         """
+    def reaction_product_multiplicities(self, type: multigroup.ReactionMultiplicityType) -> multigroup.ReactionMultiplicities:
+        """
+        The reaction product multipliciies record for the requested multiplicity typeArguments:
+            self    the table
+            type    the multiplicity type
+        """
     def to_file(self, arg0: str) -> None:
         """
         Write an NDI table to a file
@@ -235,6 +241,12 @@ class MultigroupTable:
         Arguments:
             self       the table
             particle   the outgoing particle identifier
+        """
+    def reaction_product_multiplicities(self, type: multigroup.ReactionMultiplicityType) -> multigroup.ReactionMultiplicities:
+        """
+        The reaction product multipliciies record for the requested multiplicity typeArguments:
+            self    the table
+            type    the multiplicity type
         """
     def to_file(self, arg0: str) -> None:
         """

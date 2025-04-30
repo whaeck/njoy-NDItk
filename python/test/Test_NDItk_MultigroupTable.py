@@ -20,6 +20,7 @@ from NDItk.multigroup import OutgoingParticleTypes
 from NDItk.multigroup import OutgoingParticleTransportData
 from NDItk.multigroup import LegendreMoment
 from NDItk.multigroup import ScatteringMatrix
+from NDItk.multigroup import ReactionMultiplicityType
 
 class Test_NDItk_MultigroupTable( unittest.TestCase ) :
     """Unit test for the MultigroupTable class."""
@@ -275,6 +276,11 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual( 55, heating.values[4] )
             self.assertAlmostEqual( 66, heating.values[5] )
             self.assertAlmostEqual( 77, heating.values[6] )
+
+            # reaction product multiplicities
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.All ).empty )
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.Few ).empty )
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.RMO ).empty )
 
             # verify content - outgoing particle types
             types = chunk.outgoing_particle_types

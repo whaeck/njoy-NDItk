@@ -12,6 +12,7 @@ from NDItk.multigroup import FluxWeights
 from NDItk.multigroup import TotalCrossSection
 from NDItk.multigroup import ReactionCrossSections
 from NDItk.multigroup import CrossSection
+from NDItk.multigroup import ReactionMultiplicityType
 
 class Test_NDItk_DosimetryTable( unittest.TestCase ) :
     """Unit test for the DosimetryTable class."""
@@ -116,6 +117,11 @@ class Test_NDItk_DosimetryTable( unittest.TestCase ) :
             self.assertAlmostEqual( 5.0, xs.cross_sections[4] )
             self.assertAlmostEqual( 6.0, xs.cross_sections[5] )
             self.assertAlmostEqual( 7.0, xs.cross_sections[6] )
+
+            # reaction product multiplicities
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.All ).empty )
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.Few ).empty )
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.RMO ).empty )
 
         # the data is given explicitly
         chunk = DosimetryTable( zaid = '92235.000nd', libname = 'testing',

@@ -211,6 +211,16 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     &Table::primaryKerma,
     "The primary kerma record"
   )
+  .def(
+
+    "reaction_product_multiplicities",
+    &Table::reactionProductMultiplicities,
+    python::arg( "type" ),
+    "The reaction product multipliciies record for the requested multiplicity type"
+    "Arguments:\n"
+    "    self    the table\n"
+    "    type    the multiplicity type"
+  )
   .def_property_readonly(
 
     "outgoing_particle_types",

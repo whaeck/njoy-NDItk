@@ -98,6 +98,16 @@ void wrapDosimetryTable( python::module& module, python::module& ) {
     "reaction_cross_sections",
     &Table::reactionCrossSections,
     "The reaction cross section record"
+  )
+  .def(
+
+    "reaction_product_multiplicities",
+    &Table::reactionProductMultiplicities,
+    python::arg( "type" ),
+    "The reaction product multipliciies record for the requested multiplicity type"
+    "Arguments:\n"
+    "    self    the table\n"
+    "    type    the multiplicity type"
   );
 
   // add standard table definitions

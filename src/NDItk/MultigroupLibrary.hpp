@@ -17,6 +17,7 @@ class MultigroupLibrary : public base::Library< MultigroupTable > {
 public:
 
     using Base::Base;
+
 };
 
 } // namespace NDItk

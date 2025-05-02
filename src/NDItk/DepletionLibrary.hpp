@@ -17,6 +17,7 @@ class DepletionLibrary : public base::Library< DepletionTable > {
 public:
 
     using Base::Base;
+
 };
 
 } // namespace NDItk

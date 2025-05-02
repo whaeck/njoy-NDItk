@@ -189,6 +189,12 @@ void addStandardTableDefinitions( PythonClass& table ) {
  *  This adds the following standard functions:
  *    - from_file()
  *    - to_file()
+ *    - number_tables()
+ *    - header()
+ *    - tables()
+ *    - get_table(string)
+ *    - get_table(int)
+ *    - has_table(string)
  *
  *  @param[in] library   the library to which the definitions have to be added
  */
@@ -220,6 +226,66 @@ void addStandardLibraryDefinitions( PythonClass& library ) {
     "Arguments:\n"
     "    self        the library\n"
     "    filename    the file name and path"
+  )
+  .def_property_readonly(
+
+    "number_tables",
+    [] (const Library& self) -> decltype(auto) {
+      return self.numberTables();
+    },
+    "Return the number of data tables in the library"
+  )
+  .def_property_readonly(
+
+    "header",
+    [] (const Library& self) -> decltype(auto) {
+      return self.header();
+    },
+    "Return the header in the library"
+  )
+  .def_property_readonly(
+
+    "tables",
+    [] (const Library& self) -> decltype(auto) {
+      return self.tables();
+    },
+    "Return a vector of tables in the library"
+  )
+  .def(
+
+    "get_table",
+    python::overload_cast<const int>(
+      &Library::getTable, python::const_
+    ),
+    python::arg( "index" ),
+    "Return the table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    index      the 0-based index of the table in the library file"
+  )
+  .def(
+
+    "get_table",
+    python::overload_cast<const std::string&>(
+      &Library::getTable, python::const_
+    ),
+    python::arg( "zaid" ),
+    "Return the table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    zaid       the zaid string of the table in the library file"
+  )
+  .def(
+
+    "has_table",
+    [] (const Library& self, const std::string& zaid) -> decltype(auto) {
+      return self.hasTable(zaid);
+    },
+    python::arg( "zaid" ),
+    "Check if there is a table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    zaid       the zaid string of the table in the library file"
   );
 }
 

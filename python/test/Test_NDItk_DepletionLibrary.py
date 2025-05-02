@@ -17,6 +17,25 @@ class Test_NDItk_DepletionLibrary( unittest.TestCase ) :
 
     def test_component( self ) :
 
+        # make a duplicate of the same table, but with different zaid
+        def make_table( zaid_str ) :
+
+            incident = IncidentParticle(
+                identifier=1,
+                targets=[Target(identifier=1001, products=[Product(Multiplicities(product=1002, reactions=[102], multiplicities=[1]))]),
+                        Target(identifier=1002, products=[Product(Multiplicities(product=1001, reactions=[16],  multiplicities=[1])),
+                                                        Product(Multiplicities(product=1003, reactions=[102], multiplicities=[1]))])]
+            )
+
+            return DepletionTable( 
+                zaid = zaid_str, 
+                libname = 'e66_618_chain',
+                information = 'this is some information for the table', 
+                source = '02/01/2007',
+                process = '02/01/2007', 
+                incident = [incident]
+            )
+
         def verify_subchunk( self, chunk, zaid_str ) :
 
             self.assertEqual( 1, chunk.number_incident_particles )
@@ -57,7 +76,7 @@ class Test_NDItk_DepletionLibrary( unittest.TestCase ) :
             self.assertEqual(      102, target1.products[1].reaction_identifiers[0])
             self.assertEqual(        1, target1.products[1].multiplicities[0])
             
-        def verify_chunk( self, chunk ):
+        def verify_chunk( self, chunk ) :
 
             self.assertEqual( 3, chunk.number_tables )
             self.assertEqual( 3, len(chunk.tables) )
@@ -73,40 +92,12 @@ class Test_NDItk_DepletionLibrary( unittest.TestCase ) :
             verify_subchunk( self, chunk.get_table(1), 'test_zaid_2' )
             verify_subchunk( self, chunk.get_table(2), 'test_zaid_3' )
 
-        incident = IncidentParticle(
-            identifier=1,
-            targets=[Target(identifier=1001, products=[Product(Multiplicities(product=1002, reactions=[102], multiplicities=[1]))]),
-                     Target(identifier=1002, products=[Product(Multiplicities(product=1001, reactions=[16],  multiplicities=[1])),
-                                                       Product(Multiplicities(product=1003, reactions=[102], multiplicities=[1]))])]
-        )
-
-        # the data is given explicitly
-        table1 = DepletionTable( 
-            zaid = 'test_zaid_1', 
-            libname = 'e66_618_chain',
-            information = 'this is some information for the table', 
-            source = '02/01/2007',
-            process = '02/01/2007', 
-            incident = [incident]
-        )
-        table2 = DepletionTable( 
-            zaid = 'test_zaid_2', 
-            libname = 'e66_618_chain',
-            information = 'this is some information for the table', 
-            source = '02/01/2007',
-            process = '02/01/2007', 
-            incident = [incident]
-        )
-        table3 = DepletionTable( 
-            zaid = 'test_zaid_3', 
-            libname = 'e66_618_chain',
-            information = 'this is some information for the table', 
-            source = '02/01/2007',
-            process = '02/01/2007', 
-            incident = [incident]
-        )
-
-        chunk = DepletionLibrary('This is my header.', [table1, table2, table3])
+        chunk = DepletionLibrary(
+                    'This is my header.', 
+                    [make_table('test_zaid_1'),
+                     make_table('test_zaid_2'),
+                     make_table('test_zaid_3')]
+                )
 
         verify_chunk( self, chunk )
 

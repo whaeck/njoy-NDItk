@@ -537,12 +537,6 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
-        # the data is read from a file
-        chunk.to_file( 'test.txt' )
-        chunk = MultigroupTable.from_file( 'test.txt' )
-        verify_chunk( self, chunk )
-        os.remove( 'test.txt' )
-
 if __name__ == '__main__' :
 
     unittest.main()

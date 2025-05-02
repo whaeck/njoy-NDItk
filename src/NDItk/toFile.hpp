@@ -7,24 +7,24 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "NDItk/base/Library.hpp"
 
 namespace njoy {
 namespace NDItk {
 
   /**
-   *  @brief Function to write an NDI table to a file
+   *  @brief Function to write an NDI library to a file
    *
    *  @param[in] filename   the file name
    */
-  template < typename Table >
-  void toFile( const Table& table, const std::string& filename ) {
+  template<typename Table>
+  void toFile( const base::Library<Table>& library, const std::string& filename ) {
 
     std::string content;
     auto output = std::back_inserter( content );
-    table.print( output );
+    library.print( output );
 
     std::ofstream out( filename );
-    out << "ndi: multigroup version=2.0" << std::endl;
     out << content;
     out.close();
   }

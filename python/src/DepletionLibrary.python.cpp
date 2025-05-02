@@ -69,9 +69,37 @@ void wrapDepletionLibrary( python::module& module, python::module& ) {
   .def(
 
     "get_table",
-    [] (const Library& self, const std::string& zaid) -> decltype(auto) {
-      return self.getTable(zaid);
-    },
+/*
+    python::overload_cast<const int>(
+      [] (const Library& self, const int index) -> decltype(auto) {
+        return self.getTable(index);
+      },
+      python::const_
+    ),
+*/
+    python::overload_cast<const int>(
+      &Library::getTable, python::const_
+    ),
+    python::arg( "index" ),
+    "Return the table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    index      the 0-based index of the table in the library file"
+  )
+  .def(
+
+    "get_table",
+/*
+    python::overload_cast<const std::string&>(
+      [] (const Library& self, const std::string& zaid) -> decltype(auto) {
+        return self.getTable(zaid);
+      },
+      python::const_
+    ),
+*/
+    python::overload_cast<const std::string&>(
+      &Library::getTable, python::const_
+    ),
     python::arg( "zaid" ),
     "Return the table in the library with the associated zaid\n\n"
     "Arguments:\n"
@@ -91,6 +119,6 @@ void wrapDepletionLibrary( python::module& module, python::module& ) {
     "    zaid       the zaid string of the table in the library file"
   );
 
-  // add standard table definitions
-  addStandardTableDefinitions< Library >( library );
+  // add standard library definitions
+  addStandardLibraryDefinitions< Library >( library );
 }

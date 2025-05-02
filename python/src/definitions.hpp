@@ -180,17 +180,45 @@ void addStandardTableDefinitions( PythonClass& table ) {
     "table\n\n"
     "Arguments:\n"
     "    filename    the file name and path"
+  );
+}
+
+/**
+ *  @brief Add standard library definitions
+ *
+ *  This adds the following standard functions:
+ *    - from_file()
+ *    - to_file()
+ *
+ *  @param[in] library   the library to which the definitions have to be added
+ */
+template < typename Library, typename PythonClass >
+void addStandardLibraryDefinitions( PythonClass& library ) {
+
+  library
+  .def_static(
+
+    "from_file",
+    [] ( const std::string& filename ) -> Library {
+
+      return njoy::NDItk::fromFile< Library >( filename );
+    },
+    "Read an NDI library from a file\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "library\n\n"
+    "Arguments:\n"
+    "    filename    the file name and path"
   )
   .def(
 
     "to_file",
-    [] ( const Table& self, const std::string& filename ) {
+    [] ( const Library& self, const std::string& filename ) {
 
       return njoy::NDItk::toFile( self, filename );
     },
-    "Write an NDI table to a file\n\n"
+    "Write an NDI library to a file\n\n"
     "Arguments:\n"
-    "    self        the table\n"
+    "    self        the library\n"
     "    filename    the file name and path"
   );
 }

@@ -38,7 +38,7 @@ public:
   /**
    *  @brief Return the header in the library
    */
-  std::string header() const { return this->header_; };
+  const std::string& header() const { return this->header_; };
 
   /**
    *  @brief Return the vector of tables in the library

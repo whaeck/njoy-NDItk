@@ -35,10 +35,9 @@ namespace NDItk {
   }
 
   /**
-   *  @brief Factory function to make an NDI table from a file
+   *  @brief Factory function to make an NDI table or library from a file
    *
-   *  If this function is applied to a concatenated NDI file, only the first
-   *  table is read.
+   *  For a table, only the first table is read if the file is a concatenated NDI file.
    *
    *  @param[in] filename   the file name
    */
@@ -49,12 +48,6 @@ namespace NDItk {
 
     auto iter = content.begin();
     auto end = content.end();
-
-    // read over the first line of the file
-    while ( *iter != '\n' ) {
-
-      ++iter;
-    }
 
     Table table;
     table.read( iter, end );

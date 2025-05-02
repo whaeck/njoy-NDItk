@@ -48,18 +48,6 @@ SCENARIO( "DepletionLibrary" ) {
 
         CHECK( buffer == record );
       } // THEN
-
-      THEN( "the tables can be accessed" ) {
-
-        verifySubChunk1( chunk.getTable("test_zaid_1") );
-        verifySubChunk2( chunk.getTable("test_zaid_2") );
-        verifySubChunk3( chunk.getTable("test_zaid_3") );
-
-        verifySubChunk1( chunk.getTable(0) );
-        verifySubChunk2( chunk.getTable(1) );
-        verifySubChunk3( chunk.getTable(2) );
-
-      } // THEN
     } // WHEN
   } // GIVEN
 
@@ -167,23 +155,6 @@ std::string chunk() {
          "end\n";
 }
 
-void verifyChunk( const DepletionLibrary& chunk ) {
-  std::string header( 
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"
-    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n"
-    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n"
-    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n"
-  );
-
-  CHECK( chunk.numberTables() == 3 );
-  CHECK( std::is_same_v< decltype(chunk.tables()), const std::vector<DepletionTable>& > );
-  CHECK( chunk.hasTable("test_zaid_1") );
-  CHECK( chunk.hasTable("test_zaid_2") );
-  CHECK( chunk.hasTable("test_zaid_3") );
-  CHECK( not chunk.hasTable("asdf") );
-  CHECK( chunk.header() == header );
-}
-
 void verifySubChunk1( const DepletionTable& chunk ) {
 
   CHECK( 1 == chunk.numberIncidentParticles() );
@@ -280,4 +251,27 @@ void verifySubChunk3( const DepletionTable& chunk ) {
   CHECK(        1 == target1.products()[1].numberReactions() );
   CHECK(      102 == target1.products()[1].reactionIdentifiers()[0] );
   CHECK(        1 == target1.products()[1].multiplicities()[0] );
+}
+
+void verifyChunk( const DepletionLibrary& chunk ) {
+  std::string header( 
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"
+    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n"
+    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n"
+    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n"
+  );
+
+  CHECK( chunk.numberTables() == 3 );
+  CHECK( std::is_same_v< decltype(chunk.tables()), const std::vector<DepletionTable>& > );
+  CHECK( chunk.hasTable("test_zaid_1") );
+  CHECK( chunk.hasTable("test_zaid_2") );
+  CHECK( chunk.hasTable("test_zaid_3") );
+  CHECK( not chunk.hasTable("asdf") );
+  CHECK( chunk.header() == header );
+  verifySubChunk1( chunk.getTable("test_zaid_1") );
+  verifySubChunk2( chunk.getTable("test_zaid_2") );
+  verifySubChunk3( chunk.getTable("test_zaid_3") );
+  verifySubChunk1( chunk.getTable(0) );
+  verifySubChunk2( chunk.getTable(1) );
+  verifySubChunk3( chunk.getTable(2) );
 }

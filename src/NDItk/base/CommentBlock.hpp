@@ -1,0 +1,105 @@
+#ifndef NJOY_NDITK_BASE_COMMENTBLOCK
+#define NJOY_NDITK_BASE_COMMENTBLOCK
+
+// system includes
+#include <string>
+#include <sstream>
+#include <iomanip>
+
+// other includes
+#include "NDItk/base/Record.hpp"
+#include "tools/disco/FreeFormatCharacter.hpp"
+
+namespace njoy {
+namespace NDItk {
+namespace base {
+
+/**
+ *  @brief An NDI record containing comment blocks
+ */
+class CommentBlock : protected base::Record {
+
+protected:
+
+  std::string comment_;
+
+public:
+
+  /* constructor */
+
+  /**
+   *  @brief Constructor
+   *
+   *  @param[in] keyword   the keyword of the record
+   */
+  CommentBlock() :
+      base::Record( Keyword( "comment" ) ) {}
+
+  /**
+   *  @brief Constructor
+   *
+   *  @param[in] keyword   the keyword of the record
+   *  @param[in] value     the value of the record
+   */
+  CommentBlock( std::string value ) :
+      base::Record( Keyword( "comment" ) ),
+      comment_(value) {}
+
+  /* methods */
+
+  using base::Record::keyword;
+
+  /**
+   *  @brief Read the record data
+   *
+   *  @param[in] iter   the current position in the input
+   */
+  template< typename Iterator >
+  void read( Iterator& iter, const Iterator& end ) {
+
+    // read until start of first table as signified by the 'zaid' keyword
+    Iterator start = iter;
+
+    std::string endCommentKeyword = "end_comment";
+
+    std::string keyword;
+    while ( ( keyword != endCommentKeyword ) and ( iter != end ) ) {
+
+      keyword = njoy::tools::disco::FreeFormatCharacter::read< std::string >( iter, end );
+    }
+
+    Iterator stop = iter;
+
+    // 'undo' the last word ("end_comment") read by disco 
+    stop = std::prev( stop, endCommentKeyword.length() );
+
+    this->comment_ = std::string( start, stop );
+  }
+
+  /**
+   *  @brief 
+   *
+   *  @param[in] iter 
+   */
+  template< typename OutputIterator >
+  void print( OutputIterator& iter ) const {
+
+    std::ostringstream buffer;
+    buffer << this->keyword() << "\n" << this->comment_ << "end_comment\n";
+
+    for ( auto c : buffer.str() ) { *iter++ = c; }
+  }
+
+  /**
+   *  @brief 
+   *
+   *  @param[in] iter 
+   */
+  const std::string& comment() const { return this->comment_; }
+};
+
+} // base namespace
+} // NDItk namespace
+} // njoy namespace
+
+#endif

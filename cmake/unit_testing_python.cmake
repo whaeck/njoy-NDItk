@@ -6,13 +6,16 @@ enable_testing()
 
 function( add_python_test name source )
 
+  set(PYTHONPATH_PARTS ${tools_PYTHONPATH} ${NDItk_PYTHONPATH} $ENV{PYTHONPATH})
+  string( JOIN "${PATH_DELIM}" PYTHONPATH_VALUE ${PYTHONPATH_PARTS})
+
   set( test_name "NDItk.python.${name}.test" )
   add_test( NAME ${test_name}
             COMMAND ${PYTHON_EXECUTABLE} -m unittest -v test/${source}
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/python )
   set_tests_properties( ${test_name}
                         PROPERTIES ENVIRONMENT
-                        PYTHONPATH=${tools_PYTHONPATH}:${NDItk_PYTHONPATH}:$ENV{PYTHONPATH})
+                        "PYTHONPATH=${PYTHONPATH_VALUE}")
 
 endfunction()
 
@@ -21,6 +24,8 @@ endfunction()
 #######################################################################
 
 message( STATUS "Adding NDItk Python unit testing" )
+
+add_python_test( thermonuclear.Temperatures               thermonuclear/Test_NDItk_thermonuclear_Temperatures.py )
 
 add_python_test( depletion.Multiplicities                 depletion/Test_NDItk_depletion_Multiplicities.py )
 add_python_test( depletion.Product                        depletion/Test_NDItk_depletion_Product.py )

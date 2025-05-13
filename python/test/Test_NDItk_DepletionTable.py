@@ -1,6 +1,7 @@
 # standard imports
 import unittest
 import os
+import os.path
 
 # third party imports
 
@@ -55,7 +56,7 @@ class Test_NDItk_DepletionTable( unittest.TestCase ) :
             self.assertEqual(        1, target1.products[1].number_reactions)
             self.assertEqual(      102, target1.products[1].reaction_identifiers[0])
             self.assertEqual(        1, target1.products[1].multiplicities[0])
-            
+
 
         incident = IncidentParticle(
             identifier=1,
@@ -65,12 +66,12 @@ class Test_NDItk_DepletionTable( unittest.TestCase ) :
         )
 
         # the data is given explicitly
-        chunk = DepletionTable( 
-            zaid = 'nosub010.zpd', 
+        chunk = DepletionTable(
+            zaid = 'nosub010.zpd',
             libname = 'e66_618_chain',
-            information = 'this is some information for the table', 
+            information = 'this is some information for the table',
             source = '02/01/2007',
-            process = '02/01/2007', 
+            process = '02/01/2007',
             incident = [incident]
         )
         verify_chunk( self, chunk )

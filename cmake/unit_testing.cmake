@@ -36,6 +36,8 @@ add_subdirectory( src/NDItk/base/RealListRecord/test )
 add_subdirectory( src/NDItk/base/StringListRecord/test )
 add_subdirectory( src/NDItk/base/InformationRecord/test )
 
+add_subdirectory( src/NDItk/thermonuclear/Temperatures/test )
+
 add_subdirectory( src/NDItk/depletion/Multiplicities/test )
 add_subdirectory( src/NDItk/depletion/Product/test )
 add_subdirectory( src/NDItk/depletion/Target/test )

@@ -10,17 +10,25 @@ namespace NDItk {
 /**
  *  @brief A library containing multigroup tables
  */
-class MultigroupLibrary : public base::Library< MultigroupTable > {
+class MultigroupLibrary : protected base::Library< MultigroupTable > {
 
-    using Base = base::Library< MultigroupTable >;
+  /* type aliases */
+  using Base = base::Library< MultigroupTable >;
 
 public:
 
-    using Base::Base;
+  using Base::Base;
 
+  using Base::numberTables;
+  using Base::header;
+  using Base::tables;
+  using Base::getTable;
+  using Base::hasTable;
+  using Base::read;
+  using Base::print;
 };
 
 } // namespace NDItk
 } // namespace njoy
 
-#endif 
+#endif

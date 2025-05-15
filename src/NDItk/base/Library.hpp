@@ -50,7 +50,7 @@ public:
    *
    *  @param[in] index  the 0-based index of the table in the library file
    */
-  const Table& getTable( const int index ) const { return this->tables_[index]; };
+  const Table& getTable( int index ) const { return this->tables()[index]; };
 
   /**
    *  @brief Return the table in the library with the associated zaid
@@ -59,13 +59,13 @@ public:
    */
   const Table&  getTable( const std::string& zaid ) const {
 
-    auto pos = std::find_if( this->tables_.begin(),
-                             this->tables_.end(),
+    auto pos = std::find_if( this->tables().begin(),
+                             this->tables().end(),
                              [&zaid] ( const Table& table ) {
 
                                return table.metadata().zaid() == zaid;
                              } );
-    if ( pos != this->tables_.end() ) {
+    if ( pos != this->tables().end() ) {
 
         return *pos;
     }
@@ -80,13 +80,13 @@ public:
    */
   bool hasTable( const std::string& zaid ) const {
 
-    auto pos = std::find_if( this->tables_.begin(),
-                             this->tables_.end(),
+    auto pos = std::find_if( this->tables().begin(),
+                             this->tables().end(),
                              [&zaid] ( const Table& table ) {
 
                                return table.metadata().zaid() == zaid;
                              } );
-    if ( pos != this->tables_.end() ) {
+    if ( pos != this->tables().end() ) {
 
         return true;
     }

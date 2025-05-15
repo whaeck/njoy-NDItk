@@ -15,10 +15,14 @@ namespace NDItk {
   /**
    *  @brief Function to write an NDI library to a file
    *
+   *  Note: this can also be used for printing an NDI table to a
+   *        file, although this function is not intended for
+   *        that purpose.
+   *
    *  @param[in] filename   the file name
    */
-  template<typename Table>
-  void toFile( const base::Library<Table>& library, const std::string& filename ) {
+  template< typename Library >
+  void toFile( const Library& library, const std::string& filename ) {
 
     std::string content;
     auto output = std::back_inserter( content );

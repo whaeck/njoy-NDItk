@@ -230,7 +230,8 @@ void addStandardLibraryDefinitions( PythonClass& library ) {
   .def_property_readonly(
 
     "number_tables",
-    [] (const Library& self) -> decltype(auto) {
+    [] ( const Library& self ) -> decltype(auto) {
+
       return self.numberTables();
     },
     "Return the number of data tables in the library"
@@ -238,7 +239,8 @@ void addStandardLibraryDefinitions( PythonClass& library ) {
   .def_property_readonly(
 
     "header",
-    [] (const Library& self) -> decltype(auto) {
+    [] ( const Library& self ) -> decltype(auto) {
+
       return self.header();
     },
     "Return the header in the library"
@@ -246,7 +248,8 @@ void addStandardLibraryDefinitions( PythonClass& library ) {
   .def_property_readonly(
 
     "tables",
-    [] (const Library& self) -> decltype(auto) {
+    [] ( const Library& self ) -> decltype(auto) {
+
       return self.tables();
     },
     "Return a vector of tables in the library"
@@ -254,9 +257,10 @@ void addStandardLibraryDefinitions( PythonClass& library ) {
   .def(
 
     "get_table",
-    python::overload_cast<const int>(
-      &Library::getTable, python::const_
-    ),
+    [] ( const Library& self, int index ) -> decltype(auto) {
+
+      return self.getTable( index );
+    },
     python::arg( "index" ),
     "Return the table in the library with the associated zaid\n\n"
     "Arguments:\n"
@@ -266,9 +270,10 @@ void addStandardLibraryDefinitions( PythonClass& library ) {
   .def(
 
     "get_table",
-    python::overload_cast<const std::string&>(
-      &Library::getTable, python::const_
-    ),
+    [] ( const Library& self, const std::string& zaid ) -> decltype(auto) {
+
+      return self.getTable( zaid );
+    },
     python::arg( "zaid" ),
     "Return the table in the library with the associated zaid\n\n"
     "Arguments:\n"
@@ -278,8 +283,9 @@ void addStandardLibraryDefinitions( PythonClass& library ) {
   .def(
 
     "has_table",
-    [] (const Library& self, const std::string& zaid) -> decltype(auto) {
-      return self.hasTable(zaid);
+    [] ( const Library& self, const std::string& zaid ) -> decltype(auto) {
+
+      return self.hasTable( zaid );
     },
     python::arg( "zaid" ),
     "Check if there is a table in the library with the associated zaid\n\n"

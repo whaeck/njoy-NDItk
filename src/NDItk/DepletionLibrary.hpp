@@ -10,17 +10,25 @@ namespace NDItk {
 /**
  *  @brief A library containing depletion tables
  */
-class DepletionLibrary : public base::Library< DepletionTable > {
+class DepletionLibrary : protected base::Library< DepletionTable > {
 
-    using Base = base::Library< DepletionTable >;
+  /* type aliases */
+  using Base = base::Library< DepletionTable >;
 
 public:
 
-    using Base::Base;
+  using Base::Base;
 
+  using Base::numberTables;
+  using Base::header;
+  using Base::tables;
+  using Base::getTable;
+  using Base::hasTable;
+  using Base::read;
+  using Base::print;
 };
 
 } // namespace NDItk
 } // namespace njoy
 
-#endif 
+#endif

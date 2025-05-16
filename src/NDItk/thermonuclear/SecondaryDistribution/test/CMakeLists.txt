@@ -1,1 +1,0 @@
-add_cpp_test( thermonuclear.SecondaryDistribution SecondaryDistribution.test.cpp )

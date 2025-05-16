@@ -26,8 +26,6 @@
 
 #include "NDItk/thermonuclear/Temperatures.hpp"
 #include "NDItk/thermonuclear/InterpolationRegions.hpp"
-#include "NDItk/thermonuclear/ColumnData.hpp"
-#include "NDItk/thermonuclear/SecondaryDistribution.hpp"
 
 #include "NDItk/MultigroupTable.hpp"
 #include "NDItk/DepletionTable.hpp"

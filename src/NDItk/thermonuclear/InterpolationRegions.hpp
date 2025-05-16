@@ -44,7 +44,7 @@ public:
    *
    *  @param[in] index  the interpolation region's 0-based index 
    */
-  auto interpolationType( int index ) const { 
+  auto regionInterpolationType( int index ) const { 
 
     this->verify( index );   
 
@@ -57,8 +57,14 @@ public:
    *  @param[in] index  the interpolation region's 0-based index 
    */
   auto regionEndIndex( int index ) const { 
-    
-    this->verify( index ); 
+
+    // every subsequent method will end up calling this    
+    if ( index > this->numberRegions() ) {
+
+      Log::error( "Attempted to query a region index greater than the number of regions" );
+      Log::info( "Querying index {} but found {} regions", index, this->numberRegions() );
+      throw std::exception();
+    }
 
     return this->value( 1 + 2*index ) - 1; 
   }
@@ -74,44 +80,21 @@ public:
   }
 
   /**
-   *  @brief Return the iterator for the end of a region's data
+   *  @brief Return the size of a region's data
    *
    *  @param[in] index  the interpolation region's 0-based index 
    */
-  auto regionEndIterator( int index ) const { 
-    
-    return this->iterator( this->regionEndIndex( index ) );
-  }
-
-  /**
-   *  @brief Return the iterator for the start of a region's data
-   *
-   *  @param[in] index  the interpolation region's 0-based index 
-   */
-  auto regionBeginIterator( int index ) const { 
-
-    return this->iterator( this->regionBeginIndex( index ) );
-  }
-
-  /**
-   *  @brief Return the total size of a region's data
-   *
-   *  @param[in] index  the interpolation region's 0-based index 
-   */
-  auto regionSize( int index ) const { 
+  auto regionSize( int index ) const {
 
     return ( this->regionEndIndex( index ) - this->regionBeginIndex( index ) + 1 );
   }
 
   /**
-   *  @brief Return a region's data
-   *
-   *  @param[in] index  the interpolation region's 0-based index 
+   *  @brief Return the combined size of all regions' data
    */
-  auto regionData( int index ) const {
-
-    return njoy::tools::std20::ranges::subrange( this->regionBeginIterator( index ), 
-                                                 this->regionEndIterator( index ) );
+  auto totalSize() const { 
+    
+    return ( this->regionEndIndex( this->numberRegions()-1 ) + 1 ); 
   }
 
   using Parent::values;

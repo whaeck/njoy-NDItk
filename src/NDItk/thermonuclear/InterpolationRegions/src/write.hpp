@@ -7,22 +7,19 @@
  */
 template< typename OutputIterator >
 void write( OutputIterator& iter ) const {
-/*
+
+  auto indentLevel  = 1;
+  auto indentPrefix = [](int n){ return std::string(2*n, ' '); };
+
   std::ostringstream buffer;
 
-  auto x = this->begin();
-  buffer << "    " << x[0] << '\n'
-         << "    " << x[1] << '\n';
-  x += 2;
+  buffer << indentPrefix(indentLevel) << this->numberRegions() << "\n";
 
-  auto lines = this->numberReactionProducts();
+  for (int i=0; i < this->numberRegions(); ++i) {
 
-  while ( lines-- ) {
-
-    buffer << "    " << x[0] << ' ' << x[1] << '\n';
-    x += 2;
+    buffer << indentPrefix(indentLevel) << this->regionEndIndex(i)+1 
+           << indentPrefix(indentLevel) << this->regionInterpolationType(i) << "\n";
   }
 
   for ( auto c : buffer.str() ) { *iter++ = c; }
-*/
 };

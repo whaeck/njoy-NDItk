@@ -82,68 +82,8 @@ if (NDItk.python AND NOT TARGET njoy::tools.python)
   set(NDItk.python OFF)
 endif()
 
-if( NDItk.python )
-
-  pybind11_add_module( NDItk.python
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/NDItk.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/MultigroupTable.python.cpp
-
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/thermonuclear.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/thermonuclear/Temperatures.python.cpp
-
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Multiplicities.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Product.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Target.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/IncidentParticle.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/depletion/Metadata.python.cpp
-
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ReactionMultiplicityType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Multiplicities.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ReactionMultiplicities.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/FissionType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Metadata.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/CrossSection.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/FluxWeights.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/EnergyGroupStructure.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ReactionCrossSections.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/TotalCrossSection.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/AverageFissionEnergyRelease.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/FissionNeutronMultiplicity.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/FissionNeutronProduction.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/FissionNeutronSpectrumVector.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/FissionNeutronSpectrumMatrix.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Velocities.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/HeatingNumbers.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/Kerma.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/OutgoingParticleTypes.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/OutgoingParticleTransportData.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/LegendreMoment.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/multigroup/ScatteringMatrix.python.cpp
-      )
-
-  target_link_libraries( NDItk.python PRIVATE njoy::NDItk )
-  add_dependencies( NDItk.python njoy::tools.python )
-  target_include_directories( NDItk.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/src )
-  set_target_properties( NDItk.python PROPERTIES CXX_VISIBILITY_PRESET hidden)
-  set_target_properties( NDItk.python PROPERTIES OUTPUT_NAME NDItk )
-  set_target_properties( NDItk.python PROPERTIES COMPILE_DEFINITIONS "PYBIND11" )
-  set_target_properties( NDItk.python PROPERTIES POSITION_INDEPENDENT_CODE ON )
-
-  message( STATUS "Building NDItk's python API" )
-
-  set( NDItk_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}" )
-  # Append potential installation and build paths for tools python module
-  set( tools_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}/_deps/tools-build" )
-  if (tools_DIR)
-    set( tools_PYTHONPATH "${tools_PYTHONPATH}:${tools_DIR}/../../../lib64" )
-  endif()
-
-  if( NDItk.tests )
-    include( cmake/unit_testing_python.cmake )
-  endif()
-
+if (NDItk.python)
+  add_subdirectory(python)
 endif()
 
 if( ${NDItk.tests} )
@@ -198,4 +138,14 @@ if(NDItk.installation)
       set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
       include(CPack)
     endif()
+endif()
+
+########################################################################
+# Windows-specific setup
+########################################################################
+
+# enable Edit and Continue in Visual Studio (for debugging)
+if(MSVC)
+  target_compile_options(${PROJECT_NAME}  INTERFACE "/ZI")
+  target_link_options(${PROJECT_NAME} INTERFACE "/INCREMENTAL")
 endif()

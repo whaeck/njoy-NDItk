@@ -30,3 +30,4 @@
 #include "NDItk/thermonuclear/SecondaryDistribution.hpp"
 
 #include "NDItk/MultigroupTable.hpp"
+#include "NDItk/DepletionTable.hpp"

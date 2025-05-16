@@ -26,7 +26,7 @@ void verify() {
     Log::info( "Reaction cross sections record: {}",
                this->reactionCrossSections().empty() ? "absent" : "present" );
     Log::info( "Scattering matrix record: {}",
-               this->reactionCrossSections().empty() ? "absent" : "present" );
+               this->scatteringMatrix().empty() ? "absent" : "present" );
     throw std::exception();
   }
 

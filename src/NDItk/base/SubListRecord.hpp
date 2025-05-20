@@ -4,6 +4,7 @@
 // system includes
 #include <vector>
 #include <optional>
+#include <algorithm>
 
 // other includes
 #include "tools/Log.hpp"
@@ -68,7 +69,7 @@ protected:
    */
   Iterator iterator( std::size_t index ) const {
 
-    return std::next( this->begin(), index );
+    return std::next( this->begin(), std::min( index, this->length_ ) );
   }
 
   /**
@@ -86,7 +87,7 @@ protected:
    */
   const Type& value( std::size_t index ) const {
 
-    return *std::next( this->begin(), index );
+    return *std::next( this->begin(), std::min( index, this->length_ ) );
   }
 
   /**

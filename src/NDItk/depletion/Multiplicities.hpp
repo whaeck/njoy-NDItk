@@ -61,7 +61,7 @@ public:
   auto multiplicities() const {
 
     using namespace njoy::tools;
-    return this->values( 3, 2 * this->numberReactions() )
+    return this->values( 3, 2 * this->numberReactions() - 1 )
                | std23::views::stride( 2 );
   }
 

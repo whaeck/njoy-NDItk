@@ -24,6 +24,7 @@ class InterpolationRegions : protected base::SubListRecord< InterpolationRegions
   /* auxiliary functions */
 
   #include "NDItk/thermonuclear/InterpolationRegions/src/verify.hpp"
+  #include "NDItk/thermonuclear/InterpolationRegions/src/generateData.hpp"
   #include "NDItk/thermonuclear/InterpolationRegions/src/write.hpp"
 
 public:
@@ -46,7 +47,12 @@ public:
    */
   auto regionInterpolationType( int index ) const { 
 
-    this->verify( index );   
+    if ( index > this->numberRegions() ) {
+
+      Log::error( "Attempted to query a region index greater than the number of regions" );
+      Log::info( "Querying index {} but found {} regions", index, this->numberRegions() );
+      throw std::exception();
+    }
 
     return this->value( 1 + 2*index + 1 ); 
   }
@@ -66,7 +72,7 @@ public:
       throw std::exception();
     }
 
-    return this->value( 1 + 2*index ) - 1; 
+    return this->value( 1 + 2*index ); 
   }
 
   /**

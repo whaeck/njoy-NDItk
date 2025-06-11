@@ -17,7 +17,7 @@ void write( OutputIterator& iter ) const {
 
   for (int i=0; i < this->numberRegions(); ++i) {
 
-    buffer << indentPrefix(indentLevel) << this->regionEndIndex(i)+1 
+    buffer << indentPrefix(indentLevel) << this->regionEndIndex(i) 
            << indentPrefix(indentLevel) << this->regionInterpolationType(i) << "\n";
   }
 

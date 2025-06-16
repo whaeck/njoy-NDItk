@@ -25,7 +25,6 @@ class InterpolationRegions : protected base::SubListRecord< InterpolationRegions
 
   #include "NDItk/thermonuclear/InterpolationRegions/src/verify.hpp"
   #include "NDItk/thermonuclear/InterpolationRegions/src/generateData.hpp"
-  #include "NDItk/thermonuclear/InterpolationRegions/src/write.hpp"
 
 public:
 
@@ -109,6 +108,10 @@ public:
   using Parent::begin;
   using Parent::end;
   using Parent::print;
+
+protected:
+
+  #include "NDItk/thermonuclear/InterpolationRegions/src/write.hpp"
 };
 
 } // thermonuclear namespace

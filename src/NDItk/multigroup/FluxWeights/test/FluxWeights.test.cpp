@@ -81,6 +81,8 @@ SCENARIO( "FluxWeights" ) {
       } // THEN
     } // WHEN
 
+// In debug mode, MSVC already crashes if you try to go beyond (or to) record.end()
+#ifndef _MSC_VER
     WHEN( "reading the data of the record and the number of weight "
           "values is insufficient" ) {
 
@@ -94,6 +96,7 @@ SCENARIO( "FluxWeights" ) {
         CHECK_THROWS( chunk.read( iter, end, 0 ) );
       } // THEN
     } // WHEN
+#endif
   } // GIVEN
 } // SCENARIO
 

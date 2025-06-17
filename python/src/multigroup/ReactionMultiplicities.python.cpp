@@ -86,7 +86,8 @@ void wrapReactionMultiplicities( python::module& module, python::module& ) {
     python::arg( "reaction" ),
     "Return the multiplicity data for a given reaction\n\n"
     "    self        the record\n"
-    "    reaction    the reaction to look for"
+    "    reaction    the reaction to look for",
+    python::return_value_policy::reference_internal
   )
   .def_static(
 

@@ -96,7 +96,8 @@ void wrapScatteringMatrix( python::module& module, python::module& ) {
     python::arg( "order" ),
     "Return the moment for a given order\n\n"
     "    self     the record\n"
-    "    order    the Legendre order to look for"
+    "    order    the Legendre order to look for",
+    python::return_value_policy::reference_internal
   )
   .def_static(
 

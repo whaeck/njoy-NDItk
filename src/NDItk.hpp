@@ -24,5 +24,7 @@
 #include "NDItk/depletion/IncidentParticle.hpp"
 #include "NDItk/depletion/Metadata.hpp"
 
+#include "NDItk/thermonuclear/Temperatures.hpp"
+
 #include "NDItk/MultigroupTable.hpp"
 #include "NDItk/DepletionTable.hpp"

@@ -28,3 +28,5 @@
 
 #include "NDItk/MultigroupTable.hpp"
 #include "NDItk/DepletionTable.hpp"
+#include "NDItk/MultigroupLibrary.hpp"
+#include "NDItk/DepletionLibrary.hpp"

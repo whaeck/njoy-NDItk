@@ -1,7 +1,6 @@
 # standard imports
 import unittest
 import os
-import os.path
 
 # third party imports
 
@@ -20,17 +19,91 @@ from NDItk.multigroup import OutgoingParticleTypes
 from NDItk.multigroup import OutgoingParticleTransportData
 from NDItk.multigroup import LegendreMoment
 from NDItk.multigroup import ScatteringMatrix
+from NDItk import MultigroupLibrary
 
-class Test_NDItk_MultigroupTable( unittest.TestCase ) :
-    """Unit test for the MultigroupTable class."""
+class Test_NDItk_MultigroupLibrary( unittest.TestCase ) :
+    """Unit test for the MultigroupLibrary class."""
 
     def test_component( self ) :
 
-        def verify_chunk( self, chunk ) :
+        def make_table( zaid_str ) :
+
+            return MultigroupTable( zaid = zaid_str, libname = 'mendf71x',
+                                 information = 'this is some information for the table', source = '12/22/2011',
+                                 process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
+                                 temperature = 2.53e-8, dilution = 1e+10,
+                                 structure = EnergyGroupStructure( [ 20., 18.123456789, 16.0000000000001, 14., 10., 5, 1, 1e-11 ] ),
+                                 velocities = Velocities( [ 2.1, 2.2, 2.25, 2.05, 2.15, 2.04, 2.06 ] ),
+                                 flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
+                                 total_xs = TotalCrossSection( [ 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 ] ),
+                                 reaction_xs = ReactionCrossSections(
+                                                   xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
+                                                          CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ),
+                                 scattering = ScatteringMatrix(
+                                     [ LegendreMoment( 0, [ 0.999999999999, 1e-13, 0, 0, 0, 0, 0,
+                                                            0, 1, 0, 0, 0, 0, 0,
+                                                            0, 0, 1, 0, 0, 0, 0,
+                                                            0, 0, 0, 1, 0, 0, 0,
+                                                            0, 0, 0, 0, 1, 0, 0,
+                                                            0, 0, 0, 0, 0, 1, 0,
+                                                            0, 0, 0, 0, 0, 0, 1 ], 7 ),
+                                       LegendreMoment( 1, [ 0, 0, 0, 0, 0, 0, 1,
+                                                             0, 0, 0, 0, 0, 1, 0,
+                                                             0, 0, 0, 0, 1, 0, 0,
+                                                             0, 0, 0, 1, 0, 0, 0,
+                                                             0, 0, 1, 0, 0, 0, 0,
+                                                             0, 1, 0, 0, 0, 0, 0,
+                                                             1, 0, 0, 0, 0, 0, 0 ], 7 ) ] ),
+                                 fission_q = AverageFissionEnergyRelease( 202.827, 181.238898, 4.827645,
+                                                                          7.281253, 6.5, 169.13 ),
+                                 primary_heating = HeatingNumbers( [ 11., 22., 33., 44., 55., 66., 77. ] ),
+                                 primary_kerma = Kerma( [ 110., 220., 330., 440., 550., 660., 770. ] ),
+                                 types = OutgoingParticleTypes( [ 0, 1001 ] ),
+                                 transport = OutgoingParticleTransportData( [ "92000", "92235.proton" ] ),
+                                 production = [
+
+                                     ScatteringMatrix( 0,
+                                         [ LegendreMoment( 0, [ 1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1 ], 7, 3 ),
+                                           LegendreMoment( 1, [ 0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0,
+                                                                0, 1, 0,
+                                                                0, 0, 1,
+                                                                0, 1, 0,
+                                                                1, 0, 0 ], 7, 3 ) ] ),
+                                     ScatteringMatrix( 1001,
+                                         [ LegendreMoment( 0, [ 1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0 ], 7, 2 ),
+                                           LegendreMoment( 1, [ 0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1,
+                                                                1, 0,
+                                                                0, 1 ], 7, 2 ) ] )                                 ],
+                                 outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
+                                              EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] ) ],
+                                 outgoing_heating = [ HeatingNumbers( 0, [ 21., 11., 5.1, 3., 4., 6., 7. ] ),
+                                                      HeatingNumbers( 1001, [ 25., 15., 9.1, 7., 8., 10., 11. ] ) ],
+                                 outgoing_kerma = [ Kerma( 0, [ 210., 110., 51., 30., 40., 60., 70. ] ),
+                                                    Kerma( 1001, [ 250., 150., 91., 70., 80., 100., 110. ] ) ] )
+
+        def verify_subchunk( self, chunk, zaid_str ) :
 
             # verify content - metadata
             metadata = chunk.metadata
-            self.assertEqual( '92235.711nm', metadata.zaid )
+            self.assertEqual( zaid_str, metadata.zaid )
             self.assertEqual( 'this is some information for the table', metadata.information )
             self.assertEqual( 'mendf71x', metadata.library_name )
             self.assertEqual( '12/22/2011', metadata.source_date )
@@ -464,77 +537,28 @@ class Test_NDItk_MultigroupTable( unittest.TestCase ) :
             self.assertAlmostEqual( 100, kerma.values[5] )
             self.assertAlmostEqual( 110, kerma.values[6] )
 
-        # the data is given explicitly
-        chunk = MultigroupTable( zaid = '92235.711nm', libname = 'mendf71x',
-                                 information = 'this is some information for the table', source = '12/22/2011',
-                                 process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
-                                 temperature = 2.53e-8, dilution = 1e+10,
-                                 structure = EnergyGroupStructure( [ 20., 18.123456789, 16.0000000000001, 14., 10., 5, 1, 1e-11 ] ),
-                                 velocities = Velocities( [ 2.1, 2.2, 2.25, 2.05, 2.15, 2.04, 2.06 ] ),
-                                 flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
-                                 total_xs = TotalCrossSection( [ 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 ] ),
-                                 reaction_xs = ReactionCrossSections(
-                                                   xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
-                                                          CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ),
-                                 scattering = ScatteringMatrix(
-                                     [ LegendreMoment( 0, [ 0.999999999999, 1e-13, 0, 0, 0, 0, 0,
-                                                            0, 1, 0, 0, 0, 0, 0,
-                                                            0, 0, 1, 0, 0, 0, 0,
-                                                            0, 0, 0, 1, 0, 0, 0,
-                                                            0, 0, 0, 0, 1, 0, 0,
-                                                            0, 0, 0, 0, 0, 1, 0,
-                                                            0, 0, 0, 0, 0, 0, 1 ], 7 ),
-                                       LegendreMoment( 1, [ 0, 0, 0, 0, 0, 0, 1,
-                                                             0, 0, 0, 0, 0, 1, 0,
-                                                             0, 0, 0, 0, 1, 0, 0,
-                                                             0, 0, 0, 1, 0, 0, 0,
-                                                             0, 0, 1, 0, 0, 0, 0,
-                                                             0, 1, 0, 0, 0, 0, 0,
-                                                             1, 0, 0, 0, 0, 0, 0 ], 7 ) ] ),
-                                 fission_q = AverageFissionEnergyRelease( 202.827, 181.238898, 4.827645,
-                                                                          7.281253, 6.5, 169.13 ),
-                                 primary_heating = HeatingNumbers( [ 11., 22., 33., 44., 55., 66., 77. ] ),
-                                 primary_kerma = Kerma( [ 110., 220., 330., 440., 550., 660., 770. ] ),
-                                 types = OutgoingParticleTypes( [ 0, 1001 ] ),
-                                 transport = OutgoingParticleTransportData( [ "92000", "92235.proton" ] ),
-                                 production = [
+        def verify_chunk( self, chunk ) :
 
-                                     ScatteringMatrix( 0,
-                                         [ LegendreMoment( 0, [ 1, 0, 0,
-                                                                0, 1, 0,
-                                                                0, 0, 1,
-                                                                0, 1, 0,
-                                                                1, 0, 0,
-                                                                0, 1, 0,
-                                                                0, 0, 1 ], 7, 3 ),
-                                           LegendreMoment( 1, [ 0, 0, 1,
-                                                                0, 1, 0,
-                                                                1, 0, 0,
-                                                                0, 1, 0,
-                                                                0, 0, 1,
-                                                                0, 1, 0,
-                                                                1, 0, 0 ], 7, 3 ) ] ),
-                                     ScatteringMatrix( 1001,
-                                         [ LegendreMoment( 0, [ 1, 0,
-                                                                0, 1,
-                                                                1, 0,
-                                                                0, 1,
-                                                                1, 0,
-                                                                0, 1,
-                                                                1, 0 ], 7, 2 ),
-                                           LegendreMoment( 1, [ 0, 1,
-                                                                1, 0,
-                                                                0, 1,
-                                                                1, 0,
-                                                                0, 1,
-                                                                1, 0,
-                                                                0, 1 ], 7, 2 ) ] )                                 ],
-                                 outgoing = [ EnergyGroupStructure( 0, [ 20., 10., 5, 1e-11 ] ),
-                                              EnergyGroupStructure( 1001, [ 20., 10., 1e-11 ] ) ],
-                                 outgoing_heating = [ HeatingNumbers( 0, [ 21., 11., 5.1, 3., 4., 6., 7. ] ),
-                                                      HeatingNumbers( 1001, [ 25., 15., 9.1, 7., 8., 10., 11. ] ) ],
-                                 outgoing_kerma = [ Kerma( 0, [ 210., 110., 51., 30., 40., 60., 70. ] ),
-                                                    Kerma( 1001, [ 250., 150., 91., 70., 80., 100., 110. ] ) ] )
+            self.assertEqual( 3, chunk.number_tables )
+            self.assertEqual( 3, len(chunk.tables) )
+            self.assertEqual( True, chunk.has_table('test_zaid_1') )
+            self.assertEqual( True, chunk.has_table('test_zaid_2') )
+            self.assertEqual( True, chunk.has_table('test_zaid_3') )
+            self.assertEqual( False, chunk.has_table('asdf') )
+            self.assertEqual( 'This is my header.', chunk.header )
+            verify_subchunk( self, chunk.get_table('test_zaid_1'), 'test_zaid_1' )
+            verify_subchunk( self, chunk.get_table('test_zaid_2'), 'test_zaid_2' )
+            verify_subchunk( self, chunk.get_table('test_zaid_3'), 'test_zaid_3' )
+            verify_subchunk( self, chunk.get_table(0), 'test_zaid_1' )
+            verify_subchunk( self, chunk.get_table(1), 'test_zaid_2' )
+            verify_subchunk( self, chunk.get_table(2), 'test_zaid_3' )
+
+        chunk = MultigroupLibrary(
+                    'This is my header.',
+                    [make_table('test_zaid_1'),
+                     make_table('test_zaid_2'),
+                     make_table('test_zaid_3')]
+                )
 
         verify_chunk( self, chunk )
 

@@ -1,5 +1,5 @@
-#ifndef NJOY_NDITK_BASE_COMMENTBLOCK
-#define NJOY_NDITK_BASE_COMMENTBLOCK
+#ifndef NJOY_NDITK_COMMENTBLOCK
+#define NJOY_NDITK_COMMENTBLOCK
 
 // system includes
 #include <string>
@@ -12,10 +12,9 @@
 
 namespace njoy {
 namespace NDItk {
-namespace base {
 
 /**
- *  @brief An NDI record containing comment blocks
+ *  @brief An NDI record containing a block of comments
  */
 class CommentBlock : protected base::Record {
 
@@ -33,16 +32,16 @@ public:
    *  @param[in] keyword   the keyword of the record
    */
   CommentBlock() :
-      base::Record( Keyword( "comment" ) ) {}
+      base::Record( base::Keyword( "comment" ) ) {}
 
   /**
    *  @brief Constructor
    *
    *  @param[in] keyword   the keyword of the record
-   *  @param[in] value     the value of the record
+   *  @param[in] value     the string content of the record
    */
   CommentBlock( std::string value ) :
-      base::Record( Keyword( "comment" ) ),
+      base::Record( base::Keyword( "comment" ) ),
       comment_(value) {}
 
   /* methods */
@@ -77,9 +76,9 @@ public:
   }
 
   /**
-   *  @brief 
+   *  @brief  Print the record data
    *
-   *  @param[in] iter 
+   *  @param[in] iter   the current position in the output
    */
   template< typename OutputIterator >
   void print( OutputIterator& iter ) const {
@@ -91,14 +90,11 @@ public:
   }
 
   /**
-   *  @brief 
-   *
-   *  @param[in] iter 
+   *  @brief  Return the string content of the comment block
    */
   const std::string& comment() const { return this->comment_; }
 };
 
-} // base namespace
 } // NDItk namespace
 } // njoy namespace
 

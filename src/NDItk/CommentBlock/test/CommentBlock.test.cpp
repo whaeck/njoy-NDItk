@@ -2,13 +2,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "NDItk/base/CommentBlock.hpp"
+#include "NDItk/CommentBlock.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::NDItk;
-using CommentBlock = base::CommentBlock;
+using CommentBlock = CommentBlock;
 
 std::string chunk();
 void verifyChunk( const CommentBlock& );

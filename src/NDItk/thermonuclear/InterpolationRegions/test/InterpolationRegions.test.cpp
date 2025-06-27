@@ -113,11 +113,11 @@ std::vector< int > data() {
 void verifyChunk( const InterpolationRegions& chunk ) {
 
   CHECK( 5 == chunk.numberRegions() );
-  CHECK( 16 == chunk.totalSize() );
+  CHECK( 15 == chunk.totalSize() );
 
-  CHECK( 0 == chunk.regionBeginIndex(0) );
+  CHECK( 1 == chunk.regionBeginIndex(0) );
   CHECK( 3 == chunk.regionEndIndex(0) );
-  CHECK( 4 == chunk.regionSize(0) );
+  CHECK( 3 == chunk.regionSize(0) );
   CHECK( 1 == chunk.regionInterpolationType(0) );
 
   CHECK( 4 == chunk.regionBeginIndex(1) );

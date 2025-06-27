@@ -57,7 +57,7 @@ public:
   }
 
   /**
-   *  @brief Return the 0-based index signifying the inclusive end of a region's data
+   *  @brief Return the 1-based index signifying the inclusive end of a region's data
    *
    *  @param[in] index  the interpolation region's 0-based index 
    */
@@ -75,13 +75,13 @@ public:
   }
 
   /**
-   *  @brief Return the 0-based index signifying the inclusive start of a region's data
+   *  @brief Return the 1-based index signifying the inclusive start of a region's data
    *
    *  @param[in] index  the interpolation region's 0-based index 
    */
   auto regionBeginIndex( int index ) const { 
 
-    return ( (index == 0) ? 0 : this->regionEndIndex( index-1 ) + 1 );
+    return ( (index == 0) ? 1 : this->regionEndIndex( index-1 ) + 1 );
   }
 
   /**
@@ -99,7 +99,7 @@ public:
    */
   auto totalSize() const { 
     
-    return ( this->regionEndIndex( this->numberRegions()-1 ) + 1 ); 
+    return this->regionEndIndex( this->numberRegions()-1 ); 
   }
 
   using Parent::values;

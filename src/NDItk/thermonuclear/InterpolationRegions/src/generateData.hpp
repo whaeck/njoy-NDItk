@@ -1,7 +1,7 @@
 /**
  *  @brief Generate the subrecord's data vector
  *
- *  @param[in] endIndices    a vector of 0-based indices signifying the inclusive end of each region's data
+ *  @param[in] endIndices    a vector of 1-based indices signifying the inclusive end of each region's data
  *  @param[in] interpTypes   a vector of integers specifying the interpolation type for each region
  */
 static std::vector< int >

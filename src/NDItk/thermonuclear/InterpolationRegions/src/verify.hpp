@@ -30,6 +30,16 @@ static void verify( const Range& data ) {
 
   for (int i=3; i < data.size(); ++i) {
 
+    if ( data[i] < 1 ) {
+
+      Log::error( "End indices must be 1-based" );
+      Log::info( "Found an index of {}", data[i] );
+      throw std::exception();
+    }
+  }
+
+  for (int i=3; i < data.size(); ++i) {
+
     if ( data[i] <= data[i-2] ) {
 
       Log::error( "End indices must have the regions' data being sequential" );

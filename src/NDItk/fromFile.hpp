@@ -35,28 +35,23 @@ namespace NDItk {
   }
 
   /**
-   *  @brief Factory function to make an NDI table from a file
+   *  @brief Factory function to make an NDI library from a file
    *
-   *  If this function is applied to a concatenated NDI file, only the first
-   *  table is read.
+   *  Note: this can also be used for reading an NDI table from a
+   *        file, although this function is not intended for
+   *        that purpose.
    *
    *  @param[in] filename   the file name
    */
-  template < typename Table >
-  Table fromFile( const std::string& filename ) {
+  template < typename Library >
+  Library fromFile( const std::string& filename ) {
 
     std::string content = readContentFromFile( filename );
 
     auto iter = content.begin();
     auto end = content.end();
 
-    // read over the first line of the file
-    while ( *iter != '\n' ) {
-
-      ++iter;
-    }
-
-    Table table;
+    Library table;
     table.read( iter, end );
     return table;
   }

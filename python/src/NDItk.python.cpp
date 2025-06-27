@@ -18,6 +18,10 @@ void wrapMultigroup( python::module&, python::module& );
 void wrapDepletionTable( python::module&, python::module& );
 void wrapMultigroupTable( python::module&, python::module& );
 
+// declarations - NDI library types
+void wrapDepletionLibrary( python::module&, python::module& );
+void wrapMultigroupLibrary( python::module&, python::module& );
+
 /**
  *  @brief NDItk python bindings
  *
@@ -43,4 +47,8 @@ PYBIND11_MODULE( NDItk, module ) {
   // wrap ACE table types
   wrapDepletionTable( module, viewmodule );
   wrapMultigroupTable( module, viewmodule );
+
+  // wrap ACE library types
+  wrapDepletionLibrary( module, viewmodule );
+  wrapMultigroupLibrary( module, viewmodule );
 }

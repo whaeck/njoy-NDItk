@@ -1,5 +1,5 @@
-#ifndef NJOY_NDITK_BASE_COLUMNDATA
-#define NJOY_NDITK_BASE_COLUMNDATA
+#ifndef NJOY_NDITK_COLUMNDATA
+#define NJOY_NDITK_COLUMNDATA
 
 // system includes
 
@@ -9,11 +9,9 @@
 
 namespace njoy {
 namespace NDItk {
-namespace base {
 
-//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 /**
- *  @brief 
+ *  @brief Sublist for storing and accessing column-formatted data.
  */
 template< typename T, int ncol >
 class ColumnData : protected base::SubListRecord< ColumnData<T,ncol>, T > {
@@ -21,19 +19,34 @@ class ColumnData : protected base::SubListRecord< ColumnData<T,ncol>, T > {
   friend class base::SubListRecord< ColumnData<T,ncol>, T >;
   using Parent = base::SubListRecord< ColumnData<T,ncol>, T >;
 
+  /* auxiliary functions */
+
+  #include "NDItk/ColumnData/src/verify.hpp"
+  #include "NDItk/ColumnData/src/write.hpp"
+
 public:
 
-  ColumnData() = default;
+  using Iterator = typename Parent::Iterator;
 
-  using Parent::Parent;
+  /* constructor */
+
+  #include "NDItk/ColumnData/src/ctor.hpp"
 
   /**
-   *  @brief 
+   *  @brief Return the number of columns 
+   */
+  auto numberColumns() const { return ncol; }
+
+  /**
+   *  @brief Return a view of a column's data
    */
   auto getColumn( int index ) const {
 
     if ( index > ncol ) {
-      // error out
+
+      Log::error( "The requested index is greater than the number of columns" );
+      Log::info( "Requested index {} but there are {} columns", index, ncol );
+      throw std::exception();
     }
 
     return this->values( index, this->size() ) | njoy::tools::std23::views::stride( ncol );
@@ -47,7 +60,6 @@ public:
   using Parent::print;
 };
 
-} // base namespace
 } // NDItk namespace
 } // njoy namespace
 

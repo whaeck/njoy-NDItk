@@ -1,1 +1,1 @@
-add_cpp_test( base.CommentBlock CommentBlock.test.cpp )
+add_cpp_test( CommentBlock CommentBlock.test.cpp )

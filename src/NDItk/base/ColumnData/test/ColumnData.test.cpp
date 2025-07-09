@@ -84,18 +84,18 @@ void verifyChunk( const ColumnData<int,3>& chunk ) {
   CHECK( 3 == chunk.numberColumns() );
   CHECK( 4 == chunk.numberRows() );
 
-  CHECK( 1 == chunk.getColumn(0)[0] );
-  CHECK( 4 == chunk.getColumn(0)[1] );
-  CHECK( 7 == chunk.getColumn(0)[2] );
-  CHECK( 10 == chunk.getColumn(0)[3] );
+  CHECK( 1 == chunk.column(0)[0] );
+  CHECK( 4 == chunk.column(0)[1] );
+  CHECK( 7 == chunk.column(0)[2] );
+  CHECK( 10 == chunk.column(0)[3] );
 
-  CHECK( 2 == chunk.getColumn(1)[0] );
-  CHECK( 5 == chunk.getColumn(1)[1] );
-  CHECK( 8 == chunk.getColumn(1)[2] );
-  CHECK( 11 == chunk.getColumn(1)[3] );
+  CHECK( 2 == chunk.column(1)[0] );
+  CHECK( 5 == chunk.column(1)[1] );
+  CHECK( 8 == chunk.column(1)[2] );
+  CHECK( 11 == chunk.column(1)[3] );
 
-  CHECK( 3 == chunk.getColumn(2)[0] );
-  CHECK( 6 == chunk.getColumn(2)[1] );
-  CHECK( 9 == chunk.getColumn(2)[2] );
-  CHECK( 12 == chunk.getColumn(2)[3] );
+  CHECK( 3 == chunk.column(2)[0] );
+  CHECK( 6 == chunk.column(2)[1] );
+  CHECK( 9 == chunk.column(2)[2] );
+  CHECK( 12 == chunk.column(2)[3] );
 }

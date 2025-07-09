@@ -41,12 +41,12 @@ public:
   /**
    *  @brief Return the 1-based indices for the end of each region
    */
-  auto boundaries() const { return this->getColumn(0); };
+  auto boundaries() const { return this->column(0); };
 
   /**
    *  @brief Return the interpolation types
    */
-  auto interpolants() const { return this->getColumn(1); };
+  auto interpolants() const { return this->column(1); };
 
   using Parent::values;
   using Parent::size;

@@ -46,7 +46,7 @@ public:
   /**
    *  @brief Return a view of a column's data
    */
-  auto getColumn( int index ) const {
+  auto column( int index ) const {
 
     if ( index > ncol ) {
 

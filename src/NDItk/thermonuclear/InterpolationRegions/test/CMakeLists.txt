@@ -1,0 +1,1 @@
+add_cpp_test( thermonuclear.InterpolationRegions InterpolationRegions.test.cpp )

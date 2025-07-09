@@ -78,6 +78,8 @@ void verifyChunk( const ColumnData<int,3>& chunk ) {
   CHECK( false == chunk.empty() );
   CHECK( 12 == chunk.size() );
   CHECK( 12 == chunk.values().size() );
+  CHECK( 3 == chunk.numberColumns() );
+  CHECK( 4 == chunk.numberRows() );
 
   CHECK( 1 == chunk.getColumn(0)[0] );
   CHECK( 4 == chunk.getColumn(0)[1] );

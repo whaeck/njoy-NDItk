@@ -38,6 +38,11 @@ public:
   auto numberColumns() const { return ncol; }
 
   /**
+   *  @brief Return the number of rows 
+   */
+  auto numberRows() const { return this->size() / ncol; }
+
+  /**
    *  @brief Return a view of a column's data
    */
   auto getColumn( int index ) const {

@@ -35,6 +35,7 @@ add_subdirectory( src/NDItk/base/IntegerListRecord/test )
 add_subdirectory( src/NDItk/base/RealListRecord/test )
 add_subdirectory( src/NDItk/base/StringListRecord/test )
 add_subdirectory( src/NDItk/base/InformationRecord/test )
+add_subdirectory( src/NDItk/base/ColumnData/test )
 
 add_subdirectory( src/NDItk/thermonuclear/Temperatures/test )
 
@@ -66,7 +67,6 @@ add_subdirectory( src/NDItk/multigroup/LegendreMoment/test )
 add_subdirectory( src/NDItk/multigroup/ScatteringMatrix/test )
 
 add_subdirectory( src/NDItk/CommentBlock/test )
-add_subdirectory( src/NDItk/ColumnData/test )
 add_subdirectory( src/NDItk/MultigroupTable/test )
 add_subdirectory( src/NDItk/DepletionTable/test )
 add_subdirectory( src/NDItk/MultigroupLibrary/test )

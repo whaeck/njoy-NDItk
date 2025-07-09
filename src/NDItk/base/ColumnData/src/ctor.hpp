@@ -1,3 +1,6 @@
+/**
+ *  @brief Default constructor
+ */
 ColumnData() = default;
 
 /**

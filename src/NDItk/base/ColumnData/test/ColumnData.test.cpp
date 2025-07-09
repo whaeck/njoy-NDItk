@@ -4,12 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "NDItk/ColumnData.hpp"
+#include "NDItk/base/ColumnData.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::NDItk;
+
+template<typename T, size_t n>
+using ColumnData = base::ColumnData<T, n>;
 
 std::string chunk();
 

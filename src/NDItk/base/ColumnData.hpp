@@ -1,5 +1,5 @@
-#ifndef NJOY_NDITK_COLUMNDATA
-#define NJOY_NDITK_COLUMNDATA
+#ifndef NJOY_NDITK_BASE_COLUMNDATA
+#define NJOY_NDITK_BASE_COLUMNDATA
 
 // system includes
 
@@ -9,20 +9,21 @@
 
 namespace njoy {
 namespace NDItk {
+namespace base {
 
 /**
  *  @brief Sublist for storing and accessing column-formatted data.
  */
 template< typename T, int ncol >
-class ColumnData : protected base::SubListRecord< ColumnData<T,ncol>, T > {
+class ColumnData : protected SubListRecord< ColumnData<T,ncol>, T > {
 
-  friend class base::SubListRecord< ColumnData<T,ncol>, T >;
-  using Parent = base::SubListRecord< ColumnData<T,ncol>, T >;
+  friend class SubListRecord< ColumnData<T,ncol>, T >;
+  using Parent = SubListRecord< ColumnData<T,ncol>, T >;
 
   /* auxiliary functions */
 
-  #include "NDItk/ColumnData/src/verify.hpp"
-  #include "NDItk/ColumnData/src/write.hpp"
+  #include "NDItk/base/ColumnData/src/verify.hpp"
+  #include "NDItk/base/ColumnData/src/write.hpp"
 
 public:
 
@@ -30,7 +31,7 @@ public:
 
   /* constructor */
 
-  #include "NDItk/ColumnData/src/ctor.hpp"
+  #include "NDItk/base/ColumnData/src/ctor.hpp"
 
   /**
    *  @brief Return the number of columns 
@@ -65,6 +66,7 @@ public:
   using Parent::print;
 };
 
+} // base namespace
 } // NDItk namespace
 } // njoy namespace
 

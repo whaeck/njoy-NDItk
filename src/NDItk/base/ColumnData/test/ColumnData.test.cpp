@@ -70,10 +70,10 @@ SCENARIO( "ColumnData" ) {
 
 std::string chunk() {
 
-  return "  1 2 3 \n"
-         "  4 5 6 \n"
-         "  7 8 9 \n"
-         "  10 11 12 \n";
+  return "  1  2  3\n"
+         "  4  5  6\n"
+         "  7  8  9\n"
+         "  10  11  12\n";
 }
 
 void verifyChunk( const ColumnData<int,3>& chunk ) {

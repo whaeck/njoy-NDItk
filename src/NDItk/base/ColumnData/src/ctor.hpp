@@ -11,8 +11,6 @@ ColumnData() = default;
 ColumnData( std::vector<T> data ) :
   Parent( std::move(data) ) {
 
-  Iterator iter;
-
   verify( this->values() );
 }
 

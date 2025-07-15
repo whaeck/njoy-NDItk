@@ -2,6 +2,7 @@
 #define NJOY_NDITK_BASE_COLUMNDATA
 
 // system includes
+#include <iomanip>
 
 // other includes
 #include "tools/std23/views.hpp"

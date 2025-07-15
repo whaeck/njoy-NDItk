@@ -14,7 +14,6 @@ void write( OutputIterator& iter ) const {
 
   std::ostringstream buffer;
   buffer << std::setprecision(15);
-         
 
   auto nrow = this->size() / this->numberColumns();
 

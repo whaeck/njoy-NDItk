@@ -13,7 +13,7 @@ namespace NDItk {
 namespace thermonuclear {
 
 /**
- *  @brief 
+ *  @brief A subrecord for representing interpolated data regions
  */
 class InterpolationRegions : protected base::ColumnData<int, 2> {
 

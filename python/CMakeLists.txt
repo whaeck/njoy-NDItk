@@ -10,6 +10,7 @@ if( NDItk.python )
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear/Temperatures.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear/InterpolationRegions.python.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/depletion.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/depletion/Multiplicities.python.cpp

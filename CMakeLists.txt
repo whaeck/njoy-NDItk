@@ -82,12 +82,12 @@ if (NDItk.python AND NOT TARGET njoy::tools.python)
   set(NDItk.python OFF)
 endif()
 
-if (NDItk.python)
-  add_subdirectory(python)
+if ( NDItk.python )
+  add_subdirectory( python )
 endif()
 
 if( ${NDItk.tests} )
-  include( cmake/unit_testing.cmake )
+  add_subdirectory( test )
 endif()
 
 #######################################################################

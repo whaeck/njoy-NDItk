@@ -28,7 +28,7 @@ namespace NDItk {
     auto output = std::back_inserter( content );
     library.print( output );
 
-    std::ofstream out( filename );
+    std::ofstream out( filename, std::ios::binary );
     out << content;
     out.close();
   }

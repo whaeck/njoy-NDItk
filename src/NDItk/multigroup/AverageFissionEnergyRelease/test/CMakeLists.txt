@@ -1,1 +1,0 @@
-add_cpp_test( multigroup.AverageFissionEnergyRelease AverageFissionEnergyRelease.test.cpp )

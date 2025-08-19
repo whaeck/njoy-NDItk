@@ -27,22 +27,22 @@ endfunction()
 
 message( STATUS "Adding NDItk C++ unit testing" )
 
-add_cpp_test( MultigroupTable MultigroupTable.test.cpp )
+add_cpp_test( base.Keyword base/Keyword.test.cpp )
 add_cpp_test( base.InformationRecord base/InformationRecord.test.cpp )
 add_cpp_test( base.IntegerListRecord base/IntegerListRecord.test.cpp )
-add_cpp_test( base.Keyword base/Keyword.test.cpp )
 add_cpp_test( base.RealListRecord base/RealListRecord.test.cpp )
 add_cpp_test( base.SingleIntegerRecord base/SingleIntegerRecord.test.cpp )
 add_cpp_test( base.SingleRealRecord base/SingleRealRecord.test.cpp )
 add_cpp_test( base.SingleStringRecord base/SingleStringRecord.test.cpp )
 add_cpp_test( base.StringListRecord base/StringListRecord.test.cpp )
 add_cpp_test( base.ColumnData base/ColumnData.test.cpp )
+
 add_cpp_test( depletion.IncidentParticle depletion/IncidentParticle.test.cpp )
-add_subdirectory( src/NDItk/thermonuclear/InterpolationRegions/test )
 add_cpp_test( depletion.Metadata depletion/Metadata.test.cpp )
 add_cpp_test( depletion.Multiplicities depletion/Multiplicities.test.cpp )
 add_cpp_test( depletion.Product depletion/Product.test.cpp )
 add_cpp_test( depletion.Target depletion/Target.test.cpp )
+
 add_cpp_test( multigroup.AverageFissionEnergyRelease multigroup/AverageFissionEnergyRelease.test.cpp )
 add_cpp_test( multigroup.CrossSection multigroup/CrossSection.test.cpp )
 add_cpp_test( multigroup.EnergyGroupStructure multigroup/EnergyGroupStructure.test.cpp )
@@ -63,8 +63,14 @@ add_cpp_test( multigroup.ReactionMultiplicities multigroup/ReactionMultiplicitie
 add_cpp_test( multigroup.ScatteringMatrix multigroup/ScatteringMatrix.test.cpp )
 add_cpp_test( multigroup.TotalCrossSection multigroup/TotalCrossSection.test.cpp )
 add_cpp_test( multigroup.Velocities multigroup/Velocities.test.cpp )
-add_cpp_test( DepletionTable DepletionTable.test.cpp )
+
+add_cpp_test( thermonuclear.InterpolationRegions thermonuclear/InterpolationRegions.test.cpp )
 add_cpp_test( thermonuclear.Temperatures thermonuclear/Temperatures.test.cpp )
+
 add_cpp_test( CommentBlock CommentBlock.test.cpp )
+
+add_cpp_test( DepletionTable DepletionTable.test.cpp )
+add_cpp_test( MultigroupTable MultigroupTable.test.cpp )
+
 add_cpp_test( DepletionLibrary DepletionLibrary.test.cpp )
 add_cpp_test( MultigroupLibrary MultigroupLibrary.test.cpp )

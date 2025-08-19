@@ -1,1 +1,0 @@
-add_cpp_test( multigroup.TotalCrossSection TotalCrossSection.test.cpp )

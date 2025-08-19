@@ -3,6 +3,7 @@
 
 // system includes
 #include <iomanip>
+#include <sstream>
 
 // other includes
 #include "tools/std23/views.hpp"
@@ -35,12 +36,12 @@ public:
   #include "NDItk/base/ColumnData/src/ctor.hpp"
 
   /**
-   *  @brief Return the number of columns 
+   *  @brief Return the number of columns
    */
   auto numberColumns() const { return ncol; }
 
   /**
-   *  @brief Return the number of rows 
+   *  @brief Return the number of rows
    */
   auto numberRows() const { return this->size() / ncol; }
 
@@ -72,4 +73,3 @@ public:
 } // njoy namespace
 
 #endif
-

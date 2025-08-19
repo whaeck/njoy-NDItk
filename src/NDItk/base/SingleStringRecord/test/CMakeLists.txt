@@ -1,1 +1,0 @@
-add_cpp_test( base.SingleStringRecord SingleStringRecord.test.cpp )

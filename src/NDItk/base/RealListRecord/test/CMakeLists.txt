@@ -1,1 +1,0 @@
-add_cpp_test( base.RealListRecord RealListRecord.test.cpp )

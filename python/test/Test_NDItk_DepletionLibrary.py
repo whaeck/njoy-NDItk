@@ -93,7 +93,7 @@ class Test_NDItk_DepletionLibrary( unittest.TestCase ) :
             verify_subchunk( self, chunk.get_table(2), 'test_zaid_3' )
 
         chunk = DepletionLibrary(
-                    'This is my header.', 
+                    'This is my header.',
                     [make_table('test_zaid_1'),
                      make_table('test_zaid_2'),
                      make_table('test_zaid_3')]

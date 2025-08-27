@@ -7,8 +7,12 @@ if( NDItk.python )
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DepletionTable.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DosimetryTable.python.cpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/MultigroupLibrary.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/DepletionLibrary.python.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear/Temperatures.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear/InterpolationRegions.python.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/depletion.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/depletion/Multiplicities.python.cpp

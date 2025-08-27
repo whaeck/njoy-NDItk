@@ -41,3 +41,9 @@ dependencies
 # python
 __pycache__
 *.pyc
+
+# Visual Studio
+.vs/
+python/*test*.txt
+python/_*.txt
+CMakeSettings.json

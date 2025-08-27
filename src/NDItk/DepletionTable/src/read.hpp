@@ -37,7 +37,7 @@ void read( Iterator& iter, const Iterator& end ) {
     }
 
     // read over whitespace or until the end
-    while ( std::isspace( *iter ) && iter != end ) {
+    while ( iter != end && std::isspace( *iter ) ) {
 
       ++iter;
     }

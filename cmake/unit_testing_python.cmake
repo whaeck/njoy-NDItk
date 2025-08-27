@@ -26,6 +26,7 @@ endfunction()
 message( STATUS "Adding NDItk Python unit testing" )
 
 add_python_test( thermonuclear.Temperatures               thermonuclear/Test_NDItk_thermonuclear_Temperatures.py )
+add_python_test( thermonuclear.InterpolationRegions       thermonuclear/Test_NDItk_thermonuclear_InterpolationRegions.py )
 
 add_python_test( depletion.Multiplicities                 depletion/Test_NDItk_depletion_Multiplicities.py )
 add_python_test( depletion.Product                        depletion/Test_NDItk_depletion_Product.py )
@@ -59,3 +60,6 @@ add_python_test( dosimetry.Metadata                       dosimetry/Test_NDItk_d
 add_python_test( MultigroupTable   Test_NDItk_MultigroupTable.py )
 add_python_test( DepletionTable    Test_NDItk_DepletionTable.py )
 add_python_test( DosimetryTable    Test_NDItk_DosimetryTable.py )
+
+add_python_test( MultigroupLibrary Test_NDItk_MultigroupLibrary.py )
+add_python_test( DepletionLibrary  Test_NDItk_DepletionLibrary.py )

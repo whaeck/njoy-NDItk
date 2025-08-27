@@ -2,6 +2,7 @@
 #define NJOY_NDITK_BASE_INFORMATIONRECORD
 
 // system includes
+#include <algorithm>
 #include <string>
 #include <sstream>
 #include <iomanip>
@@ -101,6 +102,14 @@ public:
       throw std::exception();
     }
     this->data() = std::string( iter, pos );
+
+    // trim initial and trailing white space
+    auto compare = []( auto&& character ) { return !std::isspace( character ); };
+    auto start = std::find_if( this->data()->begin(), this->data()->end(), compare );
+    auto stop = std::find_if( this->data()->rbegin(), this->data()->rend(), compare ).base();
+    this->data() = std::string( start, stop );
+
+
     if ( pos != end ) {
 
       iter = pos + 1;

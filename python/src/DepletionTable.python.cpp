@@ -30,16 +30,16 @@ void wrapDepletionTable( python::module& module, python::module& ) {
   table
   .def(
 
-    python::init< 
-      std::string, 
-      std::string, 
+    python::init<
+      std::string,
+      std::string,
       std::string,
       std::vector< IncidentParticle >,
       std::optional< std::string >,
       std::optional< std::string > >(),
-    python::arg( "zaid" ), 
+    python::arg( "zaid" ),
     python::arg( "libname" ),
-    python::arg( "process" ), 
+    python::arg( "process" ),
     python::arg( "incident" ),
     python::arg( "information" ) = std::nullopt,
     python::arg( "source" ) = std::nullopt,
@@ -73,7 +73,8 @@ void wrapDepletionTable( python::module& module, python::module& ) {
     "Return the record for an incident particle\n\n"
     "Arguments:\n"
     "    self       the table\n"
-    "    particle   the incident particle identifier to find"
+    "    particle   the incident particle identifier to find",
+    python::return_value_policy::reference_internal
   )
   .def_property_readonly(
 

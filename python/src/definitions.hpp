@@ -180,18 +180,118 @@ void addStandardTableDefinitions( PythonClass& table ) {
     "table\n\n"
     "Arguments:\n"
     "    filename    the file name and path"
+  );
+}
+
+/**
+ *  @brief Add standard library definitions
+ *
+ *  This adds the following standard functions:
+ *    - from_file()
+ *    - to_file()
+ *    - number_tables()
+ *    - header()
+ *    - tables()
+ *    - get_table(string)
+ *    - get_table(int)
+ *    - has_table(string)
+ *
+ *  @param[in] library   the library to which the definitions have to be added
+ */
+template < typename Library, typename PythonClass >
+void addStandardLibraryDefinitions( PythonClass& library ) {
+
+  library
+  .def_static(
+
+    "from_file",
+    [] ( const std::string& filename ) -> Library {
+
+      return njoy::NDItk::fromFile< Library >( filename );
+    },
+    "Read an NDI library from a file\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "library\n\n"
+    "Arguments:\n"
+    "    filename    the file name and path"
   )
   .def(
 
     "to_file",
-    [] ( const Table& self, const std::string& filename ) {
+    [] ( const Library& self, const std::string& filename ) {
 
       return njoy::NDItk::toFile( self, filename );
     },
-    "Write an NDI table to a file\n\n"
+    "Write an NDI library to a file\n\n"
     "Arguments:\n"
-    "    self        the table\n"
+    "    self        the library\n"
     "    filename    the file name and path"
+  )
+  .def_property_readonly(
+
+    "number_tables",
+    [] ( const Library& self ) -> decltype(auto) {
+
+      return self.numberTables();
+    },
+    "Return the number of data tables in the library"
+  )
+  .def_property_readonly(
+
+    "header",
+    [] ( const Library& self ) -> decltype(auto) {
+
+      return self.header();
+    },
+    "Return the header in the library"
+  )
+  .def_property_readonly(
+
+    "tables",
+    [] ( const Library& self ) -> decltype(auto) {
+
+      return self.tables();
+    },
+    "Return a vector of tables in the library"
+  )
+  .def(
+
+    "get_table",
+    [] ( const Library& self, int index ) -> decltype(auto) {
+
+      return self.getTable( index );
+    },
+    python::arg( "index" ),
+    "Return the table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    index      the 0-based index of the table in the library file"
+  )
+  .def(
+
+    "get_table",
+    [] ( const Library& self, const std::string& zaid ) -> decltype(auto) {
+
+      return self.getTable( zaid );
+    },
+    python::arg( "zaid" ),
+    "Return the table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    zaid       the zaid string of the table in the library file"
+  )
+  .def(
+
+    "has_table",
+    [] ( const Library& self, const std::string& zaid ) -> decltype(auto) {
+
+      return self.hasTable( zaid );
+    },
+    python::arg( "zaid" ),
+    "Check if there is a table in the library with the associated zaid\n\n"
+    "Arguments:\n"
+    "    self       the library\n"
+    "    zaid       the zaid string of the table in the library file"
   );
 }
 

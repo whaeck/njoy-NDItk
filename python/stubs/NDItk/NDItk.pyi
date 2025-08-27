@@ -5,7 +5,80 @@ from . import dosimetry
 from . import multigroup
 from . import sequence
 from . import thermonuclear
-__all__ = ['DepletionTable', 'DosimetryTable', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
+__all__ = ['DepletionLibrary', 'DepletionTable', 'DosimetryTable', 'MultigroupLibrary', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
+class DepletionLibrary:
+    """
+    A library containing depletion tables
+    """
+    @staticmethod
+    def from_file(arg0: str) -> DepletionLibrary:
+        """
+        Read an NDI library from a file
+        
+        An exception is raised if something goes wrong while reading the
+        library
+        
+        Arguments:
+            filename    the file name and path
+        """
+    def __init__(self, header: str, tables: list[DepletionTable]) -> None:
+        """
+        Initialise the library
+        
+        Arguments:
+            self               the library
+            header             the string header of the library
+            tables             a vector of DepletionTable
+        """
+    @typing.overload
+    def get_table(self, index: int) -> DepletionTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            index      the 0-based index of the table in the library file
+        """
+    @typing.overload
+    def get_table(self, zaid: str) -> DepletionTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def has_table(self, zaid: str) -> bool:
+        """
+        Check if there is a table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def to_file(self, arg0: str) -> None:
+        """
+        Write an NDI library to a file
+        
+        Arguments:
+            self        the library
+            filename    the file name and path
+        """
+    @property
+    def header(self) -> str:
+        """
+        Return the header in the library
+        """
+    @property
+    def number_tables(self) -> int:
+        """
+        Return the number of data tables in the library
+        """
+    @property
+    def tables(self) -> list[DepletionTable]:
+        """
+        Return a vector of tables in the library
+        """
 class DepletionTable:
     """
     A production/depletion table
@@ -41,14 +114,6 @@ class DepletionTable:
         Arguments:
             self       the table
             particle   the incident particle identifier to find
-        """
-    def to_file(self, arg0: str) -> None:
-        """
-        Write an NDI table to a file
-        
-        Arguments:
-            self        the table
-            filename    the file name and path
         """
     @property
     def incident_particles(self) -> list[depletion.IncidentParticle]:
@@ -107,14 +172,6 @@ class DosimetryTable:
             self    the table
             type    the multiplicity type
         """
-    def to_file(self, arg0: str) -> None:
-        """
-        Write an NDI table to a file
-        
-        Arguments:
-            self        the table
-            filename    the file name and path
-        """
     @property
     def flux_weights(self) -> multigroup.FluxWeights:
         """
@@ -139,6 +196,79 @@ class DosimetryTable:
     def total_cross_section(self) -> multigroup.TotalCrossSection:
         """
         The total cross section record
+        """
+class MultigroupLibrary:
+    """
+    A library containing multigroup tables
+    """
+    @staticmethod
+    def from_file(arg0: str) -> MultigroupLibrary:
+        """
+        Read an NDI library from a file
+        
+        An exception is raised if something goes wrong while reading the
+        library
+        
+        Arguments:
+            filename    the file name and path
+        """
+    def __init__(self, header: str, tables: list[MultigroupTable]) -> None:
+        """
+        Initialise the library
+        
+        Arguments:
+            self               the library
+            header             the string header of the library
+            tables             a vector of MultigroupTable
+        """
+    @typing.overload
+    def get_table(self, index: int) -> MultigroupTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            index      the 0-based index of the table in the library file
+        """
+    @typing.overload
+    def get_table(self, zaid: str) -> MultigroupTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def has_table(self, zaid: str) -> bool:
+        """
+        Check if there is a table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def to_file(self, arg0: str) -> None:
+        """
+        Write an NDI library to a file
+        
+        Arguments:
+            self        the library
+            filename    the file name and path
+        """
+    @property
+    def header(self) -> str:
+        """
+        Return the header in the library
+        """
+    @property
+    def number_tables(self) -> int:
+        """
+        Return the number of data tables in the library
+        """
+    @property
+    def tables(self) -> list[MultigroupTable]:
+        """
+        Return a vector of tables in the library
         """
 class MultigroupTable:
     """
@@ -247,14 +377,6 @@ class MultigroupTable:
         The reaction product multipliciies record for the requested multiplicity typeArguments:
             self    the table
             type    the multiplicity type
-        """
-    def to_file(self, arg0: str) -> None:
-        """
-        Write an NDI table to a file
-        
-        Arguments:
-            self        the table
-            filename    the file name and path
         """
     @property
     def average_fission_energy_release(self) -> multigroup.AverageFissionEnergyRelease:

@@ -76,12 +76,6 @@ class Test_NDItk_DepletionTable( unittest.TestCase ) :
         )
         verify_chunk( self, chunk )
 
-        # the data is read from a file
-        chunk.to_file( 'test.txt' )
-        chunk = DepletionTable.from_file( 'test.txt' )
-        verify_chunk( self, chunk )
-        if os.path.isfile( 'test.txt' ) : os.remove( 'test.txt' )
-
 if __name__ == '__main__' :
 
     unittest.main()

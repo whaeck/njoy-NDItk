@@ -82,12 +82,12 @@ if (NDItk.python AND NOT TARGET njoy::tools.python)
   set(NDItk.python OFF)
 endif()
 
-if (NDItk.python)
-  add_subdirectory(python)
+if ( NDItk.python )
+  add_subdirectory( python )
 endif()
 
 if( ${NDItk.tests} )
-  include( cmake/unit_testing.cmake )
+  add_subdirectory( test )
 endif()
 
 #######################################################################
@@ -145,7 +145,9 @@ endif()
 ########################################################################
 
 # enable Edit and Continue in Visual Studio (for debugging)
-if(MSVC)
-  target_compile_options(${PROJECT_NAME}  INTERFACE "/ZI")
-  target_link_options(${PROJECT_NAME} INTERFACE "/INCREMENTAL")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  if(MSVC)
+    target_compile_options(${PROJECT_NAME}  INTERFACE "/ZI")
+    target_link_options(${PROJECT_NAME} INTERFACE "/INCREMENTAL")
+  endif()
 endif()

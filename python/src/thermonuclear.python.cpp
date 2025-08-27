@@ -11,6 +11,7 @@ namespace thermonuclear {
 
   // declarations - NDI records and subrecords
   void wrapTemperatures( python::module&, python::module& );
+  void wrapInterpolationRegions( python::module&, python::module& );
 }
 
 void wrapThermonuclear( python::module& module, python::module& viewmodule ) {
@@ -23,4 +24,5 @@ void wrapThermonuclear( python::module& module, python::module& viewmodule ) {
   );
 
   thermonuclear::wrapTemperatures( submodule, viewmodule );
+  thermonuclear::wrapInterpolationRegions( submodule, viewmodule );
 }

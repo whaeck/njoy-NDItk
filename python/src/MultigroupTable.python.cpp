@@ -167,7 +167,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The fission neutron multiplicity record for the requested fission type"
     "Arguments:\n"
     "    self    the table\n"
-    "    type    the fission type"
+    "    type    the fission type",
+    python::return_value_policy::reference_internal
   )
   .def(
 
@@ -177,7 +178,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The fission neutron production record for the requested fission type"
     "Arguments:\n"
     "    self    the table\n"
-    "    type    the fission type"
+    "    type    the fission type",
+    python::return_value_policy::reference_internal
   )
   .def(
 
@@ -187,7 +189,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The fission neutron spectrum matrix record for the requested fission type"
     "Arguments:\n"
     "    self    the table\n"
-    "    type    the fission type"
+    "    type    the fission type",
+    python::return_value_policy::reference_internal
   )
   .def(
 
@@ -197,7 +200,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The fission neutron spectrum vector record for the requested fission type"
     "Arguments:\n"
     "    self    the table\n"
-    "    type    the fission type"
+    "    type    the fission type",
+    python::return_value_policy::reference_internal
   )
   .def_property_readonly(
 
@@ -241,7 +245,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The group structure record for an outgoing particle\n\n"
     "Arguments:\n"
     "    self       the table\n"
-    "    particle   the outgoing particle identifier"
+    "    particle   the outgoing particle identifier",
+    python::return_value_policy::reference_internal
   )
   .def(
 
@@ -251,7 +256,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The production record for an outgoing particle\n\n"
     "Arguments:\n"
     "    self       the table\n"
-    "    particle   the outgoing particle identifier"
+    "    particle   the outgoing particle identifier",
+    python::return_value_policy::reference_internal
   )
   .def(
 
@@ -261,7 +267,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The heating numbers record for an outgoing particle\n\n"
     "Arguments:\n"
     "    self       the table\n"
-    "    particle   the outgoing particle identifier"
+    "    particle   the outgoing particle identifier",
+    python::return_value_policy::reference_internal
   )
   .def(
 
@@ -271,7 +278,8 @@ void wrapMultigroupTable( python::module& module, python::module& ) {
     "The kerma record for an outgoing particle\n\n"
     "Arguments:\n"
     "    self       the table\n"
-    "    particle   the outgoing particle identifier"
+    "    particle   the outgoing particle identifier",
+    python::return_value_policy::reference_internal
   );
 
   // add standard table definitions

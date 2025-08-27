@@ -68,13 +68,13 @@ add_cpp_test( multigroup.Velocities multigroup/Velocities.test.cpp )
 add_cpp_test( thermonuclear.InterpolationRegions thermonuclear/InterpolationRegions.test.cpp )
 add_cpp_test( thermonuclear.Temperatures thermonuclear/Temperatures.test.cpp )
 
+add_cpp_test( dosimetry.Metadata dosimetry/Metadata.test.cpp )
+
 add_cpp_test( CommentBlock CommentBlock.test.cpp )
 
 add_cpp_test( DepletionTable DepletionTable.test.cpp )
 add_cpp_test( MultigroupTable MultigroupTable.test.cpp )
+add_cpp_test( DosimetryTable DosimetryTable.test.cpp )
 
 add_cpp_test( DepletionLibrary DepletionLibrary.test.cpp )
 add_cpp_test( MultigroupLibrary MultigroupLibrary.test.cpp )
-
-add_subdirectory( src/NDItk/dosimetry/Metadata/test )
-add_subdirectory( src/NDItk/DosimetryTable/test )

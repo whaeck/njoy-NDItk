@@ -5,7 +5,7 @@ from . import dosimetry
 from . import multigroup
 from . import sequence
 from . import thermonuclear
-__all__ = ['DepletionLibrary', 'DepletionTable', 'DosimetryTable', 'MultigroupLibrary', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
+__all__ = ['DepletionLibrary', 'DepletionTable', 'DosimetryLibrary', 'DosimetryTable', 'MultigroupLibrary', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
 class DepletionLibrary:
     """
     A library containing depletion tables
@@ -129,6 +129,79 @@ class DepletionTable:
     def number_incident_particles(self) -> int:
         """
         Return the number of incident particles
+        """
+class DosimetryLibrary:
+    """
+    A library containing dosimetry tables
+    """
+    @staticmethod
+    def from_file(arg0: str) -> DosimetryLibrary:
+        """
+        Read an NDI library from a file
+        
+        An exception is raised if something goes wrong while reading the
+        library
+        
+        Arguments:
+            filename    the file name and path
+        """
+    def __init__(self, header: str, tables: list[DosimetryTable]) -> None:
+        """
+        Initialise the library
+        
+        Arguments:
+            self               the library
+            header             the string header of the library
+            tables             a vector of DosimetryTable
+        """
+    @typing.overload
+    def get_table(self, index: int) -> DosimetryTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            index      the 0-based index of the table in the library file
+        """
+    @typing.overload
+    def get_table(self, zaid: str) -> DosimetryTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def has_table(self, zaid: str) -> bool:
+        """
+        Check if there is a table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def to_file(self, arg0: str) -> None:
+        """
+        Write an NDI library to a file
+        
+        Arguments:
+            self        the library
+            filename    the file name and path
+        """
+    @property
+    def header(self) -> str:
+        """
+        Return the header in the library
+        """
+    @property
+    def number_tables(self) -> int:
+        """
+        Return the number of data tables in the library
+        """
+    @property
+    def tables(self) -> list[DosimetryTable]:
+        """
+        Return a vector of tables in the library
         """
 class DosimetryTable:
     """

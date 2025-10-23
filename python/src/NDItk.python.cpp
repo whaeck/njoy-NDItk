@@ -22,6 +22,7 @@ void wrapMultigroupTable( python::module&, python::module& );
 
 // declarations - NDI library types
 void wrapDepletionLibrary( python::module&, python::module& );
+void wrapDosimetryLibrary( python::module&, python::module& );
 void wrapMultigroupLibrary( python::module&, python::module& );
 
 /**
@@ -54,5 +55,6 @@ PYBIND11_MODULE( NDItk, module ) {
 
   // wrap ACE library types
   wrapDepletionLibrary( module, viewmodule );
+  wrapDosimetryLibrary( module, viewmodule );
   wrapMultigroupLibrary( module, viewmodule );
 }

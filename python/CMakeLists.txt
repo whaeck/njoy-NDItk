@@ -9,6 +9,7 @@ if( NDItk.python )
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MultigroupLibrary.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DepletionLibrary.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/DosimetryLibrary.python.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear/Temperatures.python.cpp

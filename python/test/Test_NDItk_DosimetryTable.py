@@ -1,0 +1,142 @@
+# standard imports
+import unittest
+import os
+import os.path
+
+# third party imports
+
+# local imports
+from NDItk import DosimetryTable
+from NDItk.multigroup import EnergyGroupStructure
+from NDItk.multigroup import FluxWeights
+from NDItk.multigroup import TotalCrossSection
+from NDItk.multigroup import ReactionCrossSections
+from NDItk.multigroup import CrossSection
+from NDItk.multigroup import ReactionMultiplicityType
+
+class Test_NDItk_DosimetryTable( unittest.TestCase ) :
+    """Unit test for the DosimetryTable class."""
+
+    def test_component( self ) :
+
+        def verify_chunk( self, chunk ) :
+
+            # verify content - metadata
+            metadata = chunk.metadata
+            self.assertEqual( '92235.000nd', metadata.zaid )
+            self.assertEqual( 'this is some information for the table', metadata.information )
+            self.assertEqual( 'testing', metadata.library_name )
+            self.assertEqual( '12/22/2011', metadata.source_date )
+            self.assertEqual( '08/07/2013', metadata.processing_date )
+            self.assertAlmostEqual( 233.0248, metadata.atomic_weight_ratio )
+            self.assertAlmostEqual( 235.043937521619, metadata.atomic_weight )
+            self.assertAlmostEqual( 2.53e-8, metadata.temperature )
+            self.assertAlmostEqual( 1e+10, metadata.dilution )
+            self.assertEqual( 7, metadata.number_groups )
+            self.assertEqual( 2, metadata.number_reactions )
+
+            # verify content - primary energy boundaries
+            structure = chunk.primary_group_boundaries
+            self.assertEqual( 7, structure.number_groups )
+            self.assertAlmostEqual(    20, structure.values[0] )
+            self.assertAlmostEqual(    18.123456789, structure.values[1] )
+            self.assertAlmostEqual(    16.0000000000001, structure.values[2] )
+            self.assertAlmostEqual(    14, structure.values[3] )
+            self.assertAlmostEqual(    10, structure.values[4] )
+            self.assertAlmostEqual(     5, structure.values[5] )
+            self.assertAlmostEqual(     1, structure.values[6] )
+            self.assertAlmostEqual( 1e-11, structure.values[7] )
+
+            # verify content - flux weights
+            flux = chunk.flux_weights
+            self.assertEqual( 7, flux.number_groups )
+            self.assertAlmostEqual( 0.10, flux.values[0] )
+            self.assertAlmostEqual( 0.20, flux.values[1] )
+            self.assertAlmostEqual( 0.25, flux.values[2] )
+            self.assertAlmostEqual( 0.05, flux.values[3] )
+            self.assertAlmostEqual( 0.15, flux.values[4] )
+            self.assertAlmostEqual( 0.04, flux.values[5] )
+            self.assertAlmostEqual( 0.06, flux.values[6] )
+
+            # verify content - total cross section
+            total = chunk.total_cross_section
+            self.assertEqual( 7, total.number_groups )
+            self.assertAlmostEqual( 1.10, total.values[0] )
+            self.assertAlmostEqual( 1.20, total.values[1] )
+            self.assertAlmostEqual( 1.25, total.values[2] )
+            self.assertAlmostEqual( 1.05, total.values[3] )
+            self.assertAlmostEqual( 1.15, total.values[4] )
+            self.assertAlmostEqual( 1.04, total.values[5] )
+            self.assertAlmostEqual( 1.06, total.values[6] )
+
+            # verify content - reaction cross sections
+            reactions = chunk.reaction_cross_sections
+            self.assertEqual( 2, reactions.number_reactions )
+            self.assertEqual( 7, reactions.number_groups )
+            self.assertEqual( True, reactions.has_reaction( 2 ) )
+            self.assertEqual( True, reactions.has_reaction( 16 ) )
+            self.assertEqual( False, reactions.has_reaction( 102 ) )
+            self.assertEqual( 2, reactions.reactions[0].identifier )
+            self.assertAlmostEqual( 0.0, reactions.reactions[0].qvalue )
+            self.assertAlmostEqual( 10.0, reactions.reactions[0].cross_sections[0] )
+            self.assertAlmostEqual( 20.0, reactions.reactions[0].cross_sections[1] )
+            self.assertAlmostEqual( 30.0, reactions.reactions[0].cross_sections[2] )
+            self.assertAlmostEqual( 40.0, reactions.reactions[0].cross_sections[3] )
+            self.assertAlmostEqual( 50.0, reactions.reactions[0].cross_sections[4] )
+            self.assertAlmostEqual( 60.0, reactions.reactions[0].cross_sections[5] )
+            self.assertAlmostEqual( 70.0, reactions.reactions[0].cross_sections[6] )
+
+            self.assertEqual( 16, reactions.reactions[1].identifier )
+            self.assertAlmostEqual( 1.1234567, reactions.reactions[1].qvalue )
+            self.assertAlmostEqual( 1.0, reactions.reactions[1].cross_sections[0] )
+            self.assertAlmostEqual( 2.0, reactions.reactions[1].cross_sections[1] )
+            self.assertAlmostEqual( 3.0, reactions.reactions[1].cross_sections[2] )
+            self.assertAlmostEqual( 4.0, reactions.reactions[1].cross_sections[3] )
+            self.assertAlmostEqual( 5.0, reactions.reactions[1].cross_sections[4] )
+            self.assertAlmostEqual( 6.0, reactions.reactions[1].cross_sections[5] )
+            self.assertAlmostEqual( 7.0, reactions.reactions[1].cross_sections[6] )
+
+            xs = reactions.reaction( 2 )
+            self.assertEqual( 2, xs.identifier )
+            self.assertAlmostEqual( 0.0, xs.qvalue )
+            self.assertAlmostEqual( 10.0, xs.cross_sections[0] )
+            self.assertAlmostEqual( 20.0, xs.cross_sections[1] )
+            self.assertAlmostEqual( 30.0, xs.cross_sections[2] )
+            self.assertAlmostEqual( 40.0, xs.cross_sections[3] )
+            self.assertAlmostEqual( 50.0, xs.cross_sections[4] )
+            self.assertAlmostEqual( 60.0, xs.cross_sections[5] )
+            self.assertAlmostEqual( 70.0, xs.cross_sections[6] )
+
+            xs = reactions.reaction( 16 )
+            self.assertEqual( 16, xs.identifier )
+            self.assertAlmostEqual( 1.1234567, xs.qvalue )
+            self.assertAlmostEqual( 1.0, xs.cross_sections[0] )
+            self.assertAlmostEqual( 2.0, xs.cross_sections[1] )
+            self.assertAlmostEqual( 3.0, xs.cross_sections[2] )
+            self.assertAlmostEqual( 4.0, xs.cross_sections[3] )
+            self.assertAlmostEqual( 5.0, xs.cross_sections[4] )
+            self.assertAlmostEqual( 6.0, xs.cross_sections[5] )
+            self.assertAlmostEqual( 7.0, xs.cross_sections[6] )
+
+            # reaction product multiplicities
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.All ).empty )
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.Few ).empty )
+            self.assertEqual( True, chunk.reaction_product_multiplicities( ReactionMultiplicityType.RMO ).empty )
+
+        # the data is given explicitly
+        chunk = DosimetryTable( zaid = '92235.000nd', libname = 'testing',
+                                information = 'this is some information for the table', source = '12/22/2011',
+                                process = '08/07/2013', awr = 233.0248, weight = 235.043937521619,
+                                temperature = 2.53e-8, dilution = 1e+10,
+                                structure = EnergyGroupStructure( [ 20., 18.123456789, 16.0000000000001, 14., 10., 5, 1, 1e-11 ] ),
+                                flux = FluxWeights( [ 0.1, 0.2, 0.25, 0.05, 0.15, 0.04, 0.06 ] ),
+                                total_xs = TotalCrossSection( [ 1.1, 1.2, 1.25, 1.05, 1.15, 1.04, 1.06 ] ),
+                                reaction_xs = ReactionCrossSections(
+                                                  xs = [ CrossSection( 2, 0., [ 10., 20., 30., 40., 50., 60., 70. ] ),
+                                                         CrossSection( 16, 1.1234567, [ 1., 2., 3., 4., 5., 6., 7. ] ) ] ) )
+
+        verify_chunk( self, chunk )
+
+if __name__ == '__main__' :
+
+    unittest.main()

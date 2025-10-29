@@ -1,10 +1,11 @@
 from __future__ import annotations
 import typing
 from . import depletion
+from . import dosimetry
 from . import multigroup
 from . import sequence
 from . import thermonuclear
-__all__ = ['DepletionLibrary', 'DepletionTable', 'MultigroupLibrary', 'MultigroupTable', 'depletion', 'multigroup', 'sequence', 'thermonuclear']
+__all__ = ['DepletionLibrary', 'DepletionTable', 'DosimetryLibrary', 'DosimetryTable', 'MultigroupLibrary', 'MultigroupTable', 'depletion', 'dosimetry', 'multigroup', 'sequence', 'thermonuclear']
 class DepletionLibrary:
     """
     A library containing depletion tables
@@ -128,6 +129,146 @@ class DepletionTable:
     def number_incident_particles(self) -> int:
         """
         Return the number of incident particles
+        """
+class DosimetryLibrary:
+    """
+    A library containing dosimetry tables
+    """
+    @staticmethod
+    def from_file(arg0: str) -> DosimetryLibrary:
+        """
+        Read an NDI library from a file
+        
+        An exception is raised if something goes wrong while reading the
+        library
+        
+        Arguments:
+            filename    the file name and path
+        """
+    def __init__(self, header: str, tables: list[DosimetryTable]) -> None:
+        """
+        Initialise the library
+        
+        Arguments:
+            self               the library
+            header             the string header of the library
+            tables             a vector of DosimetryTable
+        """
+    @typing.overload
+    def get_table(self, index: int) -> DosimetryTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            index      the 0-based index of the table in the library file
+        """
+    @typing.overload
+    def get_table(self, zaid: str) -> DosimetryTable:
+        """
+        Return the table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def has_table(self, zaid: str) -> bool:
+        """
+        Check if there is a table in the library with the associated zaid
+        
+        Arguments:
+            self       the library
+            zaid       the zaid string of the table in the library file
+        """
+    def to_file(self, arg0: str) -> None:
+        """
+        Write an NDI library to a file
+        
+        Arguments:
+            self        the library
+            filename    the file name and path
+        """
+    @property
+    def header(self) -> str:
+        """
+        Return the header in the library
+        """
+    @property
+    def number_tables(self) -> int:
+        """
+        Return the number of data tables in the library
+        """
+    @property
+    def tables(self) -> list[DosimetryTable]:
+        """
+        Return a vector of tables in the library
+        """
+class DosimetryTable:
+    """
+    A dosimetry data table
+    """
+    @staticmethod
+    def from_file(arg0: str) -> DosimetryTable:
+        """
+        Read an NDI table from a file
+        
+        An exception is raised if something goes wrong while reading the
+        table
+        
+        Arguments:
+            filename    the file name and path
+        """
+    def __init__(self, zaid: str, libname: str, process: str, awr: float, temperature: float, dilution: float, structure: multigroup.EnergyGroupStructure, flux: multigroup.FluxWeights, total_xs: multigroup.TotalCrossSection, reaction_xs: multigroup.ReactionCrossSections, information: str | None = None, source: str | None = None, weight: float | None = None) -> None:
+        """
+        Initialise the table
+        
+        Arguments:
+            self               the table
+            zaid               the zaid of the table
+            libname            the library name
+            process            the processing date
+            awr                the atomic weight ratio of the target (with respect
+                               to the neutron mass)
+            temperature        the temperature of the target
+            dilution           the dilution (aka sigma0)
+            structure          the primary group structure
+            flux               the flux weights
+            total_xs           the total cross section
+            reaction_xs        the reaction cross section data
+            information        the table information line (optional)
+            source             the source date (optional)
+            weight             the atomic weight of the target (optional)
+        """
+    def reaction_product_multiplicities(self, type: multigroup.ReactionMultiplicityType) -> multigroup.ReactionMultiplicities:
+        """
+        The reaction product multipliciies record for the requested multiplicity typeArguments:
+            self    the table
+            type    the multiplicity type
+        """
+    @property
+    def flux_weights(self) -> multigroup.FluxWeights:
+        """
+        The flux weight record
+        """
+    @property
+    def metadata(self) -> dosimetry.Metadata:
+        """
+        The metadata of the table
+        """
+    @property
+    def primary_group_boundaries(self) -> multigroup.EnergyGroupStructure:
+        """
+        The primary group structure record
+        """
+    @property
+    def reaction_cross_sections(self) -> multigroup.ReactionCrossSections:
+        """
+        The reaction cross section record
+        """
+    @property
+    def total_cross_section(self) -> multigroup.TotalCrossSection:
+        """
+        The total cross section record
         """
 class MultigroupLibrary:
     """
@@ -303,6 +444,12 @@ class MultigroupTable:
         Arguments:
             self       the table
             particle   the outgoing particle identifier
+        """
+    def reaction_product_multiplicities(self, type: multigroup.ReactionMultiplicityType) -> multigroup.ReactionMultiplicities:
+        """
+        The reaction product multipliciies record for the requested multiplicity typeArguments:
+            self    the table
+            type    the multiplicity type
         """
     @property
     def average_fission_energy_release(self) -> multigroup.AverageFissionEnergyRelease:

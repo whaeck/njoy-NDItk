@@ -5,8 +5,11 @@ if( NDItk.python )
         ${CMAKE_CURRENT_SOURCE_DIR}/src/NDItk.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MultigroupTable.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DepletionTable.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/DosimetryTable.python.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MultigroupLibrary.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DepletionLibrary.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/DosimetryLibrary.python.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/thermonuclear/Temperatures.python.cpp
@@ -18,6 +21,9 @@ if( NDItk.python )
         ${CMAKE_CURRENT_SOURCE_DIR}/src/depletion/Target.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/depletion/IncidentParticle.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/depletion/Metadata.python.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dosimetry.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dosimetry/Metadata.python.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/multigroup.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/multigroup/ReactionMultiplicityType.python.cpp

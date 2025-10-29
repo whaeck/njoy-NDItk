@@ -693,6 +693,11 @@ void verifyChunk( const MultigroupTable& chunk ) {
   CHECK_THAT( 660, WithinRel( kerma.values()[5] ) );
   CHECK_THAT( 770, WithinRel( kerma.values()[6] ) );
 
+  // reaction product multiplicities
+  CHECK( true == chunk.reactionProductMultiplicities( multigroup::ReactionMultiplicityType::All ).empty() );
+  CHECK( true == chunk.reactionProductMultiplicities( multigroup::ReactionMultiplicityType::Few ).empty() );
+  CHECK( true == chunk.reactionProductMultiplicities( multigroup::ReactionMultiplicityType::RMO ).empty() );
+
   // outgoing particle types
   auto types = chunk.outgoingParticleTypes();
   CHECK( "sec_part_types" == types.keyword() );

@@ -13,13 +13,16 @@ namespace python = pybind11;
 void wrapThermonuclear( python::module&, python::module& );
 void wrapDepletion( python::module&, python::module& );
 void wrapMultigroup( python::module&, python::module& );
+void wrapDosimetry( python::module&, python::module& );
 
 // declarations - NDI table types
 void wrapDepletionTable( python::module&, python::module& );
+void wrapDosimetryTable( python::module&, python::module& );
 void wrapMultigroupTable( python::module&, python::module& );
 
 // declarations - NDI library types
 void wrapDepletionLibrary( python::module&, python::module& );
+void wrapDosimetryLibrary( python::module&, python::module& );
 void wrapMultigroupLibrary( python::module&, python::module& );
 
 /**
@@ -43,12 +46,15 @@ PYBIND11_MODULE( NDItk, module ) {
   wrapThermonuclear( module, viewmodule );
   wrapDepletion( module, viewmodule );
   wrapMultigroup( module, viewmodule );
+  wrapDosimetry( module, viewmodule );
 
   // wrap ACE table types
   wrapDepletionTable( module, viewmodule );
+  wrapDosimetryTable( module, viewmodule );
   wrapMultigroupTable( module, viewmodule );
 
   // wrap ACE library types
   wrapDepletionLibrary( module, viewmodule );
+  wrapDosimetryLibrary( module, viewmodule );
   wrapMultigroupLibrary( module, viewmodule );
 }
